@@ -1,0 +1,16 @@
+pre-commit:
+    parallel: true
+    commands:
+        eslint:
+            glob: '*.{js,ts,jsx,tsx}'
+            run: yarn lint --fix
+        prettier:
+            glob: '*.{js,ts,jsx,tsx,json,yaml,md}'
+            run: yarn format
+        type-check:
+            run: yarn type-check
+
+pre-push:
+    commands:
+        audit-check:
+            skip: true
