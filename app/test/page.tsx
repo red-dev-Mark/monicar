@@ -1,6 +1,7 @@
-import React from 'react';
-import { container, title } from '@/styles/styles.css';
 import Link from 'next/link';
+import React from 'react';
+
+import { container, title } from '@/app/test/styles.css';
 
 const VanillaExtract = () => {
     return (
