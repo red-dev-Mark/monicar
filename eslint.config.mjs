@@ -38,6 +38,16 @@ const eslintConfig = [
                     eventHandlerPropPrefix: 'on',
                 },
             ],
+            // 변수명 길이 제한
+            'id-length': [
+                'error',
+                {
+                    min: 2,
+                    exceptions: ['i'],
+                },
+            ],
+            // 특정 약어 사용 금지
+            'id-denylist': ['error', 'err', 'idx', 'e'],
 
             // TypeScript 네이밍 컨벤션
             '@typescript-eslint/naming-convention': [

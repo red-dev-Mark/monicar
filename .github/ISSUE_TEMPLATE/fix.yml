@@ -1,6 +1,6 @@
 name: 🔧 Fix
 description: 수정이 필요한가요?
-title: '[fix] '
+title: '[Fix] '
 labels: ['🔧 Fix']
 body:
     - type: textarea
