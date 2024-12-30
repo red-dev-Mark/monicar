@@ -18,8 +18,8 @@ export const primary = style({
 });
 
 export const secondary = style({
-    backgroundColor: '#E9ECEF',
-    color: '#343A40',
+    backgroundColor: 'red',
+    color: 'white',
     ':hover': {
         backgroundColor: '#DDE2E6',
     },

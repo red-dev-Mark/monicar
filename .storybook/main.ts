@@ -1,4 +1,4 @@
-import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin/next';
+import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin';
 
 import type { StorybookConfig } from '@storybook/nextjs';
 
@@ -16,11 +16,7 @@ const config: StorybookConfig = {
     },
     staticDirs: ['../public'],
     webpackFinal: async (config) => {
-        if (!config.plugins) {
-            config.plugins = [];
-        }
-        config.plugins.push(new VanillaExtractPlugin());
-
+        config.plugins = [...(config.plugins || []), new VanillaExtractPlugin()];
         return config;
     },
 };
