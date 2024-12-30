@@ -41,4 +41,4 @@
 #   socket      : 실시간 통신
 
 # 템플릿 설정 방법
-# git config commit.template .github/.gitmessage.txt
+# git config commit.template .github/.gitmessage
