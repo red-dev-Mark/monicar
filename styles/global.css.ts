@@ -1,7 +1,7 @@
 import { globalStyle } from '@vanilla-extract/css';
 
 globalStyle('body', {
-    fontFamily: 'system-ui, sans-serif',
+    fontFamily: '"Nanum Square Neo", "Airbnb Cereal", system-ui, sans-serif',
     backgroundColor: 'black',
     color: 'white',
 });
