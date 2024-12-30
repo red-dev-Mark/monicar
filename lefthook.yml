@@ -9,8 +9,3 @@ pre-commit:
             run: yarn format
         type-check:
             run: yarn type-check
-
-pre-push:
-    commands:
-        audit-check:
-            skip: true
