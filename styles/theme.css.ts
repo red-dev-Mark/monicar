@@ -9,14 +9,14 @@ export const [themeClass, styles] = createTheme({
         black: '#222222', // 기본 텍스트 색상
         dark: '#121212', // 다크모드 배경 색상
         error: '#c13515', // 에러 색상
-        red: '#df0404', // 레드 뱃지색상
+        red: '#df0404', // 레드 뱃지색상 ##
         pink: {
-            100: '#fbf0f3', // 핑크 뱃지 배경 색상
+            100: '#fbf0f3', // 핑크 뱃지 배경 색상 ##
             200: '#fae3e6', // 차량현황 알림 배경 색상
-            300: '#ffe9e9', // 레드 뱃지 배경 색상
+            300: '#ffe9e9', // 레드 뱃지 배경 색상 ##
             400: '#f6d7df', // 차량현황 색상
             500: '#fdced4', // 클러스트링 색상
-            600: '#d03660', // 핑크 뱃지 색상
+            600: '#d03660', // 핑크 뱃지 색상 ##
             700: '#cf6b81', // 차량현황 알림 아이콘 색상
         },
         yellow: {
@@ -25,9 +25,9 @@ export const [themeClass, styles] = createTheme({
         },
         green: {
             100: '#e1fbe8', // 차량현황 알림 배경 색상
-            200: '#a6e7d8', // 그린 뱃지 배경 색상
+            200: '#a6e7d8', // 그린 뱃지 배경 색상 ##
             300: '#6dc271', // 차량현황 알림 아이콘 색상
-            400: '#00b087', // 그린 뱃지 색상
+            400: '#00b087', // 그린 뱃지 색상 ##
             500: '#008a85', // 차량현황 색상
         },
         blue: '#004cc4',
@@ -56,7 +56,8 @@ export const [themeClass, styles] = createTheme({
         xlarge: '2rem', // 32px
     },
     fontSizes: {
-        small: '0.75rem', // 12px
+        xsmall: '0.75rem', // 12px
+        small: '0.875rem', // 14px
         medium: '1rem', // 16px
         large: '1.25rem', // 20px
         xlarge: '1.5rem', // 24px

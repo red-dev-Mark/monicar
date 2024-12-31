@@ -3,40 +3,43 @@ import { style, styleVariants } from '@vanilla-extract/css'
 import { styles } from '@/styles/theme.css'
 
 import { BADGE_SHAPE, OPERATION_STATUS, VEHICLE_ROLE } from './constants'
+
 export const base = style({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '4px 12px',
-    fontSize: '14px',
-    fontWeight: 'bold',
-    borderWidth: '4px',
+    border: '2px solid',
 })
 
 export const shape = styleVariants({
     [BADGE_SHAPE.RECTANGLE]: {
+        padding: '4px 12px 2px',
+        fontSize: styles.fontSizes.small,
         borderRadius: '4px',
-        width: '72px',
-        height: '24px',
     },
     [BADGE_SHAPE.CIRCLE]: {
+        padding: '4px 16px 2px',
+        fontWeight: 'bold',
         borderRadius: '14px',
-        width: '88px',
-        height: '32px',
     },
 })
 
-export const variant = styleVariants({
-    [OPERATION_STATUS.OPERATING]: {
-        border: '1px red',
-    },
-    [OPERATION_STATUS.NOT_OPERATING]: {
-        color: styles.colors.pink[600],
-    },
-    [OPERATION_STATUS.NOT_CONTROLLED]: {},
+const redStyle = {
+    color: styles.colors.red,
+    backgroundColor: styles.colors.pink[300],
+}
 
-    [VEHICLE_ROLE.GENERAL]: {
-        // backgroundColor
-    },
-    [VEHICLE_ROLE.COMMUTE]: {},
+const pinkStyle = {
+    color: styles.colors.pink[600],
+    backgroundColor: styles.colors.pink[100],
+}
+
+const greenStyle = {
+    color: styles.colors.green[400],
+    backgroundColor: styles.colors.green[200],
+}
+
+export const variant = styleVariants({
+    [OPERATION_STATUS.OPERATING]: pinkStyle,
+    [OPERATION_STATUS.NOT_OPERATING]: greenStyle,
+    [OPERATION_STATUS.NOT_CONTROLLED]: redStyle,
+    [VEHICLE_ROLE.GENERAL]: pinkStyle,
+    [VEHICLE_ROLE.COMMUTE]: greenStyle,
 })
