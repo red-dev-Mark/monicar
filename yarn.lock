@@ -2402,6 +2402,13 @@
     modern-ahocorasick "^1.0.0"
     picocolors "^1.0.0"
 
+"@vanilla-extract/dynamic@^2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@vanilla-extract/dynamic/-/dynamic-2.1.2.tgz#b1d1c1e0e392934c5a3bbb53f99069a7721311ac"
+  integrity sha512-9BGMciD8rO1hdSPIAh1ntsG4LPD3IYKhywR7VOmmz9OO4Lx1hlwkSg3E6X07ujFx7YuBfx0GDQnApG9ESHvB2A==
+  dependencies:
+    "@vanilla-extract/private" "^1.0.6"
+
 "@vanilla-extract/integration@^7.1.12":
   version "7.1.12"
   resolved "https://registry.yarnpkg.com/@vanilla-extract/integration/-/integration-7.1.12.tgz#6eba21f7e5d67f3253a7dda087408e16e683a265"
