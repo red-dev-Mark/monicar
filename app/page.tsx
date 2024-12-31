@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from 'next/link'
 
 const HomePage = () => {
     return (
@@ -6,7 +6,7 @@ const HomePage = () => {
             <h1>HI</h1>
             <Link href={'/test'}>Go To Test</Link>
         </div>
-    );
-};
+    )
+}
 
-export default HomePage;
+export default HomePage

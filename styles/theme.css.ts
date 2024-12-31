@@ -1,4 +1,4 @@
-import { createTheme } from '@vanilla-extract/css';
+import { createTheme } from '@vanilla-extract/css'
 
 export const [themeClass, vars] = createTheme({
     colors: {
@@ -62,4 +62,4 @@ export const [themeClass, vars] = createTheme({
         xlarge: '1.5rem', // 24px
         xxlarge: '2.5rem', // 40px
     },
-});
+})
