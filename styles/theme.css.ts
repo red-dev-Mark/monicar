@@ -1,6 +1,6 @@
 import { createTheme } from '@vanilla-extract/css'
 
-export const [themeClass, vars] = createTheme({
+export const [themeClass, styles] = createTheme({
     colors: {
         primary: '#ff385c',
         secondaryPrimary: '#f6475f', // 라이트모드
@@ -61,5 +61,8 @@ export const [themeClass, vars] = createTheme({
         large: '1.25rem', // 20px
         xlarge: '1.5rem', // 24px
         xxlarge: '2.5rem', // 40px
+    },
+    font: {
+        body: 'nanumSquareNeo',
     },
 })
