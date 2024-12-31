@@ -1,7 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-import * as styles from '@/components/common/Badge/styles.css'
-
+import * as styles from './styles.css'
 import { OperationStatusType, ShapeType, VehicleRoleType } from './types'
 
 interface BadgeProps extends Omit<ComponentPropsWithoutRef<'span'>, 'className'> {

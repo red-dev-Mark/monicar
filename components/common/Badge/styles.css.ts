@@ -5,7 +5,7 @@ import { styles } from '@/styles/theme.css'
 import { BADGE_SHAPE, OPERATION_STATUS, VEHICLE_ROLE } from './constants'
 
 export const base = style({
-    border: '2px solid',
+    border: '1.5px solid',
 })
 
 export const shape = styleVariants({

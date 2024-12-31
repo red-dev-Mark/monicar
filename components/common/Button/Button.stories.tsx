@@ -1,6 +1,7 @@
 import { fn } from '@storybook/test'
 
-import { Button } from '@/components/common/Button'
+import { Button } from '.'
+// import { Button } from '@/components/common/Button'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
