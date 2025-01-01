@@ -15,7 +15,6 @@ globalStyle('html, body', {
 })
 
 globalStyle('body', {
-    lineHeight: 1.5,
     WebkitFontSmoothing: 'antialiased',
 })
 

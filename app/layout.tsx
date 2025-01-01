@@ -1,6 +1,6 @@
-import type { Metadata } from 'next'
+import { themeClass } from '@/styles/theme.css'
 
-import '@/styles'
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
     title: 'Create Next App',
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <html lang='ko'>
-            <body>{children}</body>
+            <body className={themeClass}>{children}</body>
         </html>
     )
 }
