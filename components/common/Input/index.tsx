@@ -7,28 +7,15 @@ import { InputSizeType } from './types'
 
 interface Props extends ComponentPropsWithoutRef<'input'> {
     inputSize?: InputSizeType
-    hasIcon?: boolean
-    errorMessage?: string | null
-    hasError?: boolean
 }
 
-const Input = forwardRef<HTMLInputElement, Props>(
-    ({ inputSize = 'small', value, placeholder, hasIcon, errorMessage, hasError, onChange, ...props }, ref) => {
-        return (
-            <div>
-                <Input
-                    ref={ref}
-                    value={value}
-                    placeholder={placeholder}
-                    onChange={onChange}
-                    className={inputStyle[inputSize]}
-                    {...props}
-                />
-                {/* <ErrorMessage errorMessage={errorMessage} /> */}
-            </div>
-        )
-    },
-)
+const Input = forwardRef<HTMLInputElement, Props>(({ inputSize = 'small', className, ...props }, ref) => {
+    return (
+        <div>
+            <Input ref={ref} className={`${inputStyle[inputSize]} ${className || ''}`} {...props} />
+        </div>
+    )
+})
 
 Input.displayName = 'Input'
 
