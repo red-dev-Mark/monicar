@@ -1,8 +1,8 @@
-import { fn } from '@storybook/test';
+import { fn } from '@storybook/test'
 
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/common/Button'
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Button> = {
     title: 'Components/Button',
@@ -20,22 +20,22 @@ const meta: Meta<typeof Button> = {
             options: ['primary', 'secondary'],
         },
     },
-};
+}
 
-export default meta;
+export default meta
 
-type StoryType = StoryObj<typeof Button>;
+type StoryType = StoryObj<typeof Button>
 
 export const Primary: StoryType = {
     args: {
         variant: 'primary',
         children: 'Primary Button',
     },
-};
+}
 
 export const Secondary: StoryType = {
     args: {
         variant: 'secondary',
         children: 'Secondary Button',
     },
-};
+}

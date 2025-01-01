@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css'
 
 export const button = style({
     padding: '8px 16px',
@@ -7,7 +7,7 @@ export const button = style({
     cursor: 'pointer',
     fontSize: '14px',
     transition: 'background-color 0.2s',
-});
+})
 
 export const primary = style({
     backgroundColor: '#007AFF',
@@ -15,7 +15,7 @@ export const primary = style({
     ':hover': {
         backgroundColor: '#0055FF',
     },
-});
+})
 
 export const secondary = style({
     backgroundColor: 'red',
@@ -23,4 +23,4 @@ export const secondary = style({
     ':hover': {
         backgroundColor: '#DDE2E6',
     },
-});
+})
