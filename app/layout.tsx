@@ -1,4 +1,5 @@
 import { themeClass } from '@/styles/theme.css'
+import '@/styles'
 
 import type { Metadata } from 'next'
 

@@ -1,7 +1,8 @@
 import { globalStyle } from '@vanilla-extract/css'
 
 globalStyle('body', {
-    fontFamily: '"Nanum Square Neo", sans-serif',
+    fontFamily: 'nanumSquareNeo, airbnbCereal, sans-serif',
+    // fontFamily: '"Nanum Square Neo", sans-serif',
 })
 
 globalStyle('a', {

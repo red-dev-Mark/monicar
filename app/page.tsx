@@ -1,10 +1,10 @@
-import Link from 'next/link'
+import MobileHeader from '@/components/layout/MoblieHeader'
 
 const HomePage = () => {
     return (
         <div>
-            <h1>HI</h1>
-            <Link href={'/test'}>Go To Test</Link>
+            <div>HI</div>
+            <MobileHeader title='공지사항' isBackButton />
         </div>
     )
 }
