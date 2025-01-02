@@ -1,4 +1,6 @@
+import MobileHeader from '@/components/layout/MoblieHeader'
 import '@/styles'
+import { mobileOnly } from '@/styles/utils.css'
 
 import type { Metadata } from 'next'
 
@@ -9,8 +11,15 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
     return (
-        <html lang='ko'>
-            <body>{children}</body>
+        <html lang='ko' className='trancy-ko'>
+            <body>
+                <main>
+                    <div className={mobileOnly}>
+                        <MobileHeader title='공지사항' isBackButton />
+                    </div>
+                    {children}
+                </main>
+            </body>
         </html>
     )
 }

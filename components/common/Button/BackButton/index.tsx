@@ -5,13 +5,13 @@ import { useRouter } from 'next/navigation'
 import * as styles from './styles.css'
 
 interface BackButtonProps {
-    onClickBackButton?: () => void
+    onBackButtonClick?: () => void
     className?: string
 }
 
-const BackButton = ({ onClickBackButton, className }: BackButtonProps) => {
+const BackButton = ({ onBackButtonClick, className }: BackButtonProps) => {
     const router = useRouter()
-    const navigateBeforePage = () => (onClickBackButton ? onClickBackButton : router.back())
+    const navigateBeforePage = () => (onBackButtonClick ? onBackButtonClick : router.back())
 
     return (
         <button onClick={navigateBeforePage} className={`${styles.button} ${className ?? ''}`}>

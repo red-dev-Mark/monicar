@@ -8,8 +8,8 @@ export const FONT_FAMILY = {
 export const FONT_WEIGHT = {
     light: '300',
     regular: '400',
-    bold: '600',
-    xbold: '800',
+    bold: '700',
+    extraBold: '800',
 } as const
 
 globalFontFace(FONT_FAMILY.airbnbCereal, [
@@ -38,6 +38,6 @@ globalFontFace(FONT_FAMILY.nanumSquareNeo, [
     },
     {
         src: 'url("/fonts/NanumSquareNeo/NanumSquareNeoTTF-eHv.woff2")',
-        fontWeight: FONT_WEIGHT.xbold,
+        fontWeight: FONT_WEIGHT.extraBold,
     },
 ])

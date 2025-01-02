@@ -5,17 +5,16 @@ import * as styles from './styles.css'
 interface MobileHeaderProps {
     title?: string
     isBackButton?: boolean
+    onBackButtonClick?: () => void
     className?: string
 }
 
-const MobileHeader = ({ title, isBackButton = false, className }: MobileHeaderProps) => {
+const MobileHeader = ({ title, isBackButton = false, onBackButtonClick, className }: MobileHeaderProps) => {
     return (
         <>
             <div className={`${styles.container} ${className ?? ''}`}>
-                {isBackButton && <BackButton />}
+                {isBackButton && <BackButton onBackButtonClick={onBackButtonClick} />}
                 <h1 className={styles.title}>{title}</h1>
-                <h3>{title}</h3>
-                <h4>{title}</h4>
             </div>
             <div className={styles.spacer} />
         </>
