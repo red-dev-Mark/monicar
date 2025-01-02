@@ -2,7 +2,7 @@ import { style } from '@vanilla-extract/css'
 
 import { styles } from '@/styles/theme.css'
 
-export const container = style({
+export const header = style({
     position: 'fixed',
     top: 0,
     left: 0,
