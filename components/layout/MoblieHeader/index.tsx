@@ -14,6 +14,8 @@ const MobileHeader = ({ title, isBackButton = false, className }: MobileHeaderPr
             <div className={`${styles.container} ${className ?? ''}`}>
                 {isBackButton && <BackButton />}
                 <h1 className={styles.title}>{title}</h1>
+                <h3>{title}</h3>
+                <h4>{title}</h4>
             </div>
             <div className={styles.spacer} />
         </>

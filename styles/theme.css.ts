@@ -1,6 +1,6 @@
-import { createTheme } from '@vanilla-extract/css'
+import { createGlobalTheme } from '@vanilla-extract/css'
 
-export const [themeClass, styles] = createTheme({
+export const styles = createGlobalTheme(':root', {
     colors: {
         primary: '#ff385c',
         secondaryPrimary: '#f6475f', // 라이트모드
@@ -48,13 +48,6 @@ export const [themeClass, styles] = createTheme({
             800: '#5e5e5e',
         },
     },
-    space: {
-        none: '0',
-        small: '0.5rem', // 8px
-        medium: '1rem', // 16px
-        large: '1.5rem', // 24px
-        xlarge: '2rem', // 32px
-    },
     fontSizes: {
         xsmall: '0.75rem', // 12px
         small: '0.875rem', // 14px
@@ -62,8 +55,5 @@ export const [themeClass, styles] = createTheme({
         large: '1.25rem', // 20px
         xlarge: '1.5rem', // 24px
         xxlarge: '2.5rem', // 40px
-    },
-    font: {
-        body: 'nanumSquareNeo',
     },
 })

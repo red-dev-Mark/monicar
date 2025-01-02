@@ -18,8 +18,9 @@ export const container = style({
 })
 
 export const title = style({
-    fontSize: styles.fontSizes.large,
     color: styles.colors.black,
+    fontSize: styles.fontSizes.large,
+    fontWeight: 'bold',
 })
 export const spacer = style({
     height: '44px',

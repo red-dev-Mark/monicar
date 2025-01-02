@@ -1,56 +1,43 @@
 import { globalFontFace } from '@vanilla-extract/css'
 
-const airbnbCereal = 'airbnbCereal'
-const nanumSquareNeo = 'nanumSquareNeo'
+export const FONT_FAMILY = {
+    airbnbCereal: 'airbnbCereal',
+    nanumSquareNeo: 'nanumSquareNeo',
+} as const
 
-globalFontFace(airbnbCereal, [
+export const FONT_WEIGHT = {
+    light: '300',
+    regular: '400',
+    bold: '600',
+    xbold: '800',
+} as const
+
+globalFontFace(FONT_FAMILY.airbnbCereal, [
     {
-        src: 'url("/AirbnbCereal/AirbnbCereal_W_Lt.otf")',
-        fontWeight: 'light',
+        src: 'url("/fonts/AirbnbCereal/AirbnbCereal_W_Md.otf")',
+        fontWeight: FONT_WEIGHT.regular,
     },
     {
-        src: 'url("/AirbnbCereal/AirbnbCereal_W_Bk.otf")',
-        fontWeight: 'regular',
-    },
-    {
-        src: 'url("/AirbnbCereal/AirbnbCereal_W_Md.otf")',
-        fontWeight: 'medium',
-        fontStyle: 'normal',
-    },
-    {
-        src: 'url("/AirbnbCereal/AirbnbCereal_W_Bd.otf")',
-        fontWeight: 'bold',
-    },
-    {
-        src: 'url("/AirbnbCereal/AirbnbCereal_W_Xbd.otf")',
-        fontWeight: 'xbold',
-    },
-    {
-        src: 'url("/AirbnbCereal/AirbnbCereal_W_Blk.otf")',
-        fontWeight: 'xxbold',
+        src: 'url("/fonts/AirbnbCereal/AirbnbCereal_W_Bd.otf")',
+        fontWeight: FONT_WEIGHT.bold,
     },
 ])
 
-globalFontFace(nanumSquareNeo, [
+globalFontFace(FONT_FAMILY.nanumSquareNeo, [
     {
-        src: 'url("/NanumSquareNeo/NanumSquareNeoTTF-aLt.woff2")',
-        fontWeight: 'light',
+        src: 'url("/fonts/NanumSquareNeo/NanumSquareNeoTTF-aLt.woff2")',
+        fontWeight: FONT_WEIGHT.light,
     },
     {
-        src: 'url("/NanumSquareNeo/NanumSquareNeoTTF-bRg.woff2")',
-        fontWeight: 'regular',
+        src: 'url("/fonts/NanumSquareNeo/NanumSquareNeoTTF-bRg.woff2")',
+        fontWeight: FONT_WEIGHT.regular,
     },
     {
-        src: 'url("/NanumSquareNeo/NanumSquareNeoTTF-cBd.woff2")',
-        fontWeight: 'bold',
-        fontStyle: 'normal',
+        src: 'url("/fonts/NanumSquareNeo/NanumSquareNeoTTF-dEb.woff2")',
+        fontWeight: FONT_WEIGHT.bold,
     },
     {
-        src: 'url("/NanumSquareNeo/NanumSquareNeoTTF-dEb.woff2")',
-        fontWeight: 'xbold',
-    },
-    {
-        src: 'url("/NanumSquareNeo/NanumSquareNeoTTF-eHv.woff2")',
-        fontWeight: 'heavy',
+        src: 'url("/fonts/NanumSquareNeo/NanumSquareNeoTTF-eHv.woff2")',
+        fontWeight: FONT_WEIGHT.xbold,
     },
 ])

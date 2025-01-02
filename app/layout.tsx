@@ -1,4 +1,3 @@
-import { themeClass } from '@/styles/theme.css'
 import '@/styles'
 
 import type { Metadata } from 'next'
@@ -11,7 +10,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <html lang='ko'>
-            <body className={themeClass}>{children}</body>
+            <body>{children}</body>
         </html>
     )
 }
