@@ -6,14 +6,17 @@ const meta: Meta<typeof Header> = {
     title: 'Components/Header',
     component: Header,
     parameters: {
-        layout: 'centered',
+        layout: 'fullscreen',
         controls: {
             exclude: ['className'],
+        },
+        viewport: {
+            defaultViewport: 'mobile',
         },
     },
     tags: ['autodocs'],
     args: {
-        title: '헤더 제목',
+        title: 'Header Title',
     },
 }
 
@@ -23,22 +26,12 @@ type StoryType = StoryObj<typeof Header>
 
 export const Default: StoryType = {
     args: {
-        title: '헤더 제목',
+        title: 'Header Title',
+        isBackButton: false,
     },
-}
-
-export const WithBackButton: StoryType = {
-    args: {
-        title: '헤더 제목',
-        isBackButton: true,
-        onBackButtonClick: () => alert('뒤로가기 동작'),
-    },
-}
-
-export const WithCustomBackButtonAction: StoryType = {
-    args: {
-        title: '헤더 제목',
-        isBackButton: true,
-        onBackButtonClick: () => alert('커스텀 뒤로가기 동작'),
+    parameters: {
+        viewport: {
+            defaultViewport: 'mobile',
+        },
     },
 }
