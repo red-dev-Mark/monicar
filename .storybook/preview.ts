@@ -1,8 +1,6 @@
-import React from 'react'
-
-import { themeClass } from '@/styles/theme.css'
-
 import type { Preview } from '@storybook/react'
+
+import '@/styles/reset.css.ts'
 
 const preview: Preview = {
     parameters: {
@@ -13,7 +11,6 @@ const preview: Preview = {
             },
         },
     },
-    decorators: [(Story) => React.createElement('div', { className: themeClass }, React.createElement(Story))],
 }
 
 export default preview

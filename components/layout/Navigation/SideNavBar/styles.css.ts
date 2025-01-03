@@ -48,23 +48,6 @@ export const navList = style({
     gap: '8px',
 })
 
-export const navItem = style({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-    padding: '8px',
-    borderRadius: '4px',
-    ':hover': {
-        backgroundColor: styles.colors.gray[50],
-    },
-})
-
-export const navItemActive = style({
-    backgroundColor: styles.colors.gray[50],
-    color: styles.colors.primary,
-    fontWeight: styles.fontWeights.bold,
-})
-
 export const sideFooter = style({
     display: 'flex',
     flexDirection: 'column',

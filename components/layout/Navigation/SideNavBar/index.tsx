@@ -1,18 +1,17 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import React from 'react'
 
-import NavItem from '@/components/layout/SideBar/NavItem'
+import NavItem from '@/components/layout/Navigation/SideNavBar/NavItem'
 
 import * as styles from './styles.css'
 
-const Sidebar = () => {
+const SideNavBar = () => {
     const navItems = [
-        { label: '대시 보드', path: '/', iconSrc: '/icons/sun-icon.svg' },
-        { label: '위치 조회', path: '/', iconSrc: '/icons/sun-icon.svg' },
-        { label: '경로 조회', path: '/', iconSrc: '/icons/sun-icon.svg' },
-        { label: '운행 일지', path: '/', iconSrc: '/icons/sun-icon.svg' },
-        { label: '운행 내역', path: '/', iconSrc: '/icons/sun-icon.svg' },
+        { label: '대시 보드', path: '/', iconSrc: '/icons/home-icon.svg' },
+        { label: '위치 조회', path: '/', iconSrc: '/icons/pin-icon.svg' },
+        { label: '경로 조회', path: '/', iconSrc: '/icons/pie-chart-icon.svg' },
+        { label: '운행 일지', path: '/', iconSrc: '/icons/clock-icon.svg' },
+        { label: '운행 내역', path: '/', iconSrc: '/icons/send-icon.svg' },
     ]
 
     return (
@@ -34,11 +33,7 @@ const Sidebar = () => {
             </nav>
 
             <footer className={styles.sideFooter}>
-                <Link href='/logout' className={styles.navItem}>
-                    <Image src='/icons/sun-icon.svg' alt='아이콘' width={20} height={20} />
-                    <span>로그아웃</span>
-                </Link>
-
+                <NavItem label='로그아웃' path='/logout' iconSrc='/icons/sign-out-icon.svg' />
                 <div className={styles.themeControl}>
                     <div className={styles.themeInfo}>
                         <Image src='/icons/sun-icon.svg' alt='아이콘' width={20} height={20} />
@@ -53,4 +48,4 @@ const Sidebar = () => {
     )
 }
 
-export default Sidebar
+export default SideNavBar
