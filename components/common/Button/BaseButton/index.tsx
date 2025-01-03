@@ -5,7 +5,7 @@ import React, { ComponentPropsWithoutRef } from 'react'
 import * as styles from './style.css'
 
 export type SizeType = 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
-export type ColorType = 'dark' | 'primary' | 'gray' | 'white'
+export type ColorType = 'dark' | 'primary' | 'gray' | 'white' | 'transparent'
 
 interface BaseButtonProps extends ComponentPropsWithoutRef<'button'> {
     className?: string

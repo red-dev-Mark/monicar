@@ -21,7 +21,7 @@ export const base = style({
 export const buttonSize = {
     small: style({
         width: '94px',
-        height: '46px',
+        height: '48px',
         padding: '16px 24px',
         fontSize: styles.fontSizes.small,
         borderRadius: '8px',
@@ -84,6 +84,14 @@ export const buttonColor = {
         backgroundColor: styles.colors.white,
         color: styles.colors.black,
         border: `1px solid ${styles.colors.black}`,
+        ':hover': {
+            backgroundColor: styles.colors.gray[50],
+        },
+    }),
+    transparent: style({
+        backgroundColor: `${styles.colors.white}80`,
+        color: styles.colors.black,
+        border: `1px solid ${styles.colors.gray[50]}`,
         ':hover': {
             backgroundColor: styles.colors.gray[50],
         },

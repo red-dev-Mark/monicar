@@ -111,3 +111,11 @@ export const Disabled: StoryType = {
         disabled: true,
     },
 }
+
+export const Transparent: StoryType = {
+    args: {
+        text: 'Transparent',
+        size: 'medium',
+        color: 'transparent',
+    },
+}
