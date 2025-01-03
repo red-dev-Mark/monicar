@@ -10,20 +10,9 @@ interface MessageProps {
 const Message = ({ messageType, isError = false, className }: MessageProps) => {
     const message = messageType ? MESSAGES[messageType.category][messageType.type] : null
 
-    return (
-        <div>
-            {isError && message && (
-                <p
-                    className={`
-                    ${styles.base} 
-                    ${messageType?.category === 'SUCCESS' ? styles.successMessage : ''} 
-                    ${className ?? ''}
-                `}
-                >
-                    {message}
-                </p>
-            )}
-        </div>
-    )
+    const messageStyle = messageType?.category === 'SUCCESS' ? styles.successMessage : styles.errorMessage
+
+    return <div>{isError && message && <p className={`${messageStyle} ${className ?? ''}`}>{message}</p>}</div>
 }
+
 export default Message
