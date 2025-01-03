@@ -5,7 +5,7 @@ import { styles } from '@/styles/theme.css'
 export const resetInput = style({
     height: '56px',
     color: styles.colors.black,
-    background: `linear-gradient(90deg,  ${styles.colors.white} -30%, ${styles.colors.secondaryPrimary} 180%)`,
+    backgroundColor: 'rgba(0, 0, 0, 0.04)',
     border: 0,
     boxShadow: 'none',
     paddingLeft: '72px',
