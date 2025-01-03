@@ -9,11 +9,12 @@ import * as styles from './styles.css'
 const SideNavBar = () => {
     return (
         <aside className={styles.sideNav}>
-            <nav className={styles.mainNav}>
+            <nav className={styles.navContainer}>
                 <div className={styles.logoWrapper}>
-                    <Image src='/box-logo.png' alt='로고 이미지' width={48} height={48} />
+                    <Image src='/box-logo.png' alt='박스 로고 이미지' width={48} height={48} />
                     <div className={styles.logoInfo}>
-                        <Image src='/text-logo.png' alt='로고 이미지' width={104} height={22} />
+                        <Image src='/text-logo.png' alt='텍스트 로고 이미지' width={104} height={22} />
+                        {/* TODO: 실제 유저 이메일로 교체 예정 */}
                         <p className={styles.userEmail}>socar@gmail.com</p>
                     </div>
                 </div>
@@ -32,7 +33,7 @@ const SideNavBar = () => {
                         <Image src='/icons/sun-icon.svg' alt='아이콘' width={20} height={20} />
                         <span>라이트모드</span>
                     </div>
-                    <button className={styles.themeToggle}>
+                    <button className={styles.themeToggle} onClick={() => {}}>
                         <span className={styles.themeIndicator}></span>
                     </button>
                 </div>

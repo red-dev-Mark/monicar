@@ -20,7 +20,7 @@ export const sideNav = style({
     },
 })
 
-export const mainNav = style({
+export const navContainer = style({
     display: 'flex',
     flexDirection: 'column',
     gap: '36px',
@@ -36,12 +36,6 @@ export const logoInfo = style({
     display: 'flex',
     flexDirection: 'column',
     gap: '8px',
-})
-
-export const logoName = style({
-    color: styles.colors.primary,
-    fontSize: styles.fontSizes.large,
-    fontWeight: styles.fontWeights.extraBold,
 })
 
 export const userEmail = style({
