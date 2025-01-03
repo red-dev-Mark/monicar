@@ -26,3 +26,7 @@ globalStyle('img, picture, video, canvas, svg', {
 globalStyle('input, button, textarea, select', {
     font: 'inherit',
 })
+
+globalStyle('li', {
+    listStyle: 'none',
+})
