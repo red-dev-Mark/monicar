@@ -1,7 +1,10 @@
 import { globalStyle } from '@vanilla-extract/css'
 
+import { FONT_WEIGHT } from '@/styles/font.css'
+
 globalStyle('body', {
-    fontFamily: '"Nanum Square Neo", sans-serif',
+    fontFamily: 'airbnbCereal, nanumSquareNeo, sans-serif',
+    fontWeight: FONT_WEIGHT.regular,
 })
 
 globalStyle('a', {
@@ -14,4 +17,11 @@ globalStyle('button', {
     border: 'none',
     padding: 0,
     cursor: 'pointer',
+})
+
+globalStyle('h1, h2, h3, h4, h5, h6', {
+    margin: 0,
+    padding: 0,
+    font: 'inherit',
+    verticalAlign: 'baseline',
 })

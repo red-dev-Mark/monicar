@@ -1,8 +1,5 @@
-import React from 'react'
-
-import { themeClass } from '@/styles/theme.css'
-
 import type { Preview } from '@storybook/react'
+import '@/styles/font.css'
 
 const preview: Preview = {
     parameters: {
@@ -12,8 +9,30 @@ const preview: Preview = {
                 date: /Date$/,
             },
         },
+        viewport: {
+            viewports: {
+                mobile: {
+                    name: 'Mobile',
+                    styles: {
+                        width: '390px',
+                        height: '844px',
+                    },
+                },
+                tablet: {
+                    name: 'Tablet',
+                    styles: {
+                        width: '768px',
+                    },
+                },
+                desktop: {
+                    name: 'Desktop',
+                    styles: {
+                        width: '1024px',
+                    },
+                },
+            },
+        },
     },
-    decorators: [(Story) => React.createElement('div', { className: themeClass }, React.createElement(Story))],
 }
 
 export default preview
