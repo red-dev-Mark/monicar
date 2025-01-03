@@ -2,7 +2,8 @@
 
 import { ComponentPropsWithoutRef, forwardRef } from 'react'
 
-import Message, { MessageType } from '../../Message'
+import Message from '../../Message'
+import { MessageType } from '../../Message/types'
 
 import * as styles from './styles.css'
 

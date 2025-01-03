@@ -18,6 +18,9 @@ export const baseInput = style({
     ':focus': {
         outline: 'none',
     },
+    ':disabled': {
+        backgroundColor: styles.colors.gray[200],
+    },
 })
 
 export const errorInput = style({

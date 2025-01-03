@@ -7,3 +7,9 @@ export const base = style({
     fontSize: styles.fontSizes.small,
     marginTop: '5px',
 })
+
+export const successMessage = style({
+    color: styles.colors.blue,
+    fontSize: styles.fontSizes.small,
+    marginTop: '5px',
+})
