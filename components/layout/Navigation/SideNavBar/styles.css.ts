@@ -1,34 +1,41 @@
 import { style } from '@vanilla-extract/css'
 
 import { styles } from '@/styles/theme.css'
+import { mediaQuery } from '@/styles/utils.css'
 
 export const sideNav = style({
     width: '256px',
     height: '100vh',
-    padding: '16px',
+    padding: '44px 22px 36px 22px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     backgroundColor: styles.colors.white,
     borderRight: `1px solid ${styles.colors.gray[200]}`,
+
+    '@media': {
+        [mediaQuery.mobile]: {
+            display: 'none',
+        },
+    },
 })
 
 export const mainNav = style({
     display: 'flex',
     flexDirection: 'column',
-    gap: '32px',
+    gap: '36px',
 })
 
 export const logoWrapper = style({
     display: 'flex',
     alignItems: 'center',
-    gap: '12px',
+    gap: '14px',
 })
 
 export const logoInfo = style({
     display: 'flex',
     flexDirection: 'column',
-    gap: '4px',
+    gap: '8px',
 })
 
 export const logoName = style({
@@ -45,7 +52,7 @@ export const userEmail = style({
 export const navList = style({
     display: 'flex',
     flexDirection: 'column',
-    gap: '8px',
+    gap: '16px',
 })
 
 export const sideFooter = style({

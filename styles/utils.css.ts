@@ -16,3 +16,12 @@ export const mobileOnly = style({
         },
     },
 })
+
+export const desktopOnly = style({
+    display: 'block',
+    '@media': {
+        [mediaQuery.mobile]: {
+            display: 'none',
+        },
+    },
+})
