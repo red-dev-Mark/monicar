@@ -9,12 +9,6 @@ const meta: Meta<typeof Badge> = {
     component: Badge,
     parameters: {
         layout: 'centered',
-        docs: {
-            description: {
-                component:
-                    '사이드 네비게이션 바 컴포넌트입니다. 대시보드, 위치 조회, 경로 조회 등의 네비게이션 메뉴와 테마 컨트롤을 포함합니다.',
-            },
-        },
         controls: {
             exclude: ['className'],
         },

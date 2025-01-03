@@ -1,9 +1,12 @@
-import SideBar from '@/components/layout/Navigation/SideNavBar'
+import Header from '@/components/layout/Header'
+import SideNavBar from '@/components/layout/Navigation/SideNavBar'
 
 const HomePage = () => {
     return (
         <div>
-            <SideBar />
+            <SideNavBar />
+            <div>HI</div>
+            <Header title='asdfasd' isBackButton />
         </div>
     )
 }

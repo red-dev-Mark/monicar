@@ -1,4 +1,5 @@
 import type { Preview } from '@storybook/react'
+import '@/styles/font.css'
 
 import '@/styles'
 
@@ -8,6 +9,29 @@ const preview: Preview = {
             matchers: {
                 color: /(background|color)$/i,
                 date: /Date$/,
+            },
+        },
+        viewport: {
+            viewports: {
+                mobile: {
+                    name: 'Mobile',
+                    styles: {
+                        width: '390px',
+                        height: '844px',
+                    },
+                },
+                tablet: {
+                    name: 'Tablet',
+                    styles: {
+                        width: '768px',
+                    },
+                },
+                desktop: {
+                    name: 'Desktop',
+                    styles: {
+                        width: '1024px',
+                    },
+                },
             },
         },
     },
