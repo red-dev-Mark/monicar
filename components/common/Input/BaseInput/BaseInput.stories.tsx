@@ -3,10 +3,13 @@ import BaseInput from './index'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof BaseInput> = {
-    title: 'Components/BaseInput',
+    title: 'Components/Input/BaseInput',
     component: BaseInput,
     parameters: {
         layout: 'centered',
+        controls: {
+            exclude: ['className'],
+        },
     },
     args: {
         placeholder: 'Enter text',
@@ -18,18 +21,6 @@ const meta: Meta<typeof BaseInput> = {
             control: 'boolean',
             description: '에러 상태 표시',
         },
-        messageType: {
-            control: 'text',
-            description: '에러나 안내 메시지 표시',
-        },
-        disabled: {
-            control: 'boolean',
-            description: '비활성화 상태 표시',
-        },
-        readOnly: {
-            control: 'boolean',
-            description: '읽기 전용 상태 표시',
-        },
     },
 }
 
@@ -37,30 +28,15 @@ export default meta
 
 type StoryType = StoryObj<typeof BaseInput>
 
-export const Input: StoryType = {
+export const Base: StoryType = {
     args: {
         placeholder: 'Input',
     },
 }
 
-export const ErrorInput: StoryType = {
+export const Error: StoryType = {
     args: {
-        placeholder: 'ErrorInput',
+        placeholder: 'Error',
         isError: true,
-    },
-}
-
-export const DisabledInput: StoryType = {
-    args: {
-        placeholder: 'Disabled Input',
-        disabled: true,
-    },
-}
-
-export const ReadOnlyInput: StoryType = {
-    args: {
-        placeholder: 'Read Only Input',
-        readOnly: true,
-        value: 'Read Only Input',
     },
 }

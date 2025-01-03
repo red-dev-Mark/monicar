@@ -8,13 +8,16 @@ export const inputWrapper = style({
 })
 
 export const baseInput = style({
+    width: '100%',
+    height: '44px',
+    padding: '0 12px',
+
+    color: styles.colors.gray[800],
     backgroundColor: styles.colors.white,
     border: `1px solid ${styles.colors.gray[800]}`,
-    fontSize: styles.fontSizes.small,
-    padding: '16px 18px',
     boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.04)',
     borderRadius: '30px',
-    width: '100%',
+
     ':focus': {
         outline: 'none',
     },

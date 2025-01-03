@@ -1,18 +1,13 @@
-import { MESSAGES } from './constants'
 import * as styles from './styles.css'
-import { MessageType } from './types'
 
 interface MessageProps {
-    messageType?: MessageType
+    message: string
     isError?: boolean
-    className?: string
 }
-const Message = ({ messageType, isError = false, className }: MessageProps) => {
-    const message = messageType ? MESSAGES[messageType.category][messageType.type] : null
+const Message = ({ message, isError = true }: MessageProps) => {
+    const messageStyle = isError ? styles.message.error : styles.message.success
 
-    const messageStyle = messageType?.category === 'SUCCESS' ? styles.successMessage : styles.errorMessage
-
-    return <div>{isError && message && <p className={`${messageStyle} ${className ?? ''}`}>{message}</p>}</div>
+    return <p className={`${messageStyle} ${styles.base}`}>{message}</p>
 }
 
 export default Message
