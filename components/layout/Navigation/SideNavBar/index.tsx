@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 
+import Switch from '@/components/common/Switch'
 import NavItem from '@/components/layout/Navigation/SideNavBar/NavItem'
 import { navigationItems } from '@/constants/navigation'
 
@@ -33,9 +34,7 @@ const SideNavBar = () => {
                         <Image src='/icons/sun-icon.svg' alt='아이콘' width={20} height={20} />
                         <span>라이트모드</span>
                     </div>
-                    <button className={styles.themeToggle} onClick={() => {}}>
-                        <span className={styles.themeIndicator}></span>
-                    </button>
+                    <Switch />
                 </div>
             </footer>
         </aside>
