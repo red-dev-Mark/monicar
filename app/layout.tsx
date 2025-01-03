@@ -13,9 +13,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <html lang='ko' className='trancy-ko'>
             <body className={layoutContainer}>
-                <div>
-                    <SideNavBar />
-                </div>
+                <SideNavBar />
                 <main className={mainContent}>{children}</main>
             </body>
         </html>
