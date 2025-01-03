@@ -20,7 +20,7 @@ const meta: Meta<typeof BaseButton> = {
             options: ['dark', 'primary', 'transparent', 'white'],
             description: '버튼 색상을 설정합니다',
         },
-        text: {
+        children: {
             control: 'text',
             description: '버튼 텍스트를 설정합니다',
         },
@@ -33,7 +33,7 @@ type StoryType = StoryObj<typeof BaseButton>
 
 export const Default: StoryType = {
     args: {
-        text: 'Primary',
+        children: 'Primary',
         size: 'medium',
         color: 'primary',
     },
@@ -41,7 +41,7 @@ export const Default: StoryType = {
 
 export const Small: StoryType = {
     args: {
-        text: 'Small',
+        children: 'Small',
         size: 'small',
         color: 'primary',
     },
@@ -49,7 +49,7 @@ export const Small: StoryType = {
 
 export const Medium: StoryType = {
     args: {
-        text: 'Medium',
+        children: 'Medium',
         size: 'medium',
         color: 'primary',
     },
@@ -57,7 +57,7 @@ export const Medium: StoryType = {
 
 export const Large: StoryType = {
     args: {
-        text: 'Large',
+        children: 'Large',
         size: 'large',
         color: 'primary',
     },
@@ -65,7 +65,7 @@ export const Large: StoryType = {
 
 export const Xlarge: StoryType = {
     args: {
-        text: 'Xlarge',
+        children: 'Xlarge',
         size: 'xlarge',
         color: 'primary',
     },
@@ -73,7 +73,7 @@ export const Xlarge: StoryType = {
 
 export const XXlarge: StoryType = {
     args: {
-        text: 'XXlarge',
+        children: 'XXlarge',
         size: 'xxlarge',
         color: 'primary',
     },
@@ -81,7 +81,7 @@ export const XXlarge: StoryType = {
 
 export const Dark: StoryType = {
     args: {
-        text: 'Dark',
+        children: 'Dark',
         size: 'medium',
         color: 'dark',
     },
@@ -89,7 +89,7 @@ export const Dark: StoryType = {
 
 export const Gray: StoryType = {
     args: {
-        text: 'Gray',
+        children: 'Gray',
         size: 'medium',
         color: 'gray',
     },
@@ -97,7 +97,7 @@ export const Gray: StoryType = {
 
 export const White: StoryType = {
     args: {
-        text: 'White',
+        children: 'White',
         size: 'medium',
         color: 'white',
     },
@@ -105,7 +105,7 @@ export const White: StoryType = {
 
 export const Disabled: StoryType = {
     args: {
-        text: 'Disabled',
+        children: 'Disabled',
         size: 'medium',
         color: 'primary',
         disabled: true,
@@ -114,7 +114,7 @@ export const Disabled: StoryType = {
 
 export const Transparent: StoryType = {
     args: {
-        text: 'Transparent',
+        children: 'Transparent',
         size: 'medium',
         color: 'transparent',
     },

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { ComponentPropsWithoutRef } from 'react'
+import React, { ComponentPropsWithoutRef, ReactNode } from 'react'
 
 import { BaseButton } from '../BaseButton'
 
@@ -11,11 +11,15 @@ type ColorType = 'transparent' | 'white'
 
 interface RoundButtonProps extends ComponentPropsWithoutRef<'button'> {
     className?: string
-    text?: string
+    children: ReactNode
     size?: RoundSizeType
     color?: ColorType
 }
 
-export const RoundButton = ({ className, size = 'large', ...props }: RoundButtonProps) => {
-    return <BaseButton className={`${styles.round} ${styles.roundSize[size]} ${className ?? ''}`} {...props} />
+export const RoundButton = ({ className, size = 'large', children, ...props }: RoundButtonProps) => {
+    return (
+        <BaseButton className={`${styles.round} ${styles.roundSize[size]} ${className ?? ''}`} {...props}>
+            {children}
+        </BaseButton>
+    )
 }

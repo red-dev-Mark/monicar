@@ -20,7 +20,8 @@ export const roundSize = {
         borderRadius: '30px',
     }),
     large: style({
-        backgroundColor: `${styles.colors.white}80`,
+        backgroundColor: styles.colors.white,
+        border: `1px solid ${styles.colors.gray[200]}`,
         color: styles.colors.primary,
         width: '342px',
         height: '60px',

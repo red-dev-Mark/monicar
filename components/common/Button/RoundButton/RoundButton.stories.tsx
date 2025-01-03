@@ -20,7 +20,7 @@ const meta: Meta<typeof RoundButton> = {
             options: ['gray', 'white'],
             description: '버튼 색상을 설정합니다',
         },
-        text: {
+        children: {
             control: 'text',
             description: '버튼 텍스트를 설정합니다',
         },
@@ -33,7 +33,7 @@ type StoryType = StoryObj<typeof RoundButton>
 
 export const Default: StoryType = {
     args: {
-        text: '기본 버튼',
+        children: '기본 버튼',
         size: 'large',
         color: 'white',
     },
@@ -41,7 +41,7 @@ export const Default: StoryType = {
 
 export const Small: StoryType = {
     args: {
-        text: 'small',
+        children: 'small',
         size: 'small',
         color: 'white',
     },
@@ -49,7 +49,7 @@ export const Small: StoryType = {
 
 export const Large: StoryType = {
     args: {
-        text: 'large',
+        children: 'large',
         size: 'large',
         color: 'white',
     },
@@ -57,7 +57,7 @@ export const Large: StoryType = {
 
 export const Transparent: StoryType = {
     args: {
-        text: 'transparent',
+        children: 'transparent',
         size: 'large',
         color: 'transparent',
     },
@@ -65,7 +65,7 @@ export const Transparent: StoryType = {
 
 export const Disabled: StoryType = {
     args: {
-        text: '비활성화 버튼',
+        children: '비활성화 버튼',
         size: 'large',
         color: 'white',
         disabled: true,
