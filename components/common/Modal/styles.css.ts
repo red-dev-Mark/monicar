@@ -2,13 +2,27 @@ import { style } from '@vanilla-extract/css'
 
 import { styles } from '@/styles/theme.css'
 
+export const overlay = style({
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100dvh',
+    backgroundColor: 'rgb(0, 0, 0, 0.5)',
+    zIndex: 999,
+})
+
+export const clickableOverlay = style({
+    cursor: 'pointer',
+})
+
 export const modal = style({
-    width: '404px',
-    padding: '54px 24px 32px 24px',
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
+    width: '404px',
+    padding: '54px 24px 32px',
 
     display: 'flex',
     flexDirection: 'column',
@@ -49,15 +63,4 @@ export const button = style({
     height: '60px',
     border: '1px solid black',
     borderRadius: '10px',
-})
-
-export const overlay = style({
-    width: '100%',
-    height: '100dvh',
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: 'rgb(0, 0, 0, 0.5)',
-    zIndex: 999,
 })

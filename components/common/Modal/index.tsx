@@ -14,7 +14,15 @@ interface ModalProps {
     onClose: () => void
 }
 
-const Modal = ({ isOpen = false, icon, message, confirmText, closeText, onConfirm, onClose }: ModalProps) => {
+const Modal = ({
+    isOpen = false,
+    icon = '/icons/alert-icon.svg',
+    message,
+    confirmText,
+    closeText,
+    onConfirm,
+    onClose,
+}: ModalProps) => {
     if (!isOpen) return
 
     const isCloseButton = closeText
@@ -23,12 +31,13 @@ const Modal = ({ isOpen = false, icon, message, confirmText, closeText, onConfir
         <>
             <div className={styles.modal}>
                 {!isCloseButton && (
-                    <button onClick={onClose} className={styles.xButton}>
-                        <Image src={'/icons/clear-icon.svg'} alt='모달 닫기 버튼' width={36} height={36} />
+                    <button onClick={onClose} className={styles.xButton} aria-label='모달 닫기 버튼'>
+                        <Image src={'/icons/clear-icon.svg'} alt='' width={36} height={36} />
                     </button>
                 )}
 
-                <Image src={icon || '/icons/alert-icon.svg'} alt='모달 아이콘' width={76} height={76} />
+                <Image src={icon} alt='' width={76} height={76} />
+
                 <p className={styles.message}>{message}</p>
 
                 <div className={styles.buttonGroup}>
@@ -42,7 +51,12 @@ const Modal = ({ isOpen = false, icon, message, confirmText, closeText, onConfir
                     </button>
                 </div>
             </div>
-            <div onClick={!isCloseButton ? onClose : undefined} className={styles.overlay} role='presentation' />
+
+            <div
+                onClick={!isCloseButton ? onClose : undefined}
+                className={`${styles.overlay} ${!isCloseButton ? styles.clickableOverlay : ''}`}
+                role='presentation'
+            />
         </>
     )
 }
