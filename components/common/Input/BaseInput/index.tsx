@@ -1,29 +1,24 @@
-'use client'
-
 import { ComponentPropsWithoutRef, forwardRef } from 'react'
-
-import Message from '../../Message'
-import { MessageType } from '../../Message/types'
 
 import * as styles from './styles.css'
 
 interface BaseInputProps extends ComponentPropsWithoutRef<'input'> {
-    className?: string
+    type?: string
     isError?: boolean
-    messageType?: MessageType
+    className?: string
 }
 
 const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
-    ({ className = '', isError = false, messageType, ...props }, ref) => {
+    ({ type = 'text', isError = false, className = '', ...props }, ref) => {
         return (
-            <div>
-                <input
-                    ref={ref}
-                    className={`${styles.baseInput} ${isError ? styles.errorInput : ''} ${className}`}
-                    {...props}
-                />
-                <Message messageType={messageType} isError={isError} />
-            </div>
+            <input
+                ref={ref}
+                type={type}
+                className={`${styles.baseInput} 
+                ${isError && styles.errorInput}
+                ${className || ''}`}
+                {...props}
+            />
         )
     },
 )

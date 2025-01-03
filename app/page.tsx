@@ -1,11 +1,15 @@
+import BaseInput from '@/components/common/Input/BaseInput'
+import SignInInput from '@/components/common/Input/SignInInput'
 import Header from '@/components/layout/Header'
 
 const HomePage = () => {
     return (
-        <div>
-            <div>HI</div>
+        <>
             <Header title='asdfasd' isBackButton />
-        </div>
+            <SignInInput icon={'/icons/sign-in-user-icon.svg'} />
+            <SignInInput icon={'/icons/sign-in-lock-icon.svg'} type='password' />
+            <BaseInput />
+        </>
     )
 }
 

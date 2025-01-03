@@ -6,7 +6,7 @@ import { mediaQuery } from '@/styles/utils.css'
 export const sideNav = style({
     width: '256px',
     height: '100vh',
-    padding: '44px 22px 36px 22px',
+    padding: '44px 18px 36px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -66,22 +66,4 @@ export const themeInfo = style({
     display: 'flex',
     alignItems: 'center',
     gap: '12px',
-})
-
-export const themeToggle = style({
-    width: '48px',
-    height: '24px',
-    backgroundColor: styles.colors.primary,
-    borderRadius: '999rem',
-    position: 'relative',
-})
-
-export const themeIndicator = style({
-    width: '16px',
-    height: '16px',
-    backgroundColor: styles.colors.white,
-    borderRadius: '50%',
-    position: 'absolute',
-    right: '4px',
-    top: '4px',
 })
