@@ -15,6 +15,7 @@ export const colors = {
     white: '#ffffff',
     black: '#222222', // 기본 텍스트 색상
     dark: '#121212', // 다크모드 배경 색상
+    description: '#6b7280',
     error: '#c13515', // 에러 색상
     red: '#df0404', // 레드 뱃지색상 ##
     pink: {
@@ -46,7 +47,7 @@ export const colors = {
     gray: {
         50: '#f6f6f6', // 호버 색상
         100: '#f7f7f7', // 테이블 배경 색상
-        200: '#ebebeb',
+        200: '#ebebeb', // border 색상
         300: '#dddddd', // 테이블 선 색상
         400: '#d3d3d3',
         500: '#c2c2c2',

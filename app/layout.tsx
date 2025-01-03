@@ -1,4 +1,6 @@
+import SideNavBar from '@/components/layout/Navigation/SideNavBar'
 import '@/styles'
+import { layoutContainer, mainContent } from '@/styles/layout.css'
 
 import type { Metadata } from 'next'
 
@@ -10,8 +12,11 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <html lang='ko' className='trancy-ko'>
-            <body>
-                <main>{children}</main>
+            <body className={layoutContainer}>
+                <div>
+                    <SideNavBar />
+                </div>
+                <main className={mainContent}>{children}</main>
             </body>
         </html>
     )
