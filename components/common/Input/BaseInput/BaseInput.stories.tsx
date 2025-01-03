@@ -40,3 +40,10 @@ export const Error: StoryType = {
         isError: true,
     },
 }
+
+export const Disabled: StoryType = {
+    args: {
+        placeholder: 'Disabled',
+        disabled: true,
+    },
+}

@@ -9,8 +9,8 @@ export const inputWrapper = style({
 
 export const baseInput = style({
     width: '100%',
-    height: '44px',
-    padding: '0 12px',
+    height: '48px',
+    padding: '16px',
 
     color: styles.colors.gray[800],
     backgroundColor: styles.colors.white,

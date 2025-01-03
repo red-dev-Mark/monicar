@@ -13,7 +13,7 @@ export const resetInput = style({
 })
 
 export const signInInput = style({
-    width: '344px',
+    width: '342px',
     height: '60px',
     display: 'flex',
     position: 'relative',
