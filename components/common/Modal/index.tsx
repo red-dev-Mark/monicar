@@ -1,6 +1,8 @@
 'use client'
 
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 import * as styles from './styles.css'
 
@@ -23,11 +25,18 @@ const Modal = ({
     onConfirm,
     onClose,
 }: ModalProps) => {
-    if (!isOpen) return
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+        return () => setMounted(false)
+    }, [])
+
+    if (!isOpen || !mounted) return null
 
     const isCloseButton = closeText
 
-    return (
+    const modalContent = (
         <>
             <div className={styles.modal}>
                 {!isCloseButton && (
@@ -59,6 +68,8 @@ const Modal = ({
             />
         </>
     )
+
+    return createPortal(modalContent, document.body)
 }
 
 export default Modal
