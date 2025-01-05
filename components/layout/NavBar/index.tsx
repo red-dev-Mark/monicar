@@ -2,14 +2,14 @@ import Image from 'next/image'
 import React from 'react'
 
 import Switch from '@/components/common/Switch'
-import NavItem from '@/components/layout/Navigation/SideNavBar/NavItem'
+import NavItem from '@/components/layout/NavBar/NavItem'
 import { navigationItems } from '@/constants/navigation'
 
 import * as styles from './styles.css'
 
-const SideNavBar = () => {
+const NavBar = () => {
     return (
-        <aside className={styles.sideNav}>
+        <aside className={styles.navbar}>
             <nav className={styles.navContainer}>
                 <div className={styles.logoWrapper}>
                     <Image src='/box-logo.png' alt='박스 로고 이미지' width={48} height={48} />
@@ -41,4 +41,4 @@ const SideNavBar = () => {
     )
 }
 
-export default SideNavBar
+export default NavBar
