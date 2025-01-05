@@ -1,0 +1,46 @@
+24:30:00.561 Chromatic CLI v11.22.0
+             https://www.chromatic.com/docs/cli 
+ 
+24:30:00.609 Authenticating with Chromatic 
+24:30:00.609     → Connecting to https://index.chromatic.com
+24:30:01.424 {"errors":[{"message":"No app with code '677a9e60af1c67b3c5b149e8' found","locations":[{"line":3,"column":5}],"path":["appToken"],"extensions":{"code":"INTERNAL_SERVER_ERROR"}}]} GraphQL errors
+24:30:01.424     → No app with code '677a9e60af1c67b3c5b149e8' found
+
+24:30:01.434 ✖ Failed to authenticate
+             
+             Error communicating with the Chromatic API. Check if your Chromatic client is up-to-date.
+             Service status updates are provided at https://status.chromatic.com
+             
+             → INTERNAL_SERVER_ERROR: No app with code '677a9e60af1c67b3c5b149e8' found
+             
+             If you need help, please chat with us at https://www.chromatic.com/docs/cli for the fastest response.
+             You can also email the team at support@chromatic.com if chat is not an option.
+             
+             Please provide us with the above CLI output and the following info:
+             {
+               "timestamp": "2025-01-05T15:30:01.433Z",
+               "sessionId": "25183269-4774-4b1d-b36c-006411fbe2ec",
+               "nodePlatform": "darwin",
+               "nodeVersion": "20.11.1",
+               "packageName": "chromatic",
+               "packageVersion": "11.22.0",
+               "flags": {
+                 "debug": true,
+                 "outputDir": [],
+                 "storybookBuildDir": [],
+                 "externals": [],
+                 "onlyStoryFiles": [],
+                 "onlyStoryNames": [],
+                 "untraced": [],
+                 "fileHashing": true,
+                 "interactive": true,
+                 "appCode": []
+               },
+               "configuration": {},
+               "buildScript": "storybook build",
+               "exitCode": 202,
+               "exitCodeKey": "GRAPHQL_ERROR",
+               "errorType": "GraphQLError",
+               "errorMessage": "✖ Failed to authenticate"
+             }
+24:30:01.437 ℹ Wrote Chromatic diagnostics report to chromatic-diagnostics.json
