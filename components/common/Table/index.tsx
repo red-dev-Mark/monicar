@@ -1,7 +1,7 @@
 import { flexRender, getCoreRowModel, useReactTable, ColumnDef } from '@tanstack/react-table'
 
 import * as styles from './styles.css'
-import { TableDataType } from './types'
+import { TableDataType, TableSizeType } from './types'
 
 export interface TableCellProps {
     content: React.ReactNode
@@ -12,6 +12,7 @@ export interface TableCellProps {
 interface TableProps {
     data: TableDataType[]
     columns: ColumnDef<TableDataType>[]
+    size?: TableSizeType
 }
 
 const Table = ({ data, columns }: TableProps) => {

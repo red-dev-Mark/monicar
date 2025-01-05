@@ -18,6 +18,13 @@ const meta: Meta<typeof TanStackTable> = {
     parameters: {
         layout: 'centered',
     },
+    argTypes: {
+        size: {
+            control: 'select',
+            options: ['small', 'medium', 'large', 'full'],
+            defaultValue: 'medium',
+        },
+    },
 }
 
 export default meta
