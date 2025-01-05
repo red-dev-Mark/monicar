@@ -11,6 +11,7 @@
 /.next/
 /out/
 /build
+/storybook-static
 
 # 테스트 파일
 /coverage
