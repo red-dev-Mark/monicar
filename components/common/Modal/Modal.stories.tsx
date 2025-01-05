@@ -10,7 +10,7 @@ const meta: Meta<typeof Modal> = {
     },
     decorators: [
         (Story) => (
-            <div style={{ height: '100vh' }}>
+            <div style={{ height: '640px' }}>
                 <Story />
             </div>
         ),
@@ -64,6 +64,11 @@ export const Confirm: StoryType = {
         onConfirm: () => alert('삭제 클릭'),
         onClose: () => alert('취소 클릭'),
     },
+    parameters: {
+        docs: {
+            disable: true,
+        },
+    },
 }
 
 export const LongMessage: StoryType = {
@@ -74,5 +79,10 @@ export const LongMessage: StoryType = {
         closeText: '취소',
         onConfirm: () => alert('확인 클릭'),
         onClose: () => alert('취소 클릭'),
+    },
+    parameters: {
+        docs: {
+            disable: true,
+        },
     },
 }

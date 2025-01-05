@@ -1,4 +1,4 @@
-import NavBar from '@/components/layout/Navigation/NavBar'
+import NavBar from '@/components/layout/NavBar'
 import '@/styles'
 import { layoutContainer, mainContent } from '@/styles/layout.css'
 

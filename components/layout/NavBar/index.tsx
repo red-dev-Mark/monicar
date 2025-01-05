@@ -2,7 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 
 import Switch from '@/components/common/Switch'
-import NavItem from '@/components/layout/Navigation/NavBar/NavItem'
+import NavItem from '@/components/layout/NavBar/NavItem'
 import { navigationItems } from '@/constants/navigation'
 
 import * as styles from './styles.css'
