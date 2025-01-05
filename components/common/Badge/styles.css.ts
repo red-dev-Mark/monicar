@@ -5,17 +5,20 @@ import { styles } from '@/styles/theme.css'
 import { BADGE_SHAPE, OPERATION_STATUS, VEHICLE_ROLE } from './constants'
 
 export const base = style({
+    padding: '4px 0',
     border: '1.5px solid',
 })
 
 export const shape = styleVariants({
     [BADGE_SHAPE.RECTANGLE]: {
-        padding: '4px 12px 2px',
+        paddingLeft: '12px',
+        paddingRight: '12px',
         fontSize: styles.fontSizes.small,
         borderRadius: '4px',
     },
     [BADGE_SHAPE.CIRCLE]: {
-        padding: '4px 16px 2px',
+        paddingLeft: '16px',
+        paddingRight: '16px',
         fontWeight: 'bold',
         borderRadius: '14px',
     },

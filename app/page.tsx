@@ -1,6 +1,7 @@
 'use client'
 
 import { useModal } from '@/app/hooks/useModal'
+import Badge from '@/components/common/Badge'
 import Modal from '@/components/common/Modal'
 
 const HomePage = () => {
@@ -9,6 +10,7 @@ const HomePage = () => {
     return (
         <>
             <button onClick={openModal}>모달</button>
+            <div />
             <Modal
                 isOpen={isOpen}
                 icon='/icons/black-alert-icon.svg'
@@ -17,6 +19,7 @@ const HomePage = () => {
                 onConfirm={closeModal}
                 onClose={closeModal}
             />
+            <Badge shape='rectangle' variant='운행중' />
         </>
     )
 }
