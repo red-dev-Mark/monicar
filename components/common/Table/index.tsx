@@ -1,14 +1,13 @@
 import { flexRender, getCoreRowModel, useReactTable, ColumnDef } from '@tanstack/react-table'
 
 import * as styles from './styles.css'
+import { TableDataType } from './types'
 
 export interface TableCellProps {
     content: React.ReactNode
     backgroundColor?: string
     colSpan?: number
 }
-
-export type TableDataType = Record<string, TableCellProps>
 
 interface TableProps {
     data: TableDataType[]
@@ -23,7 +22,7 @@ const Table = ({ data, columns }: TableProps) => {
     })
 
     return (
-        <div className={styles.tableWrapper}>
+        <div className={styles.tableContainer}>
             <table className={styles.table}>
                 <tbody>
                     {table.getRowModel().rows.map((row) => (

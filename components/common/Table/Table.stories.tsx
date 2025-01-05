@@ -4,7 +4,9 @@ import { styles } from '@/styles/theme.css'
 
 import Badge from '../Badge'
 
-import TanStackTable, { TableDataType, TableCellProps } from './index'
+import { TableDataType } from './types'
+
+import TanStackTable, { TableCellProps } from './index'
 import Table from './index'
 
 import type { Meta, StoryObj } from '@storybook/react'
