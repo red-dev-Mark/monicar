@@ -3,7 +3,7 @@ import SideNavBar from '.'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof SideNavBar> = {
-    title: 'Layout/Navigation/SideNavBar',
+    title: 'Layout/NavBar',
     component: SideNavBar,
     parameters: {
         layout: 'fullscreen',

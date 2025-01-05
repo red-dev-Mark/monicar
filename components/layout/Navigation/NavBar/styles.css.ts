@@ -3,7 +3,7 @@ import { style } from '@vanilla-extract/css'
 import { styles } from '@/styles/theme.css'
 import { mediaQuery } from '@/styles/utils.css'
 
-export const sideNav = style({
+export const navbar = style({
     width: '256px',
     height: '100vh',
     padding: '44px 18px 36px',
