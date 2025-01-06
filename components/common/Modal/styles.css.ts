@@ -6,10 +6,12 @@ export const overlay = style({
     position: 'fixed',
     top: 0,
     left: 0,
+    inset: 0,
     width: '100%',
     height: '100dvh',
-    backgroundColor: 'rgb(0, 0, 0, 0.5)',
-    zIndex: 999,
+    opacity: 0.2,
+    backgroundColor: styles.colors.black,
+    zIndex: 50,
 })
 
 export const clickableOverlay = style({
@@ -47,9 +49,10 @@ export const message = style({
     fontWeight: styles.fontWeights.bold,
     textAlign: 'center',
     lineHeight: 1.8,
+    color: styles.colors.black,
 })
 
-export const buttonGroup = style({
+export const buttonWrapper = style({
     width: '100%',
     marginTop: '12px',
     padding: '0 8px',
@@ -57,10 +60,4 @@ export const buttonGroup = style({
     gap: '16px',
 })
 
-export const button = style({
-    display: 'block',
-    width: '100%',
-    height: '60px',
-    border: '1px solid black',
-    borderRadius: '10px',
-})
+export const icon = style({})

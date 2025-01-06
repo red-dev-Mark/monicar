@@ -15,6 +15,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             <body className={layoutContainer}>
                 <NavBar />
                 <main className={mainContent}>{children}</main>
+                <div id='modal-root'></div>
             </body>
         </html>
     )
