@@ -5,12 +5,12 @@ import { createPortal } from 'react-dom'
 import { BaseButton } from '../Button/BaseButton'
 
 import * as styles from './styles.css'
-import { ButtonType } from './types'
+import { ButtonType, ModalMessageType } from './types'
 
 interface ModalProps {
     isOpen?: boolean
     icon: React.ReactNode
-    message: string
+    message: ModalMessageType
     onClose: () => void
     variant: ButtonType
 }

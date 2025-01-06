@@ -39,7 +39,6 @@ type StoryType = StoryObj<typeof Modal>
 export const Alert: StoryType = {
     args: {
         isOpen: true,
-        message: '알림 메시지입니다.',
 
         onClose: () => alert('닫기 클릭'),
     },
@@ -49,7 +48,6 @@ export const Confirm: StoryType = {
     args: {
         isOpen: true,
         icon: '/icons/alert-icon.svg',
-        message: '정말 삭제하시겠습니까?',
 
         onClose: () => alert('취소 클릭'),
     },
@@ -63,7 +61,7 @@ export const Confirm: StoryType = {
 export const LongMessage: StoryType = {
     args: {
         isOpen: true,
-        message: '이것은 매우 긴 메시지입니다. 모달의 레이아웃이 깨지지 않는지 확인하기 위한 테스트용 메시지입니다.',
+
         onClose: () => alert('취소 클릭'),
     },
     parameters: {
