@@ -11,7 +11,7 @@ export const overlay = style({
     height: '100dvh',
     opacity: 0.2,
     backgroundColor: styles.colors.black,
-    zIndex: 50,
+    zIndex: styles.zIndex.overlay,
 })
 
 export const clickableOverlay = style({
@@ -25,16 +25,14 @@ export const modal = style({
     transform: 'translate(-50%, -50%)',
     width: '404px',
     padding: '54px 24px 32px',
-
     display: 'flex',
     flexDirection: 'column',
     gap: '36px',
     justifyContent: 'center',
     alignItems: 'center',
-
     backgroundColor: styles.colors.white,
-    boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.1)',
-    zIndex: 1000,
+    boxShadow: `0px 4px 4px 0px ${styles.colors.shadow[400]}`,
+    zIndex: styles.zIndex.modal,
     borderRadius: '12px',
 })
 
@@ -59,5 +57,3 @@ export const buttonWrapper = style({
     display: 'flex',
     gap: '16px',
 })
-
-export const icon = style({})

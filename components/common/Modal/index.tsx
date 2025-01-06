@@ -30,7 +30,7 @@ const Modal = ({ isOpen = false, icon = '', message, variant, onClose }: ModalPr
         <>
             <div className={styles.overlay} onClick={handleOverlayClick} role='presentation' />
             <div className={styles.modal} role='dialog' aria-modal='true'>
-                {icon && <div className={styles.icon}>{icon}</div>}
+                {icon && <div>{icon}</div>}
                 {message && <p className={styles.message}>{message}</p>}
                 <div className={styles.buttonWrapper}>
                     {variant.variant === 'dual' ? (

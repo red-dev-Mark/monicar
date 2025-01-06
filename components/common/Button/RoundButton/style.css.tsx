@@ -16,7 +16,7 @@ export const roundSize = {
         height: '48px',
         fontSize: styles.fontSizes.medium,
         border: `1px solid ${styles.colors.gray[200]}`,
-        boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.04)',
+        boxShadow: `0px 4px 4px 0px ${styles.colors.shadow[400]}`,
         borderRadius: '30px',
     }),
     large: style({

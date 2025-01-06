@@ -54,6 +54,13 @@ export const colors = {
         700: '#717171',
         800: '#5e5e5e',
     },
+    transparent: '#ffffff80',
+    shadow: {
+        100: '#00000010',
+        400: '#00000040',
+        500: '#00000050',
+        800: '#00000080',
+    },
 }
 
 export const fontSizes = {
@@ -72,9 +79,19 @@ export const fontWeights = {
     extraBold: FONT_WEIGHT.extraBold,
 }
 
+export const zIndex = {
+    modal: '50',
+    overlay: '40',
+    dropdown: '30',
+    header: '20',
+    default: '1',
+    below: '-1',
+}
+
 export const styles = createGlobalTheme(':root', {
     breakPoints,
     colors,
     fontSizes,
     fontWeights,
+    zIndex,
 })

@@ -62,12 +62,3 @@ export const Transparent: StoryType = {
         color: 'transparent',
     },
 }
-
-export const Disabled: StoryType = {
-    args: {
-        children: '비활성화 버튼',
-        size: 'large',
-        color: 'white',
-        disabled: true,
-    },
-}
