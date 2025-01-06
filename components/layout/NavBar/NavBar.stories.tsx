@@ -1,10 +1,10 @@
-import SideNavBar from '.'
+import NavBar from '.'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-const meta: Meta<typeof SideNavBar> = {
-    title: 'Layout/Navigation/SideNavBar',
-    component: SideNavBar,
+const meta: Meta<typeof NavBar> = {
+    title: 'Layout/NavBar',
+    component: NavBar,
     parameters: {
         layout: 'fullscreen',
     },
@@ -20,6 +20,6 @@ const meta: Meta<typeof SideNavBar> = {
 
 export default meta
 
-type StoryType = StoryObj<typeof SideNavBar>
+type StoryType = StoryObj<typeof NavBar>
 
 export const Default: StoryType = {}

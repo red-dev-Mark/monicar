@@ -1,4 +1,4 @@
-import SideNavBar from '@/components/layout/Navigation/SideNavBar'
+import NavBar from '@/components/layout/NavBar'
 import '@/styles'
 import { layoutContainer, mainContent } from '@/styles/layout.css'
 
@@ -13,9 +13,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <html lang='ko' className='trancy-ko'>
             <body className={layoutContainer}>
-                <div>
-                    <SideNavBar />
-                </div>
+                <NavBar />
                 <main className={mainContent}>{children}</main>
             </body>
         </html>

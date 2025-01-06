@@ -2,7 +2,7 @@ import NavItem from '.'
 
 import type { Meta, StoryObj } from '@storybook/react'
 const meta: Meta<typeof NavItem> = {
-    title: 'Layout/Navigation/NavItem',
+    title: 'Layout/NavBar/NavItem',
     component: NavItem,
     parameters: {
         layout: 'centered',

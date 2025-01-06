@@ -3,10 +3,10 @@ import { style } from '@vanilla-extract/css'
 import { styles } from '@/styles/theme.css'
 import { mediaQuery } from '@/styles/utils.css'
 
-export const sideNav = style({
+export const navbar = style({
     width: '256px',
     height: '100vh',
-    padding: '44px 22px 36px 22px',
+    padding: '44px 18px 36px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -15,7 +15,15 @@ export const sideNav = style({
 
     '@media': {
         [mediaQuery.mobile]: {
-            display: 'none',
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 'auto',
+            width: '100%',
+            zIndex: 50,
+            padding: '12px 12px',
+            alignItems: 'center',
         },
     },
 })
@@ -30,6 +38,11 @@ export const logoWrapper = style({
     display: 'flex',
     alignItems: 'center',
     gap: '14px',
+    '@media': {
+        [mediaQuery.mobile]: {
+            display: 'none',
+        },
+    },
 })
 
 export const logoInfo = style({
@@ -47,12 +60,22 @@ export const navList = style({
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
+    '@media': {
+        [mediaQuery.mobile]: {
+            flexDirection: 'row',
+        },
+    },
 })
 
 export const sideFooter = style({
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
+    '@media': {
+        [mediaQuery.mobile]: {
+            display: 'none',
+        },
+    },
 })
 
 export const themeControl = style({
@@ -66,22 +89,4 @@ export const themeInfo = style({
     display: 'flex',
     alignItems: 'center',
     gap: '12px',
-})
-
-export const themeToggle = style({
-    width: '48px',
-    height: '24px',
-    backgroundColor: styles.colors.primary,
-    borderRadius: '999rem',
-    position: 'relative',
-})
-
-export const themeIndicator = style({
-    width: '16px',
-    height: '16px',
-    backgroundColor: styles.colors.white,
-    borderRadius: '50%',
-    position: 'absolute',
-    right: '4px',
-    top: '4px',
 })

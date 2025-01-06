@@ -14,11 +14,11 @@ export const FONT_WEIGHT = {
 
 globalFontFace(FONT_FAMILY.airbnbCereal, [
     {
-        src: 'url("/fonts/AirbnbCereal/AirbnbCereal_W_Md.otf")',
+        src: 'url("/fonts/AirbnbCereal/AirbnbCereal_W_Md.woff2")',
         fontWeight: FONT_WEIGHT.regular,
     },
     {
-        src: 'url("/fonts/AirbnbCereal/AirbnbCereal_W_Bd.otf")',
+        src: 'url("/fonts/AirbnbCereal/AirbnbCereal_W_Bd.woff2")',
         fontWeight: FONT_WEIGHT.bold,
     },
 ])

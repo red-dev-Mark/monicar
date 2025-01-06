@@ -7,4 +7,6 @@ export const layoutContainer = style({
 
 export const mainContent = style({
     flex: 1,
+
+    backgroundImage: 'url("/images/sign-in-background-desktop.jpg")',
 })
