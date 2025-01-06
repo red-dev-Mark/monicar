@@ -15,7 +15,7 @@ export const searchInputWrapper = style({
 
 export const vehicleStatusWrapper = style({
     position: 'absolute',
-    top: '1rem',
-    left: '1rem',
+    top: '6.5rem',
+    right: '2rem',
     zIndex: 10,
 })
