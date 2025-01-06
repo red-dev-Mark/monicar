@@ -43,7 +43,6 @@ export const colors = {
         100: '#f2e9fd',
         200: '#ad8cdb',
     },
-
     gray: {
         50: '#f6f6f6', // 호버 색상
         100: '#f7f7f7', // 테이블 배경 색상

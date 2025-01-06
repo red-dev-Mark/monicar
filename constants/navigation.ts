@@ -3,5 +3,5 @@ export const navigationItems = [
     { label: '위치조회', path: '/location', iconSrc: '/icons/pin-icon.svg' },
     { label: '경로조회', path: '/', iconSrc: '/icons/pie-chart-icon.svg' },
     { label: '운행일지', path: '/', iconSrc: '/icons/clock-icon.svg' },
-    { label: '운행내역', path: '/', iconSrc: '/icons/send-icon.svg' },
+    { label: '운행내역', path: '/', iconSrc: '/icons/list-icon.svg' },
 ] as const
