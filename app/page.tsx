@@ -1,8 +1,8 @@
 'use client'
 
-import { useModal } from '@/app/hooks/useModal'
 import Badge from '@/components/common/Badge'
 import Modal from '@/components/common/Modal'
+import { useModal } from '@/hooks/useModal'
 
 const HomePage = () => {
     const { isOpen, openModal, closeModal } = useModal()
