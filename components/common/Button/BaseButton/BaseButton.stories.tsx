@@ -23,6 +23,6 @@ type StoryType = StoryObj<typeof BaseButton>
 
 export const Default: StoryType = {
     args: {
-        children: 'Primary',
+        children: 'Base Button',
     },
 }

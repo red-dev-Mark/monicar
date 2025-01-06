@@ -54,7 +54,10 @@ export const colors = {
         700: '#717171',
         800: '#5e5e5e',
     },
-    transparent: '#ffffff80',
+    transparent: {
+        500: '#ffffff50',
+        800: '#ffffff80',
+    },
     shadow: {
         100: '#00000010',
         400: '#00000040',

@@ -12,7 +12,7 @@ const meta = {
     argTypes: {
         color: {
             control: 'select',
-            options: ['dark', 'primary', 'gray', 'white', 'transparent'],
+            options: ['dark', 'primary', 'white', 'error'],
             description: '버튼 색상',
         },
         children: {
@@ -40,13 +40,6 @@ export const Dark: StoryType = {
     },
 }
 
-export const Gray: StoryType = {
-    args: {
-        color: 'gray',
-        children: 'Gray Button',
-    },
-}
-
 export const White: StoryType = {
     args: {
         color: 'white',
@@ -54,9 +47,9 @@ export const White: StoryType = {
     },
 }
 
-export const Transparent: StoryType = {
+export const Error: StoryType = {
     args: {
-        color: 'transparent',
-        children: 'Transparent Button',
+        color: 'error',
+        children: 'Error Button',
     },
 }
