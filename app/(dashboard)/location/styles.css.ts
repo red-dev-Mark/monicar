@@ -8,9 +8,14 @@ export const container = style({
 
 export const searchInputWrapper = style({
     position: 'absolute',
-    top: '1rem',
-    right: '1rem',
+    top: '2rem',
+    right: '2rem',
     zIndex: 10,
 })
 
-export const vehicleStatusWrapper = style({})
+export const vehicleStatusWrapper = style({
+    position: 'absolute',
+    top: '1rem',
+    left: '1rem',
+    zIndex: 10,
+})
