@@ -6,19 +6,18 @@ import { BaseButton } from '../BaseButton'
 
 import * as styles from './style.css'
 
-type RoundSizeType = 'small' | 'large'
-type ColorType = 'transparent' | 'white'
+type SizeType = 'small' | 'large'
+type ColorType = 'primary' | 'secondary'
 
 interface RoundButtonProps extends ComponentPropsWithoutRef<'button'> {
-    className?: string
     children: ReactNode
-    size?: RoundSizeType
+    size?: SizeType
     color?: ColorType
 }
 
-export const RoundButton = ({ className, size = 'large', children, ...props }: RoundButtonProps) => {
+export const RoundButton = ({ size = 'large', color = 'primary', children, ...props }: RoundButtonProps) => {
     return (
-        <BaseButton className={`${styles.round} ${styles.roundSize[size]} ${className ?? ''}`} {...props}>
+        <BaseButton className={styles.button({ size, color })} {...props}>
             {children}
         </BaseButton>
     )
