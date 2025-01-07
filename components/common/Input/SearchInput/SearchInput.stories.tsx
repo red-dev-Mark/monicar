@@ -44,7 +44,7 @@ export const Default: StoryType = {
     },
 }
 
-export const PinkSearch: StoryType = {
+export const VehicleRegistrationPlate: StoryType = {
     args: {
         placeholder: '차량을 검색하세요.',
         size: 'small',
@@ -52,15 +52,7 @@ export const PinkSearch: StoryType = {
     },
 }
 
-export const WhiteSearch: StoryType = {
-    args: {
-        placeholder: '차량을 검색하세요.',
-        size: 'medium',
-        icon: '/icons/search-icon.svg',
-    },
-}
-
-export const BlackSearch: StoryType = {
+export const DarkTheme: StoryType = {
     args: {
         placeholder: '차량을 검색하세요.',
         size: 'large',
