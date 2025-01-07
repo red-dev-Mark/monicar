@@ -32,7 +32,7 @@ export const button = recipe({
             },
         },
         color: {
-            black: {
+            secondary: {
                 backgroundColor: styles.colors.transparent[500],
                 color: styles.colors.black,
                 border: `1px solid ${styles.colors.gray[50]}`,
@@ -40,7 +40,7 @@ export const button = recipe({
                     backgroundColor: styles.colors.gray[50],
                 },
             },
-            pink: {
+            primary: {
                 backgroundColor: styles.colors.transparent[500],
                 color: styles.colors.primary,
                 border: `1px solid ${styles.colors.gray[50]}`,
@@ -52,6 +52,6 @@ export const button = recipe({
     },
     defaultVariants: {
         size: 'large',
-        color: 'pink',
+        color: 'primary',
     },
 })

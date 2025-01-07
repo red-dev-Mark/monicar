@@ -1,16 +1,16 @@
 import { MODAL_MESSAGES } from './constants'
 
-type SingleButtonType = {
-    variant: 'single'
+type AlertButtonType = {
+    variant: 'alert'
     confirmButton?: string
 }
 
-type DualButtonsType = {
-    variant: 'dual'
+type ConfirmButtonsType = {
+    variant: 'confirm'
     confirmButton?: string
     cancelButton?: string
 }
 
-export type ButtonType = SingleButtonType | DualButtonsType
+export type StatusType = AlertButtonType | ConfirmButtonsType
 
 export type ModalMessageType = (typeof MODAL_MESSAGES.AUTH)[keyof typeof MODAL_MESSAGES.AUTH]

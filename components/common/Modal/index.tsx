@@ -2,26 +2,28 @@
 
 import { createPortal } from 'react-dom'
 
+import { AlertIcon } from '@/public/icons'
+
 import { BaseButton } from '../Button/BaseButton'
 
 import * as styles from './styles.css'
-import { ButtonType, ModalMessageType } from './types'
+import { StatusType, ModalMessageType } from './types'
 
 interface ModalProps {
     isOpen?: boolean
     icon: React.ReactNode
     message: ModalMessageType
     onClose: () => void
-    variant: ButtonType
+    variant: StatusType
 }
 
-const Modal = ({ isOpen = false, icon = '', message, variant, onClose }: ModalProps) => {
+const Modal = ({ isOpen = false, icon = <AlertIcon />, message, variant, onClose }: ModalProps) => {
     if (!isOpen) return null
     const modalRoot = document.getElementById('modal-root')
     if (!isOpen || !modalRoot) return null
 
     const handleOverlayClick = () => {
-        if (variant.variant === 'single') {
+        if (variant.variant === 'alert') {
             onClose?.()
         }
     }
@@ -33,7 +35,7 @@ const Modal = ({ isOpen = false, icon = '', message, variant, onClose }: ModalPr
                 {icon && <div>{icon}</div>}
                 {message && <p className={styles.message}>{message}</p>}
                 <div className={styles.buttonWrapper}>
-                    {variant.variant === 'dual' ? (
+                    {variant.variant === 'confirm' ? (
                         <>
                             <BaseButton onClick={onClose} color='primary'>
                                 {variant.cancelButton}

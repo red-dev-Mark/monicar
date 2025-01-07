@@ -17,7 +17,7 @@ const meta = {
         },
         color: {
             control: 'select',
-            options: ['black', 'pink'],
+            options: ['secondary', 'primary'],
             description: '버튼 색상',
         },
         children: {
@@ -34,7 +34,7 @@ type StoryType = StoryObj<typeof RoundButton>
 export const small: StoryType = {
     args: {
         size: 'small',
-        color: 'pink',
+        color: 'primary',
         children: 'small',
     },
 }
@@ -42,22 +42,22 @@ export const small: StoryType = {
 export const Large: StoryType = {
     args: {
         size: 'large',
-        color: 'pink',
+        color: 'primary',
         children: 'Large',
     },
 }
 
-export const Black: StoryType = {
+export const secondary: StoryType = {
     args: {
         size: 'large',
-        color: 'black',
+        color: 'secondary',
         children: 'Black',
     },
 }
-export const Pink: StoryType = {
+export const Primary: StoryType = {
     args: {
         size: 'large',
-        color: 'pink',
+        color: 'primary',
         children: 'Pink',
     },
 }
