@@ -6,6 +6,7 @@
 
 # [영향 범위]
 #   vehicle     : 차량 정보
+#   map         : 지도
 #   route       : 경로
 #   log         : 일지
 #   history     : 내역

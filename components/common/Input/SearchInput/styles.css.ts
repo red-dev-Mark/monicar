@@ -19,6 +19,7 @@ export const iconWrapper = style({
     alignItems: 'center',
     justifyContent: 'center',
     height: '48px',
+    cursor: 'pointer',
 })
 
 export const sizeVariants = styleVariants({
