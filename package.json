@@ -21,7 +21,8 @@
         "@vanilla-extract/recipes": "^0.5.5",
         "next": "^15.1.1-canary.23",
         "react": "^19.0.0-rc.1",
-        "react-dom": "^19.0.0-rc.1"
+        "react-dom": "^19.0.0-rc.1",
+        "react-kakao-maps-sdk": "^1.1.27"
     },
     "devDependencies": {
         "@chromatic-com/storybook": "^3.2.3",
