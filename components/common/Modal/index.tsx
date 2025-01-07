@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom'
 
 import { AlertIcon } from '@/public/icons'
 
-import { BaseButton } from '../Button/BaseButton'
+import SquareButton from '../Button/SquareButton'
 
 import * as styles from './styles.css'
 import { StatusType, ModalMessageType } from './types'
@@ -18,7 +18,6 @@ interface ModalProps {
 }
 
 const Modal = ({ isOpen = false, icon = <AlertIcon />, message, variant, onClose }: ModalProps) => {
-    if (!isOpen) return null
     const modalRoot = document.getElementById('modal-root')
     if (!isOpen || !modalRoot) return null
 
@@ -37,15 +36,15 @@ const Modal = ({ isOpen = false, icon = <AlertIcon />, message, variant, onClose
                 <div className={styles.buttonWrapper}>
                     {variant.variant === 'confirm' ? (
                         <>
-                            <BaseButton onClick={onClose} color='primary'>
+                            <SquareButton onClick={onClose} color='primary'>
                                 {variant.cancelButton}
-                            </BaseButton>
-                            <BaseButton color='primary'>{variant.confirmButton}</BaseButton>
+                            </SquareButton>
+                            <SquareButton color='primary'>{variant.confirmButton}</SquareButton>
                         </>
                     ) : (
-                        <BaseButton onClick={onClose} color='primary'>
+                        <SquareButton onClick={onClose} color='primary'>
                             {variant.confirmButton}
-                        </BaseButton>
+                        </SquareButton>
                     )}
                 </div>
             </div>
