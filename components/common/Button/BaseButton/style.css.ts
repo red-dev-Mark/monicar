@@ -15,7 +15,7 @@ export const base = style({
     padding: '16px 24px',
     ':disabled': {
         cursor: 'not-allowed',
-        opacity: 0.5,
+        opacity: styles.opacity[50],
         color: styles.colors.black,
     },
 })
