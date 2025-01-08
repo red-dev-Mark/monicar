@@ -1,13 +1,14 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { MapMarker } from 'react-kakao-maps-sdk'
+import { Polyline } from 'react-kakao-maps-sdk'
 
 import Map from '@/app/(dashboard)/location/components/Map'
 import RouteSearchPanel from '@/app/(dashboard)/route/components/RouteSearchPanel'
 import mockRoutesData from '@/mock/routes.json'
+import { styles } from '@/styles/theme.css'
 
-import * as styles from './styles.css'
+import * as vars from './styles.css'
 
 const RoutePage = () => {
     const [paths, setPaths] = useState([{ id: '', lat: 0, lng: 0 }])
@@ -23,12 +24,17 @@ const RoutePage = () => {
     }, [])
 
     return (
-        <div className={styles.container}>
-            <Map zoom={12} center={paths[paths.length / 2]}>
-                {paths.map((path) => {
-                    return <MapMarker key={path.id} position={path} />
-                })}
+        <div className={vars.container}>
+            <Map zoom={11} center={paths[paths.length / 2]}>
+                <Polyline
+                    path={[paths]}
+                    strokeWeight={5}
+                    strokeColor={styles.colors.primary}
+                    strokeOpacity={1}
+                    strokeStyle={'solid'}
+                />
             </Map>
+
             <RouteSearchPanel />
         </div>
     )
