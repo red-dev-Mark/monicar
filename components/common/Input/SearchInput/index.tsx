@@ -10,20 +10,23 @@ import * as styles from './styles.css'
 interface SearchInputProps extends ComponentPropsWithoutRef<'input'> {
     icon?: string
     className?: string
+    onSubmit?: () => void
 }
 
-const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(({ icon, className = '', ...props }, ref) => {
-    return (
-        <div className={styles.container}>
-            <BaseInput ref={ref} className={`${styles.input} ${className}`} {...props} />
-            {icon && (
-                <div className={styles.iconWrapper}>
-                    <Image src={icon} alt='서치인풋 아이콘' width={32} height={32} />
-                </div>
-            )}
-        </div>
-    )
-})
+const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
+    ({ icon, className = '', onSubmit, ...props }, ref) => {
+        return (
+            <div className={styles.container}>
+                <BaseInput ref={ref} className={`${styles.input} ${className}`} {...props} />
+                {icon && (
+                    <button className={styles.iconWrapper} onClick={onSubmit}>
+                        <Image src={icon} alt='서치인풋 아이콘' width={28} height={28} />
+                    </button>
+                )}
+            </div>
+        )
+    },
+)
 
 SearchInput.displayName = 'SearchInput'
 
