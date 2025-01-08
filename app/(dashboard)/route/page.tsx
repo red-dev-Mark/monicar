@@ -7,11 +7,12 @@ import Map from '@/app/(dashboard)/location/components/Map'
 import RouteSearchPanel from '@/app/(dashboard)/route/components/RouteSearchPanel'
 import mockRoutesData from '@/mock/routes.json'
 import { styles } from '@/styles/theme.css'
+import { PathPoint } from '@/types/location'
 
 import * as vars from './styles.css'
 
 const RoutePage = () => {
-    const [paths, setPaths] = useState([{ id: '', lat: 0, lng: 0 }])
+    const [paths, setPaths] = useState<PathPoint[]>([])
 
     useEffect(() => {
         const routesData = mockRoutesData.result.routes.map((route) => ({

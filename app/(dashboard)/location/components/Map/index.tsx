@@ -3,9 +3,10 @@
 import { Map as KakaoMap } from 'react-kakao-maps-sdk'
 
 import { useKakaoLoader } from '@/hooks/useKakaoLoader'
+import { LatLng } from '@/types/location'
 
 interface MapProps {
-    center?: { lat: number; lng: number }
+    center?: LatLng
     zoom?: number
     children?: React.ReactNode
 }
