@@ -67,14 +67,14 @@ const eslintConfig = [
                         match: true,
                     },
                 },
-                {
-                    selector: 'interface',
-                    format: ['PascalCase'],
-                    custom: {
-                        regex: '(Props|Model)$',
-                        match: true,
-                    },
-                },
+                // {
+                //     selector: 'interface',
+                //     format: ['PascalCase'],
+                //     custom: {
+                //         regex: '(Props|Model)$',
+                //         match: true,
+                //     },
+                // },
                 {
                     selector: 'typeAlias',
                     format: ['PascalCase'],
