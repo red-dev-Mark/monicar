@@ -46,12 +46,12 @@ const LocationPage = () => {
                 width: 64,
                 height: 64,
             },
-            // options: {
-            //     offset: {
-            //         x: 32,
-            //         y: 32,
-            //     },
-            // },
+            options: {
+                offset: {
+                    x: 32,
+                    y: 32,
+                },
+            },
         }
     }
 
