@@ -1,6 +1,5 @@
 'use client'
 
-import { ChangeEventHandler, useState } from 'react'
 import { CustomOverlayMap, MapMarker } from 'react-kakao-maps-sdk'
 
 import Map from '@/app/(dashboard)/location/components/Map'
@@ -12,13 +11,8 @@ import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
 import * as styles from './styles.css'
 
 const LocationPage = () => {
-    const [searchTerm, setSearchTerm] = useState('')
-
-    const { singleVehicle, mapState, showSingleVehicle, searchSingleVehicle } = useSearchSingleVehicle(searchTerm)
-
-    const handleSearchChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-        setSearchTerm(event.target.value)
-    }
+    const { singleVehicle, mapState, showSingleVehicle, searchTerm, searchSingleVehicle, handleSearchChange } =
+        useSearchSingleVehicle()
 
     return (
         <div className={styles.container}>

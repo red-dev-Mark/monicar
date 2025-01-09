@@ -39,6 +39,7 @@ export const singleVehicleInfo = style({
     fontWeight: styles.fontWeights.bold,
     backgroundColor: styles.colors.black,
     borderRadius: '8px',
+    cursor: 'pointer',
 
     selectors: {
         '&:after': {

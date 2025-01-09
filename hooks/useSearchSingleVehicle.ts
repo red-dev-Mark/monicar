@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
+import { ChangeEventHandler, useEffect, useState } from 'react'
 
 import { INITIAL_MAP_STATE } from '@/constants/map'
 import { validateVehicleNumber } from '@/lib/validation'
 import mockData from '@/mock/single_vehicle_search_ok.json'
 import { singleVehicleModel } from '@/types/vehicle'
 
-export const useSearchSingleVehicle = (searchTerm: string) => {
+export const useSearchSingleVehicle = () => {
+    const [searchTerm, setSearchTerm] = useState('')
     const [singleVehicle, setSingleVehicle] = useState<singleVehicleModel>()
     const [mapState, setMapState] = useState(INITIAL_MAP_STATE)
     const [showSingleVehicle, setShowSingleVehicle] = useState(false)
@@ -53,12 +54,19 @@ export const useSearchSingleVehicle = (searchTerm: string) => {
         })
 
         setShowSingleVehicle(true)
+        setSearchTerm('')
+    }
+
+    const handleSearchChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+        setSearchTerm(event.target.value)
     }
 
     return {
         singleVehicle,
         mapState,
         showSingleVehicle,
+        searchTerm,
         searchSingleVehicle,
+        handleSearchChange,
     }
 }
