@@ -24,7 +24,7 @@ export const vehicleStatusWrapper = style({
 })
 
 export const singleVehicleInfo = style({
-    padding: '6px 12px',
+    padding: '6px 16px',
     position: 'absolute',
     bottom: '48px',
     left: '50%',
@@ -39,4 +39,17 @@ export const singleVehicleInfo = style({
     fontWeight: styles.fontWeights.bold,
     backgroundColor: styles.colors.black,
     borderRadius: '8px',
+
+    selectors: {
+        '&:after': {
+            content: '""',
+            position: 'absolute',
+            bottom: '-8px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            borderLeft: '8px solid transparent',
+            borderRight: '8px solid transparent',
+            borderTop: `8px solid ${styles.colors.black}`,
+        },
+    },
 })
