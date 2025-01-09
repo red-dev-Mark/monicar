@@ -5,7 +5,7 @@ import ListItem from '@/components/domain/vehicle/ListItem'
 import { VehicleHistoryProps } from '@/components/domain/vehicle/ListItem/types'
 import { RightIcon } from '@/public/icons'
 
-import ListHeader from './components/ListHeader'
+import ListHeader from './components/ListHeader/index'
 import * as styles from './styles.css'
 
 const HistoryPage = () => {
@@ -13,6 +13,7 @@ const HistoryPage = () => {
     // TODO 실제 데이터로 변경하기
     const mockHistoryData: VehicleHistoryProps[] = [
         {
+            id: 1,
             vehicleNumber: '123가 4567',
             icon: <RightIcon />,
             department: '해외영업1팀',
@@ -24,6 +25,7 @@ const HistoryPage = () => {
             drivingRate: '85',
         },
         {
+            id: 2,
             vehicleNumber: '456나 7890',
             icon: <RightIcon />,
             department: '국내영업2팀',
@@ -35,6 +37,7 @@ const HistoryPage = () => {
             drivingRate: '78',
         },
         {
+            id: 3,
             vehicleNumber: '789다 1234',
             icon: <RightIcon />,
             department: '해외영업2팀',
@@ -46,6 +49,7 @@ const HistoryPage = () => {
             drivingRate: '92',
         },
         {
+            id: 4,
             vehicleNumber: '321라 5678',
             icon: <RightIcon />,
             department: '국내영업1팀',
@@ -57,6 +61,7 @@ const HistoryPage = () => {
             drivingRate: '75',
         },
         {
+            id: 5,
             vehicleNumber: '654마 9012',
             icon: <RightIcon />,
             department: '해외영업3팀',
@@ -68,6 +73,7 @@ const HistoryPage = () => {
             drivingRate: '88',
         },
         {
+            id: 6,
             vehicleNumber: '987바 3456',
             icon: <RightIcon />,
             department: '국내영업3팀',
@@ -79,6 +85,7 @@ const HistoryPage = () => {
             drivingRate: '82',
         },
         {
+            id: 7,
             vehicleNumber: '147사 7890',
             icon: <RightIcon />,
             department: '해외영업1팀',
@@ -90,6 +97,7 @@ const HistoryPage = () => {
             drivingRate: '95',
         },
         {
+            id: 8,
             vehicleNumber: '258아 1234',
             icon: <RightIcon />,
             department: '국내영업2팀',
@@ -101,6 +109,7 @@ const HistoryPage = () => {
             drivingRate: '70',
         },
         {
+            id: 9,
             vehicleNumber: '369자 5678',
             icon: <RightIcon />,
             department: '해외영업2팀',
@@ -112,6 +121,7 @@ const HistoryPage = () => {
             drivingRate: '98',
         },
         {
+            id: 10,
             vehicleNumber: '159차 9012',
             icon: <RightIcon />,
             department: '국내영업3팀',
