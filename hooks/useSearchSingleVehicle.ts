@@ -8,12 +8,12 @@ import { singleVehicleModel } from '@/types/vehicle'
 
 export const useSearchSingleVehicle = () => {
     const [searchTerm, setSearchTerm] = useState('')
-    const [modalMessage, setModalMessage] = useState('')
-    const [singleVehicle, setSingleVehicle] = useState<singleVehicleModel>()
-    const [mapState, setMapState] = useState(INITIAL_MAP_STATE)
     const [showSingleVehicle, setShowSingleVehicle] = useState(false)
+    const [singleVehicle, setSingleVehicle] = useState<singleVehicleModel>()
 
-    const { isOpen, openModal, closeModal } = useModal()
+    const [mapState, setMapState] = useState(INITIAL_MAP_STATE)
+
+    const { isOpen, modalMessage, closeModal, showMessage } = useModal()
 
     useEffect(() => {
         const getSingleVehicleData = () => {
@@ -39,17 +39,13 @@ export const useSearchSingleVehicle = () => {
         const validation = validateVehicleNumber(searchTerm)
 
         if (!validation.isValid) {
-            // alert(validation.message)
-            setModalMessage(validation.message!)
-            openModal()
+            showMessage(validation.message!)
             return
         }
 
         // TODO: API 호출 로직으로 변경하기
         if (validation.value !== mockData.vehicle.vehicleNumber) {
-            // alert('등록되지 않은 차량번호입니다.')
-            setModalMessage('등록되지 않은 차량번호입니다.')
-            openModal()
+            showMessage('등록되지 않은 차량번호입니다.')
             return
         }
 
