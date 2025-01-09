@@ -29,7 +29,7 @@ const Modal = ({
 
     const handleOverlayClick = () => {
         if (variant.variant === 'alert') {
-            onClose?.()
+            onClose()
         }
     }
 

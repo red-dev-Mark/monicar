@@ -1,6 +1,6 @@
 import { ChangeEventHandler, useEffect, useState } from 'react'
 
-import { INITIAL_MAP_STATE } from '@/constants/map'
+import { useMapControl } from '@/hooks/useMapControl'
 import { useModal } from '@/hooks/useModal'
 import { validateVehicleNumber } from '@/lib/validation'
 import mockData from '@/mock/single_vehicle_search_ok.json'
@@ -11,9 +11,8 @@ export const useSearchSingleVehicle = () => {
     const [showSingleVehicle, setShowSingleVehicle] = useState(false)
     const [singleVehicle, setSingleVehicle] = useState<singleVehicleModel>()
 
-    const [mapState, setMapState] = useState(INITIAL_MAP_STATE)
-
     const { isOpen, modalMessage, closeModal, showMessage } = useModal()
+    const { mapState, updateMapLocation } = useMapControl()
 
     useEffect(() => {
         const getSingleVehicleData = () => {
@@ -33,7 +32,7 @@ export const useSearchSingleVehicle = () => {
         getSingleVehicleData()
     }, [])
 
-    const searchSingleVehicle = () => {
+    const handleVehicleSearch = () => {
         if (!singleVehicle) return
 
         const validation = validateVehicleNumber(searchTerm)
@@ -49,13 +48,13 @@ export const useSearchSingleVehicle = () => {
             return
         }
 
-        setMapState({
-            center: {
+        updateMapLocation(
+            {
                 lat: singleVehicle?.location.lat,
                 lng: singleVehicle?.location.lng,
             },
-            level: 7,
-        })
+            7,
+        )
 
         setShowSingleVehicle(true)
         setSearchTerm('')
@@ -72,7 +71,7 @@ export const useSearchSingleVehicle = () => {
         searchTerm,
         modalMessage,
         isOpen,
-        searchSingleVehicle,
+        handleVehicleSearch,
         handleSearchChange,
         closeModal,
     }
