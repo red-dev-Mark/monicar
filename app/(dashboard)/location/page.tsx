@@ -20,7 +20,7 @@ const LocationPage = () => {
         searchTerm,
         modalMessage,
         isOpen,
-        searchSingleVehicle,
+        handleVehicleSearch,
         handleSearchChange,
         closeModal,
     } = useSearchSingleVehicle()
@@ -45,7 +45,7 @@ const LocationPage = () => {
                     icon='/icons/search-icon.svg'
                     value={searchTerm}
                     onChange={handleSearchChange}
-                    onSubmit={searchSingleVehicle}
+                    onSubmit={handleVehicleSearch}
                 />
             </div>
             <div className={styles.vehicleStatusWrapper}>
