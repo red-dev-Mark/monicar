@@ -35,7 +35,11 @@ const Modal = ({
 
     return createPortal(
         <>
-            <div className={styles.overlay} onClick={handleOverlayClick} role='presentation' />
+            <div
+                className={`${styles.overlay} ${variant.variant === 'alert' ? styles.clickableOverlay : ''}`}
+                onClick={handleOverlayClick}
+                role='presentation'
+            />
             <div className={styles.modal} role='dialog' aria-modal='true'>
                 {icon && <div>{icon}</div>}
                 {message && <p className={styles.message}>{message}</p>}
