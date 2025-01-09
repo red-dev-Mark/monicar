@@ -2,16 +2,16 @@
 
 import { RoundButton } from '@/components/common/Button/RoundButton'
 import SearchInput from '@/components/common/Input/SearchInput'
-import ListItem from '@/components/domain/vehicle/ListItem'
-import { VehicleLogProps } from '@/components/domain/vehicle/ListItem/types'
 import { RightIcon } from '@/public/icons'
+import { VehicleLogModel } from '@/types/log'
 
 import ListHeader from './components/ListHeader/index'
+import ListItem from './components/ListItem/index'
 import * as styles from './styles.css'
 
 const LogPage = () => {
     // TODO 실제 데이터로 변경하기
-    const mockLogData: VehicleLogProps[] = [
+    const mockLogData: VehicleLogModel[] = [
         { id: 1, vehicleNumber: '123가 4567', vehicleModel: '미니쿠퍼', status: '운행중', icon: <RightIcon /> },
         { id: 2, vehicleNumber: '456나 7890', vehicleModel: '현대', status: '미운행', icon: <RightIcon /> },
         { id: 3, vehicleNumber: '789다 1234', vehicleModel: '기아', status: '미관제', icon: <RightIcon /> },
@@ -23,6 +23,7 @@ const LogPage = () => {
         { id: 9, vehicleNumber: '369자 5678', vehicleModel: '볼보', status: '운행중', icon: <RightIcon /> },
         { id: 10, vehicleNumber: '159차 9012', vehicleModel: '폭스바겐', status: '운행중', icon: <RightIcon /> },
     ]
+
     return (
         <div>
             <div className={styles.componentsWrapper}>
@@ -37,8 +38,8 @@ const LogPage = () => {
             </div>
             <div className={styles.listWrapper}>
                 <ListHeader />
-                {mockLogData.map((item) => (
-                    <ListItem key={item.id} data={item} variant={'log'} />
+                {mockLogData.map((log) => (
+                    <ListItem key={log.id} data={log} />
                 ))}
             </div>
 

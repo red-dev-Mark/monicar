@@ -1,17 +1,16 @@
 'use client'
 
 import SearchInput from '@/components/common/Input/SearchInput'
-import ListItem from '@/components/domain/vehicle/ListItem'
-import { VehicleHistoryProps } from '@/components/domain/vehicle/ListItem/types'
 import { RightIcon } from '@/public/icons'
+import { VehicleHistoryModel } from '@/types/history'
 
 import ListHeader from './components/ListHeader/index'
+import ListItem from './components/ListItem/index'
 import * as styles from './styles.css'
 
 const HistoryPage = () => {
-    return <div>HistoryPage</div>
     // TODO 실제 데이터로 변경하기
-    const mockHistoryData: VehicleHistoryProps[] = [
+    const mockHistoryData: VehicleHistoryModel[] = [
         {
             id: 1,
             vehicleNumber: '123가 4567',
@@ -143,8 +142,8 @@ const HistoryPage = () => {
 
             <div className={styles.listWrapper}>
                 <ListHeader />
-                {mockHistoryData.map((item) => (
-                    <ListItem key={item.id} data={item} variant={'history'} />
+                {mockHistoryData.map((history) => (
+                    <ListItem key={history.id} data={history} />
                 ))}
             </div>
             {/* TODO 페이지네이션 추가 */}
