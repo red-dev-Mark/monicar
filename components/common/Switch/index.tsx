@@ -1,13 +1,13 @@
-'use client'
+import { Switch as MantineSwitch } from '@mantine/core'
 
-import * as styles from './styles.css'
+import { styles } from '@/styles/theme.css'
 
-const Switch = () => {
-    return (
-        <button className={styles.themeToggle} onClick={() => {}}>
-            <span className={styles.themeIndicator}></span>
-        </button>
-    )
+interface SwitchProps {
+    size?: string
+}
+
+const Switch = ({ size = 'md', ...props }: SwitchProps) => {
+    return <MantineSwitch size={size} color={styles.colors.primary} {...props} />
 }
 
 export default Switch
