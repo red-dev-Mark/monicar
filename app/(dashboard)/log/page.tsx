@@ -1,11 +1,10 @@
 'use client'
 
-import { RoundButton } from '@/components/common/Button/RoundButton'
-import SearchInput from '@/components/common/Input/SearchInput'
+import ListHeader from '@/components/domain/vehicle/ListHeader'
+import SearchField from '@/components/domain/vehicle/SearchField'
 import { RightIcon } from '@/public/icons'
 import { ListItemModel } from '@/types/log'
 
-import ListHeader from './components/ListHeader/index'
 import ListItem from './components/ListItem/index'
 import * as styles from './styles.css'
 
@@ -24,20 +23,13 @@ const LogPage = () => {
         { id: 10, vehicleNumber: '159차 9012', vehicleModel: '폭스바겐', status: '운행중', icon: <RightIcon /> },
     ]
 
+    const headerTitles = ['차량번호', '차종', '차량현황']
+
     return (
         <div>
-            <div className={styles.componentsWrapper}>
-                <div className={styles.buttonWrapper}>
-                    <RoundButton color='secondary' onClick={() => {}} size='small'>
-                        등록
-                    </RoundButton>
-                </div>
-                <div className={styles.searchInputWrapper}>
-                    <SearchInput icon='/icons/search-icon.svg' />
-                </div>
-            </div>
+            <SearchField hasButton={true} />
             <div className={styles.listWrapper}>
-                <ListHeader />
+                <ListHeader headerTitles={headerTitles} />
                 {mockLogData.map((log) => (
                     <ListItem key={log.id} data={log} />
                 ))}

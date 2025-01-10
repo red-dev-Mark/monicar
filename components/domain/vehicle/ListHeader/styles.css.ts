@@ -2,7 +2,7 @@ import { style } from '@vanilla-extract/css'
 
 import { styles } from '@/styles/theme.css'
 
-export const headerWrapper = style({
+export const container = style({
     display: 'flex',
     alignItems: 'center',
     textAlign: 'center',

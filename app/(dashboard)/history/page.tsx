@@ -1,10 +1,10 @@
 'use client'
 
-import SearchInput from '@/components/common/Input/SearchInput'
+import ListHeader from '@/components/domain/vehicle/ListHeader'
+import SearchField from '@/components/domain/vehicle/SearchField'
 import { RightIcon } from '@/public/icons'
 import { ListItemModel } from '@/types/history'
 
-import ListHeader from './components/ListHeader/index'
 import ListItem from './components/ListItem/index'
 import * as styles from './styles.css'
 
@@ -132,14 +132,22 @@ const HistoryPage = () => {
             drivingRate: '86',
         },
     ]
+
+    const headerTitles = [
+        '차량번호',
+        '부서명',
+        '이름',
+        '운행일수',
+        '평균운행거리',
+        '평균운행시간',
+        '총운행거리',
+        '운행률',
+    ]
     return (
         <div>
-            <div className={styles.searchInputWrapper}>
-                <SearchInput icon='/icons/search-icon.svg' />
-            </div>
-
+            <SearchField hasButton={false} />
             <div className={styles.listWrapper}>
-                <ListHeader />
+                <ListHeader headerTitles={headerTitles} />
                 {mockHistoryData.map((history) => (
                     <ListItem key={history.id} data={history} />
                 ))}
