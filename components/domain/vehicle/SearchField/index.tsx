@@ -11,7 +11,7 @@ const SearchField = ({ hasButton }: SearchFieldProps) => {
         <div>
             <div className={styles.container}>
                 {hasButton && (
-                    <RoundButton color='secondary' onClick={() => {}} size='small'>
+                    <RoundButton size={'small'} color={'primary'}>
                         등록
                     </RoundButton>
                 )}

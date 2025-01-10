@@ -11,13 +11,17 @@ type ColorType = 'primary' | 'secondary'
 
 interface RoundButtonProps extends ComponentPropsWithoutRef<'button'> {
     children: ReactNode
-    size?: SizeType
-    color?: ColorType
+    size: SizeType
+    color: ColorType
+    className?: string
 }
 
-export const RoundButton = ({ size = 'large', color = 'primary', children, ...props }: RoundButtonProps) => {
+export const RoundButton = ({ size = 'large', color = 'primary', children, className, ...props }: RoundButtonProps) => {
     return (
-        <BaseButton className={styles.button({ size, color })} {...props}>
+        <BaseButton
+            className={`${styles.button.base} ${styles.sizeVariants[size]} ${styles.colorVariants[color]} ${className ?? ''}`}
+            {...props}
+        >
             {children}
         </BaseButton>
     )

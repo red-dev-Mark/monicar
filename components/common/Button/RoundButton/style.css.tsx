@@ -1,43 +1,42 @@
-import { recipe } from '@vanilla-extract/recipes'
+import { style } from '@vanilla-extract/css'
+import { styleVariants } from '@vanilla-extract/css'
 
 import { styles } from '@/styles/theme.css'
 
-export const button = recipe({
-    base: {
-        backgroundColor: styles.colors.transparent[500],
-        fontSize: styles.fontSizes.medium,
-        borderRadius: '30px',
-        ':hover': {
-            opacity: styles.opacity[80],
-        },
-    },
-    variants: {
-        color: {
-            primary: {
-                color: styles.colors.white,
-            },
-            secondary: {
-                color: styles.colors.gray[700],
-            },
-        },
-        size: {
-            small: {
-                width: '76px',
-                height: '48px',
-                backgroundColor: styles.colors.primary,
-                border: `1px solid ${styles.colors.gray[200]}`,
-                boxShadow: `0px 4px 4px 0px ${styles.colors.shadow[100]}`,
-                color: styles.colors.white,
-            },
-            large: {
-                color: styles.colors.primary,
-                height: '60px',
-                padding: '16px 24px',
-            },
-        },
-    },
-    defaultVariants: {
-        size: 'large',
-        color: 'primary',
+const baseButton = style({
+    borderRadius: '30px',
+    fontSize: styles.fontSizes.medium,
+    ':hover': {
+        opacity: styles.opacity[80],
     },
 })
+
+export const colorVariants = styleVariants({
+    primary: {
+        backgroundColor: styles.colors.primary,
+        color: styles.colors.white,
+    },
+    secondary: {
+        backgroundColor: styles.colors.transparent[500],
+        color: styles.colors.gray[700],
+    },
+})
+
+export const sizeVariants = styleVariants({
+    small: {
+        width: '76px',
+        height: '48px',
+        border: `1px solid ${styles.colors.gray[200]}`,
+        boxShadow: `0px 4px 4px 0px ${styles.colors.shadow[100]}`,
+    },
+    large: {
+        height: '60px',
+        padding: '16px 24px',
+    },
+})
+
+export const button = {
+    base: baseButton,
+    color: colorVariants,
+    size: sizeVariants,
+}
