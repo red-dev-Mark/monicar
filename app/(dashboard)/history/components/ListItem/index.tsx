@@ -1,3 +1,4 @@
+import { RightIcon } from '@/public/icons'
 import { ListItemModel } from '@/types/history'
 
 import * as styles from './styles.css'
@@ -16,7 +17,6 @@ const ListItem = ({ data }: ListItemProps) => {
         averageDrivingTime,
         totalDrivingDistance,
         drivingRate,
-        icon,
     } = data
 
     return (
@@ -29,7 +29,9 @@ const ListItem = ({ data }: ListItemProps) => {
             <span className={styles.itemWrapper}>{averageDrivingTime}분</span>
             <span className={styles.itemWrapper}>{totalDrivingDistance}km</span>
             <span className={styles.itemWrapper}>{drivingRate}%</span>
-            <div className={styles.icon}>{icon}</div>
+            <div className={styles.icon}>
+                <RightIcon />
+            </div>
         </div>
     )
 }

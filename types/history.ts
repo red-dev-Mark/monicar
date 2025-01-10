@@ -8,5 +8,4 @@ export interface ListItemModel {
     averageDrivingTime: number
     totalDrivingDistance: number
     drivingRate: React.ReactNode
-    icon: React.ReactNode
 }

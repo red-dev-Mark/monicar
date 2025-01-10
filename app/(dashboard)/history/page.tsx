@@ -2,7 +2,6 @@
 
 import ListHeader from '@/components/domain/vehicle/ListHeader'
 import SearchField from '@/components/domain/vehicle/SearchField'
-import { RightIcon } from '@/public/icons'
 import { ListItemModel } from '@/types/history'
 
 import ListItem from './components/ListItem/index'
@@ -14,7 +13,6 @@ const HistoryPage = () => {
         {
             id: 1,
             vehicleNumber: '123가 4567',
-            icon: <RightIcon />,
             department: '해외영업1팀',
             name: '김알린',
             drivingDays: 15,
@@ -26,7 +24,6 @@ const HistoryPage = () => {
         {
             id: 2,
             vehicleNumber: '456나 7890',
-            icon: <RightIcon />,
             department: '국내영업2팀',
             name: '이택배',
             drivingDays: 12,
@@ -38,7 +35,6 @@ const HistoryPage = () => {
         {
             id: 3,
             vehicleNumber: '789다 1234',
-            icon: <RightIcon />,
             department: '해외영업2팀',
             name: '박배송',
             drivingDays: 18,
@@ -50,7 +46,6 @@ const HistoryPage = () => {
         {
             id: 4,
             vehicleNumber: '321라 5678',
-            icon: <RightIcon />,
             department: '국내영업1팀',
             name: '최드라',
             drivingDays: 14,
@@ -62,7 +57,6 @@ const HistoryPage = () => {
         {
             id: 5,
             vehicleNumber: '654마 9012',
-            icon: <RightIcon />,
             department: '해외영업3팀',
             name: '정기사',
             drivingDays: 16,
@@ -74,7 +68,6 @@ const HistoryPage = () => {
         {
             id: 6,
             vehicleNumber: '987바 3456',
-            icon: <RightIcon />,
             department: '국내영업3팀',
             name: '강운전',
             drivingDays: 13,
@@ -86,7 +79,6 @@ const HistoryPage = () => {
         {
             id: 7,
             vehicleNumber: '147사 7890',
-            icon: <RightIcon />,
             department: '해외영업1팀',
             name: '조안전',
             drivingDays: 17,
@@ -98,7 +90,6 @@ const HistoryPage = () => {
         {
             id: 8,
             vehicleNumber: '258아 1234',
-            icon: <RightIcon />,
             department: '국내영업2팀',
             name: '윤차량',
             drivingDays: 11,
@@ -110,7 +101,6 @@ const HistoryPage = () => {
         {
             id: 9,
             vehicleNumber: '369자 5678',
-            icon: <RightIcon />,
             department: '해외영업2팀',
             name: '한주행',
             drivingDays: 19,
@@ -122,7 +112,6 @@ const HistoryPage = () => {
         {
             id: 10,
             vehicleNumber: '159차 9012',
-            icon: <RightIcon />,
             department: '국내영업3팀',
             name: '황배달',
             drivingDays: 15,

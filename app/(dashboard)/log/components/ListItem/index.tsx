@@ -1,4 +1,5 @@
 import Badge from '@/components/common/Badge'
+import { RightIcon } from '@/public/icons'
 import { ListItemModel } from '@/types/log'
 
 import * as styles from './styles.css'
@@ -8,7 +9,7 @@ interface ListItemProps {
 }
 
 const ListItem = ({ data }: ListItemProps) => {
-    const { vehicleNumber, vehicleModel, status, icon } = data
+    const { vehicleNumber, vehicleModel, status } = data
 
     return (
         <div className={styles.container}>
@@ -17,7 +18,9 @@ const ListItem = ({ data }: ListItemProps) => {
             <span className={styles.itemWrapper}>
                 <Badge shape={'rectangle'} variant={status} />
             </span>
-            <div className={styles.icon}>{icon}</div>
+            <div className={styles.icon}>
+                <RightIcon />
+            </div>
         </div>
     )
 }
