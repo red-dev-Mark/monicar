@@ -8,7 +8,7 @@ import BaseInput from '../BaseInput'
 import * as styles from './styles.css'
 
 interface SearchInputProps extends ComponentPropsWithoutRef<'input'> {
-    icon?: string
+    icon: string
     className?: string
     onSubmit?: () => void
 }
