@@ -18,9 +18,7 @@ const VehicleRegisterForm = ({ isError = false }: VehicleRegisterFormProps) => {
         <div className={styles.container}>
             <div className={styles.contentsWrapper}>
                 <div className={styles.fieldWrapper}>
-                    <div className={styles.textWrapper}>
-                        <span>차량번호</span>
-                    </div>
+                    <div className={styles.textWrapper}>차량번호</div>
                     <div className={styles.inputWrapper}>
                         <SearchInput icon='/icons/pink-search-icon.svg' />
                     </div>
@@ -31,9 +29,7 @@ const VehicleRegisterForm = ({ isError = false }: VehicleRegisterFormProps) => {
 
             <div className={styles.contentsWrapper}>
                 <div className={styles.fieldWrapper}>
-                    <div className={styles.textWrapper}>
-                        <span>차량종류</span>
-                    </div>
+                    <div className={styles.textWrapper}>차량종류</div>
                     <div className={styles.inputWrapper}>
                         <Select></Select>
                     </div>
@@ -43,9 +39,7 @@ const VehicleRegisterForm = ({ isError = false }: VehicleRegisterFormProps) => {
 
             <div className={styles.contentsWrapper}>
                 <div className={styles.fieldWrapper}>
-                    <div className={styles.textWrapper}>
-                        <span>주행거리</span>
-                    </div>
+                    <div className={styles.textWrapper}>주행거리</div>
                     <div className={styles.inputWrapper}>
                         <BaseInput placeholder='0km' />
                     </div>
@@ -55,9 +49,7 @@ const VehicleRegisterForm = ({ isError = false }: VehicleRegisterFormProps) => {
 
             <div className={styles.contentsWrapper}>
                 <div className={styles.fieldWrapper}>
-                    <div className={styles.textWrapper}>
-                        <span>출고일</span>
-                    </div>
+                    <div className={styles.textWrapper}>출고일</div>
                     <div className={styles.inputWrapper}>
                         <BaseInput placeholder='0000-00-00' />
                     </div>
