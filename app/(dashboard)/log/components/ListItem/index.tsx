@@ -11,10 +11,10 @@ const ListItem = ({ data }: ListItemProps) => {
     const { vehicleNumber, vehicleModel, status, icon } = data
 
     return (
-        <div className={styles.itemWrapper}>
-            <span className={styles.itemContent}>{vehicleNumber}</span>
-            <span className={styles.itemContent}>{vehicleModel}</span>
-            <span className={styles.itemContent}>
+        <div className={styles.container}>
+            <span className={styles.itemWrapper}>{vehicleNumber}</span>
+            <span className={styles.itemWrapper}>{vehicleModel}</span>
+            <span className={styles.itemWrapper}>
                 <Badge shape={'rectangle'} variant={status} />
             </span>
             <div className={styles.icon}>{icon}</div>

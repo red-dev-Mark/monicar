@@ -2,7 +2,7 @@ import { style } from '@vanilla-extract/css'
 
 import { styles } from '@/styles/theme.css'
 
-export const itemWrapper = style({
+export const container = style({
     display: 'flex',
     alignItems: 'center',
     textAlign: 'center',
@@ -13,7 +13,7 @@ export const itemWrapper = style({
     fontSize: styles.fontSizes.mediumPlus,
 })
 
-export const itemContent = style({
+export const itemWrapper = style({
     flex: 1,
 })
 
