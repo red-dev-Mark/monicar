@@ -14,7 +14,7 @@ const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
             <input
                 ref={ref}
                 type={type}
-                placeholder={placeholder || '차량을 검색하세요.'}
+                placeholder={placeholder || '차량번호를 검색하세요.'}
                 className={`${styles.baseInput} 
                 ${isError && styles.errorInput}
                 ${className}`}

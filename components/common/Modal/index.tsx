@@ -11,25 +11,35 @@ import { StatusType, ModalMessageType } from './types'
 
 interface ModalProps {
     isOpen?: boolean
-    icon: React.ReactNode
+    icon?: React.ReactNode
     message: ModalMessageType
-    onClose: () => void
     variant: StatusType
+    onClose: () => void
 }
 
-const Modal = ({ isOpen = false, icon = <AlertIcon />, message, variant, onClose }: ModalProps) => {
+const Modal = ({
+    isOpen = false,
+    icon = <AlertIcon width={78} height={78} />,
+    message,
+    variant,
+    onClose,
+}: ModalProps) => {
     const modalRoot = document.getElementById('modal-root')
     if (!isOpen || !modalRoot) return null
 
     const handleOverlayClick = () => {
         if (variant.variant === 'alert') {
-            onClose?.()
+            onClose()
         }
     }
 
     return createPortal(
         <>
-            <div className={styles.overlay} onClick={handleOverlayClick} role='presentation' />
+            <div
+                className={`${styles.overlay} ${variant.variant === 'alert' ? styles.clickableOverlay : ''}`}
+                onClick={handleOverlayClick}
+                role='presentation'
+            />
             <div className={styles.modal} role='dialog' aria-modal='true'>
                 {icon && <div>{icon}</div>}
                 {message && <p className={styles.message}>{message}</p>}
