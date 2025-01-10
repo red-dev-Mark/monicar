@@ -4,23 +4,29 @@ import Message from '@/components/common/Message'
 
 import * as styles from './styles.css'
 
-interface VehicleRegisterFormProps {
+interface FormField {
+    id: string
     label: string
     isError?: boolean
-    children: React.ReactNode
+    component: React.ReactNode
 }
 
-const VehicleRegisterForm = ({ label, isError, children }: VehicleRegisterFormProps) => {
+interface VehicleRegisterFormProps {
+    fields: FormField[]
+}
+
+const VehicleRegisterForm = ({ fields }: VehicleRegisterFormProps) => {
     return (
         <div className={styles.container}>
-            <div className={styles.contentsWrapper}>
-                <div className={styles.fieldWrapper}>
-                    <div className={styles.textWrapper}>{label}</div>
-                    <div className={styles.inputWrapper}>{children}</div>
+            {fields.map((filed) => (
+                <div key={filed.id} className={styles.contentsWrapper}>
+                    <div className={styles.fieldWrapper}>
+                        <div className={styles.textWrapper}>{filed.label}</div>
+                        <div className={styles.inputWrapper}>{filed.component}</div>
+                    </div>
+                    {filed.isError && <Message message={''} />}
                 </div>
-
-                {isError && <Message message={''} />}
-            </div>
+            ))}
         </div>
     )
 }
