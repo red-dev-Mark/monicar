@@ -1,14 +1,14 @@
-import { MODAL_MESSAGES } from './constants'
+import { MODAL_MESSAGES } from '@/types/ui'
 
 type AlertButtonType = {
     variant: 'alert'
-    confirmButton?: string
+    confirmButton: string
 }
 
 type ConfirmButtonsType = {
     variant: 'confirm'
-    confirmButton?: string
-    cancelButton?: string
+    confirmButton: string
+    cancelButton: string
 }
 
 export type StatusType = AlertButtonType | ConfirmButtonsType
