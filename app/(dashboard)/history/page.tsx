@@ -2,7 +2,7 @@
 
 import SearchInput from '@/components/common/Input/SearchInput'
 import { RightIcon } from '@/public/icons'
-import { VehicleHistoryModel } from '@/types/history'
+import { ListItemModel } from '@/types/history'
 
 import ListHeader from './components/ListHeader/index'
 import ListItem from './components/ListItem/index'
@@ -10,7 +10,7 @@ import * as styles from './styles.css'
 
 const HistoryPage = () => {
     // TODO 실제 데이터로 변경하기
-    const mockHistoryData: VehicleHistoryModel[] = [
+    const mockHistoryData: ListItemModel[] = [
         {
             id: 1,
             vehicleNumber: '123가 4567',
@@ -134,10 +134,8 @@ const HistoryPage = () => {
     ]
     return (
         <div>
-            <div className={styles.componentsWrapper}>
-                <div className={styles.searchInputWrapper}>
-                    <SearchInput icon='/icons/search-icon.svg' />
-                </div>
+            <div className={styles.searchInputWrapper}>
+                <SearchInput icon='/icons/search-icon.svg' />
             </div>
 
             <div className={styles.listWrapper}>

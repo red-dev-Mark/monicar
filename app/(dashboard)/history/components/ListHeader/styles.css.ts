@@ -18,5 +18,4 @@ export const headerTitle = style({
 export const headerIcon = style({
     width: '24px',
     height: '24px',
-    visibility: 'hidden',
 })

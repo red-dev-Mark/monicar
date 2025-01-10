@@ -1,10 +1,10 @@
 import Badge from '@/components/common/Badge'
-import { VehicleLogModel } from '@/types/log'
+import { ListItemModel } from '@/types/log'
 
 import * as styles from './styles.css'
 
 interface ListItemProps {
-    data: VehicleLogModel
+    data: ListItemModel
 }
 
 const ListItem = ({ data }: ListItemProps) => {

@@ -1,12 +1,12 @@
-import { VehicleHistoryModel } from '@/types/history'
+import { ListItemModel } from '@/types/history'
 
 import * as styles from './styles.css'
 
-interface HistoryItemProps {
-    data: VehicleHistoryModel
+interface ListItemProps {
+    data: ListItemModel
 }
 
-const ListItem = ({ data }: HistoryItemProps) => {
+const ListItem = ({ data }: ListItemProps) => {
     const {
         vehicleNumber,
         department,
