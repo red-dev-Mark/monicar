@@ -10,16 +10,12 @@ const SearchField = ({ hasButton }: SearchFieldProps) => {
     return (
         <div>
             <div className={styles.container}>
-                <div className={styles.buttonWrapper}>
-                    {hasButton && (
-                        <RoundButton color='secondary' onClick={() => {}} size='small'>
-                            등록
-                        </RoundButton>
-                    )}
-                </div>
-                <div className={styles.searchInputWrapper}>
-                    <SearchInput icon='/icons/search-icon.svg' />
-                </div>
+                {hasButton && (
+                    <RoundButton color='secondary' onClick={() => {}} size='small'>
+                        등록
+                    </RoundButton>
+                )}
+                <SearchInput icon='/icons/search-icon.svg' />
             </div>
         </div>
     )
