@@ -18,4 +18,8 @@ export const MARKER_IMAGE = {
             y: 48,
         },
     },
-}
+} as const
+
+export const ZOOM_LEVEL = {
+    SINGLE_VEHICLE: 7,
+} as const

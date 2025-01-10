@@ -1,5 +1,6 @@
 import { ChangeEventHandler, useEffect, useState } from 'react'
 
+import { ZOOM_LEVEL } from '@/constants/map'
 import { useMapControl } from '@/hooks/useMapControl'
 import { useModal } from '@/hooks/useModal'
 import { validateVehicleNumber } from '@/lib/validation'
@@ -53,7 +54,7 @@ export const useSearchSingleVehicle = () => {
                 lat: singleVehicle?.location.lat,
                 lng: singleVehicle?.location.lng,
             },
-            7,
+            ZOOM_LEVEL.SINGLE_VEHICLE,
         )
 
         setShowSingleVehicle(true)
