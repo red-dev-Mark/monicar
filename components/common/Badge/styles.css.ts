@@ -13,7 +13,6 @@ export const shape = styleVariants({
     [BADGE_SHAPE.RECTANGLE]: {
         paddingLeft: '12px',
         paddingRight: '12px',
-        fontSize: styles.fontSizes.small,
         borderRadius: '4px',
     },
     [BADGE_SHAPE.CIRCLE]: {

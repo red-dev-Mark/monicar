@@ -12,10 +12,9 @@ export const base = style({
     fontWeight: styles.fontWeights.bold,
     border: `1px solid ${styles.colors.gray[200]}`,
     borderRadius: '8px',
-    padding: '16px 24px',
     ':disabled': {
         cursor: 'not-allowed',
-        opacity: 0.5,
+        opacity: styles.opacity[50],
         color: styles.colors.black,
     },
 })
