@@ -43,7 +43,6 @@ export const colors = {
         100: '#f2e9fd',
         200: '#ad8cdb',
     },
-
     gray: {
         50: '#f6f6f6', // 호버 색상
         100: '#f7f7f7', // 테이블 배경 색상
@@ -55,12 +54,23 @@ export const colors = {
         700: '#717171',
         800: '#5e5e5e',
     },
+    transparent: {
+        500: '#ffffff50',
+        800: '#ffffff80',
+    },
+    shadow: {
+        100: '#00000010',
+        400: '#00000040',
+        500: '#00000050',
+        800: '#00000080',
+    },
 }
 
 export const fontSizes = {
     xsmall: '0.75rem', // 12px
     small: '0.875rem', // 14px
     medium: '1rem', // 16px
+    mediumPlus: '1.125rem', // 18px
     large: '1.25rem', // 20px
     xlarge: '1.5rem', // 24px
     xxlarge: '2.5rem', // 40px
@@ -73,9 +83,25 @@ export const fontWeights = {
     extraBold: FONT_WEIGHT.extraBold,
 }
 
+export const zIndex = {
+    modal: '50',
+    overlay: '40',
+    dropdown: '30',
+    header: '20',
+    default: '1',
+    below: '-1',
+}
+
+const opacity = {
+    80: '0.8',
+    50: '0.5',
+}
+
 export const styles = createGlobalTheme(':root', {
     breakPoints,
     colors,
     fontSizes,
     fontWeights,
+    zIndex,
+    opacity,
 })

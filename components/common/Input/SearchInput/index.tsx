@@ -1,29 +1,38 @@
 'use client'
 
 import Image from 'next/image'
-import { ComponentPropsWithoutRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, forwardRef, KeyboardEvent } from 'react'
 
 import BaseInput from '../BaseInput'
 
 import * as styles from './styles.css'
 
-type SizeType = 'small' | 'medium' | 'large'
-
-interface SearchInputProps extends Omit<ComponentPropsWithoutRef<'input'>, 'size'> {
-    icon?: string
-    size?: SizeType
+interface SearchInputProps extends ComponentPropsWithoutRef<'input'> {
+    icon: string
     className?: string
+    onSubmit?: () => void
 }
 
 const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
-    ({ icon, size = 'medium', className = '', ...props }, ref) => {
+    ({ icon, className = '', onSubmit, ...props }, ref) => {
+        const handleEnterDown = (event: KeyboardEvent<HTMLInputElement>) => {
+            if (event.key === 'Enter' && onSubmit) {
+                onSubmit()
+            }
+        }
+
         return (
-            <div className={`${styles.container} ${styles.sizeVariants[size]} ${className}`}>
-                <BaseInput ref={ref} className={styles.input} {...props} />
+            <div className={styles.container}>
+                <BaseInput
+                    ref={ref}
+                    className={`${styles.input} ${className}`}
+                    onKeyDown={handleEnterDown}
+                    {...props}
+                />
                 {icon && (
-                    <div className={styles.iconWrapper}>
-                        <Image src={icon} alt='서치인풋 아이콘' width={32} height={32} />
-                    </div>
+                    <button className={styles.iconWrapper} onClick={onSubmit}>
+                        <Image src={icon} alt='서치인풋 아이콘' width={28} height={28} />
+                    </button>
                 )}
             </div>
         )

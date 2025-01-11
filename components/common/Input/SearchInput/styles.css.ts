@@ -1,4 +1,4 @@
-import { style, styleVariants } from '@vanilla-extract/css'
+import { style } from '@vanilla-extract/css'
 
 export const container = style({
     position: 'relative',
@@ -8,7 +8,6 @@ export const container = style({
 })
 
 export const input = style({
-    width: '100%',
     paddingRight: '40px',
 })
 
@@ -19,16 +18,5 @@ export const iconWrapper = style({
     alignItems: 'center',
     justifyContent: 'center',
     height: '48px',
-})
-
-export const sizeVariants = styleVariants({
-    small: {
-        width: '278px',
-    },
-    medium: {
-        width: '302px',
-    },
-    large: {
-        width: '358px',
-    },
+    cursor: 'pointer',
 })

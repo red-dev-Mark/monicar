@@ -1,75 +1,66 @@
 'use client'
 
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 
+import { AlertIcon } from '@/public/icons'
+
+import SquareButton from '../Button/SquareButton'
+
 import * as styles from './styles.css'
+import { StatusType, ModalMessageType } from './types'
 
 interface ModalProps {
     isOpen?: boolean
-    icon?: string
-    message: string
-    confirmText: string
-    closeText?: string
-    onConfirm?: () => void
+    icon?: React.ReactNode
+    message: ModalMessageType
+    variant: StatusType
     onClose: () => void
 }
 
 const Modal = ({
     isOpen = false,
-    icon = '/icons/alert-icon.svg',
+    icon = <AlertIcon width={78} height={78} />,
     message,
-    confirmText,
-    closeText,
-    onConfirm,
+    variant,
     onClose,
 }: ModalProps) => {
-    const [mounted, setMounted] = useState(false)
+    const modalRoot = document.getElementById('modal-root')
+    if (!isOpen || !modalRoot) return null
 
-    useEffect(() => {
-        setMounted(true)
-        return () => setMounted(false)
-    }, [])
+    const handleOverlayClick = () => {
+        if (variant.variant === 'alert') {
+            onClose()
+        }
+    }
 
-    if (!isOpen || !mounted) return null
-
-    const isCloseButton = closeText
-
-    const modalContent = (
+    return createPortal(
         <>
-            <div className={styles.modal}>
-                {!isCloseButton && (
-                    <button onClick={onClose} className={styles.xButton} aria-label='모달 닫기 버튼'>
-                        <Image src={'/icons/clear-icon.svg'} alt='' width={36} height={36} />
-                    </button>
-                )}
-
-                <Image src={icon} alt='' width={76} height={76} />
-
-                <p className={styles.message}>{message}</p>
-
-                <div className={styles.buttonGroup}>
-                    {isCloseButton && (
-                        <button onClick={onClose} className={styles.button}>
-                            {closeText}
-                        </button>
-                    )}
-                    <button onClick={onConfirm} className={styles.button}>
-                        {confirmText}
-                    </button>
-                </div>
-            </div>
-
             <div
-                onClick={!isCloseButton ? onClose : undefined}
-                className={`${styles.overlay} ${!isCloseButton ? styles.clickableOverlay : ''}`}
+                className={`${styles.overlay} ${variant.variant === 'alert' ? styles.clickableOverlay : ''}`}
+                onClick={handleOverlayClick}
                 role='presentation'
             />
-        </>
+            <div className={styles.modal} role='dialog' aria-modal='true'>
+                {icon && <div>{icon}</div>}
+                {message && <p className={styles.message}>{message}</p>}
+                <div className={styles.buttonWrapper}>
+                    {variant.variant === 'confirm' ? (
+                        <>
+                            <SquareButton onClick={onClose} color='primary'>
+                                {variant.cancelButton}
+                            </SquareButton>
+                            <SquareButton color='primary'>{variant.confirmButton}</SquareButton>
+                        </>
+                    ) : (
+                        <SquareButton onClick={onClose} color='primary'>
+                            {variant.confirmButton}
+                        </SquareButton>
+                    )}
+                </div>
+            </div>
+        </>,
+        modalRoot,
     )
-
-    return createPortal(modalContent, document.body)
 }
 
 export default Modal

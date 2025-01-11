@@ -18,9 +18,16 @@ globalStyle('body', {
     WebkitFontSmoothing: 'antialiased',
 })
 
-globalStyle('img, picture, video, canvas, svg', {
+globalStyle('img, picture, video, canvas', {
     display: 'block',
     maxWidth: '100%',
+    height: 'auto',
+})
+
+globalStyle('svg', {
+    display: 'block',
+    width: '100%',
+    height: '100%',
 })
 
 globalStyle('input, button, textarea, select', {

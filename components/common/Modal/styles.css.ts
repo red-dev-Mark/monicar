@@ -6,10 +6,12 @@ export const overlay = style({
     position: 'fixed',
     top: 0,
     left: 0,
+    inset: 0,
     width: '100%',
     height: '100dvh',
-    backgroundColor: 'rgb(0, 0, 0, 0.5)',
-    zIndex: 999,
+    opacity: 0.2,
+    backgroundColor: styles.colors.black,
+    zIndex: styles.zIndex.overlay,
 })
 
 export const clickableOverlay = style({
@@ -23,16 +25,14 @@ export const modal = style({
     transform: 'translate(-50%, -50%)',
     width: '404px',
     padding: '54px 24px 32px',
-
     display: 'flex',
     flexDirection: 'column',
     gap: '36px',
     justifyContent: 'center',
     alignItems: 'center',
-
     backgroundColor: styles.colors.white,
-    boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.1)',
-    zIndex: 1000,
+    boxShadow: `0px 4px 4px 0px ${styles.colors.shadow[400]}`,
+    zIndex: styles.zIndex.modal,
     borderRadius: '12px',
 })
 
@@ -47,20 +47,13 @@ export const message = style({
     fontWeight: styles.fontWeights.bold,
     textAlign: 'center',
     lineHeight: 1.8,
+    color: styles.colors.black,
 })
 
-export const buttonGroup = style({
+export const buttonWrapper = style({
     width: '100%',
     marginTop: '12px',
     padding: '0 8px',
     display: 'flex',
     gap: '16px',
-})
-
-export const button = style({
-    display: 'block',
-    width: '100%',
-    height: '60px',
-    border: '1px solid black',
-    borderRadius: '10px',
 })
