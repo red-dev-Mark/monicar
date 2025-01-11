@@ -5,7 +5,7 @@ import SquareButton from '@/components/common/Button/SquareButton'
 import BaseInput from '@/components/common/Input/BaseInput'
 import SearchInput from '@/components/common/Input/SearchInput'
 
-import VehicleRegisterForm from '../VehicleRegisterForm'
+import VehicleRegisterForm from '../components/VehicleRegisterForm'
 
 import * as styles from './styles.css'
 
