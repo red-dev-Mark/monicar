@@ -14,7 +14,7 @@ export const formWrapper = style({
     justifyContent: 'center',
 })
 
-export const buttonWrapper = style({
+export const buttonsWrapper = style({
     display: 'flex',
     justifyContent: 'center',
     gap: '20px',

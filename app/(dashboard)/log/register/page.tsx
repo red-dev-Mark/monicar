@@ -43,7 +43,7 @@ const RegisterPage = () => {
                 <VehicleRegisterForm fields={formFields} />
             </div>
 
-            <div className={styles.buttonWrapper}>
+            <div className={styles.buttonsWrapper}>
                 <SquareButton color={'white'}>취소</SquareButton>
                 <SquareButton color={'dark'}>등록</SquareButton>
             </div>
