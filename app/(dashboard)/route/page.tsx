@@ -1,7 +1,7 @@
 'use client'
 
 // import { Modal } from '@mantine/core'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Polyline } from 'react-kakao-maps-sdk'
 
 import Map from '@/app/(dashboard)/location/components/Map'
@@ -9,7 +9,6 @@ import RouteSearchPanel from '@/app/(dashboard)/route/components/RouteSearchPane
 // import { ModalMessageType } from '@/components/common/Modal/types'
 import { INITIAL_MAP_STATE } from '@/constants/map'
 // import { useModal } from '@/hooks/useModal'
-import mockRoutesData from '@/mock/vehicle_route_data.json'
 import { styles } from '@/styles/theme.css'
 import { PathPoint } from '@/types/location'
 
@@ -17,22 +16,10 @@ import * as vars from './styles.css'
 
 const RoutePage = () => {
     const [vehiclePaths, setVehiclePaths] = useState<PathPoint[]>([])
-    const [mapStatus, _setMapStatus] = useState(INITIAL_MAP_STATE)
+    const [mapStatus, setMapStatus] = useState(INITIAL_MAP_STATE)
     const [startDate, setStartDate] = useState({ year: '', month: '', date: '', hour: '', minute: '' })
     const [endDate, setEndDate] = useState({ year: '', month: '', date: '', hour: '', minute: '' })
-    const [isSearchable, setIsSearchable] = useState(false)
-
-    useEffect(() => {
-        const routesData = mockRoutesData.result.routes.map((route) => ({
-            id: route.timestamp,
-            lat: route.lat,
-            lng: route.lon,
-        }))
-
-        setVehiclePaths(routesData)
-    }, [])
-
-    console.log(isSearchable)
+    // const [isSearchable, setIsSearchable] = useState(false)
 
     // const handleButtonClick = () => {
     //     const formattedStartDate = new Date(
@@ -65,7 +52,10 @@ const RoutePage = () => {
                 setStartDate={setStartDate}
                 setEndDate={setEndDate}
                 // onButtonClick={handleButtonClick}
-                setIsSearchable={setIsSearchable}
+                // setIsSearchable={setIsSearchable}
+                vehiclePaths={vehiclePaths}
+                setVehiclePaths={setVehiclePaths}
+                setMapStatus={setMapStatus}
             />
         </div>
     )
