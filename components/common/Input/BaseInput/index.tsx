@@ -9,14 +9,15 @@ interface BaseInputProps extends ComponentPropsWithoutRef<'input'> {
 }
 
 const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
-    ({ type = 'text', isError = false, className = '', ...props }, ref) => {
+    ({ type = 'text', isError = false, placeholder, className = '', ...props }, ref) => {
         return (
             <input
                 ref={ref}
                 type={type}
+                placeholder={placeholder || '차량번호를 검색하세요.'}
                 className={`${styles.baseInput} 
                 ${isError && styles.errorInput}
-                ${className || ''}`}
+               ${className}`}
                 {...props}
             />
         )

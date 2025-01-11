@@ -43,7 +43,7 @@ const eslintConfig = [
                 'error',
                 {
                     min: 2,
-                    exceptions: ['i'],
+                    exceptions: ['x', 'y', 'i', 'j', 'id', '_'],
                 },
             ],
             // 특정 약어 사용 금지
@@ -67,14 +67,14 @@ const eslintConfig = [
                         match: true,
                     },
                 },
-                {
-                    selector: 'interface',
-                    format: ['PascalCase'],
-                    custom: {
-                        regex: '(Props|Model)$',
-                        match: true,
-                    },
-                },
+                // {
+                //     selector: 'interface',
+                //     format: ['PascalCase'],
+                //     custom: {
+                //         regex: '(Props|Model)$',
+                //         match: true,
+                //     },
+                // },
                 {
                     selector: 'typeAlias',
                     format: ['PascalCase'],
