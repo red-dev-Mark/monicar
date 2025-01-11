@@ -9,6 +9,7 @@ import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import { useModal } from '@/hooks/useModal'
 import { useSearchVehicle } from '@/hooks/useSearchVehicle'
+import { formatDateToKorean } from '@/lib/utils/date'
 
 import * as styles from './styles.css'
 
@@ -118,7 +119,17 @@ const RouteSearchPanel = ({
             </div>
 
             <div className={styles.searchSection}>
-                <h3 className={styles.sectionTitle}>기간 검색</h3>
+                <>
+                    <h3 className={styles.sectionTitle}>기간 검색</h3>
+                    {searchableDates.firstDateAt && searchableDates.lastDateAt && (
+                        <p className={styles.searchableDate}>
+                            <span className={styles.searchableDateSpan}> [조회 가능 기간] </span>
+                            {`${formatDateToKorean(searchableDates.firstDateAt)} ~ 
+                                ${formatDateToKorean(searchableDates.lastDateAt)}
+                            `}
+                        </p>
+                    )}
+                </>
                 <DateTimeSelect
                     label='시작 일시'
                     disabled={!isButtonDisabled}

@@ -16,6 +16,5 @@ export const base = style({
     ':disabled': {
         cursor: 'not-allowed',
         opacity: 0.5,
-        color: styles.colors.black,
     },
 })

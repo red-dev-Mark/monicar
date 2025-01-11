@@ -29,8 +29,19 @@ export const sectionTitle = style({
     marginBottom: '8px',
 })
 
+export const searchableDate = style({
+    fontSize: styles.fontSizes.small,
+    marginTop: '-8px',
+    marginBottom: '8px',
+})
+
+export const searchableDateSpan = style({
+    color: styles.colors.primary,
+    fontWeight: styles.fontWeights.bold,
+})
+
 export const label = style({
-    fontSize: '14px',
+    fontSize: styles.fontSizes.small,
     color: styles.colors.gray[600],
     marginBottom: '4px',
 })
