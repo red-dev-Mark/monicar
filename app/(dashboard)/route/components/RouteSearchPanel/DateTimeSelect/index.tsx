@@ -15,35 +15,35 @@ const DateTimeSelect = ({ label }: DateTimeSelectProps) => {
                 <Select
                     withCheckIcon={false}
                     data={YEAR_OPTIONS}
-                    defaultValue='2025'
+                    placeholder='2025년'
                     styles={styles.selectStyles}
                     allowDeselect={false}
                 />
                 <Select
                     withCheckIcon={false}
                     data={MONTH_OPTIONS}
-                    defaultValue='01'
+                    placeholder='01월'
                     styles={styles.selectStyles}
                     allowDeselect={false}
                 />
                 <Select
                     withCheckIcon={false}
                     data={DAY_OPTIONS}
-                    defaultValue='01'
+                    placeholder='01일'
                     styles={styles.selectStyles}
                     allowDeselect={false}
                 />
                 <Select
                     withCheckIcon={false}
                     data={HOUR_OPTIONS}
-                    defaultValue='00'
+                    placeholder='00시'
                     styles={styles.selectStyles}
                     allowDeselect={false}
                 />
                 <Select
                     withCheckIcon={false}
                     data={MINUTE_OPTIONS}
-                    defaultValue='00'
+                    placeholder='00분'
                     styles={styles.selectStyles}
                     allowDeselect={false}
                 />

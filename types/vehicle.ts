@@ -6,3 +6,12 @@ export interface singleVehicleModel {
     status: string
     location: LatLng
 }
+
+export interface vehicleDateModel {
+    vehicleId: string
+    vehicleNumber: string
+    searchableDate: {
+        firstDateAt: string
+        lastDateAt: string
+    }
+}
