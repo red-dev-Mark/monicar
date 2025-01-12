@@ -9,7 +9,6 @@ import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import { useModal } from '@/hooks/useModal'
 import { useSearchVehicle } from '@/hooks/useSearchVehicle'
-// import { vehicleAPI } from '@/lib/apis'
 import { formatISODateToKorean } from '@/lib/utils/date'
 import mockRoutesData from '@/mock/vehicle_route_data.json'
 import { PathPoint } from '@/types/location'
@@ -50,8 +49,6 @@ interface RouteSearchPanelProps {
         }>
     >
     onButtonClick?: () => void
-    // setIsSearchable: (searchable: boolean) => void
-    // setVehiclePaths: PathPoint[]
     vehiclePaths: PathPoint[]
     setVehiclePaths: Dispatch<SetStateAction<PathPoint[]>>
     setMapStatus: Dispatch<
@@ -63,13 +60,6 @@ interface RouteSearchPanelProps {
             level: number
         }>
     >
-    // setMapStatus: {
-    //     center: {
-    //         lat: number
-    //         lng: number
-    //     }
-    //     level: number
-    // }
 }
 
 const RouteSearchPanel = ({
@@ -77,8 +67,6 @@ const RouteSearchPanel = ({
     endDate,
     setStartDate,
     setEndDate,
-    // onButtonClick,
-    // setIsSearchable,
     setVehiclePaths,
     setMapStatus,
     vehiclePaths,
@@ -139,11 +127,9 @@ const RouteSearchPanel = ({
             alert('종료 일시는 시작 일시보다 같거나 빠르면 안됩니다')
         } else if (!isSearchableStartDate || !isSearchableEndDate) {
             alert(`조회 가능한 일은 ${searchableDates.firstDateAt} ~ ${searchableDates.lastDateAt}`)
-            // setIsSearchable(false)
         }
 
         if (isSearchableStartDate && isSearchableEndDate) {
-            // setIsSearchable(true)
             getVehicleRoutes()
         }
     }
@@ -155,6 +141,12 @@ const RouteSearchPanel = ({
             lat: route.lat,
             lng: route.lon,
         }))
+
+        const bounds = new kakao.maps.LatLngBounds()
+
+        vehiclePaths.forEach((path) => {
+            bounds.extend(new kakao.maps.LatLng(path.lat, path.lng))
+        })
 
         setVehiclePaths(data)
         setMapStatus({ center: vehiclePaths[vehiclePaths.length / 2], level: 10 })
@@ -184,7 +176,7 @@ const RouteSearchPanel = ({
                     <h3 className={styles.sectionTitle}>기간 검색</h3>
                     {searchableDates.firstDateAt && searchableDates.lastDateAt && (
                         <p className={styles.searchableDate}>
-                            <span className={styles.searchableDateSpan}> [조회 가능 기간] </span>
+                            <span className={styles.searchableDateSpan}>[조회 가능 기간]</span>
                             {`${formatISODateToKorean(searchableDates.firstDateAt)} ~ 
                                 ${formatISODateToKorean(searchableDates.lastDateAt)}
                             `}

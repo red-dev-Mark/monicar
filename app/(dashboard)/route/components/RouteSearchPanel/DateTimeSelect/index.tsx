@@ -22,12 +22,6 @@ interface DateTimeSelectProps {
 }
 
 const DateTimeSelect = ({ label, disabled, date, setDate }: DateTimeSelectProps) => {
-    // const [year, setYear] = useState<string | null>('')
-    // const [month, setMonth] = useState<string | null>('')
-    // const [date, setDate] = useState<string | null>('')
-    // const [hour, setHour] = useState<string | null>('')
-    // const [minute, setMinute] = useState<string | null>('')
-
     return (
         <div className={styles.selectContainer}>
             <p className={styles.label}>{label}</p>

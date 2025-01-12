@@ -36,6 +36,7 @@ export const searchableDate = style({
 })
 
 export const searchableDateSpan = style({
+    padding: '0 4px',
     color: styles.colors.primary,
     fontWeight: styles.fontWeights.bold,
 })

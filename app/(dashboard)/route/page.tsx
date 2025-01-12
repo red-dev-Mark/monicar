@@ -1,14 +1,11 @@
 'use client'
 
-// import { Modal } from '@mantine/core'
 import { useState } from 'react'
 import { Polyline } from 'react-kakao-maps-sdk'
 
 import Map from '@/app/(dashboard)/location/components/Map'
 import RouteSearchPanel from '@/app/(dashboard)/route/components/RouteSearchPanel'
-// import { ModalMessageType } from '@/components/common/Modal/types'
 import { INITIAL_MAP_STATE } from '@/constants/map'
-// import { useModal } from '@/hooks/useModal'
 import { styles } from '@/styles/theme.css'
 import { PathPoint } from '@/types/location'
 
@@ -19,24 +16,10 @@ const RoutePage = () => {
     const [mapStatus, setMapStatus] = useState(INITIAL_MAP_STATE)
     const [startDate, setStartDate] = useState({ year: '', month: '', date: '', hour: '', minute: '' })
     const [endDate, setEndDate] = useState({ year: '', month: '', date: '', hour: '', minute: '' })
-    // const [isSearchable, setIsSearchable] = useState(false)
-
-    // const handleButtonClick = () => {
-    //     const formattedStartDate = new Date(
-    //         `${startDate.year}-${startDate.month}-${startDate.date}T${startDate.hour}:${startDate.minute}:00`,
-    //     ).getTime()
-    //     const formattedEndDate = new Date(
-    //         `${endDate.year}-${endDate.month}-${endDate.date}T${endDate.hour}:${endDate.minute}:00`,
-    //     ).getTime()
-
-    //     if (formattedStartDate >= formattedEndDate) {
-    //         alert('종료 일시는 시작 일시보다 같거나 빠르면 안됩니다')
-    //     }
-    // }
 
     return (
         <div className={vars.container}>
-            <Map center={vehiclePaths[vehiclePaths.length / 2]} zoom={mapStatus.level}>
+            <Map center={mapStatus.center} zoom={mapStatus.level}>
                 <Polyline
                     path={[vehiclePaths]}
                     strokeWeight={5}
@@ -51,8 +34,6 @@ const RoutePage = () => {
                 endDate={endDate}
                 setStartDate={setStartDate}
                 setEndDate={setEndDate}
-                // onButtonClick={handleButtonClick}
-                // setIsSearchable={setIsSearchable}
                 vehiclePaths={vehiclePaths}
                 setVehiclePaths={setVehiclePaths}
                 setMapStatus={setMapStatus}

@@ -1,9 +1,9 @@
 export const INITIAL_MAP_STATE = {
     center: {
-        lat: 37.496487,
-        lng: 127.028369,
+        lat: 36.5,
+        lng: 127.5,
     },
-    level: 10,
+    level: 12,
 }
 
 export const MARKER_IMAGE = {
