@@ -3,7 +3,7 @@ import { ChangeEventHandler, useEffect, useState } from 'react'
 import { ZOOM_LEVEL } from '@/constants/map'
 import { useMapControl } from '@/hooks/useMapControl'
 import { useModal } from '@/hooks/useModal'
-import { validateVehicleNumber } from '@/lib/validation'
+import { validateVehicleNumber } from '@/lib/utils/validation'
 import mockData from '@/mock/single_vehicle_search_ok.json'
 import { singleVehicleModel } from '@/types/vehicle'
 

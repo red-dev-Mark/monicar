@@ -11,19 +11,19 @@ import * as styles from './styles.css'
 interface DateTimeSelectProps {
     label: string
     disabled: boolean
-    date: DateTime
-    setDate: Dispatch<SetStateAction<DateTime>>
+    value: DateTime
+    onChange: Dispatch<SetStateAction<DateTime>>
 }
 
-const DateTimeSelect = ({ label, disabled, date, setDate }: DateTimeSelectProps) => {
+const DateTimeSelect = ({ label, disabled, value, onChange }: DateTimeSelectProps) => {
     return (
         <div className={styles.selectContainer}>
             <p className={styles.label}>{label}</p>
             <div className={styles.selectGroup}>
                 <Select
-                    value={date.year}
+                    value={value.year}
                     onChange={(selected) =>
-                        setDate((prev) => ({
+                        onChange((prev) => ({
                             ...prev,
                             year: selected || '',
                         }))
@@ -36,9 +36,9 @@ const DateTimeSelect = ({ label, disabled, date, setDate }: DateTimeSelectProps)
                     allowDeselect={false}
                 />
                 <Select
-                    value={date.month}
+                    value={value.month}
                     onChange={(selected) =>
-                        setDate((prev) => ({
+                        onChange((prev) => ({
                             ...prev,
                             month: selected || '',
                         }))
@@ -51,9 +51,9 @@ const DateTimeSelect = ({ label, disabled, date, setDate }: DateTimeSelectProps)
                     allowDeselect={false}
                 />
                 <Select
-                    value={date.date}
+                    value={value.date}
                     onChange={(selected) =>
-                        setDate((prev) => ({
+                        onChange((prev) => ({
                             ...prev,
                             date: selected || '',
                         }))
@@ -66,9 +66,9 @@ const DateTimeSelect = ({ label, disabled, date, setDate }: DateTimeSelectProps)
                     allowDeselect={false}
                 />
                 <Select
-                    value={date.hour}
+                    value={value.hour}
                     onChange={(selected) =>
-                        setDate((prev) => ({
+                        onChange((prev) => ({
                             ...prev,
                             hour: selected || '',
                         }))
@@ -81,9 +81,9 @@ const DateTimeSelect = ({ label, disabled, date, setDate }: DateTimeSelectProps)
                     allowDeselect={false}
                 />
                 <Select
-                    value={date.minute}
+                    value={value.minute}
                     onChange={(selected) =>
-                        setDate((prev) => ({
+                        onChange((prev) => ({
                             ...prev,
                             minute: selected || '',
                         }))

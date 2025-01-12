@@ -2,7 +2,7 @@ import { style } from '@vanilla-extract/css'
 
 import { styles } from '@/styles/theme.css'
 
-export const panel = style({
+export const container = style({
     padding: '24px',
     position: 'absolute',
     top: '1.5rem',

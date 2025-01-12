@@ -8,9 +8,9 @@ import SquareButton from '@/components/common/Button/SquareButton'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
-import { useModal } from '@/hooks/useModal'
 import { useSearchVehicle } from '@/hooks/useSearchVehicle'
 import { formatISODateToKorean } from '@/lib/utils/date'
+import { validateDateRange } from '@/lib/utils/validation'
 import mockRoutesData from '@/mock/vehicle_route_data.json'
 import { LatLng } from '@/types/location'
 
@@ -25,12 +25,16 @@ interface RouteSearchPanelProps {
 const RouteSearchPanel = ({ onPathsChange, onMapLocationChange, paths }: RouteSearchPanelProps) => {
     const [inputVehicleNumber, setInputVehicleNumber] = useState('')
     const [searchableDates, setSearchableDates] = useState({ firstDateAt: '', lastDateAt: '' })
-    const [isSelectAllDate, setIsSelectAllDate] = useState(false)
     const [startDate, setStartDate] = useState<DateTime>({ year: '', month: '', date: '', hour: '', minute: '' })
     const [endDate, setEndDate] = useState<DateTime>({ year: '', month: '', date: '', hour: '', minute: '' })
 
     const { searchVehicle, vehicleData, isOpen, modalMessage, closeModal } = useSearchVehicle(inputVehicleNumber)
-    const { showMessage } = useModal()
+
+    const { isAllSelected, isWithSearchableRange, isValidSelectRange, validate } = validateDateRange(
+        startDate,
+        endDate,
+        searchableDates,
+    )
 
     useEffect(() => {
         if (vehicleData?.searchableDate) {
@@ -38,52 +42,18 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange, paths }: RouteSe
         }
     }, [vehicleData])
 
-    useEffect(() => {
-        const { year: startYear, month: startMonth, date: startDay, hour: startHour, minute: startMinute } = startDate
-        const { year: endYear, month: endMonth, date: endDay, hour: endHour, minute: endMinute } = endDate
-
-        if (
-            startYear &&
-            startMonth &&
-            startDay &&
-            startHour &&
-            startMinute &&
-            endYear &&
-            endMonth &&
-            endDay &&
-            endHour &&
-            endMinute
-        ) {
-            setIsSelectAllDate(true)
-        }
-    }, [startDate, endDate])
-
     const handleButtonClick = () => {
-        const isSearchableStartDate =
-            new Date(
-                `${startDate.year}-${startDate.month}-${startDate.date}T${startDate.hour}:${startDate.minute}:00`,
-            ).getTime() >= new Date(searchableDates.firstDateAt).getTime()
-
-        const isSearchableEndDate =
-            new Date(
-                `${endDate.year}-${endDate.month}-${endDate.date}T${endDate.hour}:${endDate.minute}:00`,
-            ).getTime() <= new Date(searchableDates.lastDateAt).getTime()
-
-        const formattedStartDate = new Date(
-            `${startDate.year}-${startDate.month}-${startDate.date}T${startDate.hour}:${startDate.minute}:00`,
-        ).getTime()
-        const formattedEndDate = new Date(
-            `${endDate.year}-${endDate.month}-${endDate.date}T${endDate.hour}:${endDate.minute}:00`,
-        ).getTime()
-
-        if (formattedStartDate >= formattedEndDate) {
-            showMessage('종료 일시는 시작 일시보다 같거나 빠르면 안됩니다')
-            alert('종료 일시는 시작 일시보다 같거나 빠르면 안됩니다')
-        } else if (!isSearchableStartDate || !isSearchableEndDate) {
+        if (!isWithSearchableRange()) {
             alert(`조회 가능한 일은 ${searchableDates.firstDateAt} ~ ${searchableDates.lastDateAt}`)
+            return
         }
 
-        if (isSearchableStartDate && isSearchableEndDate) {
+        if (!isValidSelectRange()) {
+            alert('종료 일시는 시작 일시보다 같거나 빠르면 안됩니다')
+            return
+        }
+
+        if (validate()) {
             getVehicleRoutes()
         }
     }
@@ -95,12 +65,6 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange, paths }: RouteSe
             lng: route.lon,
         }))
 
-        const bounds = new kakao.maps.LatLngBounds()
-
-        paths.forEach((path) => {
-            bounds.extend(new kakao.maps.LatLng(path.lat, path.lng))
-        })
-
         onPathsChange(data)
         onMapLocationChange(paths[paths.length / 2], 10)
     }
@@ -108,7 +72,7 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange, paths }: RouteSe
     const isButtonDisabled = Boolean(vehicleData)
 
     return (
-        <div className={styles.panel}>
+        <div className={styles.container}>
             <div className={styles.searchSection}>
                 <h3 className={styles.sectionTitle}>차량 검색</h3>
                 <SearchInput
@@ -139,12 +103,12 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange, paths }: RouteSe
                 <DateTimeSelect
                     label='시작 일시'
                     disabled={!isButtonDisabled}
-                    date={startDate}
-                    setDate={setStartDate}
+                    value={startDate}
+                    onChange={setStartDate}
                 />
-                <DateTimeSelect label='종료 일시' disabled={!isButtonDisabled} date={endDate} setDate={setEndDate} />
+                <DateTimeSelect label='종료 일시' disabled={!isButtonDisabled} value={endDate} onChange={setEndDate} />
             </div>
-            <SquareButton disabled={!isButtonDisabled || !isSelectAllDate} onClick={handleButtonClick}>
+            <SquareButton disabled={!isButtonDisabled || !isAllSelected()} onClick={handleButtonClick}>
                 조회하기
             </SquareButton>
 

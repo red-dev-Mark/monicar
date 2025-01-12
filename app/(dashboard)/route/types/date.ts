@@ -5,3 +5,13 @@ export interface DateTime {
     hour: string
     minute: string
 }
+
+export interface SelectedDateTime {
+    startDate: DateTime
+    endDate: DateTime
+}
+
+export interface SearchableDateTime {
+    firstDateAt: string
+    lastDateAt: string
+}

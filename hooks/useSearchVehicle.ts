@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { useModal } from '@/hooks/useModal'
 import { vehicleAPI } from '@/lib/apis'
-import { validateVehicleNumber } from '@/lib/validation'
+import { validateVehicleNumber } from '@/lib/utils/validation'
 import { vehicleDateModel } from '@/types/vehicle'
 
 export const useSearchVehicle = (vehicleNumber: string = '') => {
