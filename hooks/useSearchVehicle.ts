@@ -23,7 +23,7 @@ export const useSearchVehicle = (vehicleNumber: string = '') => {
             const response = await vehicleAPI.fetchVehicleData(vehicleNumber)
 
             // TODO: 등록되지 않는 차량 API 에러 메세지로 대체
-            if (response.vehicleNumber !== vehicleNumber) {
+            if (validation.value !== response.vehicleNumber) {
                 showMessage('등록되지 않은 차량번호입니다.')
                 return
             }

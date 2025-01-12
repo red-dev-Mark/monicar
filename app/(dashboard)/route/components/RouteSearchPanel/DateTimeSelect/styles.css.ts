@@ -11,7 +11,6 @@ export const selectContainer = style({
 
 export const selectGroup = style({
     display: 'flex',
-    // justifyContent: 'space-between',
     gap: '8px',
     marginBottom: '4px',
 })

@@ -20,7 +20,6 @@ export const vehicleAPI = {
         return response.result
     },
     fetchVehicleRoutesData: async (vehicleId: string, startDate: DateTime, endDate: DateTime, interval = 60) => {
-        console.log(startDate)
         const formattedStartDate = formatToISODate(startDate)
         const formattedEndDate = formatToISODate(endDate)
         // const response = await apiClient.get(
