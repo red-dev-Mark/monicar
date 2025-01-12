@@ -14,6 +14,7 @@ export const colors = {
     secondary: '#5856D6',
     white: '#ffffff',
     black: '#222222', // 기본 텍스트 색상
+    dashboard: '#F9F9F9',
     dark: '#121212', // 다크모드 배경 색상
     description: '#6b7280',
     error: '#c13515', // 에러 색상
