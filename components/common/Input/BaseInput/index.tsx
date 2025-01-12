@@ -17,7 +17,7 @@ const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
                 placeholder={placeholder || '차량번호를 검색하세요.'}
                 className={`${styles.baseInput} 
                 ${isError && styles.errorInput}
-                ${className}`}
+               ${className}`}
                 {...props}
             />
         )
