@@ -12,17 +12,17 @@ import { useModal } from '@/hooks/useModal'
 import { useSearchVehicle } from '@/hooks/useSearchVehicle'
 import { formatISODateToKorean } from '@/lib/utils/date'
 import mockRoutesData from '@/mock/vehicle_route_data.json'
-import { LatLng, PathPoint } from '@/types/location'
+import { LatLng } from '@/types/location'
 
 import * as styles from './styles.css'
 
 interface RouteSearchPanelProps {
-    vehiclePaths: PathPoint[]
-    setVehiclePaths: Dispatch<SetStateAction<PathPoint[]>>
-    updateMapLocation: (location: LatLng, level: number) => void
+    paths: LatLng[]
+    onPathsChange: Dispatch<SetStateAction<LatLng[]>>
+    onMapLocationChange: (location: LatLng, level: number) => void
 }
 
-const RouteSearchPanel = ({ setVehiclePaths, updateMapLocation, vehiclePaths }: RouteSearchPanelProps) => {
+const RouteSearchPanel = ({ onPathsChange, onMapLocationChange, paths }: RouteSearchPanelProps) => {
     const [inputVehicleNumber, setInputVehicleNumber] = useState('')
     const [searchableDates, setSearchableDates] = useState({ firstDateAt: '', lastDateAt: '' })
     const [isSelectAllDate, setIsSelectAllDate] = useState(false)
@@ -91,19 +91,18 @@ const RouteSearchPanel = ({ setVehiclePaths, updateMapLocation, vehiclePaths }: 
     const getVehicleRoutes = async () => {
         // const data = await vehicleAPI.fetchVehicleRoutesData()
         const data = mockRoutesData.result.routes.map((route) => ({
-            id: route.timestamp,
             lat: route.lat,
             lng: route.lon,
         }))
 
         const bounds = new kakao.maps.LatLngBounds()
 
-        vehiclePaths.forEach((path) => {
+        paths.forEach((path) => {
             bounds.extend(new kakao.maps.LatLng(path.lat, path.lng))
         })
 
-        setVehiclePaths(data)
-        updateMapLocation(vehiclePaths[vehiclePaths.length / 2], 10)
+        onPathsChange(data)
+        onMapLocationChange(paths[paths.length / 2], 10)
     }
 
     const isButtonDisabled = Boolean(vehicleData)

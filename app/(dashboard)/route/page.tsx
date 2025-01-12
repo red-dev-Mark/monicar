@@ -7,12 +7,12 @@ import Map from '@/app/(dashboard)/location/components/Map'
 import RouteSearchPanel from '@/app/(dashboard)/route/components/RouteSearchPanel'
 import { useMapControl } from '@/hooks/useMapControl'
 import { styles } from '@/styles/theme.css'
-import { PathPoint } from '@/types/location'
+import { LatLng } from '@/types/location'
 
 import * as vars from './styles.css'
 
 const RoutePage = () => {
-    const [vehiclePaths, setVehiclePaths] = useState<PathPoint[]>([])
+    const [vehiclePaths, setVehiclePaths] = useState<LatLng[]>([])
 
     const { mapState, updateMapLocation } = useMapControl()
 
@@ -29,9 +29,9 @@ const RoutePage = () => {
             </Map>
 
             <RouteSearchPanel
-                vehiclePaths={vehiclePaths}
-                setVehiclePaths={setVehiclePaths}
-                updateMapLocation={updateMapLocation}
+                paths={vehiclePaths}
+                onPathsChange={setVehiclePaths}
+                onMapLocationChange={updateMapLocation}
             />
         </div>
     )
