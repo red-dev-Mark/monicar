@@ -31,42 +31,22 @@ export const sectionTitle = style({
 
 export const searchableDate = style({
     fontSize: styles.fontSizes.small,
-    marginTop: '-8px',
     marginBottom: '8px',
+    padding: '8px 12px',
+    backgroundColor: styles.colors.gray[50],
+    border: `1px solid ${styles.colors.gray[200]}`,
+    borderRadius: '8px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
 })
 
 export const searchableDateSpan = style({
-    padding: '0 4px',
+    padding: '4px 8px',
     color: styles.colors.primary,
     fontWeight: styles.fontWeights.bold,
-})
-
-export const label = style({
-    fontSize: styles.fontSizes.small,
-    color: styles.colors.gray[600],
-    marginBottom: '4px',
-})
-
-export const selectGroup = style({
-    display: 'flex',
-    gap: '8px',
-    marginBottom: '4px',
-})
-
-export const select = style({
-    padding: '8px',
-    borderRadius: '8px',
-    border: `1px solid ${styles.colors.gray[200]}`,
     backgroundColor: 'white',
-    fontSize: '14px',
-    color: styles.colors.gray[700],
-    cursor: 'pointer',
-    ':hover': {
-        borderColor: styles.colors.gray[300],
-    },
-    ':focus': {
-        outline: 'none',
-        borderColor: styles.colors.primary,
-        boxShadow: `0 0 0 2px ${styles.colors.primary}25`,
-    },
+    borderRadius: '4px',
+    fontSize: styles.fontSizes.xsmall,
+    border: `1px solid ${styles.colors.primary}`,
 })

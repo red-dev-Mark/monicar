@@ -17,7 +17,7 @@ export const selectGroup = style({
 
 export const label = style({
     fontSize: styles.fontSizes.small,
-    color: styles.colors.gray[600],
+    color: styles.colors.gray[700],
 })
 
 export const selectStyles = {
