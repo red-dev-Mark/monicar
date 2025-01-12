@@ -1,6 +1,6 @@
 'use client'
 
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 
 import DateTimeSelect from '@/app/(dashboard)/route/components/RouteSearchPanel/DateTimeSelect'
 import { DateTime } from '@/app/(dashboard)/route/types/date'
@@ -8,41 +8,42 @@ import SquareButton from '@/components/common/Button/SquareButton'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
+import { INITIAL_MAP_STATE } from '@/constants/map'
 import { useSearchVehicle } from '@/hooks/useSearchVehicle'
+import { vehicleAPI } from '@/lib/apis'
 import { formatISODateToKorean } from '@/lib/utils/date'
-import { validateDateRange } from '@/lib/utils/validation'
-import mockRoutesData from '@/mock/vehicle_route_data.json'
+import { validateDateSelection } from '@/lib/utils/validation'
 import { LatLng } from '@/types/location'
 
 import * as styles from './styles.css'
 
 interface RouteSearchPanelProps {
-    paths: LatLng[]
-    onPathsChange: Dispatch<SetStateAction<LatLng[]>>
+    onPathsChange: (paths: LatLng[]) => void
     onMapLocationChange: (location: LatLng, level: number) => void
 }
 
-const RouteSearchPanel = ({ onPathsChange, onMapLocationChange, paths }: RouteSearchPanelProps) => {
-    const [inputVehicleNumber, setInputVehicleNumber] = useState('')
-    const [searchableDates, setSearchableDates] = useState({ firstDateAt: '', lastDateAt: '' })
+const RouteSearchPanel = ({ onPathsChange, onMapLocationChange }: RouteSearchPanelProps) => {
+    const [inputValue, setInputValue] = useState('')
     const [startDate, setStartDate] = useState<DateTime>({ year: '', month: '', date: '', hour: '', minute: '' })
     const [endDate, setEndDate] = useState<DateTime>({ year: '', month: '', date: '', hour: '', minute: '' })
 
-    const { searchVehicle, vehicleData, isOpen, modalMessage, closeModal } = useSearchVehicle(inputVehicleNumber)
+    const { searchedVehicle, searchableDates, isOpen, modalMessage, searchVehicle, closeModal } =
+        useSearchVehicle(inputValue)
 
-    const { isAllSelected, isWithSearchableRange, isValidSelectRange, validate } = validateDateRange(
+    const { isValidDate, isAllSelected, isWithSearchableRange, isValidSelectRange } = validateDateSelection(
         startDate,
         endDate,
         searchableDates,
     )
 
-    useEffect(() => {
-        if (vehicleData?.searchableDate) {
-            setSearchableDates(vehicleData.searchableDate)
-        }
-    }, [vehicleData])
+    const isSelectable = !!searchableDates.firstDateAt && !!searchableDates.lastDateAt
 
-    const handleButtonClick = () => {
+    const handleSubmit = async () => {
+        if (!isValidDate()) {
+            alert('선택하신 날짜가 유효하지 않습니다')
+            return
+        }
+
         if (!isWithSearchableRange()) {
             alert(`조회 가능한 일은 ${searchableDates.firstDateAt} ~ ${searchableDates.lastDateAt}`)
             return
@@ -53,31 +54,28 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange, paths }: RouteSe
             return
         }
 
-        if (validate()) {
-            getVehicleRoutes()
+        if (!(searchedVehicle && startDate && endDate)) {
+            return
         }
-    }
 
-    const getVehicleRoutes = async () => {
-        // const data = await vehicleAPI.fetchVehicleRoutesData()
-        const data = mockRoutesData.result.routes.map((route) => ({
+        // TODO: 실제 API 코드로 수정하기
+        const mockRoutesData = await vehicleAPI.fetchVehicleRoutesData(searchedVehicle.vehicleId, startDate, endDate)
+        const routesData = mockRoutesData.result.routes.map((route) => ({
             lat: route.lat,
             lng: route.lon,
         }))
 
-        onPathsChange(data)
-        onMapLocationChange(paths[paths.length / 2], 10)
+        onPathsChange(routesData)
+        onMapLocationChange(INITIAL_MAP_STATE.center, 10)
     }
 
-    const isButtonDisabled = Boolean(vehicleData)
-
     return (
-        <div className={styles.container}>
+        <aside className={styles.container}>
             <div className={styles.searchSection}>
                 <h3 className={styles.sectionTitle}>차량 검색</h3>
                 <SearchInput
-                    value={inputVehicleNumber}
-                    onChange={(event: ChangeEvent<HTMLInputElement>) => setInputVehicleNumber(event.target.value)}
+                    value={inputValue}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value)}
                     onSubmit={searchVehicle}
                     placeholder='차량번호 검색'
                     icon='/icons/pink-search-icon.svg'
@@ -91,7 +89,7 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange, paths }: RouteSe
             <div className={styles.searchSection}>
                 <>
                     <h3 className={styles.sectionTitle}>기간 검색</h3>
-                    {searchableDates.firstDateAt && searchableDates.lastDateAt && (
+                    {isSelectable && (
                         <p className={styles.searchableDate}>
                             <span className={styles.searchableDateSpan}>[조회 가능 기간]</span>
                             {`${formatISODateToKorean(searchableDates.firstDateAt)} ~ 
@@ -100,15 +98,11 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange, paths }: RouteSe
                         </p>
                     )}
                 </>
-                <DateTimeSelect
-                    label='시작 일시'
-                    disabled={!isButtonDisabled}
-                    value={startDate}
-                    onChange={setStartDate}
-                />
-                <DateTimeSelect label='종료 일시' disabled={!isButtonDisabled} value={endDate} onChange={setEndDate} />
+                <DateTimeSelect label='시작 일시' disabled={!isSelectable} value={startDate} onChange={setStartDate} />
+                <DateTimeSelect label='종료 일시' disabled={!isSelectable} value={endDate} onChange={setEndDate} />
             </div>
-            <SquareButton disabled={!isButtonDisabled || !isAllSelected()} onClick={handleButtonClick}>
+
+            <SquareButton disabled={!isAllSelected()} onClick={handleSubmit}>
                 조회하기
             </SquareButton>
 
@@ -118,7 +112,7 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange, paths }: RouteSe
                 variant={{ variant: 'alert', confirmButton: '확인' }}
                 onClose={closeModal}
             />
-        </div>
+        </aside>
     )
 }
 

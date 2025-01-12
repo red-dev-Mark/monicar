@@ -6,7 +6,9 @@ import { validateVehicleNumber } from '@/lib/utils/validation'
 import { vehicleDateModel } from '@/types/vehicle'
 
 export const useSearchVehicle = (vehicleNumber: string = '') => {
-    const [vehicleData, setVehicleData] = useState<vehicleDateModel>()
+    const [searchedVehicle, setSearchedVehicle] = useState<vehicleDateModel>()
+    const [searchableDates, setSearchableDates] = useState({ firstDateAt: '', lastDateAt: '' })
+
     const { isOpen, modalMessage, closeModal, showMessage } = useModal()
 
     const searchVehicle = async () => {
@@ -29,13 +31,14 @@ export const useSearchVehicle = (vehicleNumber: string = '') => {
             const vehicleData = {
                 vehicleId: response.vehicleId,
                 vehicleNumber: response.vehicleNumber,
-                searchableDate: {
+                searchableDates: {
                     firstDateAt: response.firstDateAt,
                     lastDateAt: response.lastDateAt,
                 },
             }
 
-            setVehicleData(vehicleData)
+            setSearchedVehicle(vehicleData)
+            setSearchableDates(vehicleData.searchableDates)
         } catch (error) {
             console.error(error)
             showMessage('차량 정보를 불러오는데 실패했습니다')
@@ -43,10 +46,11 @@ export const useSearchVehicle = (vehicleNumber: string = '') => {
     }
 
     return {
-        searchVehicle,
-        vehicleData,
+        searchedVehicle,
+        searchableDates,
         isOpen,
         modalMessage,
+        searchVehicle,
         closeModal,
     }
 }

@@ -10,7 +10,7 @@ export interface singleVehicleModel {
 export interface vehicleDateModel {
     vehicleId: string
     vehicleNumber: string
-    searchableDate: {
+    searchableDates: {
         firstDateAt: string
         lastDateAt: string
     }

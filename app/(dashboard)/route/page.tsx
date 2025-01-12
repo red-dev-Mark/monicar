@@ -28,11 +28,7 @@ const RoutePage = () => {
                 />
             </Map>
 
-            <RouteSearchPanel
-                paths={vehiclePaths}
-                onPathsChange={setVehiclePaths}
-                onMapLocationChange={updateMapLocation}
-            />
+            <RouteSearchPanel onPathsChange={setVehiclePaths} onMapLocationChange={updateMapLocation} />
         </div>
     )
 }

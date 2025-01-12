@@ -6,7 +6,10 @@ import { LatLng } from '@/types/location'
 export const useMapControl = () => {
     const [mapState, setMapState] = useState(INITIAL_MAP_STATE)
 
-    const updateMapLocation = (location: LatLng, level: number) => {
+    const updateMapLocation = (
+        location: LatLng = INITIAL_MAP_STATE.center,
+        level: number = INITIAL_MAP_STATE.level,
+    ) => {
         setMapState({
             center: location,
             level,
