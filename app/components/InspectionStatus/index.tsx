@@ -1,25 +1,32 @@
-import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from '@/public/icons'
-
 import * as styles from './styles.css'
 
-const statusItems = [
-    { status: 'required', Icon: WhiteBellIcon, text: '점검 필요', iconType: 'bell' },
-    { status: 'scheduled', Icon: WhiteAlertIcon, text: '점검 예정', iconType: 'alert' },
-    { status: 'inProgress', Icon: WhiteOnButtonIcon, text: '점검 진행', iconType: 'button' },
-    { status: 'completed', Icon: WhiteCheckIcon, text: '점검완료', iconType: 'check' },
-] as const
+type StatusType = 'required' | 'scheduled' | 'inProgress' | 'completed'
+type IconType = 'bell' | 'alert' | 'button' | 'check'
 
-const InspectionStatus = () => {
+interface InspectionStatusModel {
+    status: StatusType
+    icon: React.ReactNode
+    text: string
+    iconType: IconType
+}
+interface InspectionStatusProps {
+    inspectionStatusData: InspectionStatusModel[]
+}
+
+const InspectionStatus = ({ inspectionStatusData }: InspectionStatusProps) => {
     return (
         <div className={styles.container}>
-            {statusItems.map(({ status, Icon, text, iconType }) => (
-                <div key={status} className={styles.statusCard({ status })}>
-                    <div className={styles.iconWrappers[iconType]}>
-                        <div className={styles.icon}>
-                            <Icon />
-                        </div>
+            {inspectionStatusData.map((data) => (
+                <div
+                    key={data.status}
+                    className={styles.statusCard({
+                        status: data.status,
+                    })}
+                >
+                    <div className={styles.iconWrappers[data.iconType]}>
+                        <div className={styles.icon}>{data.icon}</div>
                     </div>
-                    <div className={styles.statusText}>{text}</div>
+                    <div className={styles.statusText}>{data.text}</div>
                 </div>
             ))}
         </div>

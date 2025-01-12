@@ -2,26 +2,23 @@ import * as styles from './styles.css'
 
 type StatusType = 'total' | 'active' | 'inactive' | 'disabled'
 
-type StatusItemType = {
+interface VehicleStatusModel {
     type: StatusType
     text: string
 }
 
-const VehicleStatus = () => {
-    const statusItems: StatusItemType[] = [
-        { type: 'total', text: '전체 차량' },
-        { type: 'active', text: '운행중 차량' },
-        { type: 'inactive', text: '미운행 차량' },
-        { type: 'disabled', text: '미관제 차량' },
-    ]
+interface VehicleStatusProps {
+    vehicleStatusData: VehicleStatusModel[]
+}
 
+const VehicleStatus = ({ vehicleStatusData }: VehicleStatusProps) => {
     return (
         <div className={styles.container}>
-            {statusItems.map((item) => (
-                <div key={item.type} className={styles.statusRow}>
-                    <div className={styles.dots[item.type]} />
-                    <span className={styles.text}>{item.text}</span>
-                    <div className={styles.statusBars[item.type]} />
+            {vehicleStatusData.map((data) => (
+                <div key={data.type} className={styles.statusRow}>
+                    <div className={styles.dots[data.type]} />
+                    <span className={styles.text}>{data.text}</span>
+                    <div className={styles.statusBars[data.type]} />
                 </div>
             ))}
         </div>

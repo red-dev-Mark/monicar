@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css'
+import { style, styleVariants } from '@vanilla-extract/css'
 
 import { styles } from '@/styles/theme.css'
 
@@ -20,22 +20,14 @@ export const statusRow = style({
     gap: '16px',
 })
 
+export const text = style({
+    flex: 1,
+})
+
 const dotBase = style({
     width: '16px',
     height: '16px',
     borderRadius: '50%',
-})
-
-export const dots = {
-    total: style([dotBase, { backgroundColor: styles.colors.pink[400] }]),
-    active: style([dotBase, { backgroundColor: styles.colors.pink[600] }]),
-    inactive: style([dotBase, { backgroundColor: styles.colors.green[500] }]),
-    disabled: style([dotBase, { backgroundColor: styles.colors.blue }]),
-}
-
-export const text = style({
-    flex: 1,
-    fontSize: styles.fontSizes.medium,
 })
 
 const statusBarBase = style({
@@ -44,9 +36,13 @@ const statusBarBase = style({
     borderRadius: '20px',
 })
 
-export const statusBars = {
-    total: style([statusBarBase, { backgroundColor: styles.colors.pink[400] }]),
-    active: style([statusBarBase, { backgroundColor: styles.colors.pink[600] }]),
-    inactive: style([statusBarBase, { backgroundColor: styles.colors.green[500] }]),
-    disabled: style([statusBarBase, { backgroundColor: styles.colors.blue }]),
-}
+const statusColors = {
+    total: styles.colors.pink[400],
+    active: styles.colors.pink[600],
+    inactive: styles.colors.green[500],
+    disabled: styles.colors.blue,
+} as const
+
+export const dots = styleVariants(statusColors, (color) => [dotBase, { backgroundColor: color }])
+
+export const statusBars = styleVariants(statusColors, (color) => [statusBarBase, { backgroundColor: color }])

@@ -23,11 +23,6 @@ const iconWrapperBase = style({
     alignItems: 'center',
 })
 
-const iconBase = style({
-    width: '24px',
-    height: '24px',
-})
-
 export const iconWrappers = styleVariants({
     bell: [iconWrapperBase, { backgroundColor: styles.colors.pink[700] }],
     alert: [iconWrapperBase, { backgroundColor: styles.colors.yellow[200] }],
@@ -35,19 +30,20 @@ export const iconWrappers = styleVariants({
     check: [iconWrapperBase, { backgroundColor: styles.colors.purple[200] }],
 })
 
-export const icon = iconBase
-
-const statusCardBase = {
-    width: '100%',
-    height: '100%',
-    borderRadius: '11px',
-    color: styles.colors.gray[800],
-    fontWeight: styles.fontWeights.bold,
-    padding: '16px',
-}
+export const icon = style({
+    width: '24px',
+    height: '24px',
+})
 
 export const statusCard = recipe({
-    base: statusCardBase,
+    base: {
+        width: '100%',
+        height: '100%',
+        borderRadius: '11px',
+        color: styles.colors.gray[800],
+        fontWeight: styles.fontWeights.bold,
+        padding: '16px',
+    },
     variants: {
         status: {
             required: { backgroundColor: styles.colors.pink[200] },
@@ -57,11 +53,6 @@ export const statusCard = recipe({
         },
     },
 })
-
-export const required = statusCard({ status: 'required' })
-export const scheduled = statusCard({ status: 'scheduled' })
-export const inProgress = statusCard({ status: 'inProgress' })
-export const completed = statusCard({ status: 'completed' })
 
 export const statusText = style({
     marginTop: '54px',
