@@ -12,41 +12,22 @@ import { useModal } from '@/hooks/useModal'
 import { useSearchVehicle } from '@/hooks/useSearchVehicle'
 import { formatISODateToKorean } from '@/lib/utils/date'
 import mockRoutesData from '@/mock/vehicle_route_data.json'
-import { PathPoint } from '@/types/location'
+import { LatLng, PathPoint } from '@/types/location'
 
 import * as styles from './styles.css'
 
 interface RouteSearchPanelProps {
-    startDate: DateTime
-    endDate: DateTime
-    setStartDate: Dispatch<SetStateAction<DateTime>>
-    setEndDate: Dispatch<SetStateAction<DateTime>>
-    onButtonClick?: () => void
     vehiclePaths: PathPoint[]
     setVehiclePaths: Dispatch<SetStateAction<PathPoint[]>>
-    setMapStatus: Dispatch<
-        SetStateAction<{
-            center: {
-                lat: number
-                lng: number
-            }
-            level: number
-        }>
-    >
+    updateMapLocation: (location: LatLng, level: number) => void
 }
 
-const RouteSearchPanel = ({
-    startDate,
-    endDate,
-    setStartDate,
-    setEndDate,
-    setVehiclePaths,
-    setMapStatus,
-    vehiclePaths,
-}: RouteSearchPanelProps) => {
+const RouteSearchPanel = ({ setVehiclePaths, updateMapLocation, vehiclePaths }: RouteSearchPanelProps) => {
     const [inputVehicleNumber, setInputVehicleNumber] = useState('')
     const [searchableDates, setSearchableDates] = useState({ firstDateAt: '', lastDateAt: '' })
     const [isSelectAllDate, setIsSelectAllDate] = useState(false)
+    const [startDate, setStartDate] = useState<DateTime>({ year: '', month: '', date: '', hour: '', minute: '' })
+    const [endDate, setEndDate] = useState<DateTime>({ year: '', month: '', date: '', hour: '', minute: '' })
 
     const { searchVehicle, vehicleData, isOpen, modalMessage, closeModal } = useSearchVehicle(inputVehicleNumber)
     const { showMessage } = useModal()
@@ -122,7 +103,7 @@ const RouteSearchPanel = ({
         })
 
         setVehiclePaths(data)
-        setMapStatus({ center: vehiclePaths[vehiclePaths.length / 2], level: 10 })
+        updateMapLocation(vehiclePaths[vehiclePaths.length / 2], 10)
     }
 
     const isButtonDisabled = Boolean(vehicleData)

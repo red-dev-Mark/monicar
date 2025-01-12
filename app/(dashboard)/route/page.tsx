@@ -5,8 +5,7 @@ import { Polyline } from 'react-kakao-maps-sdk'
 
 import Map from '@/app/(dashboard)/location/components/Map'
 import RouteSearchPanel from '@/app/(dashboard)/route/components/RouteSearchPanel'
-import { DateTime } from '@/app/(dashboard)/route/types/date'
-import { INITIAL_MAP_STATE } from '@/constants/map'
+import { useMapControl } from '@/hooks/useMapControl'
 import { styles } from '@/styles/theme.css'
 import { PathPoint } from '@/types/location'
 
@@ -14,13 +13,12 @@ import * as vars from './styles.css'
 
 const RoutePage = () => {
     const [vehiclePaths, setVehiclePaths] = useState<PathPoint[]>([])
-    const [mapStatus, setMapStatus] = useState(INITIAL_MAP_STATE)
-    const [startDate, setStartDate] = useState<DateTime>({ year: '', month: '', date: '', hour: '', minute: '' })
-    const [endDate, setEndDate] = useState<DateTime>({ year: '', month: '', date: '', hour: '', minute: '' })
+
+    const { mapState, updateMapLocation } = useMapControl()
 
     return (
         <div className={vars.container}>
-            <Map center={mapStatus.center} zoom={mapStatus.level}>
+            <Map center={mapState.center} zoom={mapState.level}>
                 <Polyline
                     path={[vehiclePaths]}
                     strokeWeight={5}
@@ -31,13 +29,9 @@ const RoutePage = () => {
             </Map>
 
             <RouteSearchPanel
-                startDate={startDate}
-                endDate={endDate}
-                setStartDate={setStartDate}
-                setEndDate={setEndDate}
                 vehiclePaths={vehiclePaths}
                 setVehiclePaths={setVehiclePaths}
-                setMapStatus={setMapStatus}
+                updateMapLocation={updateMapLocation}
             />
         </div>
     )
