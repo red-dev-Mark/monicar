@@ -11,6 +11,7 @@ export const selectContainer = style({
 
 export const selectGroup = style({
     display: 'flex',
+    // justifyContent: 'space-between',
     gap: '8px',
     marginBottom: '4px',
 })
@@ -22,15 +23,16 @@ export const label = style({
 
 export const selectStyles = {
     input: {
+        flex: 1,
         padding: '8px',
         borderRadius: '8px',
         border: `1px solid ${styles.colors.gray[200]}`,
-        backgroundColor: 'white',
+        backgroundColor: styles.colors.white,
         fontSize: styles.fontSizes.small,
         color: styles.colors.gray[700],
         cursor: 'pointer',
         height: '38px',
-        width: '84px',
+        width: '92px',
     },
     dropdown: {
         borderRadius: '8px',

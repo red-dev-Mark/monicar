@@ -2,18 +2,29 @@ import { style } from '@vanilla-extract/css'
 
 import { styles } from '@/styles/theme.css'
 
-export const container = style({
-    padding: '24px',
+export const accordion = style({
+    // width: '540px',
     position: 'absolute',
     top: '1.5rem',
     right: '1.5rem',
     zIndex: 10,
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '24px',
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderRadius: '16px',
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+})
+
+export const accordionControl = style({
+    padding: '18px 24px',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+})
+
+export const container = style({
+    padding: '0 24px 24px 24px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '24px',
 })
 
 export const searchSection = style({

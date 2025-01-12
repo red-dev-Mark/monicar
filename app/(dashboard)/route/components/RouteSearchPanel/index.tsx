@@ -1,5 +1,6 @@
 'use client'
 
+import { Accordion } from '@mantine/core'
 import { ChangeEvent, useState } from 'react'
 
 import DateTimeSelect from '@/app/(dashboard)/route/components/RouteSearchPanel/DateTimeSelect'
@@ -69,48 +70,65 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange }: RouteSearchPan
     }
 
     return (
-        <aside className={styles.container} aria-label='경로 조회 판넬'>
-            <div className={styles.searchSection}>
-                <h3 className={styles.sectionTitle}>차량 검색</h3>
-                <SearchInput
-                    value={inputValue}
-                    onChange={(event: ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value)}
-                    onSubmit={searchVehicle}
-                    placeholder='차량번호 검색'
-                    icon='/icons/pink-search-icon.svg'
-                    style={{
-                        borderRadius: '8px',
-                        boxShadow: 'none',
-                    }}
-                />
-            </div>
+        <Accordion defaultValue='search-panel' className={styles.accordion} unstyled>
+            <Accordion.Item value='search-panel'>
+                <Accordion.Control className={styles.accordionControl}></Accordion.Control>
+                <Accordion.Panel>
+                    <aside className={styles.container} aria-label='경로 조회 판넬'>
+                        <div className={styles.searchSection}>
+                            <h3 className={styles.sectionTitle}>차량 검색</h3>
+                            <SearchInput
+                                value={inputValue}
+                                onChange={(event: ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value)}
+                                onSubmit={searchVehicle}
+                                placeholder='차량번호 검색'
+                                icon='/icons/pink-search-icon.svg'
+                                style={{
+                                    borderRadius: '8px',
+                                    boxShadow: 'none',
+                                }}
+                            />
+                        </div>
 
-            <div className={styles.searchSection}>
-                <h3 className={styles.sectionTitle}>기간 검색</h3>
-                {isSelectable && (
-                    <p className={styles.searchableDate}>
-                        <span className={styles.searchableDateSpan}>조회 가능 기간</span>
-                        {formatISODateToKorean(searchableDates.firstDateAt)}
-                        <span style={{ color: '#d3d3d3' }}>~</span>
-                        {formatISODateToKorean(searchableDates.lastDateAt)}
-                    </p>
-                )}
+                        <div className={styles.searchSection}>
+                            <h3 className={styles.sectionTitle}>기간 검색</h3>
+                            {isSelectable && (
+                                <p className={styles.searchableDate}>
+                                    <span className={styles.searchableDateSpan}>조회 가능 기간</span>
+                                    {formatISODateToKorean(searchableDates.firstDateAt)}
+                                    <span style={{ color: '#d3d3d3' }}>~</span>
+                                    {formatISODateToKorean(searchableDates.lastDateAt)}
+                                </p>
+                            )}
 
-                <DateTimeSelect label='시작 일시' disabled={!isSelectable} value={startDate} onChange={setStartDate} />
-                <DateTimeSelect label='종료 일시' disabled={!isSelectable} value={endDate} onChange={setEndDate} />
-            </div>
+                            <DateTimeSelect
+                                label='시작 일시'
+                                disabled={!isSelectable}
+                                value={startDate}
+                                onChange={setStartDate}
+                            />
+                            <DateTimeSelect
+                                label='종료 일시'
+                                disabled={!isSelectable}
+                                value={endDate}
+                                onChange={setEndDate}
+                            />
+                        </div>
 
-            <SquareButton disabled={!isAllSelected()} onClick={handleSubmit}>
-                조회하기
-            </SquareButton>
+                        <SquareButton disabled={!isAllSelected()} onClick={handleSubmit}>
+                            조회하기
+                        </SquareButton>
 
-            <Modal
-                isOpen={isOpen}
-                message={modalMessage as ModalMessageType}
-                variant={{ variant: 'alert', confirmButton: '확인' }}
-                onClose={closeModal}
-            />
-        </aside>
+                        <Modal
+                            isOpen={isOpen}
+                            message={modalMessage as ModalMessageType}
+                            variant={{ variant: 'alert', confirmButton: '확인' }}
+                            onClose={closeModal}
+                        />
+                    </aside>
+                </Accordion.Panel>
+            </Accordion.Item>
+        </Accordion>
     )
 }
 
