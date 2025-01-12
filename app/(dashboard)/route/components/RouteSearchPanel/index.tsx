@@ -70,8 +70,8 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange }: RouteSearchPan
     }
 
     return (
-        <Accordion defaultValue='search-panel' className={styles.accordion} unstyled>
-            <Accordion.Item value='search-panel'>
+        <Accordion defaultValue='경로조회' className={styles.accordion} unstyled>
+            <Accordion.Item value='경로조회'>
                 <Accordion.Control className={styles.accordionControl}></Accordion.Control>
                 <Accordion.Panel>
                     <aside className={styles.container} aria-label='경로 조회 판넬'>

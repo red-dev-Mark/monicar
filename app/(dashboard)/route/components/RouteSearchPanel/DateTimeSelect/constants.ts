@@ -20,8 +20,8 @@ export const DAY_OPTIONS = Array.from({ length: 31 }, (_, i) => ({
 
 // 시간 데이터 (00-23시)
 export const HOUR_OPTIONS = Array.from({ length: 24 }, (_, i) => ({
-    value: String(i + 1).padStart(2, '0'),
-    label: `${String(i + 1).padStart(2, '0')}일`,
+    value: String(i).padStart(2, '0'),
+    label: `${String(i).padStart(2, '0')}시`,
 }))
 
 // 분 데이터 (10분 단위)
