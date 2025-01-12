@@ -8,7 +8,7 @@ import SquareButton from '@/components/common/Button/SquareButton'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
-import { INITIAL_MAP_STATE } from '@/constants/map'
+import { INITIAL_MAP_STATE, ZOOM_LEVEL } from '@/constants/map'
 import { useSearchVehicle } from '@/hooks/useSearchVehicle'
 import { vehicleAPI } from '@/lib/apis'
 import { formatISODateToKorean } from '@/lib/utils/date'
@@ -19,7 +19,7 @@ import * as styles from './styles.css'
 
 interface RouteSearchPanelProps {
     onPathsChange: (paths: LatLng[]) => void
-    onMapLocationChange: (location: LatLng, level: number) => void
+    onMapLocationChange: (location: LatLng, level: (typeof ZOOM_LEVEL)[keyof typeof ZOOM_LEVEL]) => void
 }
 
 const RouteSearchPanel = ({ onPathsChange, onMapLocationChange }: RouteSearchPanelProps) => {
@@ -58,15 +58,14 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange }: RouteSearchPan
             return
         }
 
-        // TODO: 실제 API 코드로 수정하기
-        const mockRoutesData = await vehicleAPI.fetchVehicleRoutesData(searchedVehicle.vehicleId, startDate, endDate)
-        const routesData = mockRoutesData.result.routes.map((route) => ({
+        const routesData = await vehicleAPI.fetchVehicleRoutesData(searchedVehicle.vehicleId, startDate, endDate)
+        const paths = routesData.result.routes.map((route) => ({
             lat: route.lat,
             lng: route.lon,
         }))
 
-        onPathsChange(routesData)
-        onMapLocationChange(INITIAL_MAP_STATE.center, 10)
+        onPathsChange(paths)
+        onMapLocationChange(INITIAL_MAP_STATE.center, 12)
     }
 
     return (

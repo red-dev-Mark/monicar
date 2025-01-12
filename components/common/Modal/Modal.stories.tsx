@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { MODAL_MESSAGES } from '@/types/ui'
+import { MODAL_MESSAGES } from '@/constants/ui'
 
 import SquareButton from '../Button/SquareButton'
 
