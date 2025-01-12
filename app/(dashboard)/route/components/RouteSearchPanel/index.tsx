@@ -3,6 +3,7 @@
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 import DateTimeSelect from '@/app/(dashboard)/route/components/RouteSearchPanel/DateTimeSelect'
+import { DateTime } from '@/app/(dashboard)/route/types/date'
 import SquareButton from '@/components/common/Button/SquareButton'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
@@ -16,38 +17,10 @@ import { PathPoint } from '@/types/location'
 import * as styles from './styles.css'
 
 interface RouteSearchPanelProps {
-    startDate: {
-        year: string
-        month: string
-        date: string
-        hour: string
-        minute: string
-    }
-    endDate: {
-        year: string
-        month: string
-        date: string
-        hour: string
-        minute: string
-    }
-    setStartDate: Dispatch<
-        SetStateAction<{
-            year: string
-            month: string
-            date: string
-            hour: string
-            minute: string
-        }>
-    >
-    setEndDate: Dispatch<
-        SetStateAction<{
-            year: string
-            month: string
-            date: string
-            hour: string
-            minute: string
-        }>
-    >
+    startDate: DateTime
+    endDate: DateTime
+    setStartDate: Dispatch<SetStateAction<DateTime>>
+    setEndDate: Dispatch<SetStateAction<DateTime>>
     onButtonClick?: () => void
     vehiclePaths: PathPoint[]
     setVehiclePaths: Dispatch<SetStateAction<PathPoint[]>>

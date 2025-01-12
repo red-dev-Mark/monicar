@@ -3,22 +3,16 @@
 import { Select } from '@mantine/core'
 import { Dispatch, SetStateAction } from 'react'
 
+import { DateTime } from '@/app/(dashboard)/route/types/date'
+
 import { YEAR_OPTIONS, MONTH_OPTIONS, DAY_OPTIONS, HOUR_OPTIONS, MINUTE_OPTIONS } from './constants'
 import * as styles from './styles.css'
 
 interface DateTimeSelectProps {
     label: string
     disabled: boolean
-    date: { year: string; month: string; date: string; hour: string; minute: string }
-    setDate: Dispatch<
-        SetStateAction<{
-            year: string
-            month: string
-            date: string
-            hour: string
-            minute: string
-        }>
-    >
+    date: DateTime
+    setDate: Dispatch<SetStateAction<DateTime>>
 }
 
 const DateTimeSelect = ({ label, disabled, date, setDate }: DateTimeSelectProps) => {
