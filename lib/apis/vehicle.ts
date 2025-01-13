@@ -32,8 +32,8 @@ export const vehicleAPI = {
                     drivingTime: 18000,
                 },
                 location: {
-                    lat: 37.4319,
-                    lng: 126.78,
+                    lat: 37.5363641,
+                    lng: 126.8876848,
                     lastUpdated: '2024-12-24T10:30:00',
                 },
             },

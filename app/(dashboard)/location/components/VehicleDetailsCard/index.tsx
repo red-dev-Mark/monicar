@@ -1,8 +1,12 @@
+'use client'
+
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 import Badge from '@/components/common/Badge'
 import SquareButton from '@/components/common/Button/SquareButton'
 import { formatISODateToDot } from '@/lib/utils/date'
+import { convertCoordsToAddress } from '@/lib/utils/map'
 import { vehicleDetailsModel } from '@/types/vehicle'
 
 import * as styles from './styles.css'
@@ -13,6 +17,8 @@ interface VehicleDetailsCardProps {
 }
 
 const VehicleDetailsCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetailsCardProps) => {
+    const [address, setAddress] = useState('')
+
     const {
         department,
         vehicleNumber,
@@ -22,19 +28,21 @@ const VehicleDetailsCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetai
         location: { lat, lng, lastUpdated },
     } = vehicleDetails
 
-    const isDriving = type === 'ON'
+    useEffect(() => {
+        const getAddressFromCoords = async () => {
+            const address = await convertCoordsToAddress(lat, lng)
+            setAddress(address)
+        }
+        getAddressFromCoords()
+    }, [lat, lng])
 
-    console.log(lat, lng)
+    const isDriving = type === 'ON'
 
     return (
         <article className={styles.container}>
             <header className={styles.header}>
                 <div className={styles.headerContent}>
-                    {isDriving ? (
-                        <Badge shape='rectangle' variant='운행중' />
-                    ) : (
-                        <Badge shape='rectangle' variant='미운행' />
-                    )}
+                    <Badge shape='rectangle' variant={isDriving ? '운행중' : '미운행'} />
                     <h2 className={styles.vehicleNumber}>{vehicleNumber}</h2>
                 </div>
                 <button onClick={() => onCloseButtonClick(false)} aria-label='차량 상세 정보 닫기'>
@@ -98,7 +106,8 @@ const VehicleDetailsCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetai
                                 최종위치
                             </th>
                             <td colSpan={3} className={styles.tableCell}>
-                                대구광역시 동구 효목동 209
+                                {/* 대구광역시 동구 효목동 209 */}
+                                {address}
                             </td>
                         </tr>
                     </tbody>
