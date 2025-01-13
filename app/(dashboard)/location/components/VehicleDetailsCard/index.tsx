@@ -5,7 +5,11 @@ import SquareButton from '@/components/common/Button/SquareButton'
 
 import * as styles from './styles.css'
 
-const VehicleDetailsCard = () => {
+interface VehicleDetailsCardProps {
+    onCloseButtonClick: (showDetailsCard: boolean) => void
+}
+
+const VehicleDetailsCard = ({ onCloseButtonClick }: VehicleDetailsCardProps) => {
     return (
         <article className={styles.container}>
             <header className={styles.header}>
@@ -13,7 +17,7 @@ const VehicleDetailsCard = () => {
                     <Badge shape='rectangle' variant='운행중' />
                     <h2 className={styles.vehicleNumber}>54하 2902</h2>
                 </div>
-                <button aria-label='차량 상세 정보 닫기'>
+                <button onClick={() => onCloseButtonClick(false)} aria-label='차량 상세 정보 닫기'>
                     <Image src={'/icons/clear-icon.svg'} width={32} height={32} alt='닫기 버튼' />
                 </button>
             </header>

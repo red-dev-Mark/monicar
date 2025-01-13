@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { CustomOverlayMap, MapMarker } from 'react-kakao-maps-sdk'
 
 import VehicleDetailsCard from '@/app/(dashboard)/location/components/VehicleDetailsCard'
@@ -14,6 +15,8 @@ import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
 import * as styles from './styles.css'
 
 const LocationPage = () => {
+    const [showDetailsCard, setShowDetailsCard] = useState(false)
+
     const {
         singleVehicle,
         mapState,
@@ -33,7 +36,11 @@ const LocationPage = () => {
                     <>
                         <MapMarker position={singleVehicle?.location} image={MARKER_IMAGE} />
                         <CustomOverlayMap position={singleVehicle?.location}>
-                            <div className={styles.singleVehicleInfo}>
+                            <div
+                                className={styles.singleVehicleInfo}
+                                onClick={() => setShowDetailsCard(true)}
+                                role='presentation'
+                            >
                                 <p>{singleVehicle.vehicleNumber}</p>
                                 <p>시동 {singleVehicle.status}</p>
                             </div>
@@ -51,7 +58,7 @@ const LocationPage = () => {
             </div>
 
             <VehicleStatus />
-            <VehicleDetailsCard />
+            {showDetailsCard && <VehicleDetailsCard onCloseButtonClick={setShowDetailsCard} />}
 
             <Modal
                 isOpen={isOpen}

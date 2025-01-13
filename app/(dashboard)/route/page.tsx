@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react'
 import { Polyline } from 'react-kakao-maps-sdk'
 
-import Map from '@/components/domain/map/Map'
 import RouteSearchPanel from '@/app/(dashboard)/route/components/RouteSearchPanel'
+import Map from '@/components/domain/map/Map'
 import mockRoutesData from '@/mock/vehicle_route_data.json'
 import { styles } from '@/styles/theme.css'
 import { PathPoint } from '@/types/location'
