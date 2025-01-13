@@ -16,14 +16,15 @@ export const searchInputWrapper = style({
     zIndex: 10,
 })
 
-export const singleVehicleInfo = style({
-    padding: '6px 16px',
+export const vehicleCard = style({
+    padding: '8px 16px',
     position: 'absolute',
     bottom: '48px',
     left: '50%',
     transform: 'translateX(-50%)',
 
     display: 'flex',
+    gap: '8px',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -46,4 +47,15 @@ export const singleVehicleInfo = style({
             borderTop: `8px solid ${styles.colors.black}`,
         },
     },
+})
+
+export const vehicleInfo = style({
+    color: styles.colors.white,
+    fontSize: styles.fontSizes.large,
+    fontWeight: styles.fontWeights.bold,
+})
+
+export const description = style({
+    color: styles.colors.white,
+    fontSize: styles.fontSizes.xsmall,
 })

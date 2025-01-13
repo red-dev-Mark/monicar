@@ -11,11 +11,14 @@ import { ModalMessageType } from '@/components/common/Modal/types'
 import Map from '@/components/domain/map/Map'
 import { MARKER_IMAGE } from '@/constants/map'
 import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
+import { vehicleAPI } from '@/lib/apis'
+import { vehicleDetailsModel } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
 const LocationPage = () => {
     const [showDetailsCard, setShowDetailsCard] = useState(false)
+    const [vehicleDetails, setVehicleDetails] = useState<vehicleDetailsModel>()
 
     const {
         singleVehicle,
@@ -29,6 +32,16 @@ const LocationPage = () => {
         closeModal,
     } = useSearchSingleVehicle()
 
+    const handleVehicleClick = async () => {
+        const vehicleDetailsData = await vehicleAPI.fetchVehicleDetails()
+
+        if (!vehicleDetailsData) return
+        setVehicleDetails(vehicleDetailsData)
+        setShowDetailsCard(true)
+    }
+
+    const isVehicleDetailsVisible = showDetailsCard && vehicleDetails
+
     return (
         <div className={styles.container}>
             <Map center={mapState.center} zoom={mapState.level}>
@@ -36,13 +49,9 @@ const LocationPage = () => {
                     <>
                         <MapMarker position={singleVehicle?.location} image={MARKER_IMAGE} />
                         <CustomOverlayMap position={singleVehicle?.location}>
-                            <div
-                                className={styles.singleVehicleInfo}
-                                onClick={() => setShowDetailsCard(true)}
-                                role='presentation'
-                            >
-                                <p>{singleVehicle.vehicleNumber}</p>
-                                <p>시동 {singleVehicle.status}</p>
+                            <div className={styles.vehicleCard} onClick={handleVehicleClick} role='presentation'>
+                                <p className={styles.vehicleInfo}>{singleVehicle.vehicleNumber}</p>
+                                <p className={styles.description}>클릭하시면, 상세 정보를 확인할 수 있습니다</p>
                             </div>
                         </CustomOverlayMap>
                     </>
@@ -58,7 +67,9 @@ const LocationPage = () => {
             </div>
 
             <VehicleStatus />
-            {showDetailsCard && <VehicleDetailsCard onCloseButtonClick={setShowDetailsCard} />}
+            {isVehicleDetailsVisible && (
+                <VehicleDetailsCard vehicleDetails={vehicleDetails} onCloseButtonClick={setShowDetailsCard} />
+            )}
 
             <Modal
                 isOpen={isOpen}

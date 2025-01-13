@@ -5,8 +5,8 @@ import { styles } from '@/styles/theme.css'
 export const container = style({
     width: '580px',
     position: 'absolute',
-    bottom: '4px',
-    left: '4px',
+    bottom: '2px',
+    left: '2px',
     zIndex: 10,
     display: 'flex',
     flexDirection: 'column',

@@ -2,20 +2,40 @@ import Image from 'next/image'
 
 import Badge from '@/components/common/Badge'
 import SquareButton from '@/components/common/Button/SquareButton'
+import { formatISODateToDot } from '@/lib/utils/date'
+import { vehicleDetailsModel } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
 interface VehicleDetailsCardProps {
+    vehicleDetails: vehicleDetailsModel
     onCloseButtonClick: (showDetailsCard: boolean) => void
 }
 
-const VehicleDetailsCard = ({ onCloseButtonClick }: VehicleDetailsCardProps) => {
+const VehicleDetailsCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetailsCardProps) => {
+    const {
+        department,
+        vehicleNumber,
+        driverName,
+        status: { type, speed, lastEngineOn, lastEngineOff },
+        dailyStatus: { distance, drivingTime },
+        location: { lat, lng, lastUpdated },
+    } = vehicleDetails
+
+    const isDriving = type === 'ON'
+
+    console.log(lat, lng)
+
     return (
         <article className={styles.container}>
             <header className={styles.header}>
                 <div className={styles.headerContent}>
-                    <Badge shape='rectangle' variant='운행중' />
-                    <h2 className={styles.vehicleNumber}>54하 2902</h2>
+                    {isDriving ? (
+                        <Badge shape='rectangle' variant='운행중' />
+                    ) : (
+                        <Badge shape='rectangle' variant='미운행' />
+                    )}
+                    <h2 className={styles.vehicleNumber}>{vehicleNumber}</h2>
                 </div>
                 <button onClick={() => onCloseButtonClick(false)} aria-label='차량 상세 정보 닫기'>
                     <Image src={'/icons/clear-icon.svg'} width={32} height={32} alt='닫기 버튼' />
@@ -27,11 +47,11 @@ const VehicleDetailsCard = ({ onCloseButtonClick }: VehicleDetailsCardProps) => 
                     <tbody>
                         <tr>
                             <th scope='row' className={styles.tableHeader}>
-                                조직명
+                                {department}
                             </th>
                             <td className={styles.tableCell}>04/09 조직</td>
                             <th scope='row' className={styles.tableHeader}>
-                                운전자명
+                                {driverName}
                             </th>
                             <td className={styles.tableCell}>테스트</td>
                         </tr>
@@ -39,38 +59,38 @@ const VehicleDetailsCard = ({ onCloseButtonClick }: VehicleDetailsCardProps) => 
                             <th scope='row' className={styles.tableHeader}>
                                 운행상태
                             </th>
-                            <td className={styles.tableCell}>운행중</td>
+                            <td className={styles.tableCell}>{isDriving ? '운행중' : '미운행'}</td>
                             <th scope='row' className={styles.tableHeader}>
                                 속도
                             </th>
-                            <td className={styles.tableCell}>0 km/h</td>
+                            <td className={styles.tableCell}>{speed} km/h</td>
                         </tr>
                         <tr>
                             <th scope='row' className={styles.tableHeader}>
                                 최근시동 ON
                             </th>
-                            <td className={styles.tableCell}>2021.06.11 16:50:13</td>
+                            <td className={styles.tableCell}>{formatISODateToDot(lastEngineOn)}</td>
                             <th scope='row' className={styles.tableHeader}>
                                 최근시동 OFF
                             </th>
-                            <td className={styles.tableCell}>2021.06.11 16:50:13</td>
+                            <td className={styles.tableCell}>{formatISODateToDot(lastEngineOff)}</td>
                         </tr>
                         <tr>
                             <th scope='row' className={styles.tableHeader}>
                                 당일주행시간
                             </th>
-                            <td className={styles.tableCell}>97분</td>
+                            <td className={styles.tableCell}>{drivingTime}분</td>
                             <th scope='row' className={styles.tableHeader}>
                                 당일주행거리
                             </th>
-                            <td className={styles.tableCell}>49.7 km</td>
+                            <td className={styles.tableCell}>{distance} km</td>
                         </tr>
                         <tr>
                             <th scope='row' className={styles.tableHeader}>
                                 최종수신
                             </th>
                             <td colSpan={3} className={styles.tableCell}>
-                                2021.06.11 16:50:13
+                                {formatISODateToDot(lastUpdated)}
                             </td>
                         </tr>
                         <tr>
