@@ -8,7 +8,7 @@ export const container = style({
     height: '100%',
     display: 'flex',
     alignItems: 'center',
-    padding: '15px 15px',
+    padding: '20px',
     gap: '20px',
     backgroundColor: styles.colors.white,
     borderRadius: '12px',

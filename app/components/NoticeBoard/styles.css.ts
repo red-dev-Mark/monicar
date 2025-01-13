@@ -7,7 +7,7 @@ export const container = style({
     height: '100%',
     backgroundColor: styles.colors.white,
     gap: '20px',
-    padding: '20px',
+    padding: '30px',
     borderRadius: '12px',
 })
 
@@ -19,13 +19,14 @@ export const announcement = style({
 
 export const noticeItem = style({
     display: 'flex',
-    gap: '10px',
-    marginBottom: '10px',
+    gap: '20px',
+    marginTop: '10px',
+    marginBottom: '20px',
 })
 
 export const imageWrapper = style({
     width: '100px',
-    height: '86px',
+    height: 'auto',
     borderRadius: '12px',
     overflow: 'hidden',
 })
