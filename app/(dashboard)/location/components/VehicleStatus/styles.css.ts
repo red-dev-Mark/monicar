@@ -4,6 +4,10 @@ import { styles } from '@/styles/theme.css'
 
 export const container = style({
     padding: '16px',
+    position: 'absolute',
+    top: '6.5rem',
+    right: '2rem',
+    zIndex: 10,
     display: 'flex',
     flexDirection: 'column',
     gap: '24px',

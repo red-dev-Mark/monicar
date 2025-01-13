@@ -2,11 +2,12 @@
 
 import { CustomOverlayMap, MapMarker } from 'react-kakao-maps-sdk'
 
-import Map from '@/app/(dashboard)/location/components/Map'
+import VehicleDetailsCard from '@/app/(dashboard)/location/components/VehicleDetailsCard'
 import VehicleStatus from '@/app/(dashboard)/location/components/VehicleStatus'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
+import Map from '@/components/domain/map/Map'
 import { MARKER_IMAGE } from '@/constants/map'
 import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
 
@@ -48,9 +49,9 @@ const LocationPage = () => {
                     onSubmit={handleVehicleSearch}
                 />
             </div>
-            <div className={styles.vehicleStatusWrapper}>
-                <VehicleStatus />
-            </div>
+
+            <VehicleStatus />
+            <VehicleDetailsCard />
 
             <Modal
                 isOpen={isOpen}

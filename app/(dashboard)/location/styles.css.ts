@@ -16,13 +16,6 @@ export const searchInputWrapper = style({
     zIndex: 10,
 })
 
-export const vehicleStatusWrapper = style({
-    position: 'absolute',
-    top: '6.5rem',
-    right: '2rem',
-    zIndex: 10,
-})
-
 export const singleVehicleInfo = style({
     padding: '6px 16px',
     position: 'absolute',
