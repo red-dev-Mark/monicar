@@ -3,9 +3,9 @@ import { style } from '@vanilla-extract/css'
 import { styles } from '@/styles/theme.css'
 
 export const container = style({
-    width: '342px',
+    width: '100%',
+    height: '100%',
     padding: '30px',
-    height: '486px',
     borderRadius: '12px',
     backgroundColor: styles.colors.white,
     color: styles.colors.black,
@@ -24,6 +24,7 @@ export const dateWrapper = style({
 
 export const header = style({
     display: 'flex',
+    alignItems: 'center',
     gap: '8px',
     marginBottom: '16px',
 })
@@ -89,9 +90,9 @@ export const verticalLine = style({
 export const messageList = style({
     display: 'flex',
     flexDirection: 'column',
-    gap: '16px',
+    gap: '30px',
     width: '100%',
-    paddingLeft: '24px',
+    padding: '24px',
 })
 
 export const messageWrapper = style({
@@ -100,6 +101,10 @@ export const messageWrapper = style({
     position: 'relative',
     fontWeight: styles.fontWeights.extraBold,
     color: styles.colors.gray[500],
+})
+
+export const message = style({
+    marginLeft: '12px',
 })
 
 export const dot = style({

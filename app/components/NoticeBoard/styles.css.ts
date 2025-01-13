@@ -3,7 +3,8 @@ import { style } from '@vanilla-extract/css'
 import { styles } from '@/styles/theme.css'
 
 export const container = style({
-    width: '342px',
+    width: '100%',
+    height: '100%',
     backgroundColor: styles.colors.white,
     gap: '20px',
     padding: '20px',

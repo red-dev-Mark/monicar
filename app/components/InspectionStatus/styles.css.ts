@@ -4,8 +4,8 @@ import { recipe } from '@vanilla-extract/recipes'
 import { styles } from '@/styles/theme.css'
 
 export const container = style({
-    width: '620px',
-    height: '180px',
+    width: '100%',
+    height: '100%',
     display: 'flex',
     alignItems: 'center',
     padding: '15px 15px',

@@ -2,15 +2,17 @@ import React from 'react'
 
 import * as styles from './styles.css'
 
-const messages = [
-    '즐거운 아침! 음악과 함께 시작.',
-    '따뜻한 커피 한 잔은 건강에 좋아요.',
-    '점심에는 스트레칭을 해볼까요?',
-    '바이오리듬을 지키세요!',
-    '눈 오는 날은 차량 운행에 주의하세요.',
-]
+interface CalendarModel {
+    id: number
+    message: string
+    isActive?: boolean
+}
 
-const Calendar = () => {
+interface CalendarProps {
+    calendarData: CalendarModel[]
+}
+
+const Calendar = ({ calendarData }: CalendarProps) => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
@@ -43,10 +45,12 @@ const Calendar = () => {
             <div className={styles.messageContainer}>
                 <div className={styles.verticalLine} />
                 <div className={styles.messageList}>
-                    {messages.map((message, index) => (
-                        <div key={index} className={styles.messageWrapper}>
-                            <div className={`${styles.dot} ${index === 2 ? styles.activeDot : ''}`} />
-                            <div className={` ${index === 2 ? styles.activeMessageWrapper : ''}`}>{message}</div>
+                    {calendarData.map((data) => (
+                        <div key={data.id} className={styles.messageWrapper}>
+                            <div className={`${styles.dot}${data.isActive ? styles.activeDot : ''}`} />
+                            <div className={`${styles.message} ${data.isActive ? styles.activeMessageWrapper : ''}`}>
+                                {data.message}
+                            </div>
                         </div>
                     ))}
                 </div>
