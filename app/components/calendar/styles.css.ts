@@ -104,7 +104,7 @@ export const messageWrapper = style({
 })
 
 export const message = style({
-    marginLeft: '12px',
+    marginLeft: '40px',
 })
 
 export const dot = style({

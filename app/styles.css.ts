@@ -30,6 +30,7 @@ export const headerWrapper = style({
 })
 
 export const searchInputWrapper = style({
+    maxWidth: '358px',
     padding: '0px 20px',
     flex: '1',
 })
