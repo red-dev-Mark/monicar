@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CustomOverlayMap, MapMarker } from 'react-kakao-maps-sdk'
 
 import VehicleDetailsCard from '@/app/(dashboard)/location/components/VehicleDetailsCard'
@@ -19,6 +19,7 @@ import * as styles from './styles.css'
 const LocationPage = () => {
     const [showDetailsCard, setShowDetailsCard] = useState(false)
     const [vehicleDetails, setVehicleDetails] = useState<vehicleDetailsModel>()
+    const [isMapLoaded, setIsMapLoaded] = useState(false)
 
     const {
         singleVehicle,
@@ -32,6 +33,12 @@ const LocationPage = () => {
         closeModal,
     } = useSearchSingleVehicle()
 
+    useEffect(() => {
+        if (!isMapLoaded) return
+
+        // const geocoder = new kakao.maps.services.Geocoder()
+    }, [isMapLoaded])
+
     const handleVehicleClick = async () => {
         const vehicleDetailsData = await vehicleAPI.fetchVehicleDetails()
 
@@ -44,7 +51,7 @@ const LocationPage = () => {
 
     return (
         <div className={styles.container}>
-            <Map center={mapState.center} zoom={mapState.level}>
+            <Map center={mapState.center} zoom={mapState.level} onLoad={setIsMapLoaded}>
                 {showSingleVehicle && singleVehicle && (
                     <>
                         <MapMarker position={singleVehicle?.location} image={MARKER_IMAGE} />
@@ -57,6 +64,7 @@ const LocationPage = () => {
                     </>
                 )}
             </Map>
+
             <div className={styles.searchInputWrapper}>
                 <SearchInput
                     icon='/icons/search-icon.svg'
@@ -67,6 +75,7 @@ const LocationPage = () => {
             </div>
 
             <VehicleStatus />
+
             {isVehicleDetailsVisible && (
                 <VehicleDetailsCard vehicleDetails={vehicleDetails} onCloseButtonClick={setShowDetailsCard} />
             )}
