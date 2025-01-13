@@ -62,7 +62,7 @@ export const vehicleStatusWrapper = style({
 
 export const mapWrapper = style({
     width: '100%',
-    height: '400px',
+    height: '100vh',
     borderRadius: '12px',
     padding: '0 20px',
 })
@@ -75,6 +75,6 @@ export const calendarWrapper = style({
 
 export const noticeBoardWrapper = style({
     width: '100%',
-    height: 'auto',
+    height: '100vh',
     padding: '0 20px',
 })

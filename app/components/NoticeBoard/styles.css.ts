@@ -11,6 +11,12 @@ export const container = style({
     borderRadius: '12px',
 })
 
+export const announcement = style({
+    color: styles.colors.black,
+    fontSize: styles.fontSizes.large,
+    fontWeight: styles.fontWeights.extraBold,
+})
+
 export const noticeItem = style({
     display: 'flex',
     gap: '10px',
