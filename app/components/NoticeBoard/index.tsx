@@ -16,6 +16,7 @@ interface NoticeBoardProps {
 const NoticeBoard = ({ noticeBoardData }: NoticeBoardProps) => {
     return (
         <div className={styles.container}>
+            <div className={styles.title}>공지사항</div>
             {noticeBoardData.map((data) => (
                 <div key={data.id} className={styles.noticeItem}>
                     <div className={styles.imageWrapper}>

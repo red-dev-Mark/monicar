@@ -47,7 +47,7 @@ const Calendar = ({ calendarData }: CalendarProps) => {
                 <div className={styles.messageList}>
                     {calendarData.map((data) => (
                         <div key={data.id} className={styles.messageWrapper}>
-                            <div className={`${styles.dot}${data.isActive ? styles.activeDot : ''}`} />
+                            <div className={`${styles.dot} ${data.isActive ? styles.activeDot : ''}`} />
                             <div className={`${styles.message} ${data.isActive ? styles.activeMessageWrapper : ''}`}>
                                 {data.message}
                             </div>
