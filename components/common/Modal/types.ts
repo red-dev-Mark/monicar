@@ -1,4 +1,4 @@
-import { MODAL_MESSAGES } from '@/types/ui'
+import { MODAL_MESSAGES } from '@/constants/ui'
 
 type AlertButtonType = {
     variant: 'alert'

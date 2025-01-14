@@ -1,7 +1,4 @@
-'use client'
-
 import Image from 'next/image'
-import React from 'react'
 
 import Switch from '@/components/common/Switch'
 import NavItem from '@/components/layout/NavBar/NavItem'

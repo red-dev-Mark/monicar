@@ -7,6 +7,15 @@ export interface VehicleInfoModel {
     location: LatLng
 }
 
+export interface VehicleDateModel {
+    vehicleId: string
+    vehicleNumber: string
+    searchableDates: {
+        firstDateAt: string
+        lastDateAt: string
+    }
+}
+
 export interface VehicleDetailsModel {
     department: string
     vehicleId: string

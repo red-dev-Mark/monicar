@@ -7,6 +7,23 @@ export const formatISODateToKorean = (isoDate: string) => {
     return `${year}년 ${month}월 ${date}일 ${hour}시 ${minute}분`
 }
 
+// { year, month, date, hour, minute } -> 2024-01-15T09:30:00
+export const formatToISODate = ({
+    year,
+    month,
+    date,
+    hour,
+    minute,
+}: {
+    year: string
+    month: string
+    date: string
+    hour: string
+    minute: string
+}) => {
+    return `${year}-${month}-${date}T${hour}:${minute}:00`
+}
+
 // 2024-01-15T09:30:00 -> 2024.01.15 09:30:00
 export const formatISODateToDot = (isoDate: string) => {
     const [ymd, time] = isoDate.split('T')
