@@ -1,4 +1,4 @@
-import DateTimeSelect from '@/app/(dashboard)/route/components/RouteSearchPanel/DateTimeSelect'
+import DateTimeSelect from '@/app/route/components/RouteSearchPanel/DateTimeSelect'
 import SquareButton from '@/components/common/Button/SquareButton'
 import SearchInput from '@/components/common/Input/SearchInput'
 

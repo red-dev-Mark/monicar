@@ -1,9 +1,9 @@
 'use client'
 
+import Map from '@/app/location/components/Map'
 import SearchInput from '@/components/common/Input/SearchInput'
 import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from '@/public/icons'
 
-import Map from './(dashboard)/location/components/Map'
 import Calendar from './components/Calendar'
 import InspectionStatus from './components/InspectionStatus'
 import NoticeBoard from './components/NoticeBoard'

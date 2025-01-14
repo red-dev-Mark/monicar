@@ -2,8 +2,8 @@
 
 import { CustomOverlayMap, MapMarker } from 'react-kakao-maps-sdk'
 
-import Map from '@/app/(dashboard)/location/components/Map'
-import VehicleStatus from '@/app/(dashboard)/location/components/VehicleStatus'
+import Map from '@/app/location/components/Map'
+import VehicleStatus from '@/app/location/components/VehicleStatus'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
