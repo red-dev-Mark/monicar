@@ -10,14 +10,15 @@ export const container = style({
     zIndex: 10,
     display: 'flex',
     flexDirection: 'column',
-    gap: '24px',
+    gap: '18px',
     padding: '16px',
     backgroundColor: styles.colors.white,
-    borderRadius: '14px 14px 0 0',
+    borderRadius: '24px 24px 0 0',
     boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
 })
 
 export const header = style({
+    padding: '4px 0 0 4px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',

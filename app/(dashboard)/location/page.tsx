@@ -49,12 +49,15 @@ const LocationPage = () => {
             <Map center={mapState.center} zoom={mapState.level}>
                 {isVehicleVisible && (
                     <>
-                        <MapMarker position={singleVehicle?.location} image={MARKER_IMAGE} />
                         <CustomOverlayMap position={singleVehicle?.location}>
-                            <div className={styles.vehicleCard} onClick={handleVehicleClick} role='presentation'>
-                                <p className={styles.vehicleInfo}>{singleVehicle.vehicleNumber}</p>
-                                <p className={styles.description}>클릭하시면, 상세 정보를 확인할 수 있습니다</p>
-                            </div>
+                            <MapMarker position={singleVehicle?.location} image={MARKER_IMAGE} />
+                            <p className={styles.vehicleCard} onClick={handleVehicleClick} role='presentation'>
+                                {singleVehicle.vehicleNumber}
+                            </p>
+                            <p className={styles.description}>
+                                차량번호를 클릭하시면
+                                <br /> 상세 정보를 확인할 수 있습니다
+                            </p>
                         </CustomOverlayMap>
                     </>
                 )}

@@ -37,7 +37,7 @@ const VehicleDetailsCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetai
                     <h2 className={styles.vehicleNumber}>{vehicleNumber}</h2>
                 </div>
                 <button onClick={() => onCloseButtonClick(false)} aria-label='차량 상세 정보 닫기'>
-                    <Image src={'/icons/clear-icon.svg'} width={32} height={32} alt='닫기 버튼' />
+                    <Image src={'/icons/clear-icon.svg'} width={36} height={36} alt='닫기 버튼' />
                 </button>
             </header>
 
