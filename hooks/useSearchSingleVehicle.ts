@@ -5,12 +5,12 @@ import { useMapControl } from '@/hooks/useMapControl'
 import { useModal } from '@/hooks/useModal'
 import { validateVehicleNumber } from '@/lib/utils/validation'
 import mockData from '@/mock/single_vehicle_search_ok.json'
-import { singleVehicleModel } from '@/types/vehicle'
+import { VehicleInfoModel } from '@/types/vehicle'
 
 export const useSearchSingleVehicle = () => {
     const [searchTerm, setSearchTerm] = useState('')
-    const [showSingleVehicle, setShowSingleVehicle] = useState(false)
-    const [singleVehicle, setSingleVehicle] = useState<singleVehicleModel>()
+    const [isVehicleVisible, setIsVehicleVisible] = useState(false)
+    const [vehicleInfo, setVehicleInfo] = useState<VehicleInfoModel>()
 
     const { isOpen, modalMessage, closeModal, showMessage } = useModal()
     const { mapState, updateMapLocation } = useMapControl()
@@ -27,14 +27,14 @@ export const useSearchSingleVehicle = () => {
                 location: { lat: data.lat, lng: data.lng },
             }
 
-            setSingleVehicle(singleVehicleData)
+            setVehicleInfo(singleVehicleData)
         }
 
         getSingleVehicleData()
     }, [])
 
     const handleVehicleSearch = () => {
-        if (!singleVehicle) return
+        if (!vehicleInfo) return
 
         const validation = validateVehicleNumber(searchTerm)
 
@@ -51,13 +51,13 @@ export const useSearchSingleVehicle = () => {
 
         updateMapLocation(
             {
-                lat: singleVehicle?.location.lat,
-                lng: singleVehicle?.location.lng,
+                lat: vehicleInfo?.location.lat,
+                lng: vehicleInfo?.location.lng,
             },
             ZOOM_LEVEL.SINGLE_VEHICLE,
         )
 
-        setShowSingleVehicle(true)
+        setIsVehicleVisible(true)
         setSearchTerm('')
     }
 
@@ -66,9 +66,9 @@ export const useSearchSingleVehicle = () => {
     }
 
     return {
-        singleVehicle,
+        vehicleInfo,
         mapState,
-        showSingleVehicle,
+        isVehicleVisible,
         searchTerm,
         modalMessage,
         isOpen,

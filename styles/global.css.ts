@@ -3,7 +3,7 @@ import { globalStyle } from '@vanilla-extract/css'
 import { FONT_WEIGHT } from '@/styles/font.css'
 
 globalStyle('body', {
-    fontFamily: 'airbnbCereal, nanumSquareNeo, sans-serif',
+    fontFamily: 'airbnbCereal, nanumSquareNeo, sans-serif !important',
     fontWeight: FONT_WEIGHT.regular,
 })
 

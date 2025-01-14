@@ -23,3 +23,12 @@ export const formatToISODate = ({
 }) => {
     return `${year}-${month}-${date}T${hour}:${minute}:00`
 }
+
+// 2024-01-15T09:30:00 -> 2024.01.15 09:30:00
+export const formatISODateToDot = (isoDate: string) => {
+    const [ymd, time] = isoDate.split('T')
+    const [year, month, date] = ymd.split('-')
+    const [hour, minute, second] = time.split(':')
+
+    return `${year}.${month}.${date} ${hour}:${minute}:${second}`
+}

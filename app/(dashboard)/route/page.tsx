@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import { Polyline } from 'react-kakao-maps-sdk'
 
-import Map from '@/app/(dashboard)/location/components/Map'
 import RouteSearchPanel from '@/app/(dashboard)/route/components/RouteSearchPanel'
+import Map from '@/components/domain/map/Map'
 import { useMapControl } from '@/hooks/useMapControl'
 import { styles } from '@/styles/theme.css'
 import { LatLng } from '@/types/location'
