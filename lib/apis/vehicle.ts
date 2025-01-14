@@ -2,7 +2,7 @@
 
 import { API_URL } from '@/constants/api'
 import { apiClient } from '@/lib/apis/client'
-import { vehicleDetailsModel, VehicleStatusType } from '@/types/vehicle'
+import { VehicleDetailsModel, VehicleStatusType } from '@/types/vehicle'
 
 // 예시 API 구조
 export const vehicleAPI = {
@@ -11,7 +11,7 @@ export const vehicleAPI = {
         return response
     },
     // fetchVehicleDetails: async (vehicleId: string) => {
-    fetchVehicleDetails: async (): Promise<vehicleDetailsModel> => {
+    fetchVehicleDetails: async (): Promise<VehicleDetailsModel> => {
         // const response = await apiClient.get(`${API_URL}/api/v1/vehicles/${vehicleId}`)
         const response = {
             isSuccess: true,

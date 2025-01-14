@@ -1,13 +1,13 @@
 import { LatLng } from '@/types/location'
 
-export interface singleVehicleModel {
+export interface VehicleInfoModel {
     vehicleId: string
     vehicleNumber: string
     status: string
     location: LatLng
 }
 
-export interface vehicleDetailsModel {
+export interface VehicleDetailsModel {
     department: string
     vehicleId: string
     vehicleNumber: string

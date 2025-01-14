@@ -7,14 +7,14 @@ export const container = style({
     position: 'absolute',
     top: '6.5rem',
     right: '2rem',
-    zIndex: 10,
+    zIndex: styles.zIndex.header,
     display: 'flex',
     flexDirection: 'column',
     gap: '24px',
     justifyContent: 'center',
     alignItems: 'center',
     color: styles.colors.gray[800],
-    backgroundColor: 'rgb(256, 256, 256, 0.8)',
+    backgroundColor: styles.colors.transparent[800],
     borderRadius: '14px',
 })
 

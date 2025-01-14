@@ -8,7 +8,7 @@ export const useCoordToAddress = (lat: number, lng: number) => {
     const [address, setAddress] = useState('')
 
     useEffect(() => {
-        const cacheKey = `${lat}${lng}`
+        const cacheKey = `${lat}-${lng}`
 
         if (addressCache.has(cacheKey)) {
             const address = addressCache.get(cacheKey)

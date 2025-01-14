@@ -6,12 +6,12 @@ import Badge from '@/components/common/Badge'
 import SquareButton from '@/components/common/Button/SquareButton'
 import { useCoordToAddress } from '@/hooks/useCoordToAddress'
 import { formatISODateToDot } from '@/lib/utils/date'
-import { vehicleDetailsModel } from '@/types/vehicle'
+import { VehicleDetailsModel } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
 interface VehicleDetailsCardProps {
-    vehicleDetails: vehicleDetailsModel
+    vehicleDetails: VehicleDetailsModel
     onCloseButtonClick: (showDetailsCard: boolean) => void
 }
 
@@ -33,7 +33,7 @@ const VehicleDetailsCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetai
         <article className={styles.container}>
             <header className={styles.header}>
                 <div className={styles.headerContent}>
-                    <Badge shape='rectangle' variant={isDriving ? '운행중' : '미운행'} />
+                    <Badge shape='circle' variant={isDriving ? '운행중' : '미운행'} />
                     <h2 className={styles.vehicleNumber}>{vehicleNumber}</h2>
                 </div>
                 <button onClick={() => onCloseButtonClick(false)} aria-label='차량 상세 정보 닫기'>
