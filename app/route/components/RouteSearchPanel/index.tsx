@@ -9,7 +9,7 @@ import SquareButton from '@/components/common/Button/SquareButton'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
-import { INITIAL_MAP_STATE, ZOOM_LEVEL } from '@/constants/map'
+import { ZOOM_LEVEL } from '@/constants/map'
 import { useSearchVehicle } from '@/hooks/useSearchVehicle'
 import { vehicleAPI } from '@/lib/apis'
 import { formatISODateToKorean } from '@/lib/utils/date'
@@ -66,7 +66,8 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange }: RouteSearchPan
         }))
 
         onPathsChange(paths)
-        onMapLocationChange(INITIAL_MAP_STATE.center, 12)
+        onMapLocationChange({ lat: 37.417117, lng: 126.98816 }, 8)
+        // onMapLocationChange(INITIAL_MAP_STATE.center, 12)
     }
 
     return (
