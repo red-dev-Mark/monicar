@@ -1,10 +1,10 @@
 'use client'
 
-import Map from '@/app/location/components/Map'
+import Calendar from '@/app/(dashboard)/components/Calendar'
 import SearchInput from '@/components/common/Input/SearchInput'
+import Map from '@/components/domain/map/Map'
 import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from '@/public/icons'
 
-import Calendar from './components/Calendar'
 import InspectionStatus from './components/InspectionStatus'
 import NoticeBoard from './components/NoticeBoard'
 import VehicleStatus from './components/VehicleStatus'
@@ -76,7 +76,7 @@ const HomePage = () => {
                     />
                 </div>
                 <div className={styles.mapWrapper}>
-                    <Map></Map>
+                    <Map />
                 </div>
             </div>
             <div className={styles.rightSection}>

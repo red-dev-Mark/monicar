@@ -1,9 +1,14 @@
+export const ZOOM_LEVEL = {
+    INITIAL: 12,
+    SINGLE_VEHICLE: 7,
+} as const
+
 export const INITIAL_MAP_STATE = {
     center: {
-        lat: 37.496487,
-        lng: 127.028369,
+        lat: 36.5,
+        lng: 127.5,
     },
-    level: 10,
+    level: ZOOM_LEVEL.INITIAL,
 }
 
 export const MARKER_IMAGE = {
@@ -18,8 +23,4 @@ export const MARKER_IMAGE = {
             y: 48,
         },
     },
-} as const
-
-export const ZOOM_LEVEL = {
-    SINGLE_VEHICLE: 7,
 } as const

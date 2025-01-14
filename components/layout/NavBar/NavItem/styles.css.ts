@@ -26,3 +26,9 @@ export const navItem = style({
         },
     },
 })
+
+export const currentItem = style({
+    color: styles.colors.primary,
+    fontWeight: styles.fontWeights.bold,
+    backgroundColor: styles.colors.gray[50],
+})

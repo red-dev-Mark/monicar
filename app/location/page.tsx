@@ -1,22 +1,28 @@
 'use client'
 
-import { CustomOverlayMap, MapMarker } from 'react-kakao-maps-sdk'
+import { useState } from 'react'
 
-import Map from '@/app/location/components/Map'
+import VehicleDetailsCard from '@/app/location/components/VehicleDetailsCard'
+import VehicleMarker from '@/app/location/components/VehicleMarker'
 import VehicleStatus from '@/app/location/components/VehicleStatus'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
-import { MARKER_IMAGE } from '@/constants/map'
+import Map from '@/components/domain/map/Map'
 import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
+import { vehicleAPI } from '@/lib/apis'
+import { VehicleDetailsModel } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
 const LocationPage = () => {
+    const [isDetailsCardVisible, setIsDetailsCardVisible] = useState(false)
+    const [vehicleDetails, setVehicleDetails] = useState<VehicleDetailsModel>()
+
     const {
-        singleVehicle,
+        vehicleInfo,
         mapState,
-        showSingleVehicle,
+        isVehicleVisible,
         searchTerm,
         modalMessage,
         isOpen,
@@ -25,21 +31,26 @@ const LocationPage = () => {
         closeModal,
     } = useSearchSingleVehicle()
 
+    const handleVehicleClick = async () => {
+        const vehicleDetailsData = await vehicleAPI.fetchVehicleDetails()
+
+        if (!vehicleDetailsData) return
+
+        setVehicleDetails(vehicleDetailsData)
+        setIsDetailsCardVisible(true)
+    }
+
+    const isVehicleMarkerVisible = isVehicleVisible && vehicleInfo
+    const isVehicleDetailsVisible = isDetailsCardVisible && vehicleDetails
+
     return (
         <div className={styles.container}>
             <Map center={mapState.center} zoom={mapState.level}>
-                {showSingleVehicle && singleVehicle && (
-                    <>
-                        <MapMarker position={singleVehicle?.location} image={MARKER_IMAGE} />
-                        <CustomOverlayMap position={singleVehicle?.location}>
-                            <div className={styles.singleVehicleInfo}>
-                                <p>{singleVehicle.vehicleNumber}</p>
-                                <p>시동 {singleVehicle.status}</p>
-                            </div>
-                        </CustomOverlayMap>
-                    </>
+                {isVehicleMarkerVisible && (
+                    <VehicleMarker vehicleInfo={vehicleInfo} onVehicleClick={handleVehicleClick} />
                 )}
             </Map>
+
             <div className={styles.searchInputWrapper}>
                 <SearchInput
                     icon='/icons/search-icon.svg'
@@ -48,9 +59,12 @@ const LocationPage = () => {
                     onSubmit={handleVehicleSearch}
                 />
             </div>
-            <div className={styles.vehicleStatusWrapper}>
-                <VehicleStatus />
-            </div>
+
+            <VehicleStatus />
+
+            {isVehicleDetailsVisible && (
+                <VehicleDetailsCard vehicleDetails={vehicleDetails} onCloseButtonClick={setIsDetailsCardVisible} />
+            )}
 
             <Modal
                 isOpen={isOpen}
