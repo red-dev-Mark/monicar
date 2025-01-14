@@ -3,7 +3,6 @@ import { style } from '@vanilla-extract/css'
 import { styles } from '@/styles/theme.css'
 
 export const accordion = style({
-    // width: '540px',
     position: 'absolute',
     top: '1.5rem',
     right: '1.5rem',
@@ -60,4 +59,9 @@ export const searchableDateSpan = style({
     borderRadius: '4px',
     fontSize: styles.fontSizes.xsmall,
     border: `1px solid ${styles.colors.primary}`,
+})
+
+export const searchInputStyle = style({
+    borderRadius: '8px',
+    boxShadow: 'none',
 })

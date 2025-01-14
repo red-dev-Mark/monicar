@@ -83,10 +83,7 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange }: RouteSearchPan
                                 onSubmit={searchVehicle}
                                 placeholder='차량번호 검색'
                                 icon='/icons/pink-search-icon.svg'
-                                style={{
-                                    borderRadius: '8px',
-                                    boxShadow: 'none',
-                                }}
+                                className={styles.searchInputStyle}
                             />
                         </div>
 

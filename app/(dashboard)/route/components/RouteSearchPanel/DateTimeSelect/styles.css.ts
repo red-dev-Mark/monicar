@@ -36,7 +36,7 @@ export const selectStyles = {
     dropdown: {
         borderRadius: '8px',
         border: `1px solid ${styles.colors.gray[200]}`,
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+        boxShadow: `0 4px 12px ${styles.colors.shadow[100]}`,
     },
     item: {
         fontSize: styles.fontSizes.small,
