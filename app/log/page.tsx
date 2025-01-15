@@ -25,17 +25,18 @@ const LogPage = () => {
     const headerTitles = ['차량번호', '차종', '차량현황']
 
     return (
-        <div>
+        <>
             <SearchField hasButton={true} />
             <div className={styles.listWrapper}>
                 <ListHeader headerTitles={headerTitles} />
+
                 {mockLogData.map((log) => (
                     <ListItem key={log.id} data={log} />
                 ))}
             </div>
 
             {/* TODO 페이지네이션 추가 */}
-        </div>
+        </>
     )
 }
 

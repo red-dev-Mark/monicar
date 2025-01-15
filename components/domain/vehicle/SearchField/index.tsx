@@ -8,15 +8,13 @@ interface SearchFieldProps {
 }
 const SearchField = ({ hasButton }: SearchFieldProps) => {
     return (
-        <div>
-            <div className={styles.container}>
-                {hasButton && (
-                    <RoundButton size={'small'} color={'primary'}>
-                        등록
-                    </RoundButton>
-                )}
-                <SearchInput icon='/icons/search-icon.svg' />
-            </div>
+        <div className={styles.container}>
+            {hasButton && (
+                <RoundButton size='small' color='primary'>
+                    등록
+                </RoundButton>
+            )}
+            <SearchInput icon='/icons/search-icon.svg' />
         </div>
     )
 }
