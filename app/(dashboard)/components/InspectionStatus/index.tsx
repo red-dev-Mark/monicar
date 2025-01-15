@@ -3,7 +3,7 @@ import * as styles from './styles.css'
 type StatusType = 'required' | 'scheduled' | 'inProgress' | 'completed'
 type IconType = 'bell' | 'alert' | 'button' | 'check'
 
-interface InspectionStatusModel {
+export interface InspectionStatusModel {
     status: StatusType
     icon: React.ReactNode
     text: string

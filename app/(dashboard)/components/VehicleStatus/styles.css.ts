@@ -4,7 +4,8 @@ import { styles } from '@/styles/theme.css'
 
 export const container = style({
     width: '100%',
-    height: '100%',
+    // height: '100%',
+    height: 'auto',
     display: 'flex',
     backgroundColor: styles.colors.white,
     borderRadius: '12px',
