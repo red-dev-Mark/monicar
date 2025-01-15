@@ -1,4 +1,4 @@
-import { flexRender, getCoreRowModel, useReactTable, ColumnDef } from '@tanstack/react-table'
+import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 
 import * as styles from './styles.css'
 import { TableDataType, TableSizeType } from './types'
@@ -30,6 +30,11 @@ const Table = ({ data, columns }: TableProps) => {
                         <tr key={row.id} className={styles.tableRow}>
                             {row.getVisibleCells().map((cell) => {
                                 const cellData = cell.getValue() as TableCellProps
+
+                                if (!cellData || cellData.content === '') {
+                                    return null
+                                }
+
                                 return (
                                     <td
                                         key={cell.id}
