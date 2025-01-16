@@ -9,12 +9,14 @@ interface ListItemProps {
 }
 
 const ListItem = ({ data }: ListItemProps) => {
-    const { vehicleNumber, vehicleModel, status } = data
+    const { vehicleNumber, vehicleModel, drivingDays, totalDrivingDistance, status } = data
 
     return (
         <div className={styles.container}>
             <span className={styles.itemWrapper}>{vehicleNumber}</span>
             <span className={styles.itemWrapper}>{vehicleModel}</span>
+            <span className={styles.itemWrapper}>{drivingDays}일</span>
+            <span className={styles.itemWrapper}>{totalDrivingDistance}km</span>
             <span className={styles.itemWrapper}>
                 <Badge shape={'rectangle'} variant={status} />
             </span>
