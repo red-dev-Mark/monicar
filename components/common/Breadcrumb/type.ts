@@ -1,3 +1,5 @@
+// TODO: path 추가
+
 export const breadcrumbConfig = [
     { label: '운행기록', path: '/log' },
     { label: '운행일지', path: '/log' },
