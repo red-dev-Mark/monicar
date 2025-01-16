@@ -10,6 +10,7 @@ import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import Map from '@/components/domain/map/Map'
+import { MARKER_IMAGE } from '@/constants/map'
 import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
 import { vehicleAPI } from '@/lib/apis'
 import koreaLocation from '@/mock/metropolitan_coordinates.json'
@@ -93,7 +94,7 @@ const LocationPage = () => {
                     gridSize={100}
                 >
                     {koreaLocation.map((marker, index) => (
-                        <MapMarker key={index} position={marker} />
+                        <MapMarker key={index} position={marker} image={MARKER_IMAGE} />
                     ))}
                 </MarkerClusterer>
             </Map>
