@@ -3,6 +3,7 @@
 import { DateTime } from '@/app/route/types/date'
 import { formatToISODate } from '@/lib/utils/date'
 import mockRoutesData from '@/mock/vehicle_route_data.json'
+// import mockRoutesData from '@/mock/vehicle_route_data.json'
 import { VehicleDetailsModel, VehicleStatusType } from '@/types/vehicle'
 
 // 예시 API 구조
