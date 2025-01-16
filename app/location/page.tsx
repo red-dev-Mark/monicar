@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { MapMarker } from 'react-kakao-maps-sdk'
+import { MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk'
 
 import VehicleDetailsCard from '@/app/location/components/VehicleDetailsCard'
 import VehicleMarker from '@/app/location/components/VehicleMarker'
@@ -12,7 +12,8 @@ import { ModalMessageType } from '@/components/common/Modal/types'
 import Map from '@/components/domain/map/Map'
 import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
 import { vehicleAPI } from '@/lib/apis'
-import koreaLocation from '@/mock/korea_coordinates.json'
+import koreaLocation from '@/mock/metropolitan_coordinates.json'
+import { styles as vars } from '@/styles/theme.css'
 import { VehicleDetailsModel } from '@/types/vehicle'
 
 import * as styles from './styles.css'
@@ -20,7 +21,6 @@ import * as styles from './styles.css'
 const LocationPage = () => {
     const [isDetailsCardVisible, setIsDetailsCardVisible] = useState(false)
     const [vehicleDetails, setVehicleDetails] = useState<VehicleDetailsModel>()
-    const [currentZoom, setCurrentZoom] = useState<number>()
 
     const {
         vehicleInfo,
@@ -45,21 +45,59 @@ const LocationPage = () => {
 
     const isVehicleMarkerVisible = isVehicleVisible && vehicleInfo
     const isVehicleDetailsVisible = isDetailsCardVisible && vehicleDetails
-    const isMarkerVisible = currentZoom && currentZoom < 10
 
     return (
         <div className={styles.container}>
-            <Map center={mapState.center} zoom={mapState.level} onZoomChanged={setCurrentZoom}>
+            <Map center={mapState.center} zoom={mapState.level}>
                 {isVehicleMarkerVisible && (
                     <VehicleMarker vehicleInfo={vehicleInfo} onVehicleClick={handleVehicleClick} />
                 )}
-                {isMarkerVisible &&
-                    koreaLocation.map((marker, index) => {
-                        return <MapMarker key={index} position={marker} />
-                    })}
+                <MarkerClusterer
+                    averageCenter={true}
+                    styles={[
+                        {
+                            width: '40px',
+                            height: '40px',
+                            background: '#ed968490',
+                            borderRadius: '50%',
+                            color: vars.colors.black,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            fontWeight: 'bold',
+                        },
+                        {
+                            width: '60px',
+                            height: '60px',
+                            background: '#008a8590',
+                            borderRadius: '50%',
+                            color: vars.colors.black,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            fontWeight: 'bold',
+                        },
+                        {
+                            width: '80px',
+                            height: '80px',
+                            background: '#ff385c80',
+                            borderRadius: '50%',
+                            color: vars.colors.black,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            fontWeight: 'bold',
+                        },
+                    ]}
+                    calculator={[10, 30, 50]}
+                    gridSize={100}
+                >
+                    {koreaLocation.map((marker, index) => (
+                        <MapMarker key={index} position={marker} />
+                    ))}
+                </MarkerClusterer>
             </Map>
             <div className={styles.searchInputWrapper}>
-                <div className={styles.zoomLevel}>{currentZoom}</div>
                 <SearchInput
                     icon='/icons/search-icon.svg'
                     value={searchTerm}
