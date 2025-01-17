@@ -1,18 +1,16 @@
 import Link from 'next/link'
 import { ComponentProps } from 'react'
 
-import { BaseButton } from '../BaseButton'
-
-import * as styles from './styles.css'
-
 interface LinkButtonProps extends Omit<ComponentProps<typeof Link>, 'href'> {
     href: string
+    children: React.ReactNode
+    className?: string
 }
 
-const LinkButton = ({ href }: LinkButtonProps) => {
+const LinkButton = ({ href, children, className, ...props }: LinkButtonProps) => {
     return (
-        <Link href={href} className={styles.container}>
-            <BaseButton />
+        <Link href={href} className={className} role='button' {...props}>
+            {children}
         </Link>
     )
 }
