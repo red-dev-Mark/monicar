@@ -14,9 +14,9 @@ const Breadcrumb = ({ type }: BreadcrumbProps) => {
     return (
         <nav aria-label='breadcrumb' className={styles.container}>
             <ol className={styles.list}>
-                {visibleItems.map((item, i) => (
+                {visibleItems.map((item, index) => (
                     <li key={item.label} className={styles.item}>
-                        {i > 0 && <span className={styles.divider}>/</span>}
+                        {index > 0 && <span className={styles.divider}>/</span>}
                         <Link href={item.path} className={styles.link}>
                             {item.label}
                         </Link>
