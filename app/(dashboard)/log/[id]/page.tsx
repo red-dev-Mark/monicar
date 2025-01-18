@@ -1,5 +1,5 @@
 const VehicleDetailPage = () => {
-    return <div>page</div>
+    return <div></div>
 }
 
 export default VehicleDetailPage
