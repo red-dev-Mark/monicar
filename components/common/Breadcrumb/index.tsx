@@ -1,15 +1,15 @@
 import Link from 'next/link'
 
 import * as styles from './styles.css'
-import { breadcrumbConfig, BreadcrumbType } from './type'
+import { breadcrumbPaths, BreadcrumbType } from './type'
 
 interface BreadcrumbProps {
     type: BreadcrumbType
 }
 
 const Breadcrumb = ({ type }: BreadcrumbProps) => {
-    const index = breadcrumbConfig.findIndex((item) => item.label === type)
-    const visibleItems = breadcrumbConfig.slice(0, index + 1)
+    const index = breadcrumbPaths.findIndex((item) => item.label === type)
+    const visibleItems = breadcrumbPaths.slice(0, index + 1)
 
     return (
         <nav aria-label='breadcrumb' className={styles.container}>
