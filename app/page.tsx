@@ -4,7 +4,7 @@ import SearchInput from '@/components/common/Input/SearchInput'
 import Map from '@/components/domain/map/Map'
 import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from '@/public/icons'
 
-import Calendar from './components/Calendar'
+import Calendar from './components/calendar'
 import InspectionStatus from './components/InspectionStatus'
 import NoticeBoard from './components/NoticeBoard'
 import VehicleStatus from './components/VehicleStatus'
