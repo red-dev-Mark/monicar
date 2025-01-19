@@ -11,6 +11,12 @@ export const container = style({
     color: styles.colors.black,
     fontWeight: styles.fontWeights.bold,
     fontSize: styles.fontSizes.mediumPlus,
+    border: 'none',
+})
+
+export const list = style({
+    display: 'flex',
+    width: '100%',
 })
 
 export const itemWrapper = style({
