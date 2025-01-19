@@ -1,15 +1,16 @@
 import Link from 'next/link'
 
 import * as styles from './styles.css'
-import { breadcrumbPaths, BreadcrumbType } from './type'
+import { BreadcrumbType, logPaths, noticePaths } from './type'
 
 interface BreadcrumbProps {
     type: BreadcrumbType
 }
 
 const Breadcrumb = ({ type }: BreadcrumbProps) => {
-    const index = breadcrumbPaths.findIndex((item) => item.label === type)
-    const visibleItems = breadcrumbPaths.slice(0, index + 1)
+    const paths = type === '공지사항' ? noticePaths : logPaths
+    const index = paths.findIndex((item) => item.label === type)
+    const visibleItems = paths.slice(0, index + 1)
 
     return (
         <nav aria-label='breadcrumb' className={styles.container}>
