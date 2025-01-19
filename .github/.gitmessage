@@ -9,8 +9,7 @@
 #   dashboard   : 대시보드
 #   map         : 지도
 #   route       : 경로
-#   log         : 일지
-#   history     : 내역
+#   log         : 기록
 #   search      : 검색
 #   filter      : 필터링(지역, 시동 ON/OFF)
 #   export      : 내보내기(액셀)
