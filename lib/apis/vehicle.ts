@@ -1,7 +1,7 @@
 // import { API_URL } from '@/constants/api'
 // import { apiClient } from '@/lib/apis/client'
-import { DateTime } from '@/app/route/types/date'
-import { formatToISODate } from '@/lib/utils/date'
+// import { DateTime } from '@/app/route/types/date'
+// import { formatToISODate } from '@/lib/utils/date'
 import mockRoutesData from '@/mock/vehicle_route_data.json'
 // import mockRoutesData from '@/mock/vehicle_route_data.json'
 import { VehicleDetailsModel, VehicleStatusType } from '@/types/vehicle'
@@ -24,13 +24,14 @@ export const vehicleAPI = {
 
         return response.result
     },
-    fetchVehicleRoutesData: async (vehicleId: string, startDate: DateTime, endDate: DateTime, interval = 60) => {
-        const formattedStartDate = formatToISODate(startDate)
-        const formattedEndDate = formatToISODate(endDate)
+    fetchVehicleRoutesData: async () => {
+        // fetchVehicleRoutesData: async (vehicleId: string, startDate: DateTime, endDate: DateTime, interval = 60) => {
+        // const formattedStartDate = formatToISODate(startDate)
+        // const formattedEndDate = formatToISODate(endDate)
         // const response = await apiClient.get(
         //     `${API_URL}/api/vi/vehicles/${vehicleId}/routes?startTime=${formattedStartDate}&endTime=${formattedEndDate}&interval=${interval}`,
         // )
-        console.log(formattedStartDate, formattedEndDate, vehicleId, interval)
+        // console.log(formattedStartDate, formattedEndDate, vehicleId, interval)
 
         // return response.result
 
