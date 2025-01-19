@@ -19,7 +19,7 @@ const VehicleMarker = ({ vehicleInfo, onVehicleClick }: VehicleMarkerProps) => {
     useEffect(() => {
         setTimeout(() => {
             setIsDescriptionVisible(false)
-        }, 2000)
+        }, 3000)
     }, [])
 
     const vehicleNumber = vehicleInfo.vehicleNumber.slice(0, 3) + ' ' + vehicleInfo.vehicleNumber.slice(3)

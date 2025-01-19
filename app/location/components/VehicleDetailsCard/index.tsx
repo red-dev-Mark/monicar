@@ -46,13 +46,13 @@ const VehicleDetailsCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetai
                     <tbody>
                         <tr>
                             <th scope='row' className={styles.tableHeader}>
-                                {department}
+                                조직
                             </th>
-                            <td className={styles.tableCell}>04/09 조직</td>
+                            <td className={styles.tableCell}>{department}</td>
                             <th scope='row' className={styles.tableHeader}>
-                                {driverName}
+                                운전자
                             </th>
-                            <td className={styles.tableCell}>테스트</td>
+                            <td className={styles.tableCell}>{driverName}</td>
                         </tr>
                         <tr>
                             <th scope='row' className={styles.tableHeader}>
