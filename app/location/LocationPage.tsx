@@ -14,7 +14,7 @@ import { MARKER_IMAGE } from '@/constants/map'
 import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
 import { vehicleAPI } from '@/lib/apis'
 import koreaLocation from '@/mock/metropolitan_coordinates.json'
-import { styles as vars } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 import { VehicleDetailsModel } from '@/types/vehicle'
 
 import * as styles from './styles.css'

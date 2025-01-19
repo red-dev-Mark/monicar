@@ -1,16 +1,16 @@
 import { style } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 export const container = style({
     display: 'flex',
     alignItems: 'center',
     textAlign: 'center',
     padding: '24px 0px',
-    borderBottom: `1px solid ${styles.colors.gray[200]}`,
-    color: styles.colors.black,
-    fontWeight: styles.fontWeights.bold,
-    fontSize: styles.fontSizes.mediumPlus,
+    borderBottom: `1px solid ${vars.colors.gray[200]}`,
+    color: vars.colors.black,
+    fontWeight: vars.fontWeights.bold,
+    fontSize: vars.fontSizes.mediumPlus,
 })
 
 export const itemWrapper = style({

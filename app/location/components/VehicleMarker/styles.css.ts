@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 export const vehicleCard = style({
     padding: '6px 16px',
@@ -9,9 +9,9 @@ export const vehicleCard = style({
     left: '50%',
     transform: 'translateX(-50%)',
 
-    color: styles.colors.white,
-    fontWeight: styles.fontWeights.bold,
-    backgroundColor: styles.colors.black,
+    color: vars.colors.white,
+    fontWeight: vars.fontWeights.bold,
+    backgroundColor: vars.colors.black,
     borderRadius: '12px',
     cursor: 'pointer',
 
@@ -24,7 +24,7 @@ export const vehicleCard = style({
             transform: 'translateX(-50%)',
             borderLeft: '8px solid transparent',
             borderRight: '8px solid transparent',
-            borderTop: `8px solid ${styles.colors.black}`,
+            borderTop: `8px solid ${vars.colors.black}`,
         },
     },
 })
@@ -37,9 +37,9 @@ export const description = style({
     transform: 'translateX(-50%)',
 
     borderRadius: '12px',
-    color: styles.colors.white,
-    fontSize: styles.fontSizes.xsmall,
-    fontWeight: styles.fontWeights.bold,
-    backgroundColor: styles.colors.gray[800],
+    color: vars.colors.white,
+    fontSize: vars.fontSizes.xsmall,
+    fontWeight: vars.fontWeights.bold,
+    backgroundColor: vars.colors.gray[800],
     textAlign: 'center',
 })

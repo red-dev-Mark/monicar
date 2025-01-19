@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 export const base = style({
     width: '100%',
@@ -9,11 +9,11 @@ export const base = style({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontWeight: styles.fontWeights.bold,
-    border: `1px solid ${styles.colors.gray[200]}`,
+    fontWeight: vars.fontWeights.bold,
+    border: `1px solid ${vars.colors.gray[200]}`,
     borderRadius: '8px',
     ':disabled': {
         cursor: 'not-allowed',
-        opacity: styles.opacity[50],
+        opacity: vars.opacity[50],
     },
 })

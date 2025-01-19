@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 export const accordion = style({
     position: 'absolute',
@@ -34,17 +34,17 @@ export const searchSection = style({
 
 export const sectionTitle = style({
     fontSize: '18px',
-    fontWeight: styles.fontWeights.bold,
-    color: styles.colors.gray[800],
+    fontWeight: vars.fontWeights.bold,
+    color: vars.colors.gray[800],
     marginBottom: '8px',
 })
 
 export const searchableDate = style({
-    fontSize: styles.fontSizes.small,
+    fontSize: vars.fontSizes.small,
     marginBottom: '8px',
     padding: '8px 12px',
-    backgroundColor: styles.colors.gray[50],
-    border: `1px solid ${styles.colors.gray[200]}`,
+    backgroundColor: vars.colors.gray[50],
+    border: `1px solid ${vars.colors.gray[200]}`,
     borderRadius: '8px',
     display: 'flex',
     alignItems: 'center',
@@ -53,12 +53,12 @@ export const searchableDate = style({
 
 export const searchableDateSpan = style({
     padding: '4px 8px',
-    color: styles.colors.primary,
-    fontWeight: styles.fontWeights.bold,
+    color: vars.colors.primary,
+    fontWeight: vars.fontWeights.bold,
     backgroundColor: 'white',
     borderRadius: '4px',
-    fontSize: styles.fontSizes.xsmall,
-    border: `1px solid ${styles.colors.primary}`,
+    fontSize: vars.fontSizes.xsmall,
+    border: `1px solid ${vars.colors.primary}`,
 })
 
 export const searchInputStyle = style({

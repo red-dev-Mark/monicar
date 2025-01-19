@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 export const container = style({
     width: '80%',
@@ -9,7 +9,7 @@ export const container = style({
     flexDirection: 'column',
     padding: '10px 30px',
     gap: '30px',
-    backgroundColor: styles.colors.white,
+    backgroundColor: vars.colors.white,
     borderRadius: '30px 30px 0 0',
 })
 
@@ -20,18 +20,18 @@ export const buttonGroup = style({
 
 export const tableHeader = style({
     padding: '8px',
-    fontWeight: styles.fontWeights.bold,
-    backgroundColor: styles.colors.gray[50],
-    borderBottom: `1px solid ${styles.colors.gray[200]}`,
-    borderRight: `1px solid ${styles.colors.gray[200]}`,
+    fontWeight: vars.fontWeights.bold,
+    backgroundColor: vars.colors.gray[50],
+    borderBottom: `1px solid ${vars.colors.gray[200]}`,
+    borderRight: `1px solid ${vars.colors.gray[200]}`,
     textAlign: 'center',
-    color: styles.colors.black,
+    color: vars.colors.black,
 })
 
 export const tableCell = style({
     textAlign: 'center',
     padding: '8px',
-    borderBottom: `1px solid ${styles.colors.gray[200]}`,
-    borderRight: `1px solid ${styles.colors.gray[200]}`,
-    color: styles.colors.black,
+    borderBottom: `1px solid ${vars.colors.gray[200]}`,
+    borderRight: `1px solid ${vars.colors.gray[200]}`,
+    color: vars.colors.black,
 })

@@ -1,19 +1,19 @@
 import { style } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 export const container = style({
     width: '100%',
     height: '100%',
-    backgroundColor: styles.colors.white,
+    backgroundColor: vars.colors.white,
     padding: '30px',
     borderRadius: '12px',
 })
 
 export const announcement = style({
-    color: styles.colors.black,
-    fontSize: styles.fontSizes.large,
-    fontWeight: styles.fontWeights.extraBold,
+    color: vars.colors.black,
+    fontSize: vars.fontSizes.large,
+    fontWeight: vars.fontWeights.extraBold,
 })
 
 export const noticeItem = style({
@@ -44,13 +44,13 @@ export const contentsWrapper = style({
 })
 
 export const title = style({
-    fontWeight: styles.fontWeights.bold,
-    color: styles.colors.black,
+    fontWeight: vars.fontWeights.bold,
+    color: vars.colors.black,
 })
 
 export const description = style({
-    fontSize: styles.fontSizes.small,
-    color: styles.colors.gray[800],
+    fontSize: vars.fontSizes.small,
+    color: vars.colors.gray[800],
     display: '-webkit-box',
     WebkitLineClamp: 2,
     WebkitBoxOrient: 'vertical',

@@ -1,24 +1,24 @@
 import { style } from '@vanilla-extract/css'
 import { styleVariants } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 const baseButton = style({
     borderRadius: '30px',
-    fontSize: styles.fontSizes.medium,
+    fontSize: vars.fontSizes.medium,
     ':hover': {
-        opacity: styles.opacity[80],
+        opacity: vars.opacity[80],
     },
 })
 
 export const colorVariants = styleVariants({
     primary: {
-        backgroundColor: styles.colors.primary,
-        color: styles.colors.white,
+        backgroundColor: vars.colors.primary,
+        color: vars.colors.white,
     },
     secondary: {
-        backgroundColor: styles.colors.transparent[500],
-        color: styles.colors.gray[700],
+        backgroundColor: vars.colors.transparent[500],
+        color: vars.colors.gray[700],
     },
 })
 
@@ -26,8 +26,8 @@ export const sizeVariants = styleVariants({
     small: {
         width: '76px',
         height: '48px',
-        border: `1px solid ${styles.colors.gray[200]}`,
-        boxShadow: `0px 4px 4px 0px ${styles.colors.shadow[100]}`,
+        border: `1px solid ${vars.colors.gray[200]}`,
+        boxShadow: `0px 4px 4px 0px ${vars.colors.shadow[100]}`,
     },
     large: {
         height: '60px',

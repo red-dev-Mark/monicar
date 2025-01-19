@@ -1,10 +1,10 @@
 import { style } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 export const title = style({
-    fontSize: styles.fontSizes.xlarge,
-    fontWeight: styles.fontWeights.bold,
+    fontSize: vars.fontSizes.xlarge,
+    fontWeight: vars.fontWeights.bold,
     textAlign: 'center',
     marginTop: '60px',
 })

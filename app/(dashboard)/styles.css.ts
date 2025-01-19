@@ -1,11 +1,11 @@
 import { style } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 export const container = style({
     width: '100%',
     height: '100vh',
-    backgroundColor: styles.colors.dashboard,
+    backgroundColor: vars.colors.dashboard,
     display: 'flex',
     gap: '34px',
     padding: '30px',
@@ -32,15 +32,15 @@ export const header = style({
 })
 
 export const introduce = style({
-    color: styles.colors.black,
-    fontWeight: styles.fontWeights.extraBold,
+    color: vars.colors.black,
+    fontWeight: vars.fontWeights.extraBold,
     display: 'flex',
     flexDirection: 'column',
     marginLeft: '40px',
 })
 
 export const userName = style({
-    fontSize: styles.fontSizes.xlarge,
+    fontSize: vars.fontSizes.xlarge,
 })
 
 export const searchInputWrapper = style({

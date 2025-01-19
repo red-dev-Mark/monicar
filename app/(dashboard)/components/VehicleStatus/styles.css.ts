@@ -1,19 +1,19 @@
 import { style, styleVariants } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 export const container = style({
     width: '100%',
     // height: '100%',
     height: 'auto',
     display: 'flex',
-    backgroundColor: styles.colors.white,
+    backgroundColor: vars.colors.white,
     borderRadius: '12px',
     flexDirection: 'column',
     padding: '20px',
     gap: '16px',
-    color: styles.colors.gray[800],
-    fontWeight: styles.fontWeights.bold,
+    color: vars.colors.gray[800],
+    fontWeight: vars.fontWeights.bold,
 })
 
 export const statusRow = style({
@@ -39,10 +39,10 @@ const statusBarBase = style({
 })
 
 const statusColors = {
-    total: styles.colors.pink[400],
-    active: styles.colors.pink[600],
-    inactive: styles.colors.green[500],
-    disabled: styles.colors.blue,
+    total: vars.colors.pink[400],
+    active: vars.colors.pink[600],
+    inactive: vars.colors.green[500],
+    disabled: vars.colors.blue,
 } as const
 
 export const dots = styleVariants(statusColors, (color) => [dotBase, { backgroundColor: color }])

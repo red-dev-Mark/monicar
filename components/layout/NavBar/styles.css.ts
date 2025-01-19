@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 import { mediaQuery } from '@/styles/utils.css'
 
 export const navbar = style({
@@ -10,8 +10,8 @@ export const navbar = style({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    backgroundColor: styles.colors.white,
-    borderRight: `1px solid ${styles.colors.gray[200]}`,
+    backgroundColor: vars.colors.white,
+    borderRight: `1px solid ${vars.colors.gray[200]}`,
 
     '@media': {
         [mediaQuery.mobile]: {
@@ -52,8 +52,8 @@ export const logoInfo = style({
 })
 
 export const userEmail = style({
-    fontSize: styles.fontSizes.small,
-    color: styles.colors.description,
+    fontSize: vars.fontSizes.small,
+    color: vars.colors.description,
 })
 
 export const navList = style({

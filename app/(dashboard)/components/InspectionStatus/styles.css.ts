@@ -1,7 +1,7 @@
 import { style, styleVariants } from '@vanilla-extract/css'
 import { recipe } from '@vanilla-extract/recipes'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 export const container = style({
     width: '100%',
@@ -9,7 +9,7 @@ export const container = style({
     alignItems: 'center',
     padding: '20px',
     gap: '20px',
-    backgroundColor: styles.colors.white,
+    backgroundColor: vars.colors.white,
     borderRadius: '12px',
 })
 
@@ -23,10 +23,10 @@ const iconWrapperBase = style({
 })
 
 export const iconWrappers = styleVariants({
-    bell: [iconWrapperBase, { backgroundColor: styles.colors.pink[700] }],
-    alert: [iconWrapperBase, { backgroundColor: styles.colors.yellow[200] }],
-    button: [iconWrapperBase, { backgroundColor: styles.colors.green[300] }],
-    check: [iconWrapperBase, { backgroundColor: styles.colors.purple[200] }],
+    bell: [iconWrapperBase, { backgroundColor: vars.colors.pink[700] }],
+    alert: [iconWrapperBase, { backgroundColor: vars.colors.yellow[200] }],
+    button: [iconWrapperBase, { backgroundColor: vars.colors.green[300] }],
+    check: [iconWrapperBase, { backgroundColor: vars.colors.purple[200] }],
 })
 
 export const icon = style({
@@ -39,16 +39,16 @@ export const statusCard = recipe({
         width: '100%',
         height: '100%',
         borderRadius: '11px',
-        color: styles.colors.gray[800],
-        fontWeight: styles.fontWeights.bold,
+        color: vars.colors.gray[800],
+        fontWeight: vars.fontWeights.bold,
         padding: '16px',
     },
     variants: {
         status: {
-            required: { backgroundColor: styles.colors.pink[200] },
-            scheduled: { backgroundColor: styles.colors.yellow[100] },
-            inProgress: { backgroundColor: styles.colors.green[100] },
-            completed: { backgroundColor: styles.colors.purple[100] },
+            required: { backgroundColor: vars.colors.pink[200] },
+            scheduled: { backgroundColor: vars.colors.yellow[100] },
+            inProgress: { backgroundColor: vars.colors.green[100] },
+            completed: { backgroundColor: vars.colors.purple[100] },
         },
     },
 })

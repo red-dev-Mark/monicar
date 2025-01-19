@@ -6,10 +6,10 @@ import { Polyline } from 'react-kakao-maps-sdk'
 import RouteSearchPanel from '@/app/route/components/RouteSearchPanel'
 import Map from '@/components/domain/map/Map'
 import { useMapControl } from '@/hooks/useMapControl'
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 import { LatLng } from '@/types/location'
 
-import * as vars from './styles.css'
+import * as styles from './styles.css'
 
 const RoutePage = () => {
     const [vehiclePaths, setVehiclePaths] = useState<LatLng[]>([])
@@ -17,12 +17,12 @@ const RoutePage = () => {
     const { mapState, updateMapLocation } = useMapControl()
 
     return (
-        <div className={vars.container}>
+        <div className={styles.container}>
             <Map center={mapState.center} zoom={mapState.level}>
                 <Polyline
                     path={[vehiclePaths]}
                     strokeWeight={5}
-                    strokeColor={styles.colors.primary}
+                    strokeColor={vars.colors.primary}
                     strokeOpacity={1}
                     strokeStyle={'solid'}
                 />

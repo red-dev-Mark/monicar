@@ -1,6 +1,6 @@
 import { style, styleVariants } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 import { BADGE_SHAPE, OPERATION_STATUS, VEHICLE_ROLE } from './constants'
 
@@ -24,18 +24,18 @@ export const shape = styleVariants({
 })
 
 const redStyle = {
-    color: styles.colors.red,
-    backgroundColor: styles.colors.pink[300],
+    color: vars.colors.red,
+    backgroundColor: vars.colors.pink[300],
 }
 
 const pinkStyle = {
-    color: styles.colors.pink[600],
-    backgroundColor: styles.colors.pink[100],
+    color: vars.colors.pink[600],
+    backgroundColor: vars.colors.pink[100],
 }
 
 const greenStyle = {
-    color: styles.colors.green[400],
-    backgroundColor: styles.colors.green[200],
+    color: vars.colors.green[400],
+    backgroundColor: vars.colors.green[200],
 }
 
 export const variant = styleVariants({

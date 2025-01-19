@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 export const selectContainer = style({
     padding: '0 4px',
@@ -16,8 +16,8 @@ export const selectGroup = style({
 })
 
 export const label = style({
-    fontSize: styles.fontSizes.small,
-    color: styles.colors.gray[700],
+    fontSize: vars.fontSizes.small,
+    color: vars.colors.gray[700],
 })
 
 export const selectStyles = {
@@ -25,24 +25,24 @@ export const selectStyles = {
         flex: 1,
         padding: '8px',
         borderRadius: '8px',
-        border: `1px solid ${styles.colors.gray[200]}`,
-        backgroundColor: styles.colors.white,
-        fontSize: styles.fontSizes.small,
-        color: styles.colors.gray[700],
+        border: `1px solid ${vars.colors.gray[200]}`,
+        backgroundColor: vars.colors.white,
+        fontSize: vars.fontSizes.small,
+        color: vars.colors.gray[700],
         cursor: 'pointer',
         height: '38px',
         width: '92px',
     },
     dropdown: {
         borderRadius: '8px',
-        border: `1px solid ${styles.colors.gray[200]}`,
-        boxShadow: `0 4px 12px ${styles.colors.shadow[100]}`,
+        border: `1px solid ${vars.colors.gray[200]}`,
+        boxShadow: `0 4px 12px ${vars.colors.shadow[100]}`,
     },
     item: {
-        fontSize: styles.fontSizes.small,
-        color: styles.colors.gray[700],
+        fontSize: vars.fontSizes.small,
+        color: vars.colors.gray[700],
         ':hover': {
-            backgroundColor: styles.colors.gray[50],
+            backgroundColor: vars.colors.gray[50],
         },
     },
 }

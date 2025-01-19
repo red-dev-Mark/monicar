@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 export const container = style({
     marginBottom: '16px',
@@ -10,7 +10,7 @@ export const list = style({
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    color: styles.colors.gray[600],
+    color: vars.colors.gray[600],
 })
 
 export const item = style({
@@ -24,6 +24,6 @@ export const divider = style({
 
 export const link = style({
     ':hover': {
-        color: styles.colors.gray[800],
+        color: vars.colors.gray[800],
     },
 })

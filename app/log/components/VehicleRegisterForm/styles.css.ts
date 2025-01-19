@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 export const container = style({
     display: 'flex',
@@ -25,8 +25,8 @@ export const fieldWrapper = style({
 export const textWrapper = style({
     width: '50%',
     maxWidth: '200px',
-    fontWeight: styles.fontWeights.bold,
-    color: styles.colors.black,
+    fontWeight: vars.fontWeights.bold,
+    color: vars.colors.black,
 })
 
 export const inputWrapper = style({
