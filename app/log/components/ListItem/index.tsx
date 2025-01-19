@@ -6,22 +6,27 @@ import * as styles from './styles.css'
 
 interface ListItemProps {
     data: ListItemModel
+    onClick?: () => void
 }
 
-const ListItem = ({ data }: ListItemProps) => {
-    const { vehicleNumber, vehicleModel, status } = data
+const ListItem = ({ data, onClick }: ListItemProps) => {
+    const { vehicleNumber, vehicleModel, drivingDays, totalDrivingDistance, status } = data
 
     return (
-        <div className={styles.container}>
-            <span className={styles.itemWrapper}>{vehicleNumber}</span>
-            <span className={styles.itemWrapper}>{vehicleModel}</span>
-            <span className={styles.itemWrapper}>
-                <Badge shape={'rectangle'} variant={status} />
-            </span>
+        <button className={styles.container} onClick={onClick} type='button'>
+            <ul className={styles.list}>
+                <li className={styles.itemWrapper}>{vehicleNumber}</li>
+                <li className={styles.itemWrapper}>{vehicleModel}</li>
+                <li className={styles.itemWrapper}>{drivingDays}일</li>
+                <li className={styles.itemWrapper}>{totalDrivingDistance}km</li>
+                <li className={styles.itemWrapper}>
+                    <Badge shape={'rectangle'} variant={status} />
+                </li>
+            </ul>
             <div className={styles.icon}>
                 <RightIcon />
             </div>
-        </div>
+        </button>
     )
 }
 
