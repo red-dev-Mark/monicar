@@ -7,5 +7,22 @@ export const container = style({
     display: 'flex',
     gap: '12px',
     alignItems: 'center',
-    marginBottom: '12rem',
+    width: '100%',
+    justifyContent: 'flex-end',
+})
+
+export const searchInputWrapper = style({
+    width: '390px',
+})
+
+export const buttonGroup = style({
+    display: 'flex',
+    gap: '12px',
+    width: '200px',
+})
+
+export const buttonContent = style({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px',
 })

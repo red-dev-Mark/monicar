@@ -1,8 +1,8 @@
 import { style } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 export const container = style({
-    backgroundColor: styles.colors.dark,
-    color: styles.colors.white,
+    backgroundColor: vars.colors.dark,
+    color: vars.colors.white,
 })

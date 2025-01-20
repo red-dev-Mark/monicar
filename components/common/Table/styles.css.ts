@@ -1,13 +1,13 @@
 import { style, styleVariants } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 import { mediaQuery } from '@/styles/utils.css'
 
 import { TableSizeType } from './types'
 
 export const tableContainer = style({
     borderRadius: '6px',
-    border: `1px solid ${styles.colors.gray[100]}`,
+    border: `1px solid ${vars.colors.gray[100]}`,
     width: '100%',
     maxWidth: '1200px',
     overflowX: 'auto',
@@ -24,7 +24,7 @@ export const table = style({
 })
 
 export const tableRow = style({
-    borderBottom: `1px solid ${styles.colors.gray[100]}`,
+    borderBottom: `1px solid ${vars.colors.gray[100]}`,
 })
 
 export const tableCell = style({

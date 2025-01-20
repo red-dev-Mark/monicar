@@ -98,7 +98,7 @@ const opacity = {
     50: '0.5',
 }
 
-export const styles = createGlobalTheme(':root', {
+export const vars = createGlobalTheme(':root', {
     breakPoints,
     colors,
     fontSizes,
