@@ -8,7 +8,7 @@ import { ListItemModel } from '@/types/log'
 import ListItem from './components/ListItem/index'
 import * as styles from './styles.css'
 
-const LogPage = () => {
+const ListPage = () => {
     // TODO 실제 데이터로 변경하기
     const mockLogData: ListItemModel[] = [
         {
@@ -110,4 +110,4 @@ const LogPage = () => {
     )
 }
 
-export default LogPage
+export default ListPage

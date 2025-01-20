@@ -1,5 +1,4 @@
 import { Select } from '@mantine/core'
-import React from 'react'
 
 import SquareButton from '@/components/common/Button/SquareButton'
 import BaseInput from '@/components/common/Input/BaseInput'
