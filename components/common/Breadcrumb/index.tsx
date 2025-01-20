@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import * as styles from './styles.css'
-import { BreadcrumbType, logPaths, noticePaths } from './type'
+import { BreadcrumbType, logPaths, noticePaths } from './types'
 
 interface BreadcrumbProps {
     type: BreadcrumbType

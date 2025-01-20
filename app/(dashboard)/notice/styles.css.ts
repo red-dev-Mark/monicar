@@ -7,11 +7,13 @@ export const container = style({
     height: '100%',
     backgroundColor: styles.colors.dashboard,
     padding: '30px',
+    overflowY: 'auto',
 })
 
 export const contents = style({
     backgroundColor: styles.colors.white,
     padding: '24px',
+    borderRadius: '11px',
 })
 
 export const header = style({
@@ -44,5 +46,7 @@ export const imageWrapper = style({
 })
 
 export const children = style({
-    color: styles.colors.gray[800],
+    color: styles.colors.black,
+    whiteSpace: 'pre-line',
+    lineHeight: '2',
 })
