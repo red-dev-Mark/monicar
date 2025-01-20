@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 export const overlay = style({
     position: 'fixed',
@@ -10,8 +10,8 @@ export const overlay = style({
     width: '100%',
     height: '100dvh',
     opacity: 0.2,
-    backgroundColor: styles.colors.black,
-    zIndex: styles.zIndex.overlay,
+    backgroundColor: vars.colors.black,
+    zIndex: vars.zIndex.overlay,
 })
 
 export const clickableOverlay = style({
@@ -30,9 +30,9 @@ export const modal = style({
     gap: '36px',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: styles.colors.white,
-    boxShadow: `0px 4px 4px 0px ${styles.colors.shadow[400]}`,
-    zIndex: styles.zIndex.modal,
+    backgroundColor: vars.colors.white,
+    boxShadow: `0px 4px 4px 0px ${vars.colors.shadow[400]}`,
+    zIndex: vars.zIndex.modal,
     borderRadius: '12px',
 })
 
@@ -44,10 +44,10 @@ export const xButton = style({
 
 export const message = style({
     padding: '0 32px',
-    fontWeight: styles.fontWeights.bold,
+    fontWeight: vars.fontWeights.bold,
     textAlign: 'center',
     lineHeight: 1.8,
-    color: styles.colors.black,
+    color: vars.colors.black,
 })
 
 export const buttonWrapper = style({

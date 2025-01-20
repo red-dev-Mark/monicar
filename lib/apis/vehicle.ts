@@ -1,8 +1,9 @@
-import { DateTime } from '@/app/(dashboard)/route/types/date'
 // import { API_URL } from '@/constants/api'
 // import { apiClient } from '@/lib/apis/client'
-import { formatToISODate } from '@/lib/utils/date'
+// import { DateTime } from '@/app/route/types/date'
+// import { formatToISODate } from '@/lib/utils/date'
 import mockRoutesData from '@/mock/vehicle_route_data.json'
+// import mockRoutesData from '@/mock/vehicle_route_data.json'
 import { VehicleDetailsModel, VehicleStatusType } from '@/types/vehicle'
 
 // 예시 API 구조
@@ -23,13 +24,14 @@ export const vehicleAPI = {
 
         return response.result
     },
-    fetchVehicleRoutesData: async (vehicleId: string, startDate: DateTime, endDate: DateTime, interval = 60) => {
-        const formattedStartDate = formatToISODate(startDate)
-        const formattedEndDate = formatToISODate(endDate)
+    fetchVehicleRoutesData: async () => {
+        // fetchVehicleRoutesData: async (vehicleId: string, startDate: DateTime, endDate: DateTime, interval = 60) => {
+        // const formattedStartDate = formatToISODate(startDate)
+        // const formattedEndDate = formatToISODate(endDate)
         // const response = await apiClient.get(
         //     `${API_URL}/api/vi/vehicles/${vehicleId}/routes?startTime=${formattedStartDate}&endTime=${formattedEndDate}&interval=${interval}`,
         // )
-        console.log(formattedStartDate, formattedEndDate, vehicleId, interval)
+        // console.log(formattedStartDate, formattedEndDate, vehicleId, interval)
 
         // return response.result
 
@@ -57,8 +59,8 @@ export const vehicleAPI = {
                     drivingTime: 18000,
                 },
                 location: {
-                    lat: 37.5363641,
-                    lng: 126.8876848,
+                    lat: 37.805,
+                    lng: 128.9016,
                     lastUpdated: '2024-12-24T10:30:00',
                 },
             },

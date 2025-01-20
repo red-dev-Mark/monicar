@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 export const header = style({
     position: 'fixed',
@@ -15,9 +15,9 @@ export const header = style({
 })
 
 export const title = style({
-    color: styles.colors.black,
-    fontSize: styles.fontSizes.large,
-    fontWeight: styles.fontWeights.bold,
+    color: vars.colors.black,
+    fontSize: vars.fontSizes.large,
+    fontWeight: vars.fontWeights.bold,
 })
 
 export const spacer = style({

@@ -1,5 +1,6 @@
 export const ZOOM_LEVEL = {
     INITIAL: 12,
+    ROUTE: 8,
     SINGLE_VEHICLE: 7,
 } as const
 

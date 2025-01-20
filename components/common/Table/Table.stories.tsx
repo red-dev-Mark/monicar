@@ -1,6 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 import Badge from '../Badge'
 
@@ -125,8 +125,8 @@ export const TwoColumns: StoryType = {
         columns: twoColumns,
         data: [
             {
-                col1: { content: '날짜', backgroundColor: `${styles.colors.gray[100]}` },
-                col2: { content: '매출', backgroundColor: `${styles.colors.gray[100]}` },
+                col1: { content: '날짜', backgroundColor: `${vars.colors.gray[100]}` },
+                col2: { content: '매출', backgroundColor: `${vars.colors.gray[100]}` },
             },
             {
                 col1: { content: '2024-01-01' },
@@ -157,9 +157,9 @@ export const ThreeColumns: StoryType = {
         columns: threeColumns,
         data: [
             {
-                col1: { content: '프로젝트', backgroundColor: `${styles.colors.gray[100]}` },
-                col2: { content: '상태', backgroundColor: `${styles.colors.gray[100]}` },
-                col3: { content: '완료일', backgroundColor: `${styles.colors.gray[100]}` },
+                col1: { content: '프로젝트', backgroundColor: `${vars.colors.gray[100]}` },
+                col2: { content: '상태', backgroundColor: `${vars.colors.gray[100]}` },
+                col3: { content: '완료일', backgroundColor: `${vars.colors.gray[100]}` },
             },
             {
                 col1: { content: 'A 프로젝트' },
@@ -185,10 +185,10 @@ export const FourColumns: StoryType = {
         columns: fourColumns,
         data: [
             {
-                col1: { content: '이름', backgroundColor: `${styles.colors.gray[100]}` },
-                col2: { content: '부서', backgroundColor: `${styles.colors.gray[100]}` },
-                col3: { content: '직급', backgroundColor: `${styles.colors.gray[100]}` },
-                col4: { content: '상태', backgroundColor: `${styles.colors.gray[100]}` },
+                col1: { content: '이름', backgroundColor: `${vars.colors.gray[100]}` },
+                col2: { content: '부서', backgroundColor: `${vars.colors.gray[100]}` },
+                col3: { content: '직급', backgroundColor: `${vars.colors.gray[100]}` },
+                col4: { content: '상태', backgroundColor: `${vars.colors.gray[100]}` },
             },
             {
                 col1: { content: '김철수' },
@@ -208,7 +208,7 @@ export const NineColumn: StoryType = {
             for (let columnIndex = 1; columnIndex <= 9; columnIndex++) {
                 row[`col${columnIndex}`] = {
                     content: rowIndex === 0 ? `헤더 ${columnIndex}` : `데이터 ${rowIndex}-${columnIndex}`,
-                    backgroundColor: rowIndex === 0 ? `${styles.colors.gray[100]}` : undefined,
+                    backgroundColor: rowIndex === 0 ? `${vars.colors.gray[100]}` : undefined,
                 }
             }
             return row

@@ -1,4 +1,4 @@
-import { DateTime, SearchableDateTime } from '@/app/(dashboard)/route/types/date'
+import { DateTime, SearchableDateTime } from '@/app/route/types/date'
 import { formatToISODate } from '@/lib/utils/date'
 
 // 차량번호 유효성 검증
