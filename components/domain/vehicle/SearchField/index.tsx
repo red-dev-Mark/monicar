@@ -10,12 +10,12 @@ const SearchField = ({ hasButton }: SearchFieldProps) => {
     return (
         <div>
             <div className={styles.container}>
+                <SearchInput icon='/icons/search-icon.svg' />
                 {hasButton && (
                     <RoundButton size={'small'} color={'primary'}>
                         등록
                     </RoundButton>
                 )}
-                <SearchInput icon='/icons/search-icon.svg' />
             </div>
         </div>
     )
