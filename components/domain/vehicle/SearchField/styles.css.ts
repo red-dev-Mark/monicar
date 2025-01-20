@@ -21,7 +21,7 @@ export const buttonGroup = style({
     width: '200px',
 })
 
-export const buttonContent = style({
+export const button = style({
     display: 'flex',
     alignItems: 'center',
     gap: '6px',

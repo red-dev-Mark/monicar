@@ -18,13 +18,13 @@ const SearchField = ({ hasButton }: SearchFieldProps) => {
                 {hasButton && (
                     <div className={styles.buttonGroup}>
                         <RoundButton size={'small'} color={'secondary'}>
-                            <div className={styles.buttonContent}>
+                            <div className={styles.button}>
                                 <Image src='/icons/green-excel-icon.svg' alt='excel' width={16} height={16} />
                                 엑셀
                             </div>
                         </RoundButton>
                         <RoundButton size={'small'} color={'primary'}>
-                            <div className={styles.buttonContent}>
+                            <div className={styles.button}>
                                 <Image src='/icons/white-add-icon.svg' alt='add' width={16} height={16} />
                                 등록
                             </div>
