@@ -1,6 +1,6 @@
 import { recipe } from '@vanilla-extract/recipes'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 export const button = recipe({
     base: {
@@ -9,32 +9,32 @@ export const button = recipe({
     variants: {
         color: {
             primary: {
-                backgroundColor: styles.colors.primary,
-                color: styles.colors.white,
+                backgroundColor: vars.colors.primary,
+                color: vars.colors.white,
                 ':hover': {
-                    opacity: styles.opacity[80],
+                    opacity: vars.opacity[80],
                 },
             },
             white: {
-                backgroundColor: styles.colors.white,
-                color: styles.colors.black,
-                border: `1px solid ${styles.colors.black}`,
+                backgroundColor: vars.colors.white,
+                color: vars.colors.black,
+                border: `1px solid ${vars.colors.black}`,
                 ':hover': {
-                    backgroundColor: styles.colors.gray[50],
+                    backgroundColor: vars.colors.gray[50],
                 },
             },
             error: {
-                backgroundColor: styles.colors.error,
-                color: styles.colors.white,
+                backgroundColor: vars.colors.error,
+                color: vars.colors.white,
                 ':hover': {
-                    opacity: styles.opacity[80],
+                    opacity: vars.opacity[80],
                 },
             },
             dark: {
-                backgroundColor: styles.colors.dark,
-                color: styles.colors.white,
+                backgroundColor: vars.colors.dark,
+                color: vars.colors.white,
                 ':hover': {
-                    backgroundColor: styles.colors.gray[800],
+                    backgroundColor: vars.colors.gray[800],
                 },
             },
         },

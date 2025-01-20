@@ -1,13 +1,13 @@
 import { Switch as MantineSwitch } from '@mantine/core'
 
-import { styles } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 interface SwitchProps {
     size?: string
 }
 
 const Switch = ({ size = 'md', ...props }: SwitchProps) => {
-    return <MantineSwitch size={size} color={styles.colors.primary} {...props} />
+    return <MantineSwitch size={size} color={vars.colors.primary} {...props} />
 }
 
 export default Switch
