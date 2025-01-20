@@ -1,5 +1,6 @@
 'use client'
 
+import Breadcrumb from '@/components/common/Breadcrumb'
 import ListHeader from '@/components/domain/vehicle/ListHeader'
 import SearchField from '@/components/domain/vehicle/SearchField'
 import { ListItemModel } from '@/types/log'
@@ -97,6 +98,7 @@ const LogPage = () => {
     return (
         <div className={styles.container}>
             <div className={styles.contents}>
+                <Breadcrumb type={'운행기록'} />
                 <SearchField hasButton={true} />
                 <ListHeader headerTitles={headerTitles} />
                 {mockLogData.map((log) => (

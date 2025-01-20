@@ -10,5 +10,5 @@ export const contents = style({
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
-    marginTop: '40px',
+    marginTop: '20px',
 })
