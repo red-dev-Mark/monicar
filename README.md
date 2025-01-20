@@ -1,4 +1,4 @@
-## Monicar FE 레포지토리입니다
+## Monicar FE 레포지토리
 
 ### 배포 사이트
 
