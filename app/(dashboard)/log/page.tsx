@@ -96,7 +96,7 @@ const LogPage = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.listWrapper}>
+            <div className={styles.contents}>
                 <SearchField hasButton={true} />
                 <ListHeader headerTitles={headerTitles} />
                 {mockLogData.map((log) => (

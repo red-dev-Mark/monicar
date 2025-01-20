@@ -7,7 +7,7 @@ export const container = style({
     flexDirection: 'column',
 })
 
-export const listWrapper = style({
+export const contents = style({
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
