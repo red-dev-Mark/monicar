@@ -23,7 +23,7 @@ export const introduceMessage = style({
     marginBottom: '-24px',
     color: vars.colors.white,
     textAlign: 'center',
-    fontSize: vars.fontSizes.xlarge,
+    fontSize: '30px',
     fontWeight: vars.fontWeights.bold,
 })
 
