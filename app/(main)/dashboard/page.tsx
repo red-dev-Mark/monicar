@@ -1,6 +1,6 @@
 'use client'
 
-import Calendar from '@/app/(dashboard)/components/Calendar'
+import Calendar from '@/app/(main)/dashboard/components/Calendar'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Map from '@/components/domain/map/Map'
 import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from '@/public/icons'
@@ -10,7 +10,7 @@ import NoticeBoard from './components/NoticeBoard'
 import VehicleStatus from './components/VehicleStatus'
 import * as styles from './styles.css'
 
-const HomePage = () => {
+const DashboardPage = () => {
     return (
         <div className={styles.container}>
             <section className={styles.leftSection}>
@@ -134,4 +134,4 @@ const HomePage = () => {
     )
 }
 
-export default HomePage
+export default DashboardPage

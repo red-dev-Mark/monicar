@@ -3,9 +3,9 @@
 import { useState } from 'react'
 import { MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk'
 
-import VehicleDetailsCard from '@/app/location/components/VehicleDetailsCard'
-import VehicleMarker from '@/app/location/components/VehicleMarker'
-import VehicleStatus from '@/app/location/components/VehicleStatus'
+import VehicleDetailsCard from '@/app/(main)/location/components/VehicleDetailsCard'
+import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
+import VehicleStatus from '@/app/(main)/location/components/VehicleStatus'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'

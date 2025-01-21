@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Polyline } from 'react-kakao-maps-sdk'
 
-import RouteSearchPanel from '@/app/route/components/RouteSearchPanel'
+import RouteSearchPanel from '@/app/(main)/route/components/RouteSearchPanel'
 import Map from '@/components/domain/map/Map'
 import { useMapControl } from '@/hooks/useMapControl'
 import { vars } from '@/styles/theme.css'
