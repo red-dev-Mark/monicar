@@ -1,9 +1,31 @@
-import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin';
+import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin'
 
-const withVanillaExtract = createVanillaExtractPlugin();
+const withVanillaExtract = createVanillaExtractPlugin()
 
 /** @type {import('next').NextConfig} */
+const nextConfig = {
+    webpack(config) {
+        const fileLoaderRule = config.module.rules.find((rule) => rule.test?.test?.('.svg'))
+        if (fileLoaderRule) {
+            fileLoaderRule.exclude = /\.svg$/
+        }
 
-const nextConfig = {};
+        config.module.rules.push({
+            test: /\.svg$/,
+            issuer: /\.[jt]sx?$/,
+            use: [
+                {
+                    loader: '@svgr/webpack',
+                    options: {
+                        typescript: true,
+                        dimensions: false,
+                    },
+                },
+            ],
+        })
 
-export default withVanillaExtract(nextConfig);
+        return config
+    },
+}
+
+export default withVanillaExtract(nextConfig)

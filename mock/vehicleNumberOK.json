@@ -1,0 +1,10 @@
+{
+    "isSuccess": true,
+    "message": "요청 성공",
+    "result": {
+        "vehicleId": "V123",
+        "vehicleNumber": "54하7056",
+        "firstDataAt": "2024-01-15T09:30:00",
+        "lastDataAt": "2024-12-26T14:30:00"
+    }
+}

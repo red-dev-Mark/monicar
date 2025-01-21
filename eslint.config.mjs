@@ -1,13 +1,13 @@
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { FlatCompat } from '@eslint/eslintrc';
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
+import { FlatCompat } from '@eslint/eslintrc'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const compat = new FlatCompat({
     baseDirectory: __dirname,
-});
+})
 
 const eslintConfig = [
     {
@@ -38,6 +38,16 @@ const eslintConfig = [
                     eventHandlerPropPrefix: 'on',
                 },
             ],
+            // 변수명 길이 제한
+            'id-length': [
+                'error',
+                {
+                    min: 2,
+                    exceptions: ['x', 'y', 'i', 'j', 'id', '_'],
+                },
+            ],
+            // 특정 약어 사용 금지
+            'id-denylist': ['error', 'err', 'idx', 'e'],
 
             // TypeScript 네이밍 컨벤션
             '@typescript-eslint/naming-convention': [
@@ -57,14 +67,14 @@ const eslintConfig = [
                         match: true,
                     },
                 },
-                {
-                    selector: 'interface',
-                    format: ['PascalCase'],
-                    custom: {
-                        regex: '(Props|Model)$',
-                        match: true,
-                    },
-                },
+                // {
+                //     selector: 'interface',
+                //     format: ['PascalCase'],
+                //     custom: {
+                //         regex: '(Props|Model)$',
+                //         match: true,
+                //     },
+                // },
                 {
                     selector: 'typeAlias',
                     format: ['PascalCase'],
@@ -117,6 +127,6 @@ const eslintConfig = [
             'react-hooks/rules-of-hooks': 'off',
         },
     },
-];
+]
 
-export default eslintConfig;
+export default eslintConfig

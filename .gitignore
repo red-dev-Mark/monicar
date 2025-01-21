@@ -20,6 +20,7 @@
 
 # 시스템 파일
 .DS_Store
+.vscode
 
 # TypeScript 파일
 *.tsbuildinfo
@@ -28,3 +29,4 @@ next-env.d.ts
 # 로그 파일
 yarn-debug.log*
 yarn-error.log*
+*storybook.log

@@ -1,0 +1,9 @@
+{
+    "vehicle": {
+        "vehicleId": "V123",
+        "vehicleNumber": "54하2902",
+        "lat": 37.805,
+        "lng": 128.9016,
+        "status": "ON"
+    }
+}
