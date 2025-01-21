@@ -21,10 +21,10 @@ const LogPage = () => {
     const router = useRouter()
 
     useEffect(() => {
-        getLogData()
+        handleGetLogData()
     }, [])
 
-    const getLogData = async () => {
+    const handleGetLogData = async () => {
         try {
             setIsLoading(true)
             const response = await apiClient.get('/api/v1/driving-log?page=1&size=10')
@@ -53,6 +53,10 @@ const LogPage = () => {
         XLSX.writeFile(wb, '차량운행기록.xlsx')
     }
 
+    const handleItemClick = (id: number) => {
+        router.push(`/log/${id}`)
+    }
+
     if (isLoading) {
         return <div> 로딩 중...</div>
     }
@@ -67,7 +71,7 @@ const LogPage = () => {
                 <SearchField hasButton={true} onExcelDownload={handleExcelDownload} />
                 <ListHeader headerTitles={HEADER_TITLES} />
                 {logData?.content.map((log) => (
-                    <ListItem key={log.id} data={log} onClick={() => router.push(`/log/${log.id}`)} />
+                    <ListItem key={log.id} data={log} onClick={() => handleItemClick(log.id)} />
                 ))}
             </div>
             {/* TODO 페이지네이션 추가 */}
