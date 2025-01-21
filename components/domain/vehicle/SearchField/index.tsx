@@ -1,5 +1,6 @@
 import Image from 'next/image'
 
+import LinkButton from '@/components/common/Button/LinkButton'
 import { RoundButton } from '@/components/common/Button/RoundButton'
 import SearchInput from '@/components/common/Input/SearchInput'
 
@@ -23,12 +24,14 @@ const SearchField = ({ hasButton }: SearchFieldProps) => {
                                 엑셀
                             </div>
                         </RoundButton>
-                        <RoundButton size={'small'} color={'primary'}>
-                            <div className={styles.button}>
-                                <Image src='/icons/white-add-icon.svg' alt='add' width={16} height={16} />
-                                등록
+                        <LinkButton href={'/log/register'}>
+                            <div className={styles.linkButton}>
+                                <div className={styles.register}>
+                                    <Image src='/icons/white-add-icon.svg' alt='add' width={18} height={18} />
+                                    등록
+                                </div>
                             </div>
-                        </RoundButton>
+                        </LinkButton>
                     </div>
                 )}
             </div>
