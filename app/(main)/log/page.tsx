@@ -1,7 +1,7 @@
 'use client'
-
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import * as XLSX from 'xlsx'
 
 import Breadcrumb from '@/components/common/Breadcrumb'
 import ListHeader from '@/components/domain/vehicle/ListHeader'
@@ -12,12 +12,18 @@ import ListItem from './components/ListItem/index'
 import * as styles from './styles.css'
 import { LogListResponse } from './types'
 
+const headerTitles = ['차량번호', '차종', '운행일수', '총운행거리', '차량현황']
+
 const ListPage = () => {
-    const headerTitles = ['차량번호', '차종', '운행일수', '총운행거리', '차량현황']
-    const router = useRouter()
     const [logData, setLogData] = useState<LogListResponse>()
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
+
+    const router = useRouter()
+
+    useEffect(() => {
+        getLogData()
+    }, [])
 
     const getLogData = async () => {
         try {
@@ -32,9 +38,21 @@ const ListPage = () => {
         }
     }
 
-    useEffect(() => {
-        getLogData()
-    }, [])
+    const handleExcelDownload = () => {
+        if (!logData?.content) return
+
+        const excelData = logData.content.map((item) => ({
+            차량번호: item.vehicleNumber,
+            차종: item.vehicleModel,
+            운행일수: item.drivingDays,
+            총운행거리: `${item.totalDistance}km`,
+            차량현황: item.status,
+        }))
+        const wb = XLSX.utils.book_new()
+        const ws = XLSX.utils.json_to_sheet(excelData)
+        XLSX.utils.book_append_sheet(wb, ws, '차량운행기록')
+        XLSX.writeFile(wb, '차량운행기록.xlsx')
+    }
 
     if (isLoading) {
         return <div> 로딩 중...</div>
@@ -47,7 +65,7 @@ const ListPage = () => {
         <div className={styles.container}>
             <div className={styles.contents}>
                 <Breadcrumb type={'운행기록'} />
-                <SearchField hasButton={true} />
+                <SearchField hasButton={true} onExcelDownload={handleExcelDownload} />
                 <ListHeader headerTitles={headerTitles} />
                 {logData?.content.map((log) => (
                     <ListItem key={log.id} data={log} onClick={() => router.push(`/log/${log.id}`)} />

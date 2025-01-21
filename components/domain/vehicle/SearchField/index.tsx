@@ -11,8 +11,9 @@ import * as styles from './styles.css'
 
 interface SearchFieldProps {
     hasButton: boolean
+    onExcelDownload?: () => void
 }
-const SearchField = ({ hasButton }: SearchFieldProps) => {
+const SearchField = ({ hasButton, onExcelDownload }: SearchFieldProps) => {
     const { modalMessage, isOpen, searchTerm, handleVehicleSearch, handleSearchChange, closeModal } =
         useSearchSingleVehicle()
 
@@ -28,7 +29,7 @@ const SearchField = ({ hasButton }: SearchFieldProps) => {
             </div>
             {hasButton && (
                 <div className={styles.buttonGroup}>
-                    <RoundButton size={'small'} color={'secondary'}>
+                    <RoundButton size={'small'} color={'secondary'} onClick={onExcelDownload}>
                         <div className={styles.button}>
                             <Image src='/icons/green-excel-icon.svg' alt='excel' width={16} height={16} />
                             엑셀
