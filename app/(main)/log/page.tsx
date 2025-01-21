@@ -9,10 +9,9 @@ import SearchField from '@/components/domain/vehicle/SearchField'
 import { apiClient } from '@/lib/apis/client'
 
 import ListItem from './components/ListItem/index'
+import { HEADER_TITLES } from './constants'
 import * as styles from './styles.css'
 import { LogListResponse } from './types'
-
-const headerTitles = ['차량번호', '차종', '운행일수', '총운행거리', '차량현황']
 
 const ListPage = () => {
     const [logData, setLogData] = useState<LogListResponse>()
@@ -66,7 +65,7 @@ const ListPage = () => {
             <div className={styles.contents}>
                 <Breadcrumb type={'운행기록'} />
                 <SearchField hasButton={true} onExcelDownload={handleExcelDownload} />
-                <ListHeader headerTitles={headerTitles} />
+                <ListHeader headerTitles={HEADER_TITLES} />
                 {logData?.content.map((log) => (
                     <ListItem key={log.id} data={log} onClick={() => router.push(`/log/${log.id}`)} />
                 ))}
