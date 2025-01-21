@@ -13,7 +13,7 @@ import { HEADER_TITLES } from './constants'
 import * as styles from './styles.css'
 import { LogListResponse } from './types'
 
-const ListPage = () => {
+const LogPage = () => {
     const [logData, setLogData] = useState<LogListResponse>()
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
@@ -75,4 +75,4 @@ const ListPage = () => {
     )
 }
 
-export default ListPage
+export default LogPage
