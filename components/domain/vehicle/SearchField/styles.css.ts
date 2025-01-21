@@ -31,23 +31,18 @@ export const button = style({
 
 export const linkButton = style({
     backgroundColor: vars.colors.primary,
-    gap: '6px 6px',
-    borderRadius: '30px',
+    color: vars.colors.white,
+    fontWeight: vars.fontWeights.bold,
     width: '94px',
     height: '48px',
     display: 'flex',
+    alignItems: 'center',
     justifyContent: 'center',
+    gap: '6px',
+    borderRadius: '30px',
     border: `1px solid ${vars.colors.gray[200]}`,
     boxShadow: `0px 4px 4px 0px ${vars.colors.shadow[100]}`,
     ':hover': {
         opacity: vars.opacity[80],
     },
-})
-
-export const register = style({
-    color: vars.colors.white,
-    fontWeight: vars.fontWeights.bold,
-    display: 'flex',
-    alignItems: 'center',
-    gap: '6px',
 })
