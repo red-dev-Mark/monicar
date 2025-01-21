@@ -9,7 +9,7 @@ interface BaseButtonProps extends ComponentPropsWithoutRef<'button'> {
     children?: ReactNode
 }
 
-export const BaseButton = ({ children, onClick, className, ...props }: BaseButtonProps) => {
+export const BaseButton = ({ children, onClick, className = '', ...props }: BaseButtonProps) => {
     return (
         <button onClick={onClick} className={`${styles.base} ${className}`} {...props}>
             {children}

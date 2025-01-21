@@ -3,7 +3,7 @@
 import { Select } from '@mantine/core'
 import { Dispatch, SetStateAction } from 'react'
 
-import { DateTime } from '@/app/route/types/date'
+import { DateTime } from '@/app/(main)/route/types/date'
 
 import { YEAR_OPTIONS, MONTH_OPTIONS, DAY_OPTIONS, HOUR_OPTIONS, MINUTE_OPTIONS } from './constants'
 import * as styles from './styles.css'

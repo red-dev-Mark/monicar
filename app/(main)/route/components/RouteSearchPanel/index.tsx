@@ -3,8 +3,8 @@
 import { Accordion } from '@mantine/core'
 import { ChangeEvent, useState } from 'react'
 
-import DateTimeSelect from '@/app/route/components/RouteSearchPanel/DateTimeSelect'
-import { DateTime } from '@/app/route/types/date'
+import DateTimeSelect from '@/app/(main)/route/components/RouteSearchPanel/DateTimeSelect'
+import { DateTime } from '@/app/(main)/route/types/date'
 import SquareButton from '@/components/common/Button/SquareButton'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
