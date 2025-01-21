@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import Breadcrumb from '@/components/common/Breadcrumb'
@@ -13,6 +14,7 @@ import { LogListResponse } from './types'
 
 const ListPage = () => {
     const headerTitles = ['차량번호', '차종', '운행일수', '총운행거리', '차량현황']
+    const router = useRouter()
     const [logData, setLogData] = useState<LogListResponse>()
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
@@ -47,7 +49,9 @@ const ListPage = () => {
                 <Breadcrumb type={'운행기록'} />
                 <SearchField hasButton={true} />
                 <ListHeader headerTitles={headerTitles} />
-                {logData?.content.map((log) => <ListItem key={log.id} data={log} />)}
+                {logData?.content.map((log) => (
+                    <ListItem key={log.id} data={log} onClick={() => router.push(`/log/${log.id}`)} />
+                ))}
             </div>
             {/* TODO 페이지네이션 추가 */}
         </div>
