@@ -10,6 +10,11 @@ export const resetInput = style({
     boxShadow: 'none',
     paddingLeft: '72px',
     paddingRight: '28px',
+
+    '::placeholder': {
+        color: vars.colors.transparent[800],
+        opacity: 1,
+    },
 })
 
 export const signInInput = style({

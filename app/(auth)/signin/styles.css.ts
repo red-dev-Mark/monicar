@@ -5,32 +5,35 @@ import { vars } from '@/styles/theme.css'
 export const container = style({
     height: '100%',
     display: 'flex',
+    gap: '244px',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundImage: `url('/images/sign-in-background-desktop.jpg')`,
     backgroundSize: 'cover',
 })
 
-export const swiper = style({
+export const introSection = style({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
 })
+
 export const introduceMessage = style({
+    marginBottom: '-24px',
     color: vars.colors.white,
     textAlign: 'center',
     fontSize: vars.fontSizes.xlarge,
     fontWeight: vars.fontWeights.bold,
 })
 
-export const formContainer = style({
+export const authSection = style({
     display: 'flex',
-    gap: '36px',
+    gap: '44px',
     flexDirection: 'column',
 })
 
-export const logoContainer = style({
+export const authHeader = style({
     display: 'flex',
     gap: '12px',
     flexDirection: 'column',
@@ -38,23 +41,26 @@ export const logoContainer = style({
     alignItems: 'center',
 })
 
-export const form = style({
+export const authForm = style({
     display: 'flex',
     gap: '18px',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
 })
-export const buttonWrapper = style({
+
+export const authAction = style({
     width: '100%',
     marginTop: '12px',
 })
-export const description = style({
+
+export const helpText = style({
     color: vars.colors.white,
     fontSize: vars.fontSizes.xsmall,
 })
 
-export const bold = style({
+export const emphasis = style({
+    marginLeft: '6px',
     fontWeight: vars.fontWeights.bold,
 })
 
@@ -64,5 +70,6 @@ export const resetButton = style({
     color: `${vars.colors.primary} !important`,
 })
 
-// 하얀 로고
-// 이미지 자르기
+export const resetInput = style({
+    color: `${vars.colors.white}`,
+})
