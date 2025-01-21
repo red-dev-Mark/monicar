@@ -1,8 +1,6 @@
 import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from '@mantine/core'
 
-import NavBar from '@/components/layout/NavBar'
 import '@/styles'
-import { layoutContainer, mainContent } from '@/styles/layout.css'
 
 import type { Metadata } from 'next'
 
@@ -19,10 +17,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             <head>
                 <ColorSchemeScript />
             </head>
-            <body className={layoutContainer}>
+            <body>
                 <MantineProvider>
-                    <NavBar />
-                    <main className={mainContent}>{children}</main>
+                    {children}
                     <div id='modal-root'></div>
                 </MantineProvider>
             </body>
