@@ -33,8 +33,8 @@ const LogPage = () => {
 
     return (
         <div className={styles.container}>
+            <Breadcrumb type={'운행기록'} />
             <div className={styles.contents}>
-                <Breadcrumb type={'운행기록'} />
                 <ControlBar onExcelButtonClick={handleExcelButtonClick} />
                 <ListHeader headerTitles={HEADER_TITLES} />
                 {logData?.content.map((log) => (

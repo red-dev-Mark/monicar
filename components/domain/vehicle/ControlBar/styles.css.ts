@@ -11,6 +11,7 @@ export const container = style({
     alignItems: 'center',
     width: '100%',
     justifyContent: 'flex-end',
+    zIndex: vars.zIndex.four,
 })
 
 export const searchInputWrapper = style({

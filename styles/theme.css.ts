@@ -89,6 +89,9 @@ export const zIndex = {
     overlay: '40',
     dropdown: '30',
     header: '20',
+    four: '4',
+    third: '3',
+    second: '2',
     default: '1',
     below: '-1',
 }
