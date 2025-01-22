@@ -10,7 +10,6 @@ interface AuthState {
     isAuthLoading: boolean
     authError: string | null
 
-    setUser: (user: User) => void
     setAuthLoading: (isAuthLoading: boolean) => void
     setAuthError: (authError: string) => void
     login: (email: string) => void
@@ -23,7 +22,6 @@ export const useAuthStore = create<AuthState>((set) => ({
     isAuthLoading: false,
     authError: null,
 
-    setUser: (user: User) => set({ user }),
     setAuthLoading: (isAuthLoading: boolean) => set({ isAuthLoading }),
     setAuthError: (authError: string) => set({ authError }),
 
