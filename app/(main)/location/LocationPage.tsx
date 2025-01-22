@@ -12,7 +12,7 @@ import { ModalMessageType } from '@/components/common/Modal/types'
 import Map from '@/components/domain/map/Map'
 import { MARKER_IMAGE } from '@/constants/map'
 import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
-import { vehicleAPI } from '@/lib/apis'
+import { vehicleService } from '@/lib/apis'
 import koreaLocation from '@/mock/metropolitan_coordinates.json'
 import { vars } from '@/styles/theme.css'
 import { VehicleDetailsModel } from '@/types/vehicle'
@@ -36,7 +36,7 @@ const LocationPage = () => {
     } = useSearchSingleVehicle()
 
     const handleVehicleClick = async () => {
-        const vehicleDetailsData = await vehicleAPI.fetchVehicleDetails()
+        const vehicleDetailsData = await vehicleService.getVehicleDetails()
 
         if (!vehicleDetailsData) return
 

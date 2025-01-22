@@ -6,9 +6,8 @@ import mockRoutesData from '@/mock/vehicle_route_data.json'
 // import mockRoutesData from '@/mock/vehicle_route_data.json'
 import { VehicleDetailsModel, VehicleStatusType } from '@/types/vehicle'
 
-// 예시 API 구조
-export const vehicleAPI = {
-    fetchVehicleData: async (_vehicleNumber: string) => {
+export const vehicleService = {
+    getVehicleInfo: async (_vehicleNumber: string) => {
         // const response = await apiClient.get(`${API_URL}/api/v1/vehicles?vehicleNumber=${vehicleNumber}`)
 
         const response = {
@@ -24,8 +23,8 @@ export const vehicleAPI = {
 
         return response.result
     },
-    fetchVehicleRoutesData: async () => {
-        // fetchVehicleRoutesData: async (vehicleId: string, startDate: DateTime, endDate: DateTime, interval = 60) => {
+    getVehicleRoutesData: async () => {
+        // getVehicleRoutesData: async (vehicleId: string, startDate: DateTime, endDate: DateTime, interval = 60) => {
         // const formattedStartDate = formatToISODate(startDate)
         // const formattedEndDate = formatToISODate(endDate)
         // const response = await apiClient.get(
@@ -37,8 +36,8 @@ export const vehicleAPI = {
 
         return mockRoutesData
     },
-    // fetchVehicleDetails: async (vehicleId: string) => {
-    fetchVehicleDetails: async (): Promise<VehicleDetailsModel> => {
+    // getVehicleDetails: async (vehicleId: string) => {
+    getVehicleDetails: async (): Promise<VehicleDetailsModel> => {
         // const response = await apiClient.get(`${API_URL}/api/v1/vehicles/${vehicleId}`)
         const response = {
             isSuccess: true,

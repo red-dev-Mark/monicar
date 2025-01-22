@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { useModal } from '@/hooks/useModal'
-import { vehicleAPI } from '@/lib/apis'
+import { vehicleService } from '@/lib/apis'
 import { validateVehicleNumber } from '@/lib/utils/validation'
 import { VehicleDateModel } from '@/types/vehicle'
 
@@ -20,7 +20,7 @@ export const useSearchVehicle = (vehicleNumber: string = '') => {
         }
 
         try {
-            const response = await vehicleAPI.fetchVehicleData(vehicleNumber)
+            const response = await vehicleService.getVehicleInfo(vehicleNumber)
 
             // TODO: 등록되지 않는 차량 API 에러 메세지로 대체
             if (validation.value !== response.vehicleNumber) {
