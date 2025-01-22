@@ -19,7 +19,7 @@ export const item = style({
     border: `1px solid ${vars.colors.gray[300]}`,
     boxShadow: vars.colors.shadow[100],
     ':hover': {
-        backgroundColor: vars.colors.gray[100],
+        backgroundColor: vars.colors.gray[50],
     },
     selectors: {
         '&:not(:first-child)': {

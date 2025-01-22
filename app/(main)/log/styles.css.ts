@@ -16,6 +16,6 @@ export const contents = style({
 
 export const item = style({
     ':hover': {
-        backgroundColor: vars.colors.gray[100],
+        backgroundColor: vars.colors.gray[50],
     },
 })
