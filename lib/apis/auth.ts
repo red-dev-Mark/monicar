@@ -14,6 +14,7 @@ export const authService = {
         }
 
         const response = await httpClient.post(`${API_URL}/api/v1/sign-in`, signInData)
+        console.log(response)
         localStorage.setItem('access token', response.headers.authorization)
     },
 }
