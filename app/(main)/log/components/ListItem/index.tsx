@@ -6,14 +6,15 @@ import * as styles from './styles.css'
 
 interface ListItemProps {
     data: ListItemModel
+    className?: string
     onClick?: () => void
 }
 
-const ListItem = ({ data, onClick }: ListItemProps) => {
+const ListItem = ({ data, className, onClick }: ListItemProps) => {
     const { vehicleNumber, vehicleModel, drivingDays, totalDistance, status } = data
 
     return (
-        <button className={styles.container} onClick={onClick} type='button'>
+        <button className={`${styles.container} ${className || ''}`} onClick={onClick} type='button'>
             <ul className={styles.list}>
                 <li className={styles.itemWrapper}>{vehicleNumber}</li>
                 <li className={styles.itemWrapper}>{vehicleModel}</li>
