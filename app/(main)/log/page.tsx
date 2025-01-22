@@ -39,14 +39,7 @@ const LogPage = () => {
                 <ListHeader headerTitles={HEADER_TITLES} />
                 {logData?.content
                     .slice(0, 8)
-                    .map((log) => (
-                        <ListItem
-                            className={styles.item}
-                            key={log.id}
-                            data={log}
-                            onClick={() => handleItemClick(log.id)}
-                        />
-                    ))}
+                    .map((log) => <ListItem key={log.id} data={log} onClick={() => handleItemClick(log.id)} />)}
             </div>
             {/* TODO 페이지네이션 추가 */}
         </div>
