@@ -1,35 +1,17 @@
 import axios from 'axios'
-import { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
 import { API_URL } from '@/constants/api'
+import { setupRequestInterceptor, setupResponseInterceptor } from '@/lib/apis/interceptors'
 
 export const httpClient = axios.create({
     baseURL: API_URL,
+    withCredentials: true,
     headers: {
         accept: '*/*',
         'Content-Type': 'application/json',
     },
-    timeout: 10000,
+    timeout: 5000,
 })
 
-export const setupRequestInterceptor = (instance: AxiosInstance) => {
-    instance.interceptors.request.use(
-        (config: InternalAxiosRequestConfig) => {
-            return config
-        },
-        (error: AxiosError) => {
-            return Promise.reject(error)
-        },
-    )
-}
-
-export const setupResponseInterceptor = (instance: AxiosInstance) => {
-    instance.interceptors.response.use(
-        (response: AxiosResponse) => {
-            return response
-        },
-        (error: AxiosError) => {
-            return Promise.reject(error)
-        },
-    )
-}
+setupRequestInterceptor(httpClient)
+setupResponseInterceptor(httpClient)
