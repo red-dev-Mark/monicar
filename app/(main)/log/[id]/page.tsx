@@ -5,7 +5,7 @@ import SquareButton from '@/components/common/Button/SquareButton'
 
 import * as styles from './styles.css'
 
-const VehicleDetailPage = () => {
+const LogPage = () => {
     // TODO: 실제 데이터로 교체하기
     const mockData = {
         vehicleNumber: '123가4567',
@@ -148,4 +148,4 @@ const VehicleDetailPage = () => {
     )
 }
 
-export default VehicleDetailPage
+export default LogPage
