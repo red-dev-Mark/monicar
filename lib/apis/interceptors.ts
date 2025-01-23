@@ -13,7 +13,7 @@ export const setupRequestInterceptor = (instance: AxiosInstance) => {
     instance.interceptors.request.use(
         (config: InternalAxiosRequestConfig) => {
             const accessToken = tokenStorage.getToken()
-            config.headers.Authorization = accessToken
+            config.headers.Authorization = accessToken || ''
 
             return config
         },
@@ -26,7 +26,7 @@ export const setupRequestInterceptor = (instance: AxiosInstance) => {
 export const setupResponseInterceptor = (instance: AxiosInstance) => {
     instance.interceptors.response.use(
         (response: AxiosResponse) => {
-            return response.data
+            return response
         },
         async (error: AxiosError) => {
             const originalRequest = error.config as CustomRequestConfig
@@ -35,34 +35,39 @@ export const setupResponseInterceptor = (instance: AxiosInstance) => {
                 // TODO:  isRequestAlready 동작 여부 확인 (무한 요청이 이루어지는지 등)
                 originalRequest.isRequestAlready = true
 
-                const logout = useAuthStore((state) => state.logout)
+                const logout = useAuthStore.getState().logout
 
                 try {
                     // TODO: refresh token API URL 확인 (apl/v1이 붙는지 여부)
-                    const response = await httpClient.post(`${API_URL}/auth/refresh`)
-                    const newAccessToken = response.headers.authorization
+                    await httpClient.post(`${API_URL}/auth/refresh`)
 
-                    tokenStorage.setToken(newAccessToken)
-                    originalRequest.headers.Authorization = newAccessToken
+                    // const response = await httpClient.post(`${API_URL}/auth/refresh`)
+                    // const newAccessToken = response.headers.authorization
+
+                    // 로컬 스토리지 관련 내용
+                    // tokenStorage.setToken(newAccessToken)
+                    // originalRequest.headers.Authorization = newAccessToken
 
                     return httpClient(originalRequest)
                 } catch (error) {
                     // TODO: if문 조건 -> refresh token가 만료되었을 때의 메세지 등 조치
-                    if (error === 'refresh token 만료 메세지 등') {
-                        try {
-                            await httpClient.post(`${API_URL}/auth/reissue`)
-                            const response = await httpClient.post(`${API_URL}/auth/refresh`)
-                            const newAccessToken = response.headers.authorization
+                    // if (error === 'refresh token 만료 메세지 등') {
+                    //     try {
+                    //         await httpClient.post(`${API_URL}/auth/reissue`)
+                    //         const response = await httpClient.post(`${API_URL}/auth/refresh`)
+                    //         const newAccessToken = response.headers.authorization
 
-                            tokenStorage.setToken(newAccessToken)
-                            originalRequest.headers.Authorization = newAccessToken
+                    //         tokenStorage.setToken(newAccessToken)
+                    //         originalRequest.headers.Authorization = newAccessToken
 
-                            return httpClient(originalRequest)
-                        } catch (error) {
-                            return Promise.reject(error)
-                        }
-                    }
+                    //         return httpClient(originalRequest)
+                    //     } catch (error) {
+                    //         return Promise.reject(error)
+                    //     }
+                    // }
+
                     logout()
+                    window.location.href = '/signin'
                     return Promise.reject(error)
                 }
             }
