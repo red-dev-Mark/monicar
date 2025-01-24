@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react'
 
-import { DATA_PATHS } from '@/constants/data'
 import { apiClient } from '@/lib/apis/client'
-
-type PathType = keyof typeof DATA_PATHS
 
 export interface UseDataProps {
     url: string
     params?: Record<string, string | number>
-    path: PathType
+    path: string
 }
 
 export const useData = <T>({ url, params, path }: UseDataProps) => {
