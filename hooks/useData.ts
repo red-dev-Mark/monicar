@@ -5,7 +5,7 @@ import { apiClient } from '@/lib/apis/client'
 export interface UseDataProps {
     url: string
     params?: Record<string, string | number>
-    path: string
+    path?: string
 }
 
 export const useData = <T>({ url, params, path }: UseDataProps) => {
@@ -18,7 +18,7 @@ export const useData = <T>({ url, params, path }: UseDataProps) => {
             try {
                 setIsLoading(true)
                 const response = await apiClient.get(url, { params })
-                setData(response.data[path])
+                setData(response.data.result)
             } catch (error) {
                 setError('데이터 불러오기 실패')
                 console.error('Error', error)
