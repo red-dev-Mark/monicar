@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { RoundButton } from '@/components/common/Button/RoundButton'
@@ -13,8 +14,16 @@ const SignInPage = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const router = useRouter()
+
     const handleButtonSubmit = async () => {
-        await authService.postSignIn(email, password)
+        const isSignIn = await authService.postSignIn(email, password)
+        if (isSignIn) {
+            // console.log('현재 쿠키:', document.cookie)
+            // await new Promise((resolve) => setTimeout(resolve, 500))
+            // console.log('지연 후 쿠키:', document.cookie)
+            router.push('/dashboard')
+        }
     }
 
     return (

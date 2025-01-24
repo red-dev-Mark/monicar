@@ -2,7 +2,7 @@ import { AxiosInstance, AxiosError, AxiosResponse, InternalAxiosRequestConfig } 
 
 import { API_URL } from '@/constants/api'
 import { httpClient } from '@/lib/apis/client'
-import { tokenStorage } from '@/lib/utils/auth'
+// import { tokenStorage } from '@/lib/utils/auth'
 import { useAuthStore } from '@/stores/useAuthStore'
 
 interface CustomRequestConfig extends InternalAxiosRequestConfig {
@@ -12,9 +12,6 @@ interface CustomRequestConfig extends InternalAxiosRequestConfig {
 export const setupRequestInterceptor = (instance: AxiosInstance) => {
     instance.interceptors.request.use(
         (config: InternalAxiosRequestConfig) => {
-            const accessToken = tokenStorage.getToken()
-            config.headers.Authorization = accessToken || ''
-
             return config
         },
         (error: AxiosError) => {
