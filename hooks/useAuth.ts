@@ -1,5 +1,4 @@
 import { authService } from '@/lib/apis/auth'
-import { tokenStorage } from '@/lib/utils/auth'
 import { useAuthStore } from '@/stores/useAuthStore'
 
 export const useAuth = () => {
@@ -19,7 +18,6 @@ export const useAuth = () => {
 
     const handleLogout = () => {
         logout()
-        tokenStorage.removeToken()
     }
 
     return {

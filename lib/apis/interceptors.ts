@@ -2,7 +2,6 @@ import { AxiosInstance, AxiosError, AxiosResponse, InternalAxiosRequestConfig } 
 
 import { API_URL } from '@/constants/api'
 import { httpClient } from '@/lib/apis/client'
-// import { tokenStorage } from '@/lib/utils/auth'
 import { useAuthStore } from '@/stores/useAuthStore'
 
 interface CustomRequestConfig extends InternalAxiosRequestConfig {
@@ -34,35 +33,13 @@ export const setupResponseInterceptor = (instance: AxiosInstance) => {
 
                 const logout = useAuthStore.getState().logout
 
+                console.log('401 에러입니다!!')
+
                 try {
-                    // TODO: refresh token API URL 확인 (apl/v1이 붙는지 여부)
                     await httpClient.post(`${API_URL}/auth/refresh`)
-
-                    // const response = await httpClient.post(`${API_URL}/auth/refresh`)
-                    // const newAccessToken = response.headers.authorization
-
-                    // 로컬 스토리지 관련 내용
-                    // tokenStorage.setToken(newAccessToken)
-                    // originalRequest.headers.Authorization = newAccessToken
 
                     return httpClient(originalRequest)
                 } catch (error) {
-                    // TODO: if문 조건 -> refresh token가 만료되었을 때의 메세지 등 조치
-                    // if (error === 'refresh token 만료 메세지 등') {
-                    //     try {
-                    //         await httpClient.post(`${API_URL}/auth/reissue`)
-                    //         const response = await httpClient.post(`${API_URL}/auth/refresh`)
-                    //         const newAccessToken = response.headers.authorization
-
-                    //         tokenStorage.setToken(newAccessToken)
-                    //         originalRequest.headers.Authorization = newAccessToken
-
-                    //         return httpClient(originalRequest)
-                    //     } catch (error) {
-                    //         return Promise.reject(error)
-                    //     }
-                    // }
-
                     logout()
                     window.location.href = '/signin'
                     return Promise.reject(error)
