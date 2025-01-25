@@ -21,11 +21,10 @@ const VehicleMarker = ({ vehicleInfo, onVehicleClick }: VehicleMarkerProps) => {
             setIsDescriptionVisible(false)
         }, 3000)
     }, [])
-
     const vehicleNumber = vehicleInfo.vehicleNumber.slice(0, 3) + ' ' + vehicleInfo.vehicleNumber.slice(3)
     const vehicleCurrentLocation = {
         lat: vehicleInfo?.recentCycleInfo.lat,
-        lng: vehicleInfo?.recentCycleInfo.lat,
+        lng: vehicleInfo?.recentCycleInfo.lng,
     }
 
     return (
