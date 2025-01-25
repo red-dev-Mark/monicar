@@ -15,7 +15,7 @@ import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
 import { vehicleAPI } from '@/lib/apis'
 import koreaLocation from '@/mock/metropolitan_coordinates.json'
 import { vars } from '@/styles/theme.css'
-import { VehicleDetailsModel } from '@/types/vehicle'
+import { VehicleDetailsModel, VehicleInfoModel } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
@@ -36,9 +36,8 @@ const LocationPage = () => {
     } = useSearchSingleVehicle()
 
     const handleVehicleClick = async () => {
-        const vehicleDetailsData = await vehicleAPI.fetchVehicleDetails()
-
-        if (!vehicleDetailsData) return
+        const { vehicleId } = vehicleInfo as VehicleInfoModel
+        const vehicleDetailsData = await vehicleAPI.getVehicleDetailInfo(vehicleId)
 
         setVehicleDetails(vehicleDetailsData)
         setIsDetailsCardVisible(true)
@@ -105,6 +104,7 @@ const LocationPage = () => {
                     onChange={handleSearchChange}
                     onSubmit={handleVehicleSearch}
                 />
+                <button onClick={handleVehicleClick}>클릭</button>
             </div>
             <VehicleStatus />
             {isVehicleDetailsVisible && (

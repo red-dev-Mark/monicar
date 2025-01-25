@@ -22,25 +22,24 @@ export interface VehicleDateModel {
 }
 
 export interface VehicleDetailsModel {
-    department: string
-    vehicleId: string
-    vehicleNumber: string
-    driverName: string
-    status: {
-        type: VehicleStatusType
-        speed: number
+    recentVehicleInfo: {
+        vehicleId: number
+        vehicleNumber: string
+        status: string
         lastEngineOn: string
         lastEngineOff: string
     }
-    dailyStatus: {
-        distance: number
-        drivingTime: number
-    }
-    location: {
+    recentCycleInfo: {
+        speed: number
         lat: number
         lng: number
         lastUpdated: string
     }
+    todayDrivingHistory: {
+        distance: number
+        drivingTime: number
+    }
+    vehicleCompanyInfo: {
+        companyName: string
+    }
 }
-
-export type VehicleStatusType = 'ON' | 'OFF'

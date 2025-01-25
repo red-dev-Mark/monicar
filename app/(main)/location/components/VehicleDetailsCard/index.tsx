@@ -6,6 +6,7 @@ import Badge from '@/components/common/Badge'
 import SquareButton from '@/components/common/Button/SquareButton'
 import { useCoordToAddress } from '@/hooks/useCoordToAddress'
 import { formatISODateToDot } from '@/lib/utils/date'
+import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { VehicleDetailsModel } from '@/types/vehicle'
 
 import * as styles from './styles.css'
@@ -17,17 +18,22 @@ interface VehicleDetailsCardProps {
 
 const VehicleDetailsCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetailsCardProps) => {
     const {
-        department,
-        vehicleNumber,
-        driverName,
-        status: { type, speed, lastEngineOn, lastEngineOff },
-        dailyStatus: { distance, drivingTime },
-        location: { lat, lng, lastUpdated },
+        recentVehicleInfo: { vehicleNumber, status, lastEngineOn, lastEngineOff },
+        recentCycleInfo: { speed, lat, lng, lastUpdated },
+        todayDrivingHistory,
     } = vehicleDetails
 
-    const address = useCoordToAddress(lat, lng)
+    const normalizedCoordinate = {
+        lat: normalizeCoordinate(lat),
+        lng: normalizeCoordinate(lng),
+    }
 
-    const isDriving = type === 'ON'
+    const address = useCoordToAddress(normalizedCoordinate.lat, normalizedCoordinate.lng)
+
+    // TODO: 다른 데이터 오류 가능성 체크
+    const isDriving = status === 'ON'
+    const todayDrivingTime = todayDrivingHistory ? todayDrivingHistory.drivingTime : 0
+    const todayDrivingDistance = todayDrivingHistory ? todayDrivingHistory.distance : 0
 
     return (
         <article className={styles.container}>
@@ -44,16 +50,6 @@ const VehicleDetailsCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetai
             <div className={styles.tableWrapper}>
                 <table className={styles.table}>
                     <tbody>
-                        <tr>
-                            <th scope='row' className={styles.tableHeader}>
-                                조직
-                            </th>
-                            <td className={styles.tableCell}>{department}</td>
-                            <th scope='row' className={styles.tableHeader}>
-                                운전자
-                            </th>
-                            <td className={styles.tableCell}>{driverName}</td>
-                        </tr>
                         <tr>
                             <th scope='row' className={styles.tableHeader}>
                                 운행상태
@@ -78,11 +74,11 @@ const VehicleDetailsCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetai
                             <th scope='row' className={styles.tableHeader}>
                                 당일주행시간
                             </th>
-                            <td className={styles.tableCell}>{drivingTime}분</td>
+                            <td className={styles.tableCell}>{todayDrivingTime} 분</td>
                             <th scope='row' className={styles.tableHeader}>
                                 당일주행거리
                             </th>
-                            <td className={styles.tableCell}>{distance} km</td>
+                            <td className={styles.tableCell}>{todayDrivingDistance} km</td>
                         </tr>
                         <tr>
                             <th scope='row' className={styles.tableHeader}>
