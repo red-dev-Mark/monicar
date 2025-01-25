@@ -1,10 +1,15 @@
-import { LatLng } from '@/types/location'
-
 export interface VehicleInfoModel {
     vehicleId: string
     vehicleNumber: string
+    recentCycleInfo: RecentCycleInfo
     status: string
-    location: LatLng
+}
+
+interface RecentCycleInfo {
+    speed: number
+    lat: number
+    lng: number
+    lastUpdated: string
 }
 
 export interface VehicleDateModel {

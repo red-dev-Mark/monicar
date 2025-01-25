@@ -1,41 +1,22 @@
-// import { API_URL } from '@/constants/api'
-// import { apiClient } from '@/lib/apis/client'
+import { API_URL } from '@/constants/api'
+import { apiClient } from '@/lib/apis/client'
 // import { DateTime } from '@/app/route/types/date'
 // import { formatToISODate } from '@/lib/utils/date'
 import mockRoutesData from '@/mock/vehicle_route_data.json'
-// import mockRoutesData from '@/mock/vehicle_route_data.json'
 import { VehicleDetailsModel, VehicleStatusType } from '@/types/vehicle'
 
 // 예시 API 구조
 export const vehicleAPI = {
-    fetchVehicleData: async (_vehicleNumber: string) => {
-        // const response = await apiClient.get(`${API_URL}/api/v1/vehicles?vehicleNumber=${vehicleNumber}`)
+    getVehicleInfo: async (vehicleNumber: string) => {
+        const response = await apiClient.get(`${API_URL}/api/v1/vehicles/search?vehicle-number=${vehicleNumber}`)
 
-        const response = {
-            isSuccess: true,
-            message: '요청 성공',
-            result: {
-                vehicleId: 'V123',
-                vehicleNumber: '54하2902',
-                firstDateAt: '2024-01-15T09:30:00',
-                lastDateAt: '2024-01-21T14:30:00',
-            },
+        if (!response.data.isSuccess) {
+            if (response.data.errorCode === 1003) {
+                return { isValid: false, value: '등록되지 않은 차량입니다.' }
+            }
         }
 
-        return response.result
-    },
-    fetchVehicleRoutesData: async () => {
-        // fetchVehicleRoutesData: async (vehicleId: string, startDate: DateTime, endDate: DateTime, interval = 60) => {
-        // const formattedStartDate = formatToISODate(startDate)
-        // const formattedEndDate = formatToISODate(endDate)
-        // const response = await apiClient.get(
-        //     `${API_URL}/api/vi/vehicles/${vehicleId}/routes?startTime=${formattedStartDate}&endTime=${formattedEndDate}&interval=${interval}`,
-        // )
-        // console.log(formattedStartDate, formattedEndDate, vehicleId, interval)
-
-        // return response.result
-
-        return mockRoutesData
+        return { isValid: true, value: response.data.result }
     },
     // fetchVehicleDetails: async (vehicleId: string) => {
     fetchVehicleDetails: async (): Promise<VehicleDetailsModel> => {
@@ -66,5 +47,18 @@ export const vehicleAPI = {
             },
         }
         return response.result
+    },
+    fetchVehicleRoutesData: async () => {
+        // fetchVehicleRoutesData: async (vehicleId: string, startDate: DateTime, endDate: DateTime, interval = 60) => {
+        // const formattedStartDate = formatToISODate(startDate)
+        // const formattedEndDate = formatToISODate(endDate)
+        // const response = await apiClient.get(
+        //     `${API_URL}/api/vi/vehicles/${vehicleId}/routes?startTime=${formattedStartDate}&endTime=${formattedEndDate}&interval=${interval}`,
+        // )
+        // console.log(formattedStartDate, formattedEndDate, vehicleId, interval)
+
+        // return response.result
+
+        return mockRoutesData
     },
 }

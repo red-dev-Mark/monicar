@@ -23,10 +23,14 @@ const VehicleMarker = ({ vehicleInfo, onVehicleClick }: VehicleMarkerProps) => {
     }, [])
 
     const vehicleNumber = vehicleInfo.vehicleNumber.slice(0, 3) + ' ' + vehicleInfo.vehicleNumber.slice(3)
+    const vehicleCurrentLocation = {
+        lat: vehicleInfo?.recentCycleInfo.lat,
+        lng: vehicleInfo?.recentCycleInfo.lat,
+    }
 
     return (
-        <CustomOverlayMap position={vehicleInfo?.location}>
-            <MapMarker position={vehicleInfo?.location} image={MARKER_IMAGE} />
+        <CustomOverlayMap position={vehicleCurrentLocation}>
+            <MapMarker position={vehicleCurrentLocation} image={MARKER_IMAGE} />
             <p className={styles.vehicleCard} onClick={onVehicleClick} role='presentation'>
                 {vehicleNumber}
             </p>
