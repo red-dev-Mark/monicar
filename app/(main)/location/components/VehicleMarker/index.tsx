@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { CustomOverlayMap, MapMarker } from 'react-kakao-maps-sdk'
 
 import { MARKER_IMAGE } from '@/constants/map'
+import { addSpaceVehicleNumber } from '@/lib/utils/string'
 import { VehicleInfoModel } from '@/types/vehicle'
 
 import * as styles from './styles.css'
@@ -22,7 +23,7 @@ const VehicleMarker = ({ vehicleInfo, onVehicleClick }: VehicleMarkerProps) => {
         }, 3000)
     }, [])
 
-    const vehicleNumber = vehicleInfo.vehicleNumber.slice(0, 3) + ' ' + vehicleInfo.vehicleNumber.slice(3)
+    const vehicleNumber = addSpaceVehicleNumber(vehicleInfo.vehicleNumber)
     const vehicleCurrentLocation = {
         lat: vehicleInfo?.recentCycleInfo.lat,
         lng: vehicleInfo?.recentCycleInfo.lng,
