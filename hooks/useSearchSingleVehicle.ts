@@ -25,17 +25,16 @@ export const useSearchSingleVehicle = () => {
             return
         }
 
-        const response = await vehicleAPI.getVehicleInfo(searchTerm)
+        const result = await vehicleAPI.getVehicleInfo(searchTerm)
 
-        console.log(response)
-
-        // TODO: 등록되지 않은 차량의 경우 어떤 에러코드가 오는지 확인 후 처리
-        if (!response.isValid) {
-            showMessage(response.value)
+        if (!result.isValid) {
+            showMessage(result.value as string)
             return
         }
 
-        const vehicleInfo = response.value
+        if (typeof result.value === 'string') return
+
+        const vehicleInfo = result.value
 
         updateMapLocation(
             {

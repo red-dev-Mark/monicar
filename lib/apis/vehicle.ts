@@ -1,5 +1,6 @@
 import { API_URL } from '@/constants/api'
 import { apiClient } from '@/lib/apis/client'
+import { normalizeVehicleResponse } from '@/lib/utils/normalize'
 // import { DateTime } from '@/app/route/types/date'
 // import { formatToISODate } from '@/lib/utils/date'
 import mockRoutesData from '@/mock/vehicle_route_data.json'
@@ -8,7 +9,11 @@ import { VehicleDetailsModel, VehicleStatusType } from '@/types/vehicle'
 // 예시 API 구조
 export const vehicleAPI = {
     getVehicleInfo: async (vehicleNumber: string) => {
-        const response = await apiClient.get(`${API_URL}/api/v1/vehicles/search?vehicle-number=${vehicleNumber}`)
+        const response = await apiClient.get(`${API_URL}/api/v1/vehicles/search`, {
+            params: {
+                'vehicle-number': vehicleNumber,
+            },
+        })
 
         if (!response.data.isSuccess) {
             if (response.data.errorCode === 1003) {
@@ -16,7 +21,8 @@ export const vehicleAPI = {
             }
         }
 
-        return { isValid: true, value: response.data.result }
+        const normalizeResult = normalizeVehicleResponse(response.data.result)
+        return { isValid: true, value: normalizeResult }
     },
     // fetchVehicleDetails: async (vehicleId: string) => {
     fetchVehicleDetails: async (): Promise<VehicleDetailsModel> => {
