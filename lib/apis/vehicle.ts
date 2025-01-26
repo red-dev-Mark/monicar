@@ -1,6 +1,7 @@
 import { API_URL } from '@/constants/api'
 import { apiClient } from '@/lib/apis/client'
 import { normalizeVehicleResponse } from '@/lib/utils/normalize'
+import { removeBlank } from '@/lib/utils/string'
 import mockRoutesData from '@/mock/vehicle_route_data.json'
 
 export const vehicleAPI = {
@@ -8,7 +9,7 @@ export const vehicleAPI = {
     getVehicleInfo: async (vehicleNumber: string) => {
         const response = await apiClient.get(`${API_URL}/api/v1/vehicles/search`, {
             params: {
-                'vehicle-number': vehicleNumber,
+                'vehicle-number': removeBlank(vehicleNumber),
             },
         })
 
