@@ -2,14 +2,14 @@ import { Progress as MantineProgress } from '@mantine/core'
 
 import * as styles from './styles.css'
 
-interface ProgressProps {
+interface VehicleStatusItemProps {
     total: number
     current: number
     color: string
     children?: React.ReactNode
 }
 
-const Progress = ({ total, current, color, children }: ProgressProps) => {
+const VehicleStatusItem = ({ total, current, color, children }: VehicleStatusItemProps) => {
     const percent = (current / total) * 100
 
     return (
@@ -27,4 +27,4 @@ const Progress = ({ total, current, color, children }: ProgressProps) => {
     )
 }
 
-export default Progress
+export default VehicleStatusItem
