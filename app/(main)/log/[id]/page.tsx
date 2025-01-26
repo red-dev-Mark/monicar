@@ -65,7 +65,7 @@ const DetailPage = () => {
                         삭제
                     </RoundButton>
                 }
-            ></ControlLayout>
+            />
 
             <table>
                 <tbody>
