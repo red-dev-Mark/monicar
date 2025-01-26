@@ -104,7 +104,6 @@ const LocationPage = () => {
                     onChange={handleSearchChange}
                     onSubmit={handleVehicleSearch}
                 />
-                <button onClick={handleVehicleClick}>클릭</button>
             </div>
             <VehicleStatus />
             {isVehicleDetailsVisible && (
