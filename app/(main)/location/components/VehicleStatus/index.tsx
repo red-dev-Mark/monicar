@@ -8,7 +8,9 @@ const VehicleStatus = () => {
             <div className={styles.itemContainer}>
                 <div className={styles.titleWrapper}>
                     <div className={styles.circle} />
-                    <div className={styles.title}>전체차량</div>
+                    <div className={styles.title} style={{ color: 'blue' }}>
+                        전체차량
+                    </div>
                 </div>
 
                 <div className={styles.count}>30</div>
