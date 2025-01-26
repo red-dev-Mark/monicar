@@ -19,8 +19,10 @@ const Progress = ({ total, current, color, children }: ProgressProps) => {
                 <h3 className={styles.title}>{children}</h3>
             </div>
 
-            <p className={styles.count}>{current}</p>
-            <MantineProgress color={color} radius='md' size='lg' value={percent} />
+            <p className={styles.count}>{current.toLocaleString()}</p>
+            <div className={styles.progressWrapper}>
+                <MantineProgress color={color} radius='md' size='xl' value={percent} striped />
+            </div>
         </div>
     )
 }

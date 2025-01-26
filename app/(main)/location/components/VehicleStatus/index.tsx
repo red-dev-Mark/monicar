@@ -6,31 +6,24 @@ import { vars } from '@/styles/theme.css'
 import * as styles from './styles.css'
 
 const VehicleStatus = () => {
+    // TODO: 추후 API 연동
+    const allVehicles = 15000
+    const engineOnVehicles = 8650
+    const engineOffVehicles = 6320
+
     return (
         <div className={styles.container}>
-            <Progress total={100} current={60} color={vars.colors.blue}>
+            <Progress total={allVehicles} current={allVehicles} color={vars.colors.primary}>
                 전체차량
             </Progress>
 
-            <div className={styles.itemContainer}>
-                <div className={styles.titleWrapper}>
-                    <div className={styles.circle} />
-                    <div className={styles.title}>주행중</div>
-                </div>
+            <Progress total={allVehicles} current={engineOnVehicles} color={vars.colors.green[500]}>
+                운행중
+            </Progress>
 
-                <div className={styles.count}>30</div>
-                <div className={styles.bar}></div>
-            </div>
-
-            <div className={styles.itemContainer}>
-                <div className={styles.titleWrapper}>
-                    <div className={styles.circle} />
-                    <div className={styles.title}>미주행</div>
-                </div>
-
-                <div className={styles.count}>30</div>
-                <div className={styles.bar}></div>
-            </div>
+            <Progress total={allVehicles} current={engineOffVehicles} color={vars.colors.blue}>
+                미운행
+            </Progress>
         </div>
     )
 }
