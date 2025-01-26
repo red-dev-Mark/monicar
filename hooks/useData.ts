@@ -1,14 +1,9 @@
 import { useEffect, useState } from 'react'
 
+import { UseDataRequest } from '@/constants/api'
 import { apiClient } from '@/lib/apis/client'
 
-export interface UseDataProps {
-    url: string
-    params?: Record<string, string | number>
-    path?: string
-}
-
-export const useData = <T>({ url, params, path }: UseDataProps) => {
+export const useData = <T>({ url, params }: UseDataRequest) => {
     const [data, setData] = useState<T>()
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
@@ -27,7 +22,7 @@ export const useData = <T>({ url, params, path }: UseDataProps) => {
             }
         }
         getData()
-    }, [url, params, path])
+    }, [url, params])
 
     return { data, isLoading, error }
 }
