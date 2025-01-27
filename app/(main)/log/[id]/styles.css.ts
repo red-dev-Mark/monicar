@@ -7,15 +7,19 @@ export const container = style({
     position: 'absolute',
     display: 'flex',
     flexDirection: 'column',
+    height: '100%',
     padding: '40px 44px',
     gap: '30px',
     backgroundColor: vars.colors.white,
     borderRadius: '30px 30px 0 0',
 })
 
-export const buttonGroup = style({
+export const tableWrapper = style({
+    flex: 1,
     display: 'flex',
-    gap: '10px',
+    flexDirection: 'column',
+    gap: '30px',
+    overflowY: 'auto',
 })
 
 export const tableHeader = style({
@@ -43,6 +47,7 @@ export const linkButton = style({
     padding: '16px 24px',
     textAlign: 'center',
     borderRadius: '8px',
+    marginTop: 'auto',
     ':hover': {
         backgroundColor: vars.colors.gray[800],
     },
