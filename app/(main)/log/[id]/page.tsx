@@ -1,5 +1,6 @@
 'use client'
 
+import { useParams } from 'next/navigation'
 import { useState } from 'react'
 import DatePicker from 'react-datepicker'
 
@@ -47,6 +48,9 @@ const DetailPage = () => {
     }
 
     const [startDate, setStartDate] = useState<Date | null>(new Date())
+
+    const params = useParams()
+    const id = params.id
 
     return (
         <div className={styles.container}>
@@ -189,7 +193,7 @@ const DetailPage = () => {
                 </tbody>
             </table>
 
-            <LinkButton href={'/log'} className={styles.linkButton}>
+            <LinkButton href={`/log/${id}/records`} className={styles.linkButton}>
                 일별 및 시간별 조회
             </LinkButton>
         </div>
