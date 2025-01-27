@@ -1,5 +1,4 @@
-import { ListItemModel } from '@/types/history'
-
+import { ListItemModel } from '@/types/log'
 export interface LogListResponse {
     content: ListItemModel[]
     page: number
@@ -8,4 +7,10 @@ export interface LogListResponse {
     totalPages: number
     first: boolean
     last: boolean
+}
+
+export type ApiType<T> = {
+    isSuccess: boolean
+    message: string
+    result: T
 }
