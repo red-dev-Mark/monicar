@@ -1,5 +1,6 @@
 import { DateTime, SearchableDateTime } from '@/app/(main)/route/types/date'
 import { formatToISODate } from '@/lib/utils/date'
+import { removeSpaces } from '@/lib/utils/string'
 
 // 차량번호 유효성 검증
 export const validateVehicleNumber = (searchTerm: string) => {
@@ -10,7 +11,7 @@ export const validateVehicleNumber = (searchTerm: string) => {
         }
     }
 
-    const removedBlank = searchTerm.trim().replace(/\s/g, '')
+    const removedBlank = removeSpaces(searchTerm)
 
     const hasOnlyKoreanAndNumber = /^[\u3131-\uD79D0-9]+$/.test(removedBlank)
 
