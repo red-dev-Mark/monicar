@@ -2,6 +2,7 @@ import Image from 'next/image'
 
 import LinkButton from '@/components/common/Button/LinkButton'
 import { RoundButton } from '@/components/common/Button/RoundButton'
+import ControlLayout from '@/components/common/ControlLayout'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
@@ -18,29 +19,33 @@ const ControlBar = ({ onExcelButtonClick }: ControlBarProps) => {
         useSearchSingleVehicle()
 
     return (
-        <div className={styles.container}>
-            <div className={styles.searchInputWrapper}>
-                <SearchInput
-                    icon='/icons/search-icon.svg'
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                    onSubmit={handleVehicleSearch}
-                />
-            </div>
-            <div className={styles.buttonGroup}>
-                <RoundButton size={'small'} color={'secondary'} onClick={onExcelButtonClick}>
-                    <div className={styles.button}>
-                        <Image src='/icons/green-excel-icon.svg' alt='excel' width={16} height={16} />
-                        엑셀
-                    </div>
-                </RoundButton>
-                <LinkButton href={'/log/register'}>
-                    <div className={styles.linkButton}>
-                        <Image src='/icons/white-add-icon.svg' alt='add' width={18} height={18} />
-                        등록
-                    </div>
-                </LinkButton>
-            </div>
+        <div>
+            <ControlLayout
+                control={
+                    <SearchInput
+                        icon='/icons/search-icon.svg'
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        onSubmit={handleVehicleSearch}
+                    />
+                }
+                primaryButton={
+                    <RoundButton size={'small'} color={'secondary'} onClick={onExcelButtonClick}>
+                        <div className={styles.button}>
+                            <Image src='/icons/green-excel-icon.svg' alt='excel' width={16} height={16} />
+                            엑셀
+                        </div>
+                    </RoundButton>
+                }
+                secondaryButton={
+                    <LinkButton href={'/log/register'}>
+                        <div className={styles.linkButton}>
+                            <Image src='/icons/white-add-icon.svg' alt='add' width={18} height={18} />
+                            등록
+                        </div>
+                    </LinkButton>
+                }
+            />
             <Modal
                 isOpen={isOpen}
                 message={modalMessage as ModalMessageType}
