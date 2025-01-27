@@ -36,7 +36,6 @@ export const titleWrapper = style({
 export const circle = style({
     width: '16px',
     height: '16px',
-    // backgroundColor: vars.colors.green[500],
     backgroundColor: vars.colors.pink[600],
     borderRadius: '50%',
 })
