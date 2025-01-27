@@ -1,15 +1,12 @@
 'use client'
 
 import { useParams } from 'next/navigation'
-import { useState } from 'react'
-import DatePicker from 'react-datepicker'
 
 import Breadcrumb from '@/components/common/Breadcrumb'
 import LinkButton from '@/components/common/Button/LinkButton'
 import { RoundButton } from '@/components/common/Button/RoundButton'
 import ControlLayout from '@/components/common/ControlLayout'
 
-import 'react-datepicker/dist/react-datepicker.css'
 import * as styles from './styles.css'
 
 const DetailPage = () => {
@@ -47,9 +44,6 @@ const DetailPage = () => {
             },
         ],
     }
-
-    const [startDate, setStartDate] = useState<Date | null>(new Date())
-
     const params = useParams()
     const id = params.id
 
@@ -57,14 +51,7 @@ const DetailPage = () => {
         <div className={styles.container}>
             <Breadcrumb type={'운행일지'} />
             <ControlLayout
-                control={
-                    <DatePicker
-                        locale='ko'
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        dateFormat='yyyy.MM.dd'
-                    />
-                }
+                control={''}
                 primaryButton={
                     <RoundButton color='secondary' size={'small'}>
                         엑셀
