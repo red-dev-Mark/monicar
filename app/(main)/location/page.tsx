@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
 import VehicleDetailsCard from '@/app/(main)/location/components/VehicleDetailsCard'
-import VehicleStatus from '@/app/(main)/location/components/VehicleStatus'
+import VehicleStatusPanel from '@/app/(main)/location/components/VehicleStatusPanel'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
@@ -62,7 +62,7 @@ const LocationPage = () => {
                     onSubmit={handleVehicleSearch}
                 />
             </div>
-            <VehicleStatus />
+            <VehicleStatusPanel />
             {isVehicleDetailsVisible && (
                 <VehicleDetailsCard vehicleDetails={vehicleDetails} onCloseButtonClick={setIsDetailsCardVisible} />
             )}
