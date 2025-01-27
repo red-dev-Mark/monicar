@@ -9,7 +9,9 @@ import LinkButton from '@/components/common/Button/LinkButton'
 import { RoundButton } from '@/components/common/Button/RoundButton'
 import ControlLayout from '@/components/common/ControlLayout'
 import { CalendarIcon } from '@/public/icons'
+import 'dayjs/locale/ko'
 
+import '@mantine/dates/styles.css'
 import * as styles from './styles.css'
 
 const DetailPage = () => {
@@ -58,7 +60,12 @@ const DetailPage = () => {
             <ControlLayout
                 control={
                     <DatePickerInput
-                        leftSection={<CalendarIcon size={14} stroke={1.5} />}
+                        locale='ko'
+                        leftSection={
+                            <div style={{ width: '24px', height: '24px' }}>
+                                <CalendarIcon size={16} stroke={1} />
+                            </div>
+                        }
                         leftSectionPointerEvents='none'
                         type='range'
                         size='lg'
