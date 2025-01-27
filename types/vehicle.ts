@@ -1,10 +1,15 @@
-import { LatLng } from '@/types/location'
-
 export interface VehicleInfoModel {
     vehicleId: string
     vehicleNumber: string
+    recentCycleInfo: RecentCycleInfo
     status: string
-    location: LatLng
+}
+
+interface RecentCycleInfo {
+    speed: number
+    lat: number
+    lng: number
+    lastUpdated: string
 }
 
 export interface VehicleDateModel {
@@ -17,25 +22,24 @@ export interface VehicleDateModel {
 }
 
 export interface VehicleDetailsModel {
-    department: string
-    vehicleId: string
-    vehicleNumber: string
-    driverName: string
-    status: {
-        type: VehicleStatusType
-        speed: number
+    recentVehicleInfo: {
+        vehicleId: number
+        vehicleNumber: string
+        status: string
         lastEngineOn: string
         lastEngineOff: string
     }
-    dailyStatus: {
-        distance: number
-        drivingTime: number
-    }
-    location: {
+    recentCycleInfo: {
+        speed: number
         lat: number
         lng: number
         lastUpdated: string
     }
+    todayDrivingHistory: {
+        distance: number
+        drivingTime: number
+    }
+    vehicleCompanyInfo: {
+        companyName: string
+    }
 }
-
-export type VehicleStatusType = 'ON' | 'OFF'
