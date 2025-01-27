@@ -9,6 +9,7 @@ import LinkButton from '@/components/common/Button/LinkButton'
 import { RoundButton } from '@/components/common/Button/RoundButton'
 import ControlLayout from '@/components/common/ControlLayout'
 
+import 'react-datepicker/dist/react-datepicker.css'
 import * as styles from './styles.css'
 
 const DetailPage = () => {
@@ -57,7 +58,12 @@ const DetailPage = () => {
             <Breadcrumb type={'운행일지'} />
             <ControlLayout
                 control={
-                    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} dateFormat='yyyy.MM.dd' />
+                    <DatePicker
+                        locale='ko'
+                        selected={startDate}
+                        onChange={(date) => setStartDate(date)}
+                        dateFormat='yyyy.MM.dd'
+                    />
                 }
                 primaryButton={
                     <RoundButton color='secondary' size={'small'}>
@@ -65,7 +71,7 @@ const DetailPage = () => {
                     </RoundButton>
                 }
                 secondaryButton={
-                    <RoundButton color='secondary' size={'small'}>
+                    <RoundButton color='secondary' size={'small'} onClick={() => {}}>
                         삭제
                     </RoundButton>
                 }
