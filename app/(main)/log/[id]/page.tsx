@@ -1,6 +1,7 @@
 'use client'
 
 import { DatePickerInput } from '@mantine/dates'
+import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import { useState } from 'react'
 
@@ -57,35 +58,43 @@ const DetailPage = () => {
     return (
         <div className={styles.container}>
             <Breadcrumb type={'운행일지'} />
-            <ControlLayout
-                control={
-                    <DatePickerInput
-                        locale='ko'
-                        leftSection={
-                            <div style={{ width: '24px', height: '24px' }}>
-                                <CalendarIcon size={16} stroke={1} />
+            <div>
+                <ControlLayout
+                    control={
+                        <DatePickerInput
+                            locale='ko'
+                            leftSection={
+                                <div style={{ width: '24px', height: '24px' }}>
+                                    <CalendarIcon size={16} stroke={1} />
+                                </div>
+                            }
+                            leftSectionPointerEvents='none'
+                            type='range'
+                            size='lg'
+                            radius='xl'
+                            placeholder='날짜를 검색하세요.'
+                            value={value}
+                            onChange={setValue}
+                        />
+                    }
+                    primaryButton={
+                        <RoundButton color='secondary' size={'small'}>
+                            <div className={styles.button}>
+                                <Image src='/icons/green-excel-icon.svg' alt='excel' width={16} height={16} />
+                                엑셀
                             </div>
-                        }
-                        leftSectionPointerEvents='none'
-                        type='range'
-                        size='lg'
-                        radius='xl'
-                        placeholder='날짜를 검색하세요.'
-                        value={value}
-                        onChange={setValue}
-                    />
-                }
-                primaryButton={
-                    <RoundButton color='secondary' size={'small'}>
-                        엑셀
-                    </RoundButton>
-                }
-                secondaryButton={
-                    <RoundButton color='secondary' size={'small'} onClick={() => {}}>
-                        삭제
-                    </RoundButton>
-                }
-            />
+                        </RoundButton>
+                    }
+                    secondaryButton={
+                        <RoundButton color='primary' size={'small'} onClick={() => {}}>
+                            <div className={styles.button}>
+                                <Image src='/icons/white-trash-icon.svg' alt='add' width={18} height={18} />
+                                삭제
+                            </div>
+                        </RoundButton>
+                    }
+                />
+            </div>
 
             <div className={styles.tableWrapper}>
                 <table>

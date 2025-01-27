@@ -9,7 +9,7 @@ interface ControlLayoutProps {
 const ControlLayout = ({ control, primaryButton, secondaryButton }: ControlLayoutProps) => {
     return (
         <div className={styles.container}>
-            <div className={styles.controlWrapper}>{control}</div>
+            <div>{control}</div>
             <div className={styles.buttonGroup}>
                 {primaryButton}
                 {secondaryButton}

@@ -14,10 +14,6 @@ export const container = style({
     zIndex: vars.zIndex.four,
 })
 
-export const controlWrapper = style({
-    justifyContent: 'center',
-})
-
 export const buttonGroup = style({
     display: 'flex',
     width: '200px',

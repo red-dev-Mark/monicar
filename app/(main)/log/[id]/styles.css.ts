@@ -40,6 +40,18 @@ export const tableCell = style({
     color: vars.colors.black,
 })
 
+export const button = style({
+    display: 'flex',
+    width: '200px',
+    justifyContent: 'center',
+    gap: '6px',
+})
+
+export const deleteButton = style({
+    backgroundColor: vars.colors.primary,
+    color: vars.colors.white,
+})
+
 export const linkButton = style({
     color: vars.colors.white,
     backgroundColor: vars.colors.dark,
