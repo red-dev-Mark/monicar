@@ -1,13 +1,3 @@
-// 'use client'
-
-// import dynamic from 'next/dynamic'
-
-// const LocationPage = dynamic(() => import('./LocationPage'), {
-//     ssr: false,
-// })
-
-// export default LocationPage
-
 'use client'
 
 import dynamic from 'next/dynamic'
@@ -31,7 +21,7 @@ import { VehicleDetailsModel, VehicleInfoModel } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
-const MapSection = dynamic(() => import('./components/MapSection'), {
+const MapSection = dynamic(() => import('./components/MapSection/index'), {
     ssr: false,
 })
 
@@ -115,12 +105,14 @@ const LocationPage = () => {
                         ))}
                     </MarkerClusterer>
                 </Map> */}
-                <MapSection
-                    mapState={mapState}
-                    vehicleInfo={vehicleInfo as VehicleInfoModel}
-                    isVehicleMarkerVisible={isVehicleMarkerVisible}
-                    onVehicleClick={handleVehicleClick}
-                />
+                <div style={{ width: '100%', height: '500px' }}>
+                    <MapSection
+                        mapState={mapState}
+                        vehicleInfo={vehicleInfo as VehicleInfoModel}
+                        isVehicleMarkerVisible={isVehicleMarkerVisible}
+                        onVehicleClick={handleVehicleClick}
+                    />
+                </div>
             </div>
             <div className={styles.searchInputWrapper}>
                 <SearchInput
