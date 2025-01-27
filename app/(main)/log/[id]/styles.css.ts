@@ -7,7 +7,7 @@ export const container = style({
     position: 'absolute',
     display: 'flex',
     flexDirection: 'column',
-    padding: '10px 30px',
+    padding: '40px 44px',
     gap: '30px',
     backgroundColor: vars.colors.white,
     borderRadius: '30px 30px 0 0',
