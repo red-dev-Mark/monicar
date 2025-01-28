@@ -35,9 +35,8 @@ const LocationPage = () => {
     } = useSearchSingleVehicle()
 
     const handleVehicleClick = async () => {
-        const vehicleDetailsData = await vehicleAPI.fetchVehicleDetails()
-
-        if (!vehicleDetailsData) return
+        const { vehicleId } = vehicleInfo as VehicleInfoModel
+        const vehicleDetailsData = await vehicleAPI.getVehicleDetailInfo(vehicleId)
 
         setVehicleDetails(vehicleDetailsData)
         setIsDetailsCardVisible(true)
