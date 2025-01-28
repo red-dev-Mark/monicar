@@ -43,7 +43,7 @@ const LocationPage = () => {
     }
 
     const isVehicleMarkerVisible = !!(isVehicleVisible && vehicleInfo)
-    const isVehicleDetailsVisible = isDetailsCardVisible && vehicleDetails
+    const isVehicleDetailsVisible = !!(isDetailsCardVisible && vehicleDetails)
 
     return (
         <div className={styles.container}>
