@@ -1,5 +1,5 @@
 const RecordsPage = () => {
-    return <div>일별 및 시간별 운행기록</div>
+    return <div></div>
 }
 
 export default RecordsPage
