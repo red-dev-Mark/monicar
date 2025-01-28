@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-    const accessToken = request.cookies.get('access_token')
+    // const accessToken = request.cookies.get('access_token')?.value
+    const accessToken = request.cookies
     const { pathname } = request.nextUrl
 
     const protectedRoutes = ['/dashboard', '/log', '/route', '/location']
@@ -12,9 +13,9 @@ export async function middleware(request: NextRequest) {
         }
     }
 
-    if (pathname === '/signin' && accessToken) {
-        return NextResponse.redirect(new URL('/dashboard', request.url))
-    }
+    // if (pathname === '/signin' && accessToken) {
+    //     return NextResponse.redirect(new URL('/dashboard', request.url))
+    // }
 
     return NextResponse.next()
 }

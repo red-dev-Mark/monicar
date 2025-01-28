@@ -8,6 +8,11 @@ interface CustomRequestConfig extends InternalAxiosRequestConfig {
     isRequestAlready?: boolean
 }
 
+interface ErrorResponse {
+    errorCode: number
+    message: string
+}
+
 export const setupRequestInterceptor = (instance: AxiosInstance) => {
     instance.interceptors.request.use(
         (config: InternalAxiosRequestConfig) => {
@@ -24,25 +29,50 @@ export const setupResponseInterceptor = (instance: AxiosInstance) => {
         (response: AxiosResponse) => {
             return response
         },
-        async (error: AxiosError) => {
+        async (error: AxiosError<ErrorResponse>) => {
             const originalRequest = error.config as CustomRequestConfig
+            const errorCode = error.response?.data?.errorCode
 
-            if (error.response?.status === 401 && originalRequest && !originalRequest.isRequestAlready) {
+            if (originalRequest && !originalRequest.isRequestAlready) {
                 // TODO:  isRequestAlready 동작 여부 확인 (무한 요청이 이루어지는지 등)
                 originalRequest.isRequestAlready = true
 
                 const logout = useAuthStore.getState().logout
 
                 console.log('401 에러입니다!!')
+                console.log(error)
 
+                // try {
+                //     await httpClient.post(`${API_URL}/auth/reissue`)
+
+                //     return httpClient(originalRequest)
+                // } catch (error) {
+                //     logout()
+                //     window.location.href = '/signin'
+                //     return Promise.reject(error)
+                // }
                 try {
-                    await httpClient.post(`${API_URL}/auth/refresh`)
+                    switch (errorCode) {
+                        case 9995:
+                            await httpClient.post(`${API_URL}/auth/refresh`)
+                            return httpClient(originalRequest)
 
-                    return httpClient(originalRequest)
-                } catch (error) {
+                        case 9994:
+                            await httpClient.post(`${API_URL}/auth/reissue`)
+                            return httpClient(originalRequest)
+
+                        case 9993:
+                            // logout()
+                            window.location.href = '/signin'
+                            return Promise.reject(error)
+
+                        default:
+                            return Promise.reject(error)
+                    }
+                } catch (retryError) {
                     logout()
                     window.location.href = '/signin'
-                    return Promise.reject(error)
+                    return Promise.reject(retryError)
                 }
             }
             return Promise.reject(error)

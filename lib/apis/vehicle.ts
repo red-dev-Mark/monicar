@@ -1,27 +1,32 @@
-// import { API_URL } from '@/constants/api'
-// import { apiClient } from '@/lib/apis/client'
-// import { DateTime } from '@/app/route/types/date'
-// import { formatToISODate } from '@/lib/utils/date'
+import { API_URL } from '@/constants/api'
+import { httpClient } from '@/lib/apis/client'
+import { normalizeVehicleResponse } from '@/lib/utils/normalize'
+import { removeSpaces } from '@/lib/utils/string'
 import mockRoutesData from '@/mock/vehicle_route_data.json'
-// import mockRoutesData from '@/mock/vehicle_route_data.json'
-import { VehicleDetailsModel, VehicleStatusType } from '@/types/vehicle'
 
 export const vehicleService = {
-    getVehicleInfo: async (_vehicleNumber: string) => {
-        // const response = await apiClient.get(`${API_URL}/api/v1/vehicles?vehicleNumber=${vehicleNumber}`)
-
-        const response = {
-            isSuccess: true,
-            message: '요청 성공',
-            result: {
-                vehicleId: 'V123',
-                vehicleNumber: '54하2902',
-                firstDateAt: '2024-01-15T09:30:00',
-                lastDateAt: '2024-01-21T14:30:00',
+    // 개별차량 검색 조회
+    getVehicleInfo: async (vehicleNumber: string) => {
+        const response = await httpClient.get(`${API_URL}/api/v1/vehicles/search`, {
+            params: {
+                'vehicle-number': removeSpaces(vehicleNumber),
             },
+        })
+
+        if (!response.data.isSuccess) {
+            if (response.data.errorCode === 1003) {
+                return { isValid: false, value: '등록되지 않은 차량입니다.' }
+            }
         }
 
-        return response.result
+        const normalizeResult = normalizeVehicleResponse(response.data.result)
+        return { isValid: true, value: normalizeResult }
+    },
+    // 개별차량 상세정보 조회
+    getVehicleDetailInfo: async (vehicleId: string) => {
+        const response = await httpClient.get(`${API_URL}/api/v1/vehicles/${vehicleId}`)
+
+        return response.data.result
     },
     getVehicleRoutesData: async () => {
         // getVehicleRoutesData: async (vehicleId: string, startDate: DateTime, endDate: DateTime, interval = 60) => {
@@ -35,35 +40,5 @@ export const vehicleService = {
         // return response.result
 
         return mockRoutesData
-    },
-    // getVehicleDetails: async (vehicleId: string) => {
-    getVehicleDetails: async (): Promise<VehicleDetailsModel> => {
-        // const response = await apiClient.get(`${API_URL}/api/v1/vehicles/${vehicleId}`)
-        const response = {
-            isSuccess: true,
-            message: '요청 성공',
-            result: {
-                department: '04/09 조직',
-                vehicleId: 'V123',
-                vehicleNumber: '54하7056',
-                driverName: '홍길동',
-                status: {
-                    type: 'ON' as VehicleStatusType, // "ON" | "OFF"
-                    speed: 60,
-                    lastEngineOn: '2024-12-24T08:30:00',
-                    lastEngineOff: '2024-12-23T18:30:00',
-                },
-                dailyStatus: {
-                    distance: 152.4,
-                    drivingTime: 18000,
-                },
-                location: {
-                    lat: 37.805,
-                    lng: 128.9016,
-                    lastUpdated: '2024-12-24T10:30:00',
-                },
-            },
-        }
-        return response.result
     },
 }

@@ -1,5 +1,7 @@
 import { style } from '@vanilla-extract/css'
 
+import { vars } from '@/styles/theme.css'
+
 export const container = style({
     position: 'absolute',
     top: '2rem',
@@ -9,20 +11,12 @@ export const container = style({
     alignItems: 'center',
     width: '100%',
     justifyContent: 'flex-end',
-})
-
-export const searchInputWrapper = style({
-    width: '390px',
+    zIndex: vars.zIndex.four,
 })
 
 export const buttonGroup = style({
     display: 'flex',
-    gap: '12px',
     width: '200px',
-})
-
-export const buttonContent = style({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '6px',
+    justifyContent: 'center',
+    gap: '12px',
 })
