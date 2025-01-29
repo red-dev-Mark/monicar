@@ -45,7 +45,7 @@ export const vehicleAPI = {
     // 지도 뷰포트 클러스터링 조회
     getClusteringInfo: async () => {
         // getClusteringInfo: async ({ level, neLat, neLng, swLat, swLng }: ClusteringModel) => {
-        const response = await apiClient.get(`${API_URL}/api/v1/vehicles/cluster/details`, {
+        const response = await apiClient.get(`${API_URL}/api/v1/vehicles/cluster`, {
             // params: {
             //     level,
             //     neLat,

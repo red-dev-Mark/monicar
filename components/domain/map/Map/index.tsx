@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, useEffect, useRef } from 'react'
+import { memo } from 'react'
 import { Map as KakaoMap } from 'react-kakao-maps-sdk'
 
 import { useKakaoLoader } from '@/hooks/useKakaoLoader'
@@ -17,9 +17,9 @@ interface MapProps {
 
 const Map = memo(
     ({
+        ref,
         center = { lat: 37.5665, lng: 126.978 },
         zoom = 10,
-        ref,
         children,
         onLoad,
         onZoomChanged,
@@ -27,48 +27,26 @@ const Map = memo(
     }: MapProps) => {
         const { loading, error } = useKakaoLoader()
 
-        const mapRef = useRef<kakao.maps.Map>(null)
-
-        useEffect(() => {
-            if (!loading && !error) {
-                // console.log('loaded!!')
-                onLoad?.(true)
-                // console.log(ref)
-
-                // const map = mapRef
-
-                // console.log(map)
-            }
-        }, [loading, error, ref, onLoad])
+        const handleCreate = () => {
+            console.log('맵 생성 시점:', ref)
+            onLoad?.(true)
+        }
 
         // useEffect(() => {
-        //     const getInfo = () => {
-        //         if (!!mapRef.current) return
-        //         const map = mapRef.current
-
-        //         console.log(map)
-        //         // if (!map) return
-
-        //         // 지도의 현재 레벨을 얻어옵니다
-        //         // const level = map.getLevel()
-
-        //         // // 지도의 현재 영역을 얻어옵니다
-        //         // const bounds = map.getBounds()
-        //         // // 영역의 남서쪽 좌표를 얻어옵니다
-        //         // const swLatLng = bounds.getSouthWest()
-        //         // // 영역의 북동쪽 좌표를 얻어옵니다
-        //         // const neLatLng = bounds.getNorthEast()
-
-        //         //   swLatLng.getLat() +
-        //         //   swLatLng.getLng() +
-        //         //   neLatLng.getLat() +
-        //         //   neLatLng.getLng() +
-        //         // setInfo(message)
-
-        //         // console.log(level, swLatLng)
+        //     if (!loading && !error) {
+        //         console.log('a')
+        //         console.log(mapRef)
+        //         // console.log('loaded!!')
+        //         onLoad?.(true)
         //     }
-        //     getInfo()
-        // }, [mapRef])
+        // }, [loading, error, mapRef, onLoad])
+        // useEffect(() => {
+        //     // KakaoMap 컴포넌트의 onLoad 이벤트를 이용s
+        //     if (!loading && !error && mapRef.current) {
+        //         console.log(mapRef) // 이제 맵 인스턴스가 존재함
+        //         onLoad?.(true)
+        //     }
+        // }, [loading, error, ref, onLoad])
 
         const handleZoomChanged = (map: kakao.maps.Map) => {
             const currentZoom = map.getLevel()
@@ -80,11 +58,13 @@ const Map = memo(
 
         return (
             <KakaoMap
-                ref={mapRef}
+                ref={ref}
                 center={center}
                 level={zoom}
                 style={{ width: '100%', height: '100%' }}
                 onZoomChanged={handleZoomChanged}
+                // onLoad={handleCreate}
+                onCreate={handleCreate}
                 {...props}
             >
                 {children}

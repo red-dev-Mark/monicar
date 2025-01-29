@@ -9,6 +9,7 @@ export const INITIAL_MAP_STATE = {
         lat: 36.5,
         lng: 127.5,
     },
+    // level: ZOOM_LEVEL.INITIAL,
     level: ZOOM_LEVEL.INITIAL,
 }
 
