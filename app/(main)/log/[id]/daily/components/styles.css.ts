@@ -43,4 +43,5 @@ export const title = style({
     fontSize: vars.fontSizes.large,
     fontWeight: vars.fontWeights.extraBold,
     color: vars.colors.black,
+    marginBottom: '10px',
 })

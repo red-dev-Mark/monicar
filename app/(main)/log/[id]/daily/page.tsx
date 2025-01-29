@@ -40,7 +40,7 @@ const DailyPage = () => {
                         }
                         vehicleNumber={'33가 1234'}
                     >
-                        <ListHeader headerTitles={DAILY_TITLES}></ListHeader>
+                        <ListHeader headerTitles={DAILY_TITLES} />
                     </ControlBox>
                 </div>
 
