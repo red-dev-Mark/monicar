@@ -21,7 +21,7 @@ const VehicleStatusItem = ({ total, current, color, children }: VehicleStatusIte
 
             <p className={styles.count}>{current.toLocaleString()}</p>
             <div className={styles.progressWrapper}>
-                <MantineProgress color={color} radius='md' size='xl' value={percent} striped />
+                <MantineProgress color={color} radius='md' size='xl' value={percent} />
             </div>
         </div>
     )
