@@ -1,10 +1,6 @@
 import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin'
 
-const withVanillaExtract = createVanillaExtractPlugin({
-    outputCss: {
-        filePrefix: 'module', // .module.css로 출력
-    },
-})
+const withVanillaExtract = createVanillaExtractPlugin()
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
