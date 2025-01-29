@@ -7,17 +7,17 @@ import Breadcrumb from '@/components/common/Breadcrumb'
 import { RoundButton } from '@/components/common/Button/RoundButton'
 import ListHeader from '@/components/domain/vehicle/ListHeader'
 
-import RecordsBox from './components'
+import { default as ControlBox } from './components'
 import * as styles from './styles.css'
 
-const RecordsPage = () => {
+const DailyPage = () => {
     return (
         <div className={styles.container}>
             <Breadcrumb type={'일별 및 시간별 운행기록'} />
 
             <div className={styles.contents}>
                 <div className={styles.leftSection}>
-                    <RecordsBox
+                    <ControlBox
                         hasVehicleNumber={true}
                         title={'일별 운행기록'}
                         control={
@@ -40,11 +40,11 @@ const RecordsPage = () => {
                         vehicleNumber={'33가 1234'}
                     >
                         <ListHeader headerTitles={[]}></ListHeader>
-                    </RecordsBox>
+                    </ControlBox>
                 </div>
 
                 <div className={styles.rightSection}>
-                    <RecordsBox
+                    <ControlBox
                         title={'시간별 운행기록'}
                         button={
                             <RoundButton color='secondary' size={'small'}>
@@ -55,12 +55,12 @@ const RecordsPage = () => {
                             </RoundButton>
                         }
                     >
-                        <ListHeader headerTitles={[]}></ListHeader>
-                    </RecordsBox>
+                        <ListHeader headerTitles={[]} />
+                    </ControlBox>
                 </div>
             </div>
         </div>
     )
 }
 
-export default RecordsPage
+export default DailyPage

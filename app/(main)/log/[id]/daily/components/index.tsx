@@ -1,6 +1,6 @@
 import * as styles from './styles.css'
 
-interface RecordsBoxProps {
+interface ControlBoxProps {
     vehicleNumber?: React.ReactNode
     control?: React.ReactNode
     button: React.ReactNode
@@ -8,7 +8,7 @@ interface RecordsBoxProps {
     children: React.ReactNode
     hasVehicleNumber?: boolean
 }
-const RecordsBox = ({ vehicleNumber, control, button, title, children, hasVehicleNumber = false }: RecordsBoxProps) => {
+const ControlBox = ({ vehicleNumber, control, button, title, children, hasVehicleNumber = false }: ControlBoxProps) => {
     return (
         <>
             <div className={styles.controlGroup}>
@@ -25,4 +25,4 @@ const RecordsBox = ({ vehicleNumber, control, button, title, children, hasVehicl
     )
 }
 
-export default RecordsBox
+export default ControlBox
