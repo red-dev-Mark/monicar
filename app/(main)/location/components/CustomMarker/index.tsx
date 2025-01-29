@@ -1,3 +1,4 @@
+import { getMarkerColor } from '@/lib/utils/map'
 import { vars } from '@/styles/theme.css'
 
 interface CustomMarkerProps {
@@ -6,13 +7,14 @@ interface CustomMarkerProps {
 }
 
 const CustomMarker = ({ count, onClick }: CustomMarkerProps) => {
+    const colors = getMarkerColor(count)
+
     return (
         <div
             style={{
                 width: '54px',
                 height: '54px',
-                backgroundColor: '#fdced440',
-                // backgroundColor: colors.outer,
+                backgroundColor: colors.outer,
                 borderRadius: '50%',
                 display: 'flex',
                 justifyContent: 'center',
@@ -24,8 +26,7 @@ const CustomMarker = ({ count, onClick }: CustomMarkerProps) => {
                 style={{
                     width: '40px',
                     height: '40px',
-                    backgroundColor: '#fdced480',
-                    // backgroundColor: colors.inner,
+                    backgroundColor: colors.inner,
                     borderRadius: '50%',
                     display: 'flex',
                     justifyContent: 'center',
