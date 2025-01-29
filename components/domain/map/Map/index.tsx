@@ -31,13 +31,13 @@ const Map = memo(
 
         useEffect(() => {
             if (!loading && !error) {
-                console.log('loaded!!')
+                // console.log('loaded!!')
                 onLoad?.(true)
                 // console.log(ref)
 
-                const map = mapRef
+                // const map = mapRef
 
-                console.log(map)
+                // console.log(map)
             }
         }, [loading, error, ref, onLoad])
 

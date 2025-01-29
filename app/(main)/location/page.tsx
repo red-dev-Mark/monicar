@@ -21,12 +21,13 @@ const MapSection = dynamic(() => import('./components/MapSection'), {
 const LocationPage = () => {
     const [isDetailsCardVisible, setIsDetailsCardVisible] = useState(false)
     const [vehicleDetails, setVehicleDetails] = useState<VehicleDetailsModel>()
-    const [isMapLoaded, setIsMapLoaded] = useState(false)
+    // const [isMapLoaded, setIsMapLoaded] = useState(false)
+    // const [cluster, setCluster] = useState()
 
     // const mapRef = useRef<kakao.maps.Map>(null)
     // const [info, setInfo] = useState<string>('')
 
-    console.log(isMapLoaded)
+    // console.log(isMapLoaded)
 
     const {
         vehicleInfo,
@@ -93,7 +94,7 @@ const LocationPage = () => {
                 vehicleInfo={vehicleInfo as VehicleInfoModel}
                 isVehicleMarkerVisible={isVehicleMarkerVisible}
                 onVehicleClick={handleVehicleClick}
-                onMapLoad={() => setIsMapLoaded(true)}
+                // onMapLoad={() => setIsMapLoaded(true)}
             />
             <div className={styles.searchInputWrapper}>
                 <SearchInput
