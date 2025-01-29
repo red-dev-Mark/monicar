@@ -22,15 +22,14 @@ const DetailPage = () => {
     const id = params.id
 
     const { logData, isLoading, error } = useDetailData({ url: `${API_ENDPOINTS.LOG}/${id}` })
-
-    const [value, setValue] = useState<[Date | null, Date | null]>([null, null])
-
     if (isLoading) {
         return <div> 로딩 중...</div>
     }
     if (error) {
         return <div>Error: {error}</div>
     }
+
+    const [value, setValue] = useState<[Date | null, Date | null]>([null, null])
 
     return (
         <div className={styles.container}>
@@ -153,8 +152,8 @@ const DetailPage = () => {
                                 비고
                             </th>
                         </tr>
-                        {logData?.records.map((data, index) => (
-                            <tr key={index}>
+                        {logData?.records.map((data) => (
+                            <tr key={data.id}>
                                 <td className={styles.tableCell}>{data.usageDate}</td>
                                 <td className={styles.tableCell}>{data.user.departmentName}</td>
                                 <td className={styles.tableCell}>{data.user.name}</td>

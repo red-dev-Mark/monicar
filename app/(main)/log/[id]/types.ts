@@ -27,6 +27,7 @@ interface User {
 }
 
 interface Record {
+    id: number
     usageDate: string
     user: User
     drivingInfo: DrivingInfo
