@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Breadcrumb from '@/components/common/Breadcrumb'
 import { RoundButton } from '@/components/common/Button/RoundButton'
 import ListHeader from '@/components/domain/vehicle/ListHeader'
+import { DAILY_TITLES, HOURLY_TITLES } from '@/constants/listHeader'
 
 import { default as ControlBox } from './components'
 import * as styles from './styles.css'
@@ -39,7 +40,7 @@ const DailyPage = () => {
                         }
                         vehicleNumber={'33가 1234'}
                     >
-                        <ListHeader headerTitles={[]}></ListHeader>
+                        <ListHeader headerTitles={DAILY_TITLES}></ListHeader>
                     </ControlBox>
                 </div>
 
@@ -55,7 +56,7 @@ const DailyPage = () => {
                             </RoundButton>
                         }
                     >
-                        <ListHeader headerTitles={[]} />
+                        <ListHeader headerTitles={HOURLY_TITLES} />
                     </ControlBox>
                 </div>
             </div>
