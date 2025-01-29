@@ -8,6 +8,7 @@ interface ControlBoxProps {
     children: React.ReactNode
     hasVehicleNumber?: boolean
 }
+
 const ControlBox = ({ vehicleNumber, control, button, title, children, hasVehicleNumber = false }: ControlBoxProps) => {
     return (
         <>
