@@ -40,7 +40,6 @@ export const statusCard = recipe({
         height: '100%',
         borderRadius: '11px',
         color: vars.colors.gray[800],
-        fontWeight: vars.fontWeights.bold,
         padding: '16px',
     },
     variants: {
