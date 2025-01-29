@@ -59,7 +59,7 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange }: RouteSearchPan
             return
         }
 
-        const routesData = await vehicleService.getVehicleRoutesData()
+        const routesData = await vehicleService.fetchVehicleRoutesData()
         // const routesData = await vehicleService.fetchVehicleRoutesData(searchedVehicle.vehicleId, startDate, endDate)
         const paths = routesData.result.routes.map((route) => ({
             lat: route.lat,

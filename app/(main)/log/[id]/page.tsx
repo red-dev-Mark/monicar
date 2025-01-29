@@ -220,7 +220,7 @@ const DetailPage = () => {
                 </table>
             </div>
 
-            <LinkButton href={`/log/${id}/records`} className={styles.linkButton}>
+            <LinkButton href={`/log/${id}/daily`} className={styles.linkButton}>
                 일별 및 시간별 조회
             </LinkButton>
         </div>
