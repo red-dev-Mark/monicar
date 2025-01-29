@@ -21,15 +21,16 @@ const DetailPage = () => {
     const params = useParams()
     const id = params.id
 
+    const [value, setValue] = useState<[Date | null, Date | null]>([null, null])
+
     const { logData, isLoading, error } = useDetailData({ url: `${API_ENDPOINTS.LOG}/${id}` })
+
     if (isLoading) {
         return <div> 로딩 중...</div>
     }
     if (error) {
         return <div>Error: {error}</div>
     }
-
-    const [value, setValue] = useState<[Date | null, Date | null]>([null, null])
 
     return (
         <div className={styles.container}>
@@ -152,27 +153,28 @@ const DetailPage = () => {
                                 비고
                             </th>
                         </tr>
-                        {logData?.records.map((data) => (
-                            <tr key={data.id}>
-                                <td className={styles.tableCell}>{data.usageDate}</td>
-                                <td className={styles.tableCell}>{data.user.departmentName}</td>
-                                <td className={styles.tableCell}>{data.user.name}</td>
-                                <td className={styles.tableCell}>{data.drivingInfo.drivingBefore}km</td>
-                                <td className={styles.tableCell}>{data.drivingInfo.drivingAfter}km</td>
-                                <td className={styles.tableCell}>{data.drivingInfo.totalDriving}km</td>
-                                <td className={styles.tableCell}>
-                                    {data.drivingInfo.businessDrivingDetails.usePurpose === 'COMMUTE'
-                                        ? data.drivingInfo.businessDrivingDetails.drivingDistance + 'km'
-                                        : '0km'}
-                                </td>
-                                <td className={styles.tableCell}>
-                                    {data.drivingInfo.businessDrivingDetails.usePurpose !== 'COMMUTE'
-                                        ? data.drivingInfo.businessDrivingDetails.drivingDistance + 'km'
-                                        : '0km'}
-                                </td>
-                                <td className={styles.tableCell}>{data.drivingInfo.notes}</td>
-                            </tr>
-                        ))}
+                        {logData?.records.map((data) => {
+                            const isCommutePurpose = data.drivingInfo.businessDrivingDetails.usePurpose === 'COMMUTE'
+                            const drivingDistance = data.drivingInfo.businessDrivingDetails.drivingDistance
+
+                            return (
+                                <tr key={data.id}>
+                                    <td className={styles.tableCell}>{data.usageDate}</td>
+                                    <td className={styles.tableCell}>{data.user.departmentName}</td>
+                                    <td className={styles.tableCell}>{data.user.name}</td>
+                                    <td className={styles.tableCell}>{data.drivingInfo.drivingBefore}km</td>
+                                    <td className={styles.tableCell}>{data.drivingInfo.drivingAfter}km</td>
+                                    <td className={styles.tableCell}>{data.drivingInfo.totalDriving}km</td>
+                                    <td className={styles.tableCell}>
+                                        {isCommutePurpose ? drivingDistance + 'km' : '0km'}
+                                    </td>
+                                    <td className={styles.tableCell}>
+                                        {!isCommutePurpose ? drivingDistance + 'km' : '0km'}
+                                    </td>
+                                    <td className={styles.tableCell}>{data.drivingInfo.notes}</td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
 
