@@ -2,11 +2,11 @@ import { useData } from '@/hooks/useData'
 
 import { DetailResponse } from '../types'
 
-interface Test {
+interface DataRequest {
     url: string
 }
 
-export const useDetailData = ({ url }: Test) => {
+export const useDetailData = ({ url }: DataRequest) => {
     const { data, isLoading, error } = useData<DetailResponse>({
         url,
     })
