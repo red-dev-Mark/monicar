@@ -8,12 +8,14 @@ export const container = style({
     backgroundColor: vars.colors.dashboard,
     gap: '34px',
     padding: '30px',
-    justifyContent: 'center',
+    overflowY: 'auto',
 })
 
 export const contents = style({
     display: 'flex',
     alignItems: 'center',
+    gap: '30px',
+    marginTop: '30px',
 })
 
 export const button = style({
@@ -24,7 +26,9 @@ export const button = style({
 })
 
 export const leftSection = style({
-    padding: '20px',
+    width: '50%',
 })
 
-export const rightSection = style({})
+export const rightSection = style({
+    width: '50%',
+})

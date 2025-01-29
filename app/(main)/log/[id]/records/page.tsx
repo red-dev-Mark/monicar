@@ -18,8 +18,17 @@ const RecordsPage = () => {
             <div className={styles.contents}>
                 <div className={styles.leftSection}>
                     <RecordsBox
+                        hasVehicleNumber={true}
                         title={'일별 운행기록'}
-                        control={<Select />}
+                        control={
+                            <Select
+                                placeholder='1주일'
+                                data={['1주일', '1개월', '3개월']}
+                                size='md'
+                                radius='xl'
+                                searchable
+                            />
+                        }
                         button={
                             <RoundButton color='secondary' size={'small'}>
                                 <div className={styles.button}>
@@ -28,6 +37,7 @@ const RecordsPage = () => {
                                 </div>
                             </RoundButton>
                         }
+                        vehicleNumber={'33가 1234'}
                     >
                         <ListHeader headerTitles={[]}></ListHeader>
                     </RecordsBox>
