@@ -12,8 +12,8 @@ const CustomMarker = ({ count, onClick }: CustomMarkerProps) => {
     return (
         <div
             style={{
-                width: '54px',
-                height: '54px',
+                width: '56px',
+                height: '56px',
                 backgroundColor: colors.outer,
                 borderRadius: '50%',
                 display: 'flex',
@@ -24,8 +24,8 @@ const CustomMarker = ({ count, onClick }: CustomMarkerProps) => {
             <div
                 onClick={onClick}
                 style={{
-                    width: '40px',
-                    height: '40px',
+                    width: '44px',
+                    height: '44px',
                     backgroundColor: colors.inner,
                     borderRadius: '50%',
                     display: 'flex',
@@ -37,7 +37,7 @@ const CustomMarker = ({ count, onClick }: CustomMarkerProps) => {
                 }}
                 role='presentation'
             >
-                {count}
+                {count.toLocaleString()}
             </div>
         </div>
     )
