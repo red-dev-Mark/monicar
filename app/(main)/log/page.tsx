@@ -4,9 +4,9 @@ import { useRouter } from 'next/navigation'
 import Breadcrumb from '@/components/common/Breadcrumb'
 import ControlBar from '@/components/domain/vehicle/ControlBar'
 import ListHeader from '@/components/domain/vehicle/ListHeader'
+import { LOG_TITLES } from '@/constants/listHeader'
 
 import ListItem from './components/ListItem/index'
-import { HEADER_TITLES } from './constants'
 import { useLogData } from './hooks/useLogData'
 import * as styles from './styles.css'
 import { downloadExcel } from './utils/excel'
@@ -36,7 +36,7 @@ const LogPage = () => {
             <Breadcrumb type={'운행기록'} />
             <div className={styles.contents}>
                 <ControlBar onExcelButtonClick={handleExcelButtonClick} />
-                <ListHeader headerTitles={HEADER_TITLES} />
+                <ListHeader headerTitles={LOG_TITLES} />
                 {logData?.content.map((log) => (
                     <ListItem key={log.id} data={log} onClick={() => handleItemClick(log.id)} />
                 ))}
