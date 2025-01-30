@@ -1,6 +1,7 @@
 import { Select } from '@mantine/core'
 
 import VehicleRegisterForm from '@/app/(main)/log/components/VehicleRegisterForm'
+import Breadcrumb from '@/components/common/Breadcrumb'
 import SquareButton from '@/components/common/Button/SquareButton'
 import BaseInput from '@/components/common/Input/BaseInput'
 import SearchInput from '@/components/common/Input/SearchInput'
@@ -36,6 +37,7 @@ const RegisterPage = () => {
     ]
     return (
         <div>
+            <Breadcrumb type={'차량등록'} />
             <div className={styles.title}>차량등록📝</div>
             <div className={styles.formWrapper}>
                 <VehicleRegisterForm fields={formFields} />
