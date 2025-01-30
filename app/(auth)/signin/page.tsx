@@ -1,12 +1,16 @@
 'use client'
 
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { RoundButton } from '@/components/common/Button/RoundButton'
 import SignInInput from '@/components/common/Input/SignInInput'
-import { authService } from '@/lib/apis/auth'
+import Modal from '@/components/common/Modal'
+import { ModalMessageType } from '@/components/common/Modal/types'
+import { useModal } from '@/hooks/useModal'
+// import { authService } from '@/lib/apis/auth'
+import { validateEmail, validatePassword } from '@/lib/utils/validation'
 
 import * as styles from './styles.css'
 
@@ -14,15 +18,37 @@ const SignInPage = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const router = useRouter()
+    const { isOpen, modalMessage, closeModal, showMessage } = useModal()
+
+    // const router = useRouter()
 
     const handleButtonSubmit = async () => {
-        const isSignIn = await authService.postSignIn(email, password)
-        if (isSignIn) {
-            // console.log('현재 쿠키:', document.cookie)
-            // await new Promise((resolve) => setTimeout(resolve, 500))
-            // console.log('지연 후 쿠키:', document.cookie)
-            router.push('/dashboard')
+        const emailValidation = validateEmail(email)
+        const passwordValidation = validatePassword(password)
+        console.log('zxcvzxcvxcvzxcv')
+        if (!emailValidation.isValid) {
+            console.log(emailValidation.message)
+            showMessage(emailValidation.message!)
+            return
+        }
+
+        if (!passwordValidation.isValid) {
+            console.log(passwordValidation.message)
+            showMessage(passwordValidation.message!)
+            return
+        }
+
+        try {
+            console.log('요청!')
+            // const isSignIn = await authService.postSignIn(email, password)
+            // if (isSignIn) {
+            //     // console.log('현재 쿠키:', document.cookie)
+            //     // await new Promise((resolve) => setTimeout(resolve, 500))
+            //     // console.log('지연 후 쿠키:', document.cookie)
+            //     router.push('/dashboard')
+            // }
+        } catch (error) {
+            console.error(error)
         }
     }
 
@@ -73,6 +99,13 @@ const SignInPage = () => {
                     </p>
                 </div>
             </section>
+
+            <Modal
+                isOpen={isOpen}
+                message={modalMessage as ModalMessageType}
+                variant={{ variant: 'alert', confirmButton: '확인' }}
+                onClose={closeModal}
+            />
         </div>
     )
 }

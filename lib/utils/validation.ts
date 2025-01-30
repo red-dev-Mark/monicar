@@ -2,6 +2,64 @@ import { DateTime, SearchableDateTime } from '@/app/(main)/route/types/date'
 import { formatToISODate } from '@/lib/utils/date'
 import { removeSpaces } from '@/lib/utils/string'
 
+export const validateEmail = (email: string) => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
+
+    if (!email?.trim()) {
+        return {
+            isValid: false,
+            message: '이메일을 입력해주세요',
+        }
+    }
+
+    if (!emailRegex.test(email)) {
+        return {
+            isValid: false,
+            message: '올바른 이메일 형식이 아닙니다\n(monicar@gmail.com)',
+        }
+    }
+
+    if (email.length > 50) {
+        return {
+            isValid: false,
+            message: '이메일은 50자를 초과할 수 없습니다',
+        }
+    }
+
+    return {
+        isValid: true,
+        value: email,
+    }
+}
+
+export const validatePassword = (password: string) => {
+    if (!password?.trim()) {
+        return {
+            isValid: false,
+            message: '비밀번호를 입력해주세요',
+        }
+    }
+
+    if (password.length < 4) {
+        return {
+            isValid: false,
+            message: '비밀번호는 최소 4자 이상이어야 합니다',
+        }
+    }
+
+    if (password.length > 20) {
+        return {
+            isValid: false,
+            message: '비밀번호는 20자를 초과할 수 없습니다',
+        }
+    }
+
+    return {
+        isValid: true,
+        value: password,
+    }
+}
+
 // 차량번호 유효성 검증
 export const validateVehicleNumber = (searchTerm: string) => {
     if (!searchTerm?.trim()) {
