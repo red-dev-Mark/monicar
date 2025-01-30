@@ -35,8 +35,9 @@ const RegisterPage = () => {
             isError: false,
         },
     ]
+
     return (
-        <div>
+        <div className={styles.container}>
             <Breadcrumb type={'차량등록'} />
             <div className={styles.title}>차량등록📝</div>
             <div className={styles.formWrapper}>
