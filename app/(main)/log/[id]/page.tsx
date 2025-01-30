@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation'
 import { useState } from 'react'
 
 import Breadcrumb from '@/components/common/Breadcrumb'
+import ExcelButton from '@/components/common/Button/ExcelButton'
 import LinkButton from '@/components/common/Button/LinkButton'
 import { RoundButton } from '@/components/common/Button/RoundButton'
 import ControlLayout from '@/components/common/ControlLayout'
@@ -54,14 +55,7 @@ const DetailPage = () => {
                             onChange={setValue}
                         />
                     }
-                    primaryButton={
-                        <RoundButton color='secondary' size={'small'}>
-                            <div className={styles.button}>
-                                <Image src='/icons/green-excel-icon.svg' alt='excel' width={16} height={16} />
-                                엑셀
-                            </div>
-                        </RoundButton>
-                    }
+                    primaryButton={<ExcelButton />}
                     secondaryButton={
                         <RoundButton color='primary' size={'small'} onClick={() => {}}>
                             <div className={styles.button}>

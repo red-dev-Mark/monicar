@@ -18,13 +18,6 @@ export const contents = style({
     marginTop: '30px',
 })
 
-export const button = style({
-    display: 'flex',
-    width: '100px',
-    justifyContent: 'center',
-    gap: '6px',
-})
-
 export const leftSection = style({
     width: '50%',
 })

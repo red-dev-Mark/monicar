@@ -24,12 +24,6 @@ export const buttonGroup = style({
     width: '200px',
 })
 
-export const button = style({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '6px',
-})
-
 export const linkButton = style({
     backgroundColor: vars.colors.primary,
     color: vars.colors.white,
