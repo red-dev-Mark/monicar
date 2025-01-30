@@ -2,7 +2,7 @@
 
 import { DatePickerInput } from '@mantine/dates'
 import Image from 'next/image'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import Breadcrumb from '@/components/common/Breadcrumb'
@@ -11,6 +11,7 @@ import LinkButton from '@/components/common/Button/LinkButton'
 import { RoundButton } from '@/components/common/Button/RoundButton'
 import ControlLayout from '@/components/common/ControlLayout'
 import { API_ENDPOINTS } from '@/constants/api'
+import { detailAPI } from '@/lib/apis/detail'
 import { CalendarIcon } from '@/public/icons'
 
 import '@mantine/dates/styles.css'
@@ -19,12 +20,26 @@ import { useDetailData } from './hooks/useDetailData'
 import * as styles from './styles.css'
 
 const DetailPage = () => {
-    const params = useParams()
-    const id = params.id
-
     const [value, setValue] = useState<[Date | null, Date | null]>([null, null])
 
+    const params = useParams()
+    const id = params.id
+    const router = useRouter()
     const { logData, isLoading, error } = useDetailData({ url: `${API_ENDPOINTS.LOG}/${id}` })
+
+    const deleteVehicle = async (id: number) => {
+        try {
+            await detailAPI.deleteVehicle(id)
+            router.push('/log')
+        } catch (error) {
+            console.error('차량 삭제 실패', error)
+        }
+    }
+
+    const handleDeleteButtonClick = () => {
+        if (!id) return
+        deleteVehicle(Number(id))
+    }
 
     if (isLoading) {
         return <div> 로딩 중...</div>
@@ -57,7 +72,7 @@ const DetailPage = () => {
                     }
                     primaryButton={<ExcelButton />}
                     secondaryButton={
-                        <RoundButton color='primary' size={'small'} onClick={() => {}}>
+                        <RoundButton color='primary' size={'small'} onClick={handleDeleteButtonClick}>
                             <div className={styles.button}>
                                 <Image src='/icons/white-trash-icon.svg' alt='add' width={18} height={18} />
                                 삭제

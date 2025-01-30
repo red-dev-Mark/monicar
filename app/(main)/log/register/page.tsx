@@ -15,14 +15,14 @@ import * as styles from './styles.css'
 import { VehicleTypeModel } from './types'
 
 const RegisterPage = () => {
-    const router = useRouter()
-
     const [vehicleType, setVehicleType] = useState<VehicleTypeModel[] | null>(null)
     const [isLoading, setIsLoading] = useState(true)
     const [vehicleNumber, setVehicleNumber] = useState<string>('')
     const [vehicleTypeId, setVehicleTypeId] = useState<number>()
     const [deliveryDate, setDeliveryDate] = useState<string>('1995-11-02')
     const [drivingDistance, setDrivingDistance] = useState<number>(1)
+
+    const router = useRouter()
 
     useEffect(() => {
         const getVehicleType = async () => {
@@ -38,6 +38,10 @@ const RegisterPage = () => {
         }
         getVehicleType()
     }, [])
+
+    const handleCancelButtonClick = () => {
+        router.push('/log')
+    }
 
     const postRegisterVehicle = async () => {
         // TODO: 유효성검사
@@ -59,10 +63,6 @@ const RegisterPage = () => {
     }
 
     if (isLoading || !vehicleType) return
-
-    const handleCancelButtonClick = () => {
-        router.push('/log')
-    }
 
     const formFields = [
         {
