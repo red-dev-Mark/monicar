@@ -19,7 +19,14 @@ const RegisterPage = () => {
         {
             id: 'vehicleType',
             label: '차량종류',
-            component: <Select />,
+            component: (
+                <Select
+                    placeholder='차량종류를 선택하세요.'
+                    data={['그랜저', '쏘나타', '싼타페', '아반떼']}
+                    size='md'
+                    radius='xl'
+                />
+            ),
             isError: false,
         },
         {
