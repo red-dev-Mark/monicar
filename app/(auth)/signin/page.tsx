@@ -1,8 +1,9 @@
 'use client'
 
 import Image from 'next/image'
-// import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { ColorRing } from 'react-loader-spinner'
 
 import { RoundButton } from '@/components/common/Button/RoundButton'
 import SignInInput from '@/components/common/Input/SignInInput'
@@ -19,10 +20,11 @@ const SignInPage = () => {
         email: '',
         password: '',
     })
+    const [isLoading, setIsLoading] = useState(false)
 
     const { isOpen, modalMessage, closeModal, showMessage } = useModal()
 
-    // const router = useRouter()
+    const router = useRouter()
 
     const handleSubmit = async () => {
         const emailValidation = validateEmail(formData.email)
@@ -38,7 +40,7 @@ const SignInPage = () => {
             return
         }
 
-        console.log('로그인 요청!')
+        setIsLoading(true)
         const response = await authService.postSignIn(formData.email, formData.password)
         // if (!isSignIn.isSuccess) {
         //     showMessage(isSignIn.value)
@@ -48,19 +50,23 @@ const SignInPage = () => {
         if (!response.isSuccess) {
             switch (response.error) {
                 case 'INVALID_CREDENTIALS':
-                    showMessage('아이디 또는 비밀번호가 일치하지 않습니다')
+                    showMessage('일시적인 오류가 발생했습니다\n잠시 후에 다시 시도해주세요')
+                    // showMessage('서비스 이용에 불편을 드려 죄송합니다\n잠시 후에 다시 시도해주세요')
+                    // showMessage('이메일 또는 비밀번호가 일치하지 않습니다')
                     break
                 case 'SERVICE_ERROR':
-                    showMessage('서비스에 문제가 발생하였습니다')
+                    break
+                default:
+                    showMessage('서비스 이용에 불편을 드려 죄송합니다\n잠시 후에 다시 시도해주세요')
                     break
             }
+
+            setIsLoading(false)
+
+            return
         }
 
-        console.log('로그인 성공!')
-        // console.log('현재 쿠키:', document.cookie)
-        // await new Promise((resolve) => setTimeout(resolve, 500))
-        // console.log('지연 후 쿠키:', document.cookie)
-        // router.push('/dashboard')
+        router.push('/dashboard')
     }
 
     return (
@@ -100,8 +106,21 @@ const SignInPage = () => {
                             color='secondary'
                             className={styles.resetButton}
                             onClick={handleSubmit}
+                            disabled={isLoading}
                         >
-                            로그인
+                            {isLoading ? (
+                                <ColorRing
+                                    visible={true}
+                                    height='40'
+                                    width='40'
+                                    ariaLabel='color-ring-loading'
+                                    wrapperStyle={{}}
+                                    wrapperClass='color-ring-wrapper'
+                                    colors={['#ff385c', '#cf6b81', '#fdced4', '#00b087', '#ed9684']}
+                                />
+                            ) : (
+                                '로그인'
+                            )}
                         </RoundButton>
                     </div>
 

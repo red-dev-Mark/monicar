@@ -2,7 +2,7 @@ import { AxiosInstance, AxiosError, AxiosResponse, InternalAxiosRequestConfig } 
 
 import { API_URL } from '@/constants/api'
 import { httpClient } from '@/lib/apis/client'
-// import { useAuthStore } from '@/stores/useAuthStore'
+import { useAuthStore } from '@/stores/useAuthStore'
 
 interface CustomRequestConfig extends InternalAxiosRequestConfig {
     isRequestAlready?: boolean
@@ -38,39 +38,37 @@ export const setupResponseInterceptor = (instance: AxiosInstance) => {
                 originalRequest &&
                 !originalRequest.isRequestAlready
             ) {
+                const logout = useAuthStore.getState().logout
                 // TODO:  isRequestAlready 동작 여부 확인 (무한 요청이 이루어지는지 등)
                 originalRequest.isRequestAlready = true
 
-                // const logout = useAuthStore.getState().logout
-
+                console.log(error.response?.data?.errorCode)
                 try {
                     switch (errorCode) {
                         case 9995:
-                            console.log('액세스 재발급!!')
                             await httpClient.post(`${API_URL}/auth/reissue`)
                             await httpClient.post(`${API_URL}/auth/refresh`)
                             return httpClient(originalRequest)
 
-                        case 9994:
-                            console.log('리프레시 재발급!!')
-                            await httpClient.post(`${API_URL}/auth/refresh`)
-                            return httpClient(originalRequest)
+                        // case 9994:
+                        //     console.log('리프레시 재발급!!')
+                        //     await httpClient.post(`${API_URL}/auth/refresh`)
+                        //     return httpClient(originalRequest)
 
-                        case 9993:
-                            console.log('둘 다 없음!')
-                            // logout()
-                            // window.location.href = '/signin'
-                            return Promise.reject(error)
-
+                        case 9000:
+                            logout()
+                            window.location.href = '/signin'
+                            break
                         default:
-                            return Promise.reject(error)
+                            break
                     }
                 } catch (retryError) {
-                    // logout()
-                    // window.location.href = '/signin'
-                    return Promise.reject(retryError)
+                    console.log(retryError)
+                    logout()
+                    window.location.href = '/signin'
                 }
             }
+
             return Promise.reject(error)
         },
     )
