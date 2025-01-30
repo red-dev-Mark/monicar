@@ -31,7 +31,7 @@ const RegisterPage = () => {
         },
         {
             id: 'mileage',
-            label: '주행거리',
+            label: '운행거리',
             component: <BaseInput />,
             isError: false,
         },
