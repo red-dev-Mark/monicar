@@ -14,14 +14,6 @@ import { registerAPI } from '@/lib/apis/register'
 import * as styles from './styles.css'
 import { VehicleTypeModel } from './types'
 
-// TODO: 공통 에러처리
-// interface CommonError {
-//     isSuccess: boolean
-//     errorMessage: string[]
-//     errorCode: number
-//     timestamp: number
-// }
-
 const RegisterPage = () => {
     const router = useRouter()
 
