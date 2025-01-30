@@ -11,7 +11,7 @@ import * as styles from './styles.css'
 
 interface VehicleMarkerProps {
     vehicleInfo: VehicleInfoModel
-    onVehicleClick: () => void
+    onVehicleClick?: () => void
 }
 
 const VehicleMarker = ({ vehicleInfo, onVehicleClick }: VehicleMarkerProps) => {

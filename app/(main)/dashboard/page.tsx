@@ -1,8 +1,12 @@
 'use client'
 
 import Calendar from '@/app/(main)/dashboard/components/Calendar'
+import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
 import SearchInput from '@/components/common/Input/SearchInput'
+import Modal from '@/components/common/Modal'
+import { ModalMessageType } from '@/components/common/Modal/types'
 import Map from '@/components/domain/map/Map'
+import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
 import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from '@/public/icons'
 
 import InspectionStatus from './components/InspectionStatus'
@@ -11,6 +15,20 @@ import VehicleStatus from './components/VehicleStatusPanel'
 import * as styles from './styles.css'
 
 const DashboardPage = () => {
+    const {
+        vehicleInfo,
+        mapState,
+        isVehicleVisible,
+        searchTerm,
+        modalMessage,
+        isOpen,
+        handleVehicleSearch,
+        handleSearchChange,
+        closeModal,
+    } = useSearchSingleVehicle()
+
+    const isVehicleMarkerVisible = !!(isVehicleVisible && vehicleInfo)
+
     return (
         <div className={styles.container}>
             <section className={styles.leftSection}>
@@ -21,7 +39,13 @@ const DashboardPage = () => {
                     </p>
 
                     <div className={styles.searchInputWrapper}>
-                        <SearchInput icon={'/icons/search-icon.svg'} />
+                        {/* <SearchInput icon={'/icons/search-icon.svg'} /> */}
+                        <SearchInput
+                            icon='/icons/search-icon.svg'
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            onSubmit={handleVehicleSearch}
+                        />
                     </div>
                 </header>
 
@@ -57,7 +81,10 @@ const DashboardPage = () => {
                 <VehicleStatus />
 
                 <div className={styles.mapWrapper}>
-                    <Map />
+                    {/* <Map /> */}
+                    <Map center={mapState.center} zoom={mapState.level}>
+                        {isVehicleMarkerVisible && <VehicleMarker vehicleInfo={vehicleInfo} />}
+                    </Map>
                 </div>
             </section>
 
@@ -111,6 +138,13 @@ const DashboardPage = () => {
                     ]}
                 />
             </section>
+
+            <Modal
+                isOpen={isOpen}
+                message={modalMessage as ModalMessageType}
+                variant={{ variant: 'alert', confirmButton: '확인' }}
+                onClose={closeModal}
+            />
         </div>
     )
 }
