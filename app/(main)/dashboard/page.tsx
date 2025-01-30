@@ -7,7 +7,7 @@ import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from
 
 import InspectionStatus from './components/InspectionStatus'
 import NoticeBoard from './components/NoticeBoard'
-import VehicleStatus from './components/VehicleStatus'
+import VehicleStatus from './components/VehicleStatusPanel'
 import * as styles from './styles.css'
 
 const DashboardPage = () => {
