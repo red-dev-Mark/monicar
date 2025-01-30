@@ -3,7 +3,6 @@ import { style } from '@vanilla-extract/css'
 import { vars } from '@/styles/theme.css'
 
 export const container = style({
-    width: '100%',
     backgroundColor: vars.colors.dashboard,
     padding: '24px',
 })
