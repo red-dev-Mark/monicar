@@ -15,8 +15,13 @@ import { validateEmail, validatePassword } from '@/lib/utils/validation'
 
 import * as styles from './styles.css'
 
+interface FormDataModel {
+    email: string
+    password: string
+}
+
 const SignInPage = () => {
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormDataModel>({
         email: '',
         password: '',
     })
@@ -26,43 +31,43 @@ const SignInPage = () => {
 
     const router = useRouter()
 
-    const handleSubmit = async () => {
+    const validateFormData = (formData: FormDataModel) => {
         const emailValidation = validateEmail(formData.email)
         const passwordValidation = validatePassword(formData.password)
 
         if (!emailValidation.isValid) {
             showMessage(emailValidation.message!)
-            return
+            return { isValid: false }
         }
 
         if (!passwordValidation.isValid) {
             showMessage(passwordValidation.message!)
-            return
+            return { isValid: false }
         }
+
+        return { isValid: true }
+    }
+
+    const handleSubmit = async () => {
+        const validate = validateFormData(formData)
+        if (!validate.isValid) return
 
         setIsLoading(true)
         const response = await authService.postSignIn(formData.email, formData.password)
-        // if (!isSignIn.isSuccess) {
-        //     showMessage(isSignIn.value)
-        //     return
-        // }
 
         if (!response.isSuccess) {
             switch (response.error) {
                 case 'INVALID_CREDENTIALS':
-                    showMessage('일시적인 오류가 발생했습니다\n잠시 후에 다시 시도해주세요')
-                    // showMessage('서비스 이용에 불편을 드려 죄송합니다\n잠시 후에 다시 시도해주세요')
-                    // showMessage('이메일 또는 비밀번호가 일치하지 않습니다')
+                    showMessage('이메일 또는 비밀번호가 일치하지 않습니다')
                     break
                 case 'SERVICE_ERROR':
+                    showMessage('일시적인 오류가 발생했습니다\n잠시 후에 다시 시도해주세요')
                     break
                 default:
                     showMessage('서비스 이용에 불편을 드려 죄송합니다\n잠시 후에 다시 시도해주세요')
                     break
             }
-
             setIsLoading(false)
-
             return
         }
 
@@ -79,18 +84,19 @@ const SignInPage = () => {
                 <Image src={'/images/sign-in-map.png'} width={550} height={550} alt='지도' />
             </section>
 
-            <section className={styles.authSection}>
-                <div className={styles.authHeader}>
+            <section className={styles.signInSection}>
+                <div className={styles.signInHeader}>
                     <Image src={'/logo.png'} width={180} height={120} alt='박스로고' />
                     <Image src={'/white-text-logo.png'} width={180} height={40} alt='텍스트로고' />
                 </div>
 
-                <div className={styles.authForm}>
+                <div className={styles.signInForm}>
                     <SignInInput
                         icon='/icons/sign-in-user-icon.svg'
                         placeholder='아이디를 입력해주세요'
                         value={formData.email}
                         onChange={(event) => setFormData({ ...formData, email: event.target.value })}
+                        onSubmit={handleSubmit}
                     />
                     <SignInInput
                         icon='/icons/sign-in-lock-icon.svg'
@@ -98,6 +104,7 @@ const SignInPage = () => {
                         placeholder='비밀번호를 입력해주세요'
                         value={formData.password}
                         onChange={(event) => setFormData({ ...formData, password: event.target.value })}
+                        onSubmit={handleSubmit}
                     />
 
                     <div className={styles.buttonWrapper}>

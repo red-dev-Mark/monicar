@@ -28,13 +28,13 @@ export const introduceMessage = style({
     fontWeight: vars.fontWeights.bold,
 })
 
-export const authSection = style({
+export const signInSection = style({
     display: 'flex',
     gap: '44px',
     flexDirection: 'column',
 })
 
-export const authHeader = style({
+export const signInHeader = style({
     display: 'flex',
     gap: '12px',
     flexDirection: 'column',
@@ -42,7 +42,7 @@ export const authHeader = style({
     alignItems: 'center',
 })
 
-export const authForm = style({
+export const signInForm = style({
     display: 'flex',
     gap: '18px',
     flexDirection: 'column',
