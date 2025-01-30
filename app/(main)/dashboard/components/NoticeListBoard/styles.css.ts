@@ -3,23 +3,36 @@ import { style } from '@vanilla-extract/css'
 import { vars } from '@/styles/theme.css'
 
 export const container = style({
-    width: '100%',
-    height: '100%',
+    height: 0,
+    flex: 1,
     backgroundColor: vars.colors.white,
     padding: '24px',
     borderRadius: '12px',
+    display: 'flex',
+    gap: '12px',
+    flexDirection: 'column',
 })
 
-export const announcement = style({
+export const heading = style({
     color: vars.colors.black,
     fontSize: vars.fontSizes.large,
     fontWeight: vars.fontWeights.extraBold,
 })
 
+export const noticeList = style({
+    overflowY: 'auto',
+    msOverflowStyle: 'none', // IE, Edge 레거시 브라우저용
+    scrollbarWidth: 'none', // Firefox용
+    '::-webkit-scrollbar': {
+        // Chrome, Safari용
+        display: 'none',
+    },
+})
+
 export const noticeItem = style({
+    width: '100%',
     display: 'flex',
     gap: '20px',
-    marginTop: '10px',
     marginBottom: '20px',
 })
 

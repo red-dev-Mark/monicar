@@ -3,7 +3,8 @@ import { style } from '@vanilla-extract/css'
 import { vars } from '@/styles/theme.css'
 
 export const container = style({
-    minHeight: '100vh',
+    // minHeight: '100vh',
+    height: '100vh',
     backgroundColor: vars.colors.dashboard,
     display: 'flex',
     gap: '34px',

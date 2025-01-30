@@ -29,30 +29,34 @@ const NoticeListBoard = () => {
         getNoticeListData()
     }, [])
 
-    if (isLoading) return <div>공지사항 로딩중...</div>
-
     return (
         <div className={styles.container}>
-            <h2 className={styles.announcement}>공지사항</h2>
+            <h2 className={styles.heading}>공지사항</h2>
 
-            {noticeList.map((notice) => (
-                <Link key={notice.id} href={`/dashboard/notice/${notice.id}`} className={styles.noticeItem}>
-                    <div className={styles.imageWrapper}>
-                        <Image
-                            src={notice.imageUrl}
-                            alt={notice.title}
-                            width={280}
-                            height={240}
-                            className={styles.image}
-                        />
-                    </div>
+            {isLoading ? (
+                <div>공지사항 로딩중...</div>
+            ) : (
+                <div className={styles.noticeList}>
+                    {noticeList.map((notice) => (
+                        <Link key={notice.id} href={`/dashboard/notice/${notice.id}`} className={styles.noticeItem}>
+                            <div className={styles.imageWrapper}>
+                                <Image
+                                    src={notice.imageUrl}
+                                    alt={notice.title}
+                                    width={280}
+                                    height={240}
+                                    className={styles.image}
+                                />
+                            </div>
 
-                    <div className={styles.contentsWrapper}>
-                        <h3 className={styles.title}>{notice.title}</h3>
-                        <p className={styles.description}>{notice.content}</p>
-                    </div>
-                </Link>
-            ))}
+                            <div className={styles.contentsWrapper}>
+                                <h3 className={styles.title}>{notice.title}</h3>
+                                <p className={styles.description}>{notice.content}</p>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            )}
         </div>
     )
 }
