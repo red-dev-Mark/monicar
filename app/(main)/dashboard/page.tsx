@@ -35,7 +35,7 @@ const DashboardPage = () => {
                 <header className={styles.header}>
                     <p className={styles.introduce}>
                         안녕하세요,
-                        <span className={styles.userName}>쏘카님👋</span>
+                        <span className={styles.userName}>쏘카님 👋</span>
                     </p>
 
                     <div className={styles.searchInputWrapper}>
