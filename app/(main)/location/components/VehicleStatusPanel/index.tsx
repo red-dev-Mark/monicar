@@ -3,14 +3,9 @@ import React, { useEffect, useState } from 'react'
 import VehicleStatusItem from '@/app/(main)/location/components/VehicleStatusItem'
 import { vehicleAPI } from '@/lib/apis'
 import { vars } from '@/styles/theme.css'
+import { VehicleStatusModel } from '@/types/vehicle'
 
 import * as styles from './styles.css'
-
-interface VehicleStatusModel {
-    allVehicles: number
-    engineOnVehicles: number
-    engineOffVehicles: number
-}
 
 const VehicleStatusPanel = () => {
     const [vehicleStatus, setVehicleStatus] = useState<VehicleStatusModel>()
