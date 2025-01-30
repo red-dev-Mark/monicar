@@ -15,16 +15,19 @@ import { validateEmail, validatePassword } from '@/lib/utils/validation'
 import * as styles from './styles.css'
 
 const SignInPage = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+    })
 
     const { isOpen, modalMessage, closeModal, showMessage } = useModal()
 
     // const router = useRouter()
 
-    const handleButtonSubmit = async () => {
-        const emailValidation = validateEmail(email)
-        const passwordValidation = validatePassword(password)
+    const handleSubmit = async () => {
+        const emailValidation = validateEmail(formData.email)
+        const passwordValidation = validatePassword(formData.password)
+
         if (!emailValidation.isValid) {
             showMessage(emailValidation.message!)
             return
@@ -36,7 +39,7 @@ const SignInPage = () => {
         }
 
         try {
-            console.log('요청!')
+            console.log('로그인 요청!')
             // const isSignIn = await authService.postSignIn(email, password)
             // if (isSignIn) {
             //     // console.log('현재 쿠키:', document.cookie)
@@ -69,23 +72,23 @@ const SignInPage = () => {
                     <SignInInput
                         icon='/icons/sign-in-user-icon.svg'
                         placeholder='아이디를 입력해주세요'
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)}
+                        value={formData.email}
+                        onChange={(event) => setFormData({ ...formData, email: event.target.value })}
                     />
                     <SignInInput
                         icon='/icons/sign-in-lock-icon.svg'
                         type='password'
                         placeholder='비밀번호를 입력해주세요'
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
+                        value={formData.password}
+                        onChange={(event) => setFormData({ ...formData, password: event.target.value })}
                     />
 
-                    <div className={styles.authAction}>
+                    <div className={styles.buttonWrapper}>
                         <RoundButton
                             size='large'
                             color='secondary'
                             className={styles.resetButton}
-                            onClick={handleButtonSubmit}
+                            onClick={handleSubmit}
                         >
                             로그인
                         </RoundButton>

@@ -50,7 +50,7 @@ export const authForm = style({
     alignItems: 'center',
 })
 
-export const authAction = style({
+export const buttonWrapper = style({
     width: '100%',
     marginTop: '12px',
 })

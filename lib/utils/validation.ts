@@ -42,6 +42,14 @@ export const validateEmail = (email: string) => {
         }
     }
 
+    // TODO: 추후 삭제!
+    if (email === 'string') {
+        return {
+            isValid: true,
+            value: email,
+        }
+    }
+
     if (!isValidEmailFormat(email)) {
         return {
             isValid: false,
