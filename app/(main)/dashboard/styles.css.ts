@@ -8,7 +8,7 @@ export const container = style({
     backgroundColor: vars.colors.dashboard,
     display: 'flex',
     gap: '34px',
-    padding: '30px',
+    padding: '24px',
 })
 
 export const leftSection = style({

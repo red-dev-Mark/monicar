@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import Progress from '@/app/(main)/location/components/VehicleStatusItem'
+import VehicleStatusItem from '@/app/(main)/location/components/VehicleStatusItem'
 import { vehicleAPI } from '@/lib/apis'
 import { vars } from '@/styles/theme.css'
 
@@ -35,25 +35,29 @@ const VehicleStatusPanel = () => {
 
     return (
         <div className={styles.container}>
-            <Progress total={vehicleStatus.allVehicles} current={vehicleStatus.allVehicles} color={vars.colors.primary}>
-                전체차량
-            </Progress>
+            <VehicleStatusItem
+                total={vehicleStatus.allVehicles}
+                current={vehicleStatus.allVehicles}
+                color={vars.colors.primary}
+            >
+                전체 차량
+            </VehicleStatusItem>
 
-            <Progress
+            <VehicleStatusItem
                 total={vehicleStatus.allVehicles}
                 current={vehicleStatus.engineOnVehicles}
                 color={vars.colors.green[500]}
             >
-                운행중
-            </Progress>
+                운행중 차량
+            </VehicleStatusItem>
 
-            <Progress
+            <VehicleStatusItem
                 total={vehicleStatus.allVehicles}
                 current={vehicleStatus.engineOffVehicles}
                 color={vars.colors.blue}
             >
-                미운행
-            </Progress>
+                미운행 차량
+            </VehicleStatusItem>
         </div>
     )
 }

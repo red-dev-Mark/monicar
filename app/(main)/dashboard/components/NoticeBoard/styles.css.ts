@@ -6,7 +6,7 @@ export const container = style({
     width: '100%',
     height: '100%',
     backgroundColor: vars.colors.white,
-    padding: '30px',
+    padding: '24px',
     borderRadius: '12px',
 })
 
