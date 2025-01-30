@@ -24,8 +24,7 @@ export const noticeList = style({
     msOverflowStyle: 'none', // IE, Edge 레거시 브라우저용
     scrollbarWidth: 'none', // Firefox용
     '::-webkit-scrollbar': {
-        // Chrome, Safari용
-        display: 'none',
+        display: 'none', // Chrome, Safari용
     },
 })
 
