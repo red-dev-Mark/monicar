@@ -4,11 +4,11 @@ import { vars } from '@/styles/theme.css'
 
 export const container = style({
     width: '100%',
-    height: '100vh',
+    height: '100%',
     backgroundColor: vars.colors.dashboard,
     display: 'flex',
     gap: '34px',
-    padding: '30px',
+    padding: '24px',
 })
 
 export const leftSection = style({
@@ -36,7 +36,7 @@ export const introduce = style({
     fontWeight: vars.fontWeights.extraBold,
     display: 'flex',
     flexDirection: 'column',
-    marginLeft: '40px',
+    marginLeft: '24px',
 })
 
 export const userName = style({

@@ -32,14 +32,16 @@ const NoticeListBoard = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.announcement}>공지사항</div>
+            <h2 className={styles.announcement}>공지사항</h2>
+
             {noticeList.map((data) => (
                 <div key={data.id} className={styles.noticeItem}>
                     <div className={styles.imageWrapper}>
                         <Image src={data.imageUrl} alt={data.title} width={280} height={240} className={styles.image} />
                     </div>
+
                     <div className={styles.contentsWrapper}>
-                        <h2 className={styles.title}>{data.title}</h2>
+                        <h3 className={styles.title}>{data.title}</h3>
                         <p className={styles.description}>{data.content}</p>
                     </div>
                 </div>

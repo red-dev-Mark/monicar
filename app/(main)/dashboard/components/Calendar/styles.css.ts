@@ -5,7 +5,7 @@ import { vars } from '@/styles/theme.css'
 export const container = style({
     width: '100%',
     height: '100%',
-    padding: '30px',
+    padding: '24px',
     borderRadius: '12px',
     backgroundColor: vars.colors.white,
     color: vars.colors.black,
