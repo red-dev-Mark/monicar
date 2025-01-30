@@ -1,6 +1,7 @@
 'use client'
 
 import { Select } from '@mantine/core'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import VehicleRegisterForm from '@/app/(main)/log/components/VehicleRegisterForm'
@@ -11,11 +12,7 @@ import SearchInput from '@/components/common/Input/SearchInput'
 import { registerAPI } from '@/lib/apis/register'
 
 import * as styles from './styles.css'
-
-interface VehicleTypeModel {
-    id: number
-    vehicleName: string
-}
+import { VehicleTypeModel } from './types'
 
 // TODO: 공통 에러처리
 // interface CommonError {
@@ -26,8 +23,14 @@ interface VehicleTypeModel {
 // }
 
 const RegisterPage = () => {
+    const router = useRouter()
+
     const [vehicleType, setVehicleType] = useState<VehicleTypeModel[] | null>(null)
     const [isLoading, setIsLoading] = useState(true)
+    const [vehicleNumber, setVehicleNumber] = useState<string>('')
+    const [vehicleTypeId, setVehicleTypeId] = useState<number>()
+    const [deliveryDate, setDeliveryDate] = useState<string>('1995-11-02')
+    const [drivingDistance, setDrivingDistance] = useState<number>(1)
 
     useEffect(() => {
         const getVehicleType = async () => {
@@ -44,13 +47,32 @@ const RegisterPage = () => {
         getVehicleType()
     }, [])
 
+    const postRegisterVehicle = async () => {
+        // TODO: 유효성검사
+        if (!vehicleTypeId || !drivingDistance) {
+            return
+        }
+
+        try {
+            await registerAPI.postRegisterVehicle({
+                vehicleNumber,
+                vehicleTypeId,
+                deliveryDate,
+                drivingDistance,
+            })
+            router.push('/log')
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     if (isLoading || !vehicleType) return
 
     const formFields = [
         {
             id: 'vehicleNumber',
             label: '차량번호',
-            component: <SearchInput icon={''} />,
+            component: <SearchInput onChange={(event) => setVehicleNumber(event.target.value)} icon={''} />,
             isError: false,
         },
         {
@@ -65,6 +87,9 @@ const RegisterPage = () => {
                             label: item.vehicleName,
                         })) || []
                     }
+                    onChange={(event) => {
+                        setVehicleTypeId(Number(event))
+                    }}
                     size='md'
                     radius='xl'
                     checkIconPosition='right'
@@ -75,13 +100,13 @@ const RegisterPage = () => {
         {
             id: 'mileage',
             label: '운행거리',
-            component: <BaseInput />,
+            component: <BaseInput onChange={(event) => setDeliveryDate(event.target.value)} />,
             isError: false,
         },
         {
             id: 'releaseDate',
             label: '출고일',
-            component: <BaseInput />,
+            component: <BaseInput onChange={(event) => setDrivingDistance(Number(event))} />,
             isError: false,
         },
     ]
@@ -96,7 +121,9 @@ const RegisterPage = () => {
 
             <div className={styles.buttonsWrapper}>
                 <SquareButton color={'white'}>취소</SquareButton>
-                <SquareButton color={'dark'}>등록</SquareButton>
+                <SquareButton color={'dark'} onClick={postRegisterVehicle}>
+                    등록
+                </SquareButton>
             </div>
         </div>
     )
