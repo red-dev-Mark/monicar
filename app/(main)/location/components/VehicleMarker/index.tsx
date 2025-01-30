@@ -35,7 +35,7 @@ const VehicleMarker = ({ vehicleInfo, onVehicleClick }: VehicleMarkerProps) => {
             <p className={styles.vehicleCard} onClick={onVehicleClick} role='presentation'>
                 {vehicleNumber}
             </p>
-            {isDescriptionVisible && (
+            {onVehicleClick && isDescriptionVisible && (
                 <p className={styles.description}>
                     차량번호를 클릭하시면
                     <br /> 상세 정보를 확인할 수 있습니다
