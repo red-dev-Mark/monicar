@@ -1,10 +1,9 @@
 'use client'
 
 import { Select } from '@mantine/core'
-import Image from 'next/image'
 
 import Breadcrumb from '@/components/common/Breadcrumb'
-import { RoundButton } from '@/components/common/Button/RoundButton'
+import ExcelButton from '@/components/common/Button/ExcelButton'
 import ListHeader from '@/components/domain/vehicle/ListHeader'
 import { DAILY_TITLES, HOURLY_TITLES } from '@/constants/listHeader'
 
@@ -30,14 +29,7 @@ const DailyPage = () => {
                                 searchable
                             />
                         }
-                        button={
-                            <RoundButton color='secondary' size={'small'}>
-                                <div className={styles.button}>
-                                    <Image src='/icons/green-excel-icon.svg' alt='excel' width={16} height={16} />
-                                    엑셀
-                                </div>
-                            </RoundButton>
-                        }
+                        button={<ExcelButton />}
                         vehicleNumber={'33가 1234'}
                     >
                         <ListHeader headerTitles={DAILY_TITLES} />
@@ -45,17 +37,7 @@ const DailyPage = () => {
                 </div>
 
                 <div className={styles.rightSection}>
-                    <ControlBox
-                        title={'시간별 운행기록'}
-                        button={
-                            <RoundButton color='secondary' size={'small'}>
-                                <div className={styles.button}>
-                                    <Image src='/icons/green-excel-icon.svg' alt='excel' width={16} height={16} />
-                                    엑셀
-                                </div>
-                            </RoundButton>
-                        }
-                    >
+                    <ControlBox title={'시간별 운행기록'} button={<ExcelButton />}>
                         <ListHeader headerTitles={HOURLY_TITLES} />
                     </ControlBox>
                 </div>
