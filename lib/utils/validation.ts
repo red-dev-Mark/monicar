@@ -53,7 +53,7 @@ export const validateEmail = (email: string) => {
     if (!isValidEmailFormat(email)) {
         return {
             isValid: false,
-            message: '올바른 이메일 형식이 아닙니다\n(monicar@gmail.com)',
+            message: '올바른 이메일 형식이 아닙니다\n(예시 : b6f2@monicar.com)',
         }
     }
 
