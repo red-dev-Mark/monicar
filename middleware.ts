@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function middleware(request: NextRequest) {
     // const accessToken = request.cookies.get('access_token')?.value
+
     const accessToken = request.cookies
+    console.log(accessToken)
     const { pathname } = request.nextUrl
 
     const protectedRoutes = ['/dashboard', '/log', '/route', '/location']

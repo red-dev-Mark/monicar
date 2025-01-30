@@ -9,7 +9,7 @@ import SignInInput from '@/components/common/Input/SignInInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import { useModal } from '@/hooks/useModal'
-// import { authService } from '@/lib/apis/auth'
+import { authService } from '@/lib/apis/auth'
 import { validateEmail, validatePassword } from '@/lib/utils/validation'
 
 import * as styles from './styles.css'
@@ -38,18 +38,29 @@ const SignInPage = () => {
             return
         }
 
-        try {
-            console.log('로그인 요청!')
-            // const isSignIn = await authService.postSignIn(email, password)
-            // if (isSignIn) {
-            //     // console.log('현재 쿠키:', document.cookie)
-            //     // await new Promise((resolve) => setTimeout(resolve, 500))
-            //     // console.log('지연 후 쿠키:', document.cookie)
-            //     router.push('/dashboard')
-            // }
-        } catch (error) {
-            console.error(error)
+        console.log('로그인 요청!')
+        const response = await authService.postSignIn(formData.email, formData.password)
+        // if (!isSignIn.isSuccess) {
+        //     showMessage(isSignIn.value)
+        //     return
+        // }
+
+        if (!response.isSuccess) {
+            switch (response.error) {
+                case 'INVALID_CREDENTIALS':
+                    showMessage('아이디 또는 비밀번호가 일치하지 않습니다')
+                    break
+                case 'SERVICE_ERROR':
+                    showMessage('서비스에 문제가 발생하였습니다')
+                    break
+            }
         }
+
+        console.log('로그인 성공!')
+        // console.log('현재 쿠키:', document.cookie)
+        // await new Promise((resolve) => setTimeout(resolve, 500))
+        // console.log('지연 후 쿠키:', document.cookie)
+        // router.push('/dashboard')
     }
 
     return (
