@@ -54,26 +54,7 @@ const DashboardPage = () => {
                     ]}
                 />
 
-                <VehicleStatus
-                    vehicleStatusData={[
-                        {
-                            type: 'total',
-                            text: '전체 차량',
-                        },
-                        {
-                            type: 'active',
-                            text: '운행중 차량',
-                        },
-                        {
-                            type: 'inactive',
-                            text: '미운행 차량',
-                        },
-                        {
-                            type: 'disabled',
-                            text: '미관제 차량',
-                        },
-                    ]}
-                />
+                <VehicleStatus />
 
                 <div className={styles.mapWrapper}>
                     <Map />

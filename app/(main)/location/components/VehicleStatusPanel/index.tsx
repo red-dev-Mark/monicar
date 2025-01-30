@@ -18,7 +18,7 @@ const VehicleStatusPanel = () => {
                 const vehicleStatus = await vehicleAPI.getVehicleStatus()
                 setVehicleStatus(vehicleStatus)
             } catch (error) {
-                console.error('Failed to fetch vehicle status:', error)
+                console.error('차량현황 조회에 실패하였습니다', error)
             } finally {
                 setIsLoading(false)
             }
