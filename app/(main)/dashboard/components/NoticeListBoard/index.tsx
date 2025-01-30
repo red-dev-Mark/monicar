@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 import { noticeService } from '@/lib/apis/notice'
@@ -34,17 +35,23 @@ const NoticeListBoard = () => {
         <div className={styles.container}>
             <h2 className={styles.announcement}>공지사항</h2>
 
-            {noticeList.map((data) => (
-                <div key={data.id} className={styles.noticeItem}>
+            {noticeList.map((notice) => (
+                <Link key={notice.id} href={`/dashboard/notice/${notice.id}`} className={styles.noticeItem}>
                     <div className={styles.imageWrapper}>
-                        <Image src={data.imageUrl} alt={data.title} width={280} height={240} className={styles.image} />
+                        <Image
+                            src={notice.imageUrl}
+                            alt={notice.title}
+                            width={280}
+                            height={240}
+                            className={styles.image}
+                        />
                     </div>
 
                     <div className={styles.contentsWrapper}>
-                        <h3 className={styles.title}>{data.title}</h3>
-                        <p className={styles.description}>{data.content}</p>
+                        <h3 className={styles.title}>{notice.title}</h3>
+                        <p className={styles.description}>{notice.content}</p>
                     </div>
-                </div>
+                </Link>
             ))}
         </div>
     )
