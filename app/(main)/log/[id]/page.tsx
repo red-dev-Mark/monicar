@@ -6,54 +6,32 @@ import { useParams } from 'next/navigation'
 import { useState } from 'react'
 
 import Breadcrumb from '@/components/common/Breadcrumb'
+import ExcelButton from '@/components/common/Button/ExcelButton'
 import LinkButton from '@/components/common/Button/LinkButton'
 import { RoundButton } from '@/components/common/Button/RoundButton'
 import ControlLayout from '@/components/common/ControlLayout'
+import { API_ENDPOINTS } from '@/constants/api'
 import { CalendarIcon } from '@/public/icons'
-import 'dayjs/locale/ko'
 
 import '@mantine/dates/styles.css'
+import 'dayjs/locale/ko'
+import { useDetailData } from './hooks/useDetailData'
 import * as styles from './styles.css'
 
 const DetailPage = () => {
-    const mockData = {
-        taxStartPeriod: '2020-01-01',
-        taxEndPeriod: '2025-01-01',
-        businessInfo: {
-            businessName: '카카오',
-            businessRegistrationNumber: '123-45-67890',
-        },
-        taxPeriodDistance: 920,
-        taxPeriodBusinessDistance: 8,
-        businessUseRatio: 42,
-        vehicleType: {
-            vehicleNumber: '457나7179',
-            vehicleModel: 'GV90',
-        },
-        records: [
-            {
-                usageDate: '2025-01-01',
-                user: {
-                    departmentName: '세일팀',
-                    name: '회장',
-                },
-                drivingInfo: {
-                    drivingBefore: 10000,
-                    drivingAfter: 10030,
-                    totalDriving: 30,
-                    businessDrivingDetails: {
-                        usePurpose: 'NORMAL',
-                        drivingDistance: 30,
-                    },
-                    notes: '일반업무용',
-                },
-            },
-        ],
-    }
     const params = useParams()
     const id = params.id
 
     const [value, setValue] = useState<[Date | null, Date | null]>([null, null])
+
+    const { logData, isLoading, error } = useDetailData({ url: `${API_ENDPOINTS.LOG}/${id}` })
+
+    if (isLoading) {
+        return <div> 로딩 중...</div>
+    }
+    if (error) {
+        return <div>Error: {error}</div>
+    }
 
     return (
         <div className={styles.container}>
@@ -77,14 +55,7 @@ const DetailPage = () => {
                             onChange={setValue}
                         />
                     }
-                    primaryButton={
-                        <RoundButton color='secondary' size={'small'}>
-                            <div className={styles.button}>
-                                <Image src='/icons/green-excel-icon.svg' alt='excel' width={16} height={16} />
-                                엑셀
-                            </div>
-                        </RoundButton>
-                    }
+                    primaryButton={<ExcelButton />}
                     secondaryButton={
                         <RoundButton color='primary' size={'small'} onClick={() => {}}>
                             <div className={styles.button}>
@@ -108,8 +79,8 @@ const DetailPage = () => {
                             </th>
                         </tr>
                         <tr>
-                            <td className={styles.tableCell}>{mockData.vehicleType.vehicleNumber}</td>
-                            <td className={styles.tableCell}>{mockData.vehicleType.vehicleModel}</td>
+                            <td className={styles.tableCell}>{logData?.vehicleType.vehicleNumber}</td>
+                            <td className={styles.tableCell}>{logData?.vehicleType.vehicleModel}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -121,7 +92,7 @@ const DetailPage = () => {
                                 과세기간
                             </th>
                             <td rowSpan={3} className={styles.tableCell}>
-                                {mockData.taxStartPeriod} - {mockData.taxEndPeriod}
+                                {logData?.taxStartPeriod} - {logData?.taxEndPeriod}
                             </td>
                             <th scope='row' rowSpan={2} className={styles.tableHeader}>
                                 업무승용차 운행기록부
@@ -129,13 +100,13 @@ const DetailPage = () => {
                             <th scope='row' className={styles.tableHeader}>
                                 상호명
                             </th>
-                            <td className={styles.tableCell}>{mockData.businessInfo.businessName}</td>
+                            <td className={styles.tableCell}>{logData?.businessInfo.businessName}</td>
                         </tr>
                         <tr>
                             <th scope='row' className={styles.tableHeader}>
                                 사업자 등록번호
                             </th>
-                            <td className={styles.tableCell}>{mockData.businessInfo.businessRegistrationNumber}</td>
+                            <td className={styles.tableCell}>{logData?.businessInfo.businessRegistrationNumber}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -176,27 +147,28 @@ const DetailPage = () => {
                                 비고
                             </th>
                         </tr>
-                        {mockData.records.map((data) => (
-                            <tr key={data.drivingInfo.drivingAfter}>
-                                <td className={styles.tableCell}>{data.usageDate}</td>
-                                <td className={styles.tableCell}>{data.user.departmentName}</td>
-                                <td className={styles.tableCell}>{data.user.name}</td>
-                                <td className={styles.tableCell}>{data.drivingInfo.drivingBefore}km</td>
-                                <td className={styles.tableCell}>{data.drivingInfo.drivingAfter}km</td>
-                                <td className={styles.tableCell}>{data.drivingInfo.totalDriving}km</td>
-                                <td className={styles.tableCell}>
-                                    {data.drivingInfo.businessDrivingDetails.usePurpose === 'COMMUTE'
-                                        ? data.drivingInfo.businessDrivingDetails.drivingDistance + 'km'
-                                        : ''}
-                                </td>
-                                <td className={styles.tableCell}>
-                                    {data.drivingInfo.businessDrivingDetails.usePurpose !== 'COMMUTE'
-                                        ? data.drivingInfo.businessDrivingDetails.drivingDistance + 'km'
-                                        : ''}
-                                </td>
-                                <td className={styles.tableCell}>{data.drivingInfo.notes}</td>
-                            </tr>
-                        ))}
+                        {logData?.records.map((data) => {
+                            const isCommutePurpose = data.drivingInfo.businessDrivingDetails.usePurpose === 'COMMUTE'
+                            const drivingDistance = data.drivingInfo.businessDrivingDetails.drivingDistance
+
+                            return (
+                                <tr key={data.id}>
+                                    <td className={styles.tableCell}>{data.usageDate}</td>
+                                    <td className={styles.tableCell}>{data.user.departmentName}</td>
+                                    <td className={styles.tableCell}>{data.user.name}</td>
+                                    <td className={styles.tableCell}>{data.drivingInfo.drivingBefore}km</td>
+                                    <td className={styles.tableCell}>{data.drivingInfo.drivingAfter}km</td>
+                                    <td className={styles.tableCell}>{data.drivingInfo.totalDriving}km</td>
+                                    <td className={styles.tableCell}>
+                                        {isCommutePurpose ? drivingDistance + 'km' : '0km'}
+                                    </td>
+                                    <td className={styles.tableCell}>
+                                        {!isCommutePurpose ? drivingDistance + 'km' : '0km'}
+                                    </td>
+                                    <td className={styles.tableCell}>{data.drivingInfo.notes}</td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
 
@@ -206,15 +178,17 @@ const DetailPage = () => {
                             <th scope='row' className={styles.tableHeader}>
                                 과세기간 총 주행 거리
                             </th>
-                            <td className={styles.tableCell}>1,000km</td>
+                            <td className={styles.tableCell}>{logData?.taxPeriodDistance.toLocaleString('ko-KR')}km</td>
                             <th scope='row' className={styles.tableHeader}>
                                 과세기간 업무용 사용 거리
                             </th>
-                            <td className={styles.tableCell}>1,000km</td>
+                            <td className={styles.tableCell}>
+                                {logData?.taxPeriodBusinessDistance.toLocaleString('ko-KR')}km
+                            </td>
                             <th scope='row' className={styles.tableHeader}>
                                 업무사용비율
                             </th>
-                            <td className={styles.tableCell}>100%</td>
+                            <td className={styles.tableCell}>{logData?.businessUseRatio}%</td>
                         </tr>
                     </tbody>
                 </table>

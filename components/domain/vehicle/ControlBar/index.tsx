@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
+import ExcelButton from '@/components/common/Button/ExcelButton'
 import LinkButton from '@/components/common/Button/LinkButton'
-import { RoundButton } from '@/components/common/Button/RoundButton'
 import ControlLayout from '@/components/common/ControlLayout'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
@@ -29,14 +29,7 @@ const ControlBar = ({ onExcelButtonClick }: ControlBarProps) => {
                         onSubmit={handleVehicleSearch}
                     />
                 }
-                primaryButton={
-                    <RoundButton size={'small'} color={'secondary'} onClick={onExcelButtonClick}>
-                        <div className={styles.button}>
-                            <Image src='/icons/green-excel-icon.svg' alt='excel' width={16} height={16} />
-                            엑셀
-                        </div>
-                    </RoundButton>
-                }
+                primaryButton={<ExcelButton onClick={onExcelButtonClick} />}
                 secondaryButton={
                     <LinkButton href={'/log/register'}>
                         <div className={styles.linkButton}>
