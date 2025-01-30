@@ -58,11 +58,11 @@ const RegisterPage = () => {
         }
     }
 
+    if (isLoading || !vehicleType) return
+
     const handleCancelButtonClick = () => {
         router.push('/log')
     }
-
-    if (isLoading || !vehicleType) return
 
     const formFields = [
         {
