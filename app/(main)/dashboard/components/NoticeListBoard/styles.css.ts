@@ -9,7 +9,7 @@ export const container = style({
     padding: '24px',
     borderRadius: '12px',
     display: 'flex',
-    gap: '12px',
+    gap: '24px',
     flexDirection: 'column',
 })
 
