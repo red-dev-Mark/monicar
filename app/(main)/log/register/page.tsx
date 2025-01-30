@@ -58,6 +58,10 @@ const RegisterPage = () => {
         }
     }
 
+    const handleCancelButtonClick = () => {
+        router.push('/log')
+    }
+
     if (isLoading || !vehicleType) return
 
     const formFields = [
@@ -112,7 +116,9 @@ const RegisterPage = () => {
             </div>
 
             <div className={styles.buttonsWrapper}>
-                <SquareButton color={'white'}>취소</SquareButton>
+                <SquareButton color={'white'} onClick={handleCancelButtonClick}>
+                    취소
+                </SquareButton>
                 <SquareButton color={'dark'} onClick={postRegisterVehicle}>
                     등록
                 </SquareButton>
