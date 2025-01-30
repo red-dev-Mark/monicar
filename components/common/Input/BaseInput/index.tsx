@@ -1,3 +1,5 @@
+'use client'
+
 import { ComponentPropsWithoutRef, forwardRef, KeyboardEvent } from 'react'
 
 import * as styles from './styles.css'
