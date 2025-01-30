@@ -1,7 +1,6 @@
-import { API_URL } from '@/constants/api'
 import { httpClient } from '@/lib/apis/client'
 
-interface SignInRequest {
+interface SignInRequestModel {
     // TODO: userId -> email 요청
     userId: string
     password: string
@@ -9,12 +8,12 @@ interface SignInRequest {
 
 export const authService = {
     postSignIn: async (email: string, password: string) => {
-        const signInData: SignInRequest = {
+        const signInData: SignInRequestModel = {
             userId: email,
             password,
         }
 
-        const response = await httpClient.post(`${API_URL}/api/v1/sign-in`, signInData)
+        const response = await httpClient.post(`api/v1/sign-in`, signInData)
 
         if (!response.data.isSuccess) {
             switch (response.data.errorCode) {
