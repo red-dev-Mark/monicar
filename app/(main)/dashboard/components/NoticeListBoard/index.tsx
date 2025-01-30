@@ -2,39 +2,33 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 import { noticeService } from '@/lib/apis/notice'
+import { NoticeModel } from '@/types/notice'
 
 import * as styles from './styles.css'
 
-// interface NoticeBoardModel {
-//     id: number
-//     title: string
-//     description: string
-//     imageUrl: string
-// }
-
-// interface NoticeBoardProps {
-//     noticeBoardData: NoticeBoardModel[]
-// }
-
-interface NoticeModel {
-    id: number
-    title: string
-    content: string
-    imageUrl: string
-    createdAt: string
-}
-
-const NoticeBoard = () => {
+const NoticeListBoard = () => {
     const [noticeList, setNoticeList] = useState<NoticeModel[]>([])
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         const getNoticeListData = async () => {
-            const noticeList = await noticeService.getNoticeList()
+            try {
+                setIsLoading(true)
 
-            setNoticeList(noticeList)
+                const noticeList = await noticeService.getNoticeList()
+
+                setNoticeList(noticeList)
+            } catch (error) {
+                console.error(error)
+            } finally {
+                setIsLoading(false)
+            }
         }
+
         getNoticeListData()
     }, [])
+
+    if (isLoading) return <div>공지사항 로딩중...</div>
 
     return (
         <div className={styles.container}>
@@ -54,4 +48,4 @@ const NoticeBoard = () => {
     )
 }
 
-export default NoticeBoard
+export default NoticeListBoard
