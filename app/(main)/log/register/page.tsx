@@ -34,7 +34,6 @@ const RegisterPage = () => {
             try {
                 setIsLoading(true)
                 const vehicleType = await registerAPI.getVehicleType()
-                console.log(vehicleType)
                 setVehicleType(vehicleType)
             } catch (error) {
                 console.error(error)
