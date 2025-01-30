@@ -25,15 +25,12 @@ const SignInPage = () => {
     const handleButtonSubmit = async () => {
         const emailValidation = validateEmail(email)
         const passwordValidation = validatePassword(password)
-        console.log('zxcvzxcvxcvzxcv')
         if (!emailValidation.isValid) {
-            console.log(emailValidation.message)
             showMessage(emailValidation.message!)
             return
         }
 
         if (!passwordValidation.isValid) {
-            console.log(passwordValidation.message)
             showMessage(passwordValidation.message!)
             return
         }

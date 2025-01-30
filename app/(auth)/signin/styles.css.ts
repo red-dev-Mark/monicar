@@ -4,8 +4,9 @@ import { vars } from '@/styles/theme.css'
 
 export const container = style({
     height: '100%',
+    padding: '24px',
     display: 'flex',
-    gap: '244px',
+    gap: '276px',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundImage: `url('/images/sign-in-background-desktop.jpg')`,
