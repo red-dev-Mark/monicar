@@ -5,7 +5,7 @@ import { vars } from '@/styles/theme.css'
 export const page = style({
     width: '100%',
     height: '100vh',
-    background: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url('/images/page-not-found-desktop.jpg')`,
+    background: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('/images/page-not-found-desktop.jpg')`,
     backgroundSize: 'cover',
 
     display: 'flex',
@@ -47,7 +47,7 @@ export const title = style({
 
 export const introduce = style({
     marginLeft: '4px',
-    marginBottom: '22px',
+    marginBottom: '28px',
     color: vars.colors.white,
     fontWeight: vars.fontWeights.bold,
     whiteSpace: 'pre-line',
@@ -56,5 +56,6 @@ export const introduce = style({
 
 export const button = style({
     color: `${vars.colors.primary} !important`,
-    backgroundColor: vars.colors.white,
+    backgroundColor: `${vars.colors.white}  !important`,
+    fontSize: `${vars.fontSizes.large} !important`,
 })
