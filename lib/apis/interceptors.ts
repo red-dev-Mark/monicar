@@ -47,13 +47,11 @@ export const setupResponseInterceptor = (instance: AxiosInstance) => {
                     switch (errorCode) {
                         case 9995:
                             await httpClient.post(`${API_URL}/auth/reissue`)
-                            await httpClient.post(`${API_URL}/auth/refresh`)
                             return httpClient(originalRequest)
 
-                        // case 9994:
-                        //     console.log('리프레시 재발급!!')
-                        //     await httpClient.post(`${API_URL}/auth/refresh`)
-                        //     return httpClient(originalRequest)
+                        case 9994:
+                            await httpClient.post(`${API_URL}/auth/refresh`)
+                            return httpClient(originalRequest)
 
                         case 9000:
                             logout()
