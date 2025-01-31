@@ -11,7 +11,7 @@ import LinkButton from '@/components/common/Button/LinkButton'
 import { RoundButton } from '@/components/common/Button/RoundButton'
 import ControlLayout from '@/components/common/ControlLayout'
 import { API_ENDPOINTS } from '@/constants/api'
-import { vehicleAPI } from '@/lib/apis/vehicle'
+import { vehicleService } from '@/lib/apis/vehicle'
 import { CalendarIcon } from '@/public/icons'
 
 import '@mantine/dates/styles.css'
@@ -28,7 +28,7 @@ const DetailPage = () => {
 
     const deleteVehicle = async (id: number) => {
         try {
-            await vehicleAPI.deleteVehicle(id)
+            await vehicleService.deleteVehicle(id)
             router.push('/log')
         } catch (error) {
             console.error('차량 삭제 실패', error)

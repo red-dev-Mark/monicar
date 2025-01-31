@@ -9,7 +9,7 @@ import Breadcrumb from '@/components/common/Breadcrumb'
 import SquareButton from '@/components/common/Button/SquareButton'
 import BaseInput from '@/components/common/Input/BaseInput'
 import SearchInput from '@/components/common/Input/SearchInput'
-import { vehicleAPI } from '@/lib/apis/vehicle'
+import { vehicleService } from '@/lib/apis/vehicle'
 
 import * as styles from './styles.css'
 import { VehicleTypeModel } from './types'
@@ -28,7 +28,7 @@ const RegisterPage = () => {
         const getVehicleType = async () => {
             try {
                 setIsLoading(true)
-                const vehicleType = await vehicleAPI.getVehicleType()
+                const vehicleType = await vehicleService.getVehicleType()
                 setVehicleType(vehicleType)
             } catch (error) {
                 console.error(error)
@@ -50,7 +50,7 @@ const RegisterPage = () => {
         }
 
         try {
-            await vehicleAPI.postVehicleInfo({
+            await vehicleService.postVehicleInfo({
                 vehicleNumber,
                 vehicleTypeId,
                 deliveryDate,

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import { useModal } from '@/hooks/useModal'
-// import { vehicleAPI } from '@/lib/apis'
 import { validateVehicleNumber } from '@/lib/utils/validation'
 import { VehicleDateModel } from '@/types/vehicle'
 
