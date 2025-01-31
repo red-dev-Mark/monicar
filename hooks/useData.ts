@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { UseDataRequest } from '@/constants/api'
-import { apiClient } from '@/lib/apis/client'
+import { httpClient } from '@/lib/apis/client'
 
 export const useData = <T>({ url, params }: UseDataRequest) => {
     const [data, setData] = useState<T>()
@@ -12,7 +12,7 @@ export const useData = <T>({ url, params }: UseDataRequest) => {
         const getData = async () => {
             try {
                 setIsLoading(true)
-                const response = await apiClient.get(url, { params })
+                const response = await httpClient.get(url, { params })
                 setData(response.data.result)
             } catch (error) {
                 setError('데이터 불러오기 실패')
