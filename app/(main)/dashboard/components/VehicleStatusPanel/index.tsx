@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import VehicleStatusItem from '@/app/(main)/dashboard/components/VehicleStatusItem'
-import { vehicleAPI } from '@/lib/apis'
+import { vehicleService } from '@/lib/apis'
 import { vars } from '@/styles/theme.css'
 import { VehicleStatusModel } from '@/types/vehicle'
 
@@ -16,7 +16,7 @@ const VehicleStatusPanel = () => {
         const getVehicleStatus = async () => {
             try {
                 setIsLoading(true)
-                const vehicleStatus = await vehicleAPI.getVehicleStatus()
+                const vehicleStatus = await vehicleService.getVehicleStatus()
                 setVehicleStatus(vehicleStatus)
             } catch (error) {
                 console.error('차량현황 조회에 실패하였습니다', error)

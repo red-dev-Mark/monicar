@@ -3,7 +3,6 @@ import { style } from '@vanilla-extract/css'
 import { vars } from '@/styles/theme.css'
 
 export const container = style({
-    width: '100%',
     height: '100vh',
     backgroundColor: vars.colors.dashboard,
     display: 'flex',
@@ -36,7 +35,7 @@ export const introduce = style({
     fontWeight: vars.fontWeights.extraBold,
     display: 'flex',
     flexDirection: 'column',
-    marginLeft: '40px',
+    marginLeft: '24px',
 })
 
 export const userName = style({

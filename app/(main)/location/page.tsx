@@ -9,7 +9,7 @@ import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
-import { vehicleAPI } from '@/lib/apis'
+import { vehicleService } from '@/lib/apis'
 import { VehicleDetailsModel, VehicleInfoModel } from '@/types/vehicle'
 
 import * as styles from './styles.css'
@@ -36,7 +36,7 @@ const LocationPage = () => {
 
     const handleVehicleClick = async () => {
         const { vehicleId } = vehicleInfo as VehicleInfoModel
-        const vehicleDetailsData = await vehicleAPI.getVehicleDetailInfo(vehicleId)
+        const vehicleDetailsData = await vehicleService.getVehicleDetailInfo(vehicleId)
 
         setVehicleDetails(vehicleDetailsData)
         setIsDetailsCardVisible(true)

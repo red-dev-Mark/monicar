@@ -49,6 +49,7 @@ export const message = style({
     textAlign: 'center',
     lineHeight: 1.8,
     color: vars.colors.black,
+    whiteSpace: 'pre-line',
 })
 
 export const buttonWrapper = style({
