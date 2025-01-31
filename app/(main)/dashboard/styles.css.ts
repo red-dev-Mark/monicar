@@ -47,7 +47,6 @@ export const searchInputWrapper = style({
 })
 
 export const mapWrapper = style({
-    width: '100%',
     height: '100%',
     borderRadius: '14px',
     overflow: 'hidden',

@@ -104,7 +104,7 @@ export const validateVehicleNumber = (searchTerm: string) => {
     if (!trimValue(searchTerm)) {
         return {
             isValid: false,
-            message: '차량번호를 입력해주세요.',
+            message: '차량번호를 입력해주세요',
         }
     }
 
@@ -113,14 +113,14 @@ export const validateVehicleNumber = (searchTerm: string) => {
     if (!isKoreanAndNumbersOnly(removedBlank)) {
         return {
             isValid: false,
-            message: '차량번호는 숫자/한글만 입력 가능합니다.',
+            message: '차량번호는 숫자/한글만 입력 가능합니다',
         }
     }
 
     if (!isValidVehicleNumberFormat(removedBlank)) {
         return {
             isValid: false,
-            message: '올바른 차량번호 형식이 아닙니다.',
+            message: '올바른 차량번호 형식이 아닙니다\n(예시 : 12가 1234 또는 123가 1234)',
         }
     }
 

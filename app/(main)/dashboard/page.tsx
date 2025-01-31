@@ -1,27 +1,50 @@
 'use client'
 
 import Calendar from '@/app/(main)/dashboard/components/Calendar'
+import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
 import SearchInput from '@/components/common/Input/SearchInput'
+import Modal from '@/components/common/Modal'
+import { ModalMessageType } from '@/components/common/Modal/types'
 import Map from '@/components/domain/map/Map'
+import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
 import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from '@/public/icons'
 
 import InspectionStatus from './components/InspectionStatus'
 import NoticeListBoard from './components/NoticeListBoard'
-import VehicleStatus from './components/VehicleStatus'
+import VehicleStatusPanel from './components/VehicleStatusPanel'
 import * as styles from './styles.css'
 
 const DashboardPage = () => {
+    const {
+        vehicleInfo,
+        mapState,
+        isVehicleVisible,
+        searchTerm,
+        modalMessage,
+        isOpen,
+        handleVehicleSearch,
+        handleSearchChange,
+        closeModal,
+    } = useSearchSingleVehicle()
+
+    const isVehicleMarkerVisible = !!(isVehicleVisible && vehicleInfo)
+
     return (
         <div className={styles.container}>
             <section className={styles.leftSection}>
                 <header className={styles.header}>
                     <p className={styles.introduce}>
                         안녕하세요,
-                        <span className={styles.userName}>쏘카님👋</span>
+                        <span className={styles.userName}>쏘카님 👋</span>
                     </p>
 
                     <div className={styles.searchInputWrapper}>
-                        <SearchInput icon={'/icons/search-icon.svg'} />
+                        <SearchInput
+                            icon='/icons/search-icon.svg'
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            onSubmit={handleVehicleSearch}
+                        />
                     </div>
                 </header>
 
@@ -54,29 +77,12 @@ const DashboardPage = () => {
                     ]}
                 />
 
-                <VehicleStatus
-                    vehicleStatusData={[
-                        {
-                            type: 'total',
-                            text: '전체 차량',
-                        },
-                        {
-                            type: 'active',
-                            text: '운행중 차량',
-                        },
-                        {
-                            type: 'inactive',
-                            text: '미운행 차량',
-                        },
-                        {
-                            type: 'disabled',
-                            text: '미관제 차량',
-                        },
-                    ]}
-                />
+                <VehicleStatusPanel />
 
                 <div className={styles.mapWrapper}>
-                    <Map />
+                    <Map center={mapState.center} zoom={mapState.level}>
+                        {isVehicleMarkerVisible && <VehicleMarker vehicleInfo={vehicleInfo} />}
+                    </Map>
                 </div>
             </section>
 
@@ -113,6 +119,13 @@ const DashboardPage = () => {
 
                 <NoticeListBoard />
             </section>
+
+            <Modal
+                isOpen={isOpen}
+                message={modalMessage as ModalMessageType}
+                variant={{ variant: 'alert', confirmButton: '확인' }}
+                onClose={closeModal}
+            />
         </div>
     )
 }
