@@ -5,7 +5,7 @@ import { RoundButton } from '@/components/common/Button/RoundButton'
 
 import * as styles from './not-found.styles.css'
 
-const NotFound = () => {
+const NotFoundPage = () => {
     return (
         <div className={styles.page}>
             <div className={styles.container}>
@@ -18,8 +18,13 @@ const NotFound = () => {
                     <h3 className={styles.title}>페이지를 찾을 수 없습니다.</h3>
                     <p className={styles.introduce}>{`모니카와 함께 차량을 조회하고 경로를\n탐색해보세요.`}</p>
 
-                    <Link href='/dashboard'>
-                        <RoundButton size='large' color='primary' className={styles.button}>
+                    <Link href='/dashboard' role='navigation' aria-label='홈으로 이동'>
+                        <RoundButton
+                            size='large'
+                            color='primary'
+                            className={styles.button}
+                            aria-label='홈으로 돌아가기 버튼'
+                        >
                             홈으로 돌아가기
                         </RoundButton>
                     </Link>
@@ -29,4 +34,4 @@ const NotFound = () => {
     )
 }
 
-export default NotFound
+export default NotFoundPage
