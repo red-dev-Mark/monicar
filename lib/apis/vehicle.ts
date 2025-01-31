@@ -22,18 +22,21 @@ export const vehicleService = {
         const normalizeResult = normalizeVehicleResponse(response.data.result)
         return { isValid: true, value: normalizeResult }
     },
+
     // 개별차량 상세정보 조회
     getVehicleDetailInfo: async (vehicleId: string) => {
         const response = await httpClient.get(`api/v1/vehicle/${vehicleId}`)
 
         return response.data.result
     },
+
     // 시동 여부에 따른 차량 현황 조회
     getVehicleStatus: async () => {
         const response = await httpClient.get(`api/v1/vehicle/status`)
 
         return response.data.result
     },
+
     // getVehicleRoutesData: async () => {
     // getVehicleRoutesData: async (vehicleId: string, startDate: DateTime, endDate: DateTime, interval = 60) => {
     fetchVehicleRoutesData: async () => {
@@ -49,20 +52,32 @@ export const vehicleService = {
 
         return mockRoutesData
     },
+
     getVehicleType: async (): Promise<VehicleTypeModel[]> => {
         const response = await httpClient.get(`/api/v1/log/vehicle-type`)
+
         return response.data.result
     },
+
     postVehicleInfo: async (data: RegisterVehicleModel) => {
         const response = await httpClient.post(`/api/v1/vehicle/register`, data)
+
+        if (!response.data.result && response.data.errorCode === 1001) {
+            return {
+                isSuccess: false,
+                message: '해당 차종이 존재하지 않습니다.',
+            }
+        }
         return response.data.result
     },
+
     deleteVehicle: async (id: number) => {
         const response = await httpClient.delete(`/api/v1/vehicle/${id}`)
-        // console.log(response)
-        if (!response.data.isSuccess) {
-            if (response.data.errorCode === 1006) {
-                // return { isSuccess: false, errorMessage }
+
+        if (!response.data && response.data.errorCode === 1006) {
+            return {
+                isSuccess: false,
+                message: '해당 차종이 존재하지 않습니다.',
             }
         }
         return response.data
