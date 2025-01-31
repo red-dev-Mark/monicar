@@ -43,3 +43,9 @@ export interface VehicleDetailsModel {
         companyName: string
     }
 }
+
+export interface VehicleStatusModel {
+    allVehicles: number
+    engineOnVehicles: number
+    engineOffVehicles: number
+}

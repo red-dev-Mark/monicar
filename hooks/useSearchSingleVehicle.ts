@@ -3,7 +3,7 @@ import { ChangeEventHandler, useState } from 'react'
 import { ZOOM_LEVEL } from '@/constants/map'
 import { useMapControl } from '@/hooks/useMapControl'
 import { useModal } from '@/hooks/useModal'
-import { vehicleAPI } from '@/lib/apis'
+import { vehicleService } from '@/lib/apis'
 import { validateVehicleNumber } from '@/lib/utils/validation'
 import { VehicleInfoModel } from '@/types/vehicle'
 
@@ -25,7 +25,7 @@ export const useSearchSingleVehicle = () => {
             return
         }
 
-        const result = await vehicleAPI.getVehicleInfo(searchTerm)
+        const result = await vehicleService.getVehicleInfo(searchTerm)
 
         if (!result.isValid) {
             showMessage(result.value as string)

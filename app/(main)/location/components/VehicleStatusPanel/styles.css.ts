@@ -10,7 +10,7 @@ export const container = style({
     zIndex: vars.zIndex.header,
     display: 'flex',
     flexDirection: 'column',
-    gap: '36px',
+    gap: '28px',
     justifyContent: 'center',
     alignItems: 'center',
     color: vars.colors.gray[800],
