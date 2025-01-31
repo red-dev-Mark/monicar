@@ -3,16 +3,14 @@ import { style } from '@vanilla-extract/css'
 import { vars } from '@/styles/theme.css'
 
 export const container = style({
-    width: '100%',
-    height: '100%',
     backgroundColor: vars.colors.dashboard,
-    padding: '30px',
-    overflowY: 'auto',
+    padding: '24px',
 })
 
 export const contents = style({
-    backgroundColor: vars.colors.white,
+    marginTop: '24px',
     padding: '24px',
+    backgroundColor: vars.colors.white,
     borderRadius: '11px',
 })
 
@@ -31,22 +29,19 @@ export const title = style({
     fontSize: vars.fontSizes.xlarge,
 })
 
-export const date = style({
+export const createdAt = style({
     color: vars.colors.gray[600],
     fontSize: vars.fontSizes.small,
 })
 
 export const imageWrapper = style({
-    position: 'relative',
-    width: '100%',
-    marginTop: '24px',
     marginBottom: '24px',
     display: 'flex',
     justifyContent: 'center',
 })
 
-export const children = style({
+export const content = style({
     color: vars.colors.black,
     whiteSpace: 'pre-line',
-    lineHeight: '2',
+    lineHeight: 1.5,
 })
