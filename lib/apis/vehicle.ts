@@ -1,3 +1,4 @@
+import { RegisterVehicleModel, VehicleTypeModel } from '@/app/(main)/log/register/types'
 import { apiClient } from '@/lib/apis/client'
 import { normalizeVehicleResponse } from '@/lib/utils/normalize'
 import { removeSpaces } from '@/lib/utils/string'
@@ -45,5 +46,18 @@ export const vehicleAPI = {
         // return response.result
 
         return mockRoutesData
+    },
+    getVehicleType: async (): Promise<VehicleTypeModel[]> => {
+        const response = await apiClient.get(`/api/v1/driving-log/vehicle-type`)
+        return response.data.result
+    },
+
+    postVehicleInfo: async (data: RegisterVehicleModel) => {
+        const response = await apiClient.post(`/api/v1/vehicles/register`, data)
+        return response.data.result
+    },
+    deleteVehicle: async (id: number) => {
+        const response = await apiClient.delete(`/api/v1/vehicles/${id}`)
+        return response.data.result
     },
 }

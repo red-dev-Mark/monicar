@@ -9,7 +9,7 @@ import Breadcrumb from '@/components/common/Breadcrumb'
 import SquareButton from '@/components/common/Button/SquareButton'
 import BaseInput from '@/components/common/Input/BaseInput'
 import SearchInput from '@/components/common/Input/SearchInput'
-import { registerAPI } from '@/lib/apis/register'
+import { vehicleAPI } from '@/lib/apis/vehicle'
 
 import * as styles from './styles.css'
 import { VehicleTypeModel } from './types'
@@ -28,7 +28,7 @@ const RegisterPage = () => {
         const getVehicleType = async () => {
             try {
                 setIsLoading(true)
-                const vehicleType = await registerAPI.getVehicleType()
+                const vehicleType = await vehicleAPI.getVehicleType()
                 setVehicleType(vehicleType)
             } catch (error) {
                 console.error(error)
@@ -43,14 +43,14 @@ const RegisterPage = () => {
         router.push('/log')
     }
 
-    const postRegisterVehicle = async () => {
+    const postVehicleInfo = async () => {
         // TODO: 유효성검사
         if (!vehicleTypeId || !drivingDistance) {
             return
         }
 
         try {
-            await registerAPI.postRegisterVehicle({
+            await vehicleAPI.postVehicleInfo({
                 vehicleNumber,
                 vehicleTypeId,
                 deliveryDate,
@@ -119,7 +119,7 @@ const RegisterPage = () => {
                 <SquareButton color={'white'} onClick={handleCancelButtonClick}>
                     취소
                 </SquareButton>
-                <SquareButton color={'dark'} onClick={postRegisterVehicle}>
+                <SquareButton color={'dark'} onClick={postVehicleInfo}>
                     등록
                 </SquareButton>
             </div>
