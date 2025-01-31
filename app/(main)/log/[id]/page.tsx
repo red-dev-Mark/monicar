@@ -22,8 +22,7 @@ import * as styles from './styles.css'
 const DetailPage = () => {
     const [value, setValue] = useState<[Date | null, Date | null]>([null, null])
 
-    const params = useParams()
-    const id = params.id
+    const { id } = useParams()
     const router = useRouter()
     const { logData, isLoading, error } = useDetailData({ url: `${API_ENDPOINTS.LOG}/${id}` })
 

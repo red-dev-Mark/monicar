@@ -51,13 +51,18 @@ export const vehicleAPI = {
         const response = await apiClient.get(`/api/v1/driving-log/vehicle-type`)
         return response.data.result
     },
-
     postVehicleInfo: async (data: RegisterVehicleModel) => {
         const response = await apiClient.post(`/api/v1/vehicles/register`, data)
         return response.data.result
     },
     deleteVehicle: async (id: number) => {
         const response = await apiClient.delete(`/api/v1/vehicles/${id}`)
-        return response.data.result
+        // console.log(response)
+        // if (!response.data.isSuccess) {
+        //     if (response.data.errorCode === 1006) {
+        //         return { isSuccess: false, errorMessage }
+        //     }
+        // }
+        return response.data
     },
 }
