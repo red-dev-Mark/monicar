@@ -13,7 +13,7 @@ export const page = style({
 
     selectors: {
         '&:after': {
-            backgroundColor: '#00000050',
+            backgroundColor: vars.colors.shadow[500],
         },
     },
 })

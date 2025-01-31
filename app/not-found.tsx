@@ -10,7 +10,7 @@ const NotFound = () => {
         <div className={styles.page}>
             <div className={styles.container}>
                 <div>
-                    <Image src={'/white-logo.png'} width={120} height={80} alt='박스로고' />
+                    <Image src={'/white-logo.png'} width={120} height={80} alt='박스로고' priority />
                     <h1 className={styles.pageNotFoundText}>Page Not Found</h1>
                 </div>
 
