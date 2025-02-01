@@ -1,3 +1,5 @@
+import { MapState } from '@/types/map'
+
 export const convertCoordsToAddress = (lat: number, lng: number): Promise<string> => {
     const geocoder = new kakao.maps.services.Geocoder()
 
@@ -31,7 +33,7 @@ export const getMarkerColor = (count: number) => {
     }
 }
 
-export const getCurrentMapStatus = (map: kakao.maps.Map) => {
+export const getCurrentMapStatus = (map: kakao.maps.Map): MapState => {
     const level = map.getLevel()
 
     const bounds = map.getBounds()
@@ -40,8 +42,8 @@ export const getCurrentMapStatus = (map: kakao.maps.Map) => {
     const neLat = bounds.getNorthEast().getLat()
     const neLng = bounds.getNorthEast().getLng()
 
-    const swCoord = { swLat, swLng }
-    const neCoord = { neLat, neLng }
+    const swCoord = { lat: swLat, lng: swLng }
+    const neCoord = { lat: neLat, lng: neLng }
 
     return {
         level,
