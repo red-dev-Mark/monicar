@@ -7,6 +7,7 @@ import CustomMarker from '@/app/(main)/location/components/CustomMarker'
 import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
 import Map from '@/components/domain/map/Map'
 import { useMapStatus } from '@/hooks/useCurrentMapStatus'
+import { clusterService } from '@/lib/apis/cluster'
 import ClusteringData from '@/mock/clustering.json'
 import { LatLng } from '@/types/location'
 import { MapState } from '@/types/map'
@@ -30,7 +31,11 @@ const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleCl
     })
 
     useEffect(() => {
-        console.log(currentMapState)
+        // console.log(currentMapState)
+        const getClusterInfo = async () => {
+            await clusterService.getClusteringInfo(currentMapState)
+        }
+        getClusterInfo()
     }, [currentMapState])
 
     return (
