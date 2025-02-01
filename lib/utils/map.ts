@@ -11,3 +11,22 @@ export const convertCoordsToAddress = (lat: number, lng: number): Promise<string
         })
     })
 }
+
+export const getMarkerColor = (count: number) => {
+    if (count <= 100) {
+        return {
+            outer: '#fdced440',
+            inner: '#fdced480',
+        }
+    }
+    if (count <= 1000) {
+        return {
+            outer: '#fb7da740',
+            inner: '#fb7da780',
+        }
+    }
+    return {
+        outer: '#f41d4e40',
+        inner: '#f41d4e80',
+    }
+}

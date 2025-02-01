@@ -27,6 +27,9 @@ const nextConfig = {
 
         return config
     },
+    images: {
+        domains: ['github.com'],
+    },
 }
 
 export default withVanillaExtract(nextConfig)
