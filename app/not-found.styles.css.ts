@@ -5,7 +5,7 @@ import { vars } from '@/styles/theme.css'
 export const container = style({
     width: '100%',
     height: '100vh',
-    background: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('/images/page-not-found-desktop.jpg')`,
+    background: `linear-gradient(${vars.colors.shadow[200]}, ${vars.colors.shadow[200]}), url('/images/page-not-found-desktop.jpg')`,
     backgroundSize: 'cover',
 
     display: 'flex',
