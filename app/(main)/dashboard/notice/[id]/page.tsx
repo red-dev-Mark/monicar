@@ -10,9 +10,10 @@ import { NoticeModel } from '@/types/notice'
 
 import * as styles from './styles.css'
 
-// const NoticePage = ({ params }: { params: { id: string } }) => {
-const NoticePage = () => {
-    // const { id: noticeId } = params
+const NoticePage = ({ params }: { params: { id: string } }) => {
+    const { id: noticeId } = params
+
+    console.log(noticeId)
 
     const [noticeItem, setNoticeItem] = useState<NoticeModel>()
     const [isLoading, setIsLoading] = useState(true)
@@ -23,7 +24,7 @@ const NoticePage = () => {
                 setIsLoading(true)
 
                 // const noticeList = await noticeService.getNoticeItem(noticeId)
-                const noticeItem = await noticeService.getNoticeItem()
+                const noticeItem = await noticeService.getNoticeItem('2')
 
                 setNoticeItem(noticeItem)
             } catch (error) {
@@ -53,7 +54,12 @@ const NoticePage = () => {
 
                 {noticeItem.imageUrl && (
                     <div className={styles.imageWrapper}>
-                        <Image src={noticeItem.imageUrl} alt={noticeItem.title} width={300} height={300} />
+                        <Image
+                            src={noticeItem.imageUrl || '/images/notice-1.jpg'}
+                            alt={noticeItem.title}
+                            width={300}
+                            height={300}
+                        />
                     </div>
                 )}
 
