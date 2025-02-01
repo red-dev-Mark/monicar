@@ -4,12 +4,7 @@ import { INITIAL_MAP_STATE } from '@/constants/map'
 import { getBoundedMapStatus } from '@/lib/utils/map'
 import { MapState } from '@/types/map'
 
-interface UseMapStatusProps {
-    isMapLoaded: boolean
-    map: kakao.maps.Map | null
-}
-
-export const useMapStatus = ({ isMapLoaded, map }: UseMapStatusProps) => {
+export const useMapStatus = (map: kakao.maps.Map | null) => {
     const [currentMapState, setCurrentMapState] = useState<MapState>({
         level: 7,
         center: INITIAL_MAP_STATE.center,
@@ -18,8 +13,7 @@ export const useMapStatus = ({ isMapLoaded, map }: UseMapStatusProps) => {
     })
 
     const updateMapStatus = () => {
-        if (!isMapLoaded || !map) return
-        // setCurrentMapState(getCurrentMapStatus(map))
+        if (!map) return
         setCurrentMapState(getBoundedMapStatus(map))
     }
 
