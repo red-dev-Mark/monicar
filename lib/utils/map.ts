@@ -37,16 +37,20 @@ export const getCurrentMapStatus = (map: kakao.maps.Map): MapState => {
     const level = map.getLevel()
 
     const bounds = map.getBounds()
+    const centerLat = map.getCenter().getLat()
+    const centerLng = map.getCenter().getLng()
     const swLat = bounds.getSouthWest().getLat()
     const swLng = bounds.getSouthWest().getLng()
     const neLat = bounds.getNorthEast().getLat()
     const neLng = bounds.getNorthEast().getLng()
 
+    const center = { lat: centerLat, lng: centerLng }
     const swCoord = { lat: swLat, lng: swLng }
     const neCoord = { lat: neLat, lng: neLng }
 
     return {
         level,
+        center,
         swCoord,
         neCoord,
     }

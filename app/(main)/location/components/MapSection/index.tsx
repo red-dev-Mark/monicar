@@ -39,7 +39,7 @@ const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleCl
             center={mapState.center}
             zoom={mapState.level}
             onLoad={() => setIsMapLoaded(true)}
-            onZoomChanged={handleZoomChanged}
+            onMapStatusChanged={handleZoomChanged}
         >
             {ClusteringData.result.map((loc, index) => {
                 return (

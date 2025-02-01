@@ -12,19 +12,19 @@ interface MapProps {
     zoom?: number
     children?: React.ReactNode
     onLoad?: (isMapLoaded: boolean) => void
-    onZoomChanged?: () => void
+    onMapStatusChanged?: () => void
 }
 
 const Map = memo(
-    ({ ref, center = { lat: 37.5665, lng: 126.978 }, zoom = 10, children, onLoad, onZoomChanged }: MapProps) => {
+    ({ ref, center = { lat: 37.5665, lng: 126.978 }, zoom = 10, children, onLoad, onMapStatusChanged }: MapProps) => {
         const { loading, error } = useKakaoLoader()
 
         const handleCreate = () => {
             onLoad?.(true)
         }
 
-        const handleZoomChanged = () => {
-            onZoomChanged?.()
+        const handleMapStatusChange = () => {
+            onMapStatusChanged?.()
         }
 
         if (loading) return <div>지도를 불러오는 중...</div>
@@ -36,8 +36,9 @@ const Map = memo(
                 center={center}
                 level={zoom}
                 style={{ width: '100%', height: '100%' }}
-                onZoomChanged={handleZoomChanged}
                 onCreate={handleCreate}
+                onZoomChanged={handleMapStatusChange}
+                onDragEnd={handleMapStatusChange}
             >
                 {children}
                 <ZoomControl />
