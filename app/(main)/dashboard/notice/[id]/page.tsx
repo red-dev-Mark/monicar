@@ -6,7 +6,7 @@ import Breadcrumb from '@/components/common/Breadcrumb'
 import * as styles from './styles.css'
 
 const NoticePage = async ({ params }: { params: { id: string } }) => {
-    const { id: noticeId } = params
+    const { id: noticeId } = await params
 
     return (
         <article className={styles.container}>
