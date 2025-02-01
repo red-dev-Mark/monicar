@@ -10,9 +10,8 @@ export const downloadExcel = (data: ListItemModel[]) => {
     const excelData = data.map((item) => ({
         차량번호: item.vehicleNumber,
         차종: item.vehicleModel,
-        운행일수: item.drivingDays,
-        총운행거리: `${item.totalDistance}km`,
-        차량현황: item.status,
+        운행일수: `${item.drivingDays.toLocaleString('ko-KR')}`,
+        총운행거리: `${item.totalDistance.toLocaleString('ko-KR')}km`,
     }))
 
     const wb = XLSX.utils.book_new()
