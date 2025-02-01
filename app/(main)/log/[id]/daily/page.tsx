@@ -21,13 +21,7 @@ const DailyPage = () => {
                         hasVehicleNumber={true}
                         title={'일별 운행기록'}
                         control={
-                            <Select
-                                placeholder='1주일'
-                                data={['1주일', '1개월', '3개월']}
-                                size='md'
-                                radius='xl'
-                                searchable
-                            />
+                            <Select placeholder='1주일' data={['1주일', '1개월', '3개월']} size='md' radius='xl' />
                         }
                         button={<ExcelButton />}
                         vehicleNumber={'33가 1234'}

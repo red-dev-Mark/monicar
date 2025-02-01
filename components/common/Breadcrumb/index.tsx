@@ -1,14 +1,14 @@
 import Link from 'next/link'
 
 import * as styles from './styles.css'
-import { BreadcrumbType, logPaths, noticePaths } from './types'
+import { breadcrumbPath, BreadcrumbType, logPath } from './types'
 
 interface BreadcrumbProps {
     type: BreadcrumbType
 }
 
 const Breadcrumb = ({ type }: BreadcrumbProps) => {
-    const paths = type === '공지사항' ? noticePaths : logPaths
+    const paths = breadcrumbPath[type as keyof typeof breadcrumbPath] ?? logPath
     const index = paths.findIndex((item) => item.label === type)
     const visibleItems = paths.slice(0, index + 1)
 
