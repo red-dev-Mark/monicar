@@ -3,7 +3,7 @@
 export const noticeService = {
     // 공지사항 목록 조회
     getNoticeList: async () => {
-        // const response = await apiClient.get(`/v1/control-center/notices`)
+        // const response = await apiClient.get(`/v1/control-center/notice`)
 
         // TODO: API 연동
         const mockNoticeData = [
@@ -47,7 +47,7 @@ export const noticeService = {
     // 공지사항 개별항목 조회
     getNoticeItem: async () => {
         // getNoticeItem: async (noticeId: string) => {
-        // const response = await apiClient.get(`/v1/control-center/notices/${noticeId}`)
+        // const response = await apiClient.get(`/v1/control-center/notice/${noticeId}`)
 
         // TODO: API 연동
         const mockNoticeData = {
