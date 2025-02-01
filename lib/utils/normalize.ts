@@ -1,7 +1,7 @@
 import { VehicleInfoModel } from '@/types/vehicle'
 
 export const normalizeCoordinate = (coordinateValue: number): number => coordinateValue / 1000000
-export const denormalizeCoordinate = (coordinateValue: number): number => coordinateValue * 1000000
+export const denormalizeCoordinate = (coordinateValue: number): number => Math.round(coordinateValue * 1000000)
 
 export const normalizeVehicleResponse = (data: VehicleInfoModel) => {
     return {
