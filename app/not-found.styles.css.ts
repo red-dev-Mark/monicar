@@ -2,7 +2,7 @@ import { style } from '@vanilla-extract/css'
 
 import { vars } from '@/styles/theme.css'
 
-export const page = style({
+export const container = style({
     width: '100%',
     height: '100vh',
     background: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('/images/page-not-found-desktop.jpg')`,
@@ -18,24 +18,24 @@ export const page = style({
     },
 })
 
-export const container = style({
+export const content = style({
     marginLeft: '120px',
     display: 'flex',
     gap: '380px',
     flexDirection: 'column',
 })
 
-export const content = style({
-    display: 'flex',
-    gap: '8px',
-    flexDirection: 'column',
-})
-
-export const pageNotFoundText = style({
+export const heading = style({
     marginTop: '4px',
     color: vars.colors.white,
     fontSize: '48px',
     fontWeight: vars.fontWeights.bold,
+})
+
+export const bottomSection = style({
+    display: 'flex',
+    gap: '8px',
+    flexDirection: 'column',
 })
 
 export const title = style({
@@ -45,7 +45,7 @@ export const title = style({
     fontWeight: vars.fontWeights.bold,
 })
 
-export const introduce = style({
+export const message = style({
     marginLeft: '4px',
     marginBottom: '28px',
     color: vars.colors.white,
