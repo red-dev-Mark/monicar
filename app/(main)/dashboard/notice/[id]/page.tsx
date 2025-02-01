@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 
 import Breadcrumb from '@/components/common/Breadcrumb'
 import { noticeService } from '@/lib/apis/notice'
@@ -10,10 +10,12 @@ import { NoticeModel } from '@/types/notice'
 
 import * as styles from './styles.css'
 
-const NoticePage = ({ params }: { params: { id: string } }) => {
-    const { id: noticeId } = params
+const NoticePage = ({ params }: { params: Promise<{ id: string }> }) => {
+    // const { id: noticeId } = params
+    const unWrappedParams = use(params)
+    const { id: noticeId } = unWrappedParams
 
-    console.log(noticeId)
+    // console.log(noticeId)
 
     const [noticeItem, setNoticeItem] = useState<NoticeModel>()
     const [isLoading, setIsLoading] = useState(true)
@@ -23,8 +25,8 @@ const NoticePage = ({ params }: { params: { id: string } }) => {
             try {
                 setIsLoading(true)
 
-                // const noticeList = await noticeService.getNoticeItem(noticeId)
-                const noticeItem = await noticeService.getNoticeItem('2')
+                const noticeItem = await noticeService.getNoticeItem(noticeId)
+                // const noticeItem = await noticeService.getNoticeItem('2')
 
                 setNoticeItem(noticeItem)
             } catch (error) {
