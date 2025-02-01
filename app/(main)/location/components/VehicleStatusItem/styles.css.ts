@@ -12,8 +12,9 @@ export const container = style({
 })
 
 export const titleWrapper = style({
+    marginLeft: '-8px',
     display: 'flex',
-    gap: '8px',
+    gap: '12px',
     justifyContent: 'center',
     alignItems: 'center',
 })

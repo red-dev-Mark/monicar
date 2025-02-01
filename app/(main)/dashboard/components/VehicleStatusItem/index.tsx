@@ -9,17 +9,16 @@ interface VehicleStatusItemProps {
     children?: React.ReactNode
 }
 
+// TODO: location VehicleStatusItem 컴포넌트와 통합해보기
 const VehicleStatusItem = ({ total, current, color, children }: VehicleStatusItemProps) => {
     const percent = (current / total) * 100
 
     return (
         <div className={styles.container}>
-            <div className={styles.titleWrapper}>
-                <span className={styles.circle} style={{ background: `${color}` }} />
-                <h3 className={styles.title}>{children}</h3>
-            </div>
-
-            <p className={styles.count}>{current.toLocaleString()}</p>
+            <span className={styles.circle} style={{ background: color }} />
+            <p className={styles.title}>
+                {children} <span className={styles.count}>{`( ${current} )`}</span>
+            </p>
             <div className={styles.progressWrapper}>
                 <Progress color={color} radius='md' size='lg' value={percent} />
             </div>

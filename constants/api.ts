@@ -6,5 +6,5 @@ export interface UseDataRequest {
 }
 
 export const API_ENDPOINTS = {
-    LOG: '/api/v1/driving-log',
+    LOG: '/api/v1/log',
 } as const
