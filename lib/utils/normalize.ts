@@ -13,3 +13,5 @@ export const normalizeVehicleResponse = (data: VehicleInfoModel) => {
         },
     }
 }
+
+export const getNormalizedZoomLevel = (level: number) => (level % 2 === 0 ? level - 1 : level)

@@ -34,6 +34,7 @@ const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleCl
         // console.log(currentMapState)
         const getClusterInfo = async () => {
             await clusterService.getClusteringInfo(currentMapState)
+            // await clusterService.getClusteringDetailInfo(currentMapState)
         }
         getClusterInfo()
     }, [currentMapState])
