@@ -3,6 +3,7 @@
 import { memo } from 'react'
 import { Map as KakaoMap, ZoomControl } from 'react-kakao-maps-sdk'
 
+import { ZOOM_LEVEL } from '@/constants/map'
 import { useKakaoLoader } from '@/hooks/useKakaoLoader'
 import { LatLng } from '@/types/location'
 
@@ -35,6 +36,8 @@ const Map = memo(
                 ref={ref}
                 center={center}
                 level={zoom}
+                maxLevel={ZOOM_LEVEL.MAX}
+                minLevel={ZOOM_LEVEL.MIN}
                 style={{ width: '100%', height: '100%' }}
                 onCreate={handleCreate}
                 onZoomChanged={handleMapStatusChange}

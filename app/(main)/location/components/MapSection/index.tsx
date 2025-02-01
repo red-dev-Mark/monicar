@@ -1,12 +1,12 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CustomOverlayMap } from 'react-kakao-maps-sdk'
 
 import CustomMarker from '@/app/(main)/location/components/CustomMarker'
 import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
 import Map from '@/components/domain/map/Map'
-import { getCurrentMapStatus } from '@/lib/utils/map'
+import { useMapStatus } from '@/hooks/useCurrentMapStatus'
 import ClusteringData from '@/mock/clustering.json'
 import { LatLng } from '@/types/location'
 import { MapState } from '@/types/map'
@@ -24,14 +24,14 @@ const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleCl
     const [isMapLoaded, setIsMapLoaded] = useState(false)
     const mapRef = useRef<kakao.maps.Map>(null)
 
-    const handleZoomChanged = () => {
-        if (!isMapLoaded || !mapRef.current) return
+    const { currentMapState, updateMapStatus } = useMapStatus({
+        isMapLoaded,
+        map: mapRef.current,
+    })
 
-        const map = mapRef.current
-        const currentMapStatus = getCurrentMapStatus(map)
-
-        console.log(currentMapStatus)
-    }
+    useEffect(() => {
+        console.log(currentMapState)
+    }, [currentMapState])
 
     return (
         <Map
@@ -39,7 +39,7 @@ const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleCl
             center={mapState.center}
             zoom={mapState.level}
             onLoad={() => setIsMapLoaded(true)}
-            onMapStatusChanged={handleZoomChanged}
+            onMapStatusChanged={updateMapStatus}
         >
             {ClusteringData.result.map((loc, index) => {
                 return (
