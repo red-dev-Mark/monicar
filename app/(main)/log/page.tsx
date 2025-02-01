@@ -23,9 +23,9 @@ import { downloadExcel } from './utils/excel'
 const LogPage = () => {
     const router = useRouter()
     const [activePage, setActivePage] = useState(1)
-    const { logData, isLoading, error } = useLogData(activePage - 1)
-    const { modalMessage, isOpen, searchTerm, handleVehicleSearch, handleSearchChange, closeModal } =
-        useSearchSingleVehicle()
+    const [searchVehicleNumber, setSearchVehicleNumber] = useState<string>()
+    const { logData, isLoading, error } = useLogData(activePage - 1, searchVehicleNumber)
+    const { modalMessage, isOpen, searchTerm, handleSearchChange, closeModal } = useSearchSingleVehicle()
 
     const handleExcelButtonClick = () => {
         if (!logData?.content) return
@@ -34,6 +34,16 @@ const LogPage = () => {
 
     const handleItemClick = (id: number) => {
         router.push(`/log/${id}`)
+    }
+
+    const handleSearchVehicleNumber = () => {
+        if (!searchTerm) {
+            setSearchVehicleNumber(undefined)
+            return
+        }
+
+        setSearchVehicleNumber(searchTerm)
+        setActivePage(1)
     }
 
     if (isLoading) {
@@ -54,7 +64,7 @@ const LogPage = () => {
                             icon='/icons/search-icon.svg'
                             value={searchTerm}
                             onChange={handleSearchChange}
-                            onSubmit={handleVehicleSearch}
+                            onSubmit={handleSearchVehicleNumber}
                         />
                     }
                     primaryButton={<ExcelButton onClick={handleExcelButtonClick} />}
