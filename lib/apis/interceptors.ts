@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
+import { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
 import { API_URL } from '@/constants/api'
 import { httpClient } from '@/lib/apis/client'
