@@ -5,7 +5,7 @@ import Breadcrumb from '@/components/common/Breadcrumb'
 
 import * as styles from './styles.css'
 
-const NoticePage = async ({ params }: { params: { id: string } }) => {
+const NoticePage = async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id: noticeId } = await params
 
     return (
