@@ -1,21 +1,16 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { CustomOverlayMap } from 'react-kakao-maps-sdk'
 
 import CustomMarker from '@/app/(main)/location/components/CustomMarker'
 import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
 import Map from '@/components/domain/map/Map'
+import { getCurrentMapStatus } from '@/lib/utils/map'
 import ClusteringData from '@/mock/clustering.json'
 import { LatLng } from '@/types/location'
 import { MapState } from '@/types/map'
 import { VehicleInfoModel } from '@/types/vehicle'
-
-// export interface MapStatusModel {
-//     level: number
-//     swCoord: LatLng
-//     neCoord: LatLng
-// }
 
 interface MapSectionProps {
     mapState: MapState
@@ -29,31 +24,13 @@ const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleCl
     const [isMapLoaded, setIsMapLoaded] = useState(false)
     const mapRef = useRef<kakao.maps.Map>(null)
 
-    useEffect(() => {
-        const getInfo = () => {
-            if (!isMapLoaded || !mapRef.current) return
-            const map = mapRef.current
-
-            if (!map) return
-
-            // const level = map.getLevel()
-
-            // const bounds = map.getBounds()
-            // const swLat = bounds.getSouthWest()
-            // const swLng = bounds.getSouthWest().getLng()
-            // const neLat = bounds.getNorthEast().getLat()
-            // const neLng = bounds.getNorthEast().getLng()
-
-            // console.log(`level: ${level}`)
-            // console.log(`swLat: ${swLat}, swLng: ${swLng}, neLat: ${neLat}, neLng: ${neLng}`)
-        }
-        getInfo()
-    }, [isMapLoaded, mapRef])
-
-    // const handleZoomChanged = (level: number) => {
     const handleZoomChanged = () => {
-        const level = mapRef?.current?.getLevel()
-        console.log(level)
+        if (!isMapLoaded || !mapRef.current) return
+
+        const map = mapRef.current
+        const currentMapStatus = getCurrentMapStatus(map)
+
+        console.log(currentMapStatus)
     }
 
     return (
@@ -65,7 +42,6 @@ const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleCl
             onZoomChanged={handleZoomChanged}
         >
             {ClusteringData.result.map((loc, index) => {
-                // console.log(mapState.center, mapState.level)
                 return (
                     <CustomOverlayMap key={index} position={loc.coordinate}>
                         <CustomMarker count={loc.count} onClick={() => onClick(loc.coordinate, mapState.level - 1)} />

@@ -23,24 +23,7 @@ const Map = memo(
             onLoad?.(true)
         }
 
-        const handleZoomChanged = (map: kakao.maps.Map) => {
-            const level = map.getLevel()
-            const bounds = map.getBounds()
-            const swLat = bounds.getSouthWest().getLat()
-            const swLng = bounds.getSouthWest().getLng()
-            const neLat = bounds.getNorthEast().getLat()
-            const neLng = bounds.getNorthEast().getLng()
-
-            const swCoord = { swLat, swLng }
-            const neCoord = { neLat, neLng }
-            console.log(level, swCoord, neCoord)
-
-            // const currentMapStatus = {
-            //     level,
-            //     swCoord,
-            //     neCoord,
-            // }
-
+        const handleZoomChanged = () => {
             onZoomChanged?.()
         }
 
