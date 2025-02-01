@@ -11,6 +11,12 @@ import { LatLng } from '@/types/location'
 import { MapState } from '@/types/map'
 import { VehicleInfoModel } from '@/types/vehicle'
 
+// export interface MapStatusModel {
+//     level: number
+//     swCoord: LatLng
+//     neCoord: LatLng
+// }
+
 interface MapSectionProps {
     mapState: MapState
     vehicleInfo: VehicleInfoModel
@@ -21,7 +27,6 @@ interface MapSectionProps {
 
 const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleClick, onClick }: MapSectionProps) => {
     const [isMapLoaded, setIsMapLoaded] = useState(false)
-
     const mapRef = useRef<kakao.maps.Map>(null)
 
     useEffect(() => {
@@ -31,21 +36,23 @@ const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleCl
 
             if (!map) return
 
-            const level = map.getLevel()
+            // const level = map.getLevel()
 
-            const bounds = map.getBounds()
-            const swLat = bounds.getSouthWest()
-            const swLng = bounds.getSouthWest().getLng()
-            const neLat = bounds.getNorthEast().getLat()
-            const neLng = bounds.getNorthEast().getLng()
+            // const bounds = map.getBounds()
+            // const swLat = bounds.getSouthWest()
+            // const swLng = bounds.getSouthWest().getLng()
+            // const neLat = bounds.getNorthEast().getLat()
+            // const neLng = bounds.getNorthEast().getLng()
 
-            console.log(`level: ${level}`)
-            console.log(`swLat: ${swLat}, swLng: ${swLng}, neLat: ${neLat}, neLng: ${neLng}`)
+            // console.log(`level: ${level}`)
+            // console.log(`swLat: ${swLat}, swLng: ${swLng}, neLat: ${neLat}, neLng: ${neLng}`)
         }
         getInfo()
     }, [isMapLoaded, mapRef])
 
-    const handleZoomChanged = (level: number) => {
+    // const handleZoomChanged = (level: number) => {
+    const handleZoomChanged = () => {
+        const level = mapRef?.current?.getLevel()
         console.log(level)
     }
 
