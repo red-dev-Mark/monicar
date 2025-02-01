@@ -1,5 +1,7 @@
 'use client'
+import { Group, Pagination } from '@mantine/core'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 import Breadcrumb from '@/components/common/Breadcrumb'
 import ControlBar from '@/components/domain/vehicle/ControlBar'
@@ -13,7 +15,8 @@ import { downloadExcel } from './utils/excel'
 
 const LogPage = () => {
     const router = useRouter()
-    const { logData, isLoading, error } = useLogData()
+    const [activePage, setActivePage] = useState(1)
+    const { logData, isLoading, error } = useLogData(activePage - 1)
 
     const handleExcelButtonClick = () => {
         if (!logData?.content) return
@@ -41,7 +44,17 @@ const LogPage = () => {
                     <ListItem key={log.id} data={log} onClick={() => handleItemClick(log.id)} />
                 ))}
             </div>
-            {/* TODO 페이지네이션 추가 */}
+            <div className={styles.pagination}>
+                <Pagination.Root total={logData?.totalPages || 1} value={activePage} onChange={setActivePage}>
+                    <Group gap={5} justify='center' color='f6f6f6'>
+                        <Pagination.First />
+                        <Pagination.Previous />
+                        <Pagination.Items />
+                        <Pagination.Next />
+                        <Pagination.Last />
+                    </Group>
+                </Pagination.Root>
+            </div>
         </div>
     )
 }

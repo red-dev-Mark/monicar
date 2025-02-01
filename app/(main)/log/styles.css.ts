@@ -11,3 +11,10 @@ export const contents = style({
     flexDirection: 'column',
     marginTop: '20px',
 })
+
+export const pagination = style({
+    margin: '30px',
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+})
