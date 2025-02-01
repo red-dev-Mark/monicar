@@ -62,12 +62,22 @@ export const vehicleService = {
     postVehicleInfo: async (data: RegisterVehicleModel) => {
         const response = await httpClient.post(`/api/v1/vehicle/register`, data)
 
-        if (!response.data.result && response.data.errorCode === 1001) {
-            return {
-                isSuccess: false,
-                message: '해당 차종이 존재하지 않습니다.',
+        if (!response.data.isSuccess) {
+            if (response.data.errorCode === 1001) {
+                return {
+                    isSuccess: false,
+                    message: '해당 차종이 존재하지 않습니다.',
+                }
+            }
+            if (response.data.errorCode === 1002) {
+                return {
+                    isSuccess: false,
+                    message: '해당 차종이 존재하지 않습니다.',
+                }
             }
         }
+
+        console.log('post!!!!: ', response.data)
         return response.data.result
     },
 
