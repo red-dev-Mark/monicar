@@ -30,3 +30,22 @@ export const getMarkerColor = (count: number) => {
         inner: '#f41d4e80',
     }
 }
+
+export const getCurrentMapStatus = (map: kakao.maps.Map) => {
+    const level = map.getLevel()
+
+    const bounds = map.getBounds()
+    const swLat = bounds.getSouthWest().getLat()
+    const swLng = bounds.getSouthWest().getLng()
+    const neLat = bounds.getNorthEast().getLat()
+    const neLng = bounds.getNorthEast().getLng()
+
+    const swCoord = { swLat, swLng }
+    const neCoord = { neLat, neLng }
+
+    return {
+        level,
+        swCoord,
+        neCoord,
+    }
+}
