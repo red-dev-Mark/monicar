@@ -39,10 +39,8 @@ export const setupResponseInterceptor = (instance: AxiosInstance) => {
                 !originalRequest.isRequestAlready
             ) {
                 const logout = useAuthStore.getState().logout
-                // TODO:  isRequestAlready 동작 여부 확인 (무한 요청이 이루어지는지 등)
                 originalRequest.isRequestAlready = true
 
-                console.log(error.response?.data?.errorCode)
                 try {
                     switch (errorCode) {
                         case 9995:
