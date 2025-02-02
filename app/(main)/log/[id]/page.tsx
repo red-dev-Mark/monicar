@@ -4,7 +4,6 @@ import { Loader } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
-import { useState } from 'react'
 
 import Breadcrumb from '@/components/common/Breadcrumb'
 import ExcelButton from '@/components/common/Button/ExcelButton'
@@ -15,38 +14,37 @@ import ErrorMessage from '@/components/common/ErrorMessage'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import { API_ENDPOINTS } from '@/constants/api'
-import { useModal } from '@/hooks/useModal'
 import { vehicleService } from '@/lib/apis/vehicle'
 import { CalendarIcon } from '@/public/icons'
 
 import '@mantine/dates/styles.css'
 import 'dayjs/locale/ko'
 import { useDetailData } from './hooks/useDetailData'
+import { useDetailModal } from './hooks/useDetailModal'
+import { useFilteredData } from './hooks/useFilteredData'
 import * as styles from './styles.css'
+import { DrivingRecord } from './types'
 import { downloadExcel } from './utils/excel'
 
 const DetailPage = () => {
-    const [value, setValue] = useState<[Date | null, Date | null]>([null, null])
-
     const { id } = useParams()
     const router = useRouter()
     const { logData, isLoading, error } = useDetailData({ url: `${API_ENDPOINTS.LOG}/${id}` })
+    const { filteredData, dateRange, handleDateRangeChange } = useFilteredData(logData)
     const {
-        isOpen: isConfirmModalOpen,
-        modalMessage: confirmModalMessage,
-        closeModal: closeConfirmModal,
-        showMessage: showConfirmMessage,
-    } = useModal()
-    const {
-        isOpen: isAlertModalOpen,
-        modalMessage: alertModalMessage,
-        closeModal: closeAlertModal,
-        showMessage: showAlertMessage,
-    } = useModal()
+        isConfirmModalOpen,
+        confirmModalMessage,
+        closeConfirmModal,
+        showConfirmMessage,
+        isAlertModalOpen,
+        alertModalMessage,
+        closeAlertModal,
+        showAlertMessage,
+    } = useDetailModal()
 
     const handleExcelButtonClick = async () => {
         try {
-            await downloadExcel(logData)
+            await downloadExcel(filteredData || logData)
         } catch (error) {
             console.error('엑셀 다운로드 에러', error)
             showAlertMessage('엑셀 다운로드에 실패했습니다')
@@ -57,12 +55,7 @@ const DetailPage = () => {
         showConfirmMessage('선택한 차량을 삭제하시겠습니까?')
     }
 
-    const confirmDeleteVehicle = () => {
-        if (!id) return
-        deleteVehicle(Number(id))
-    }
-
-    const deleteVehicle = async (id: number) => {
+    const handleDeleteVehicle = async (id: number) => {
         try {
             await vehicleService.deleteVehicle(id)
             router.push('/log')
@@ -70,6 +63,11 @@ const DetailPage = () => {
             console.error('차량 삭제 실패', error)
             showAlertMessage('차량 삭제에 실패했습니다')
         }
+    }
+
+    const confirmDeleteVehicle = () => {
+        if (!id) return
+        handleDeleteVehicle(Number(id))
     }
 
     if (isLoading) {
@@ -82,6 +80,8 @@ const DetailPage = () => {
     if (error) {
         return <ErrorMessage />
     }
+
+    const displayData = filteredData || logData
 
     return (
         <div className={styles.container}>
@@ -101,11 +101,11 @@ const DetailPage = () => {
                         size='lg'
                         radius='xl'
                         placeholder='날짜를 검색하세요.'
-                        value={value}
-                        onChange={setValue}
+                        value={dateRange}
+                        onChange={handleDateRangeChange}
                         styles={{
                             input: {
-                                width: '270px',
+                                width: '300px',
                                 height: '48px',
                                 fontSize: '16px',
                                 color: '#222222',
@@ -164,7 +164,7 @@ const DetailPage = () => {
                                 과세기간
                             </th>
                             <td rowSpan={3} className={styles.tableCell}>
-                                {logData?.taxStartPeriod} - {logData?.taxEndPeriod}
+                                {displayData?.taxStartPeriod} - {displayData?.taxEndPeriod}
                             </td>
                             <th scope='row' rowSpan={2} className={styles.tableHeader}>
                                 업무승용차 운행기록부
@@ -172,13 +172,13 @@ const DetailPage = () => {
                             <th scope='row' className={styles.tableHeader}>
                                 상호명
                             </th>
-                            <td className={styles.tableCell}>{logData?.businessInfo.businessName}</td>
+                            <td className={styles.tableCell}>{displayData?.businessInfo.businessName}</td>
                         </tr>
                         <tr>
                             <th scope='row' className={styles.tableHeader}>
                                 사업자 등록번호
                             </th>
-                            <td className={styles.tableCell}>{logData?.businessInfo.businessRegistrationNumber}</td>
+                            <td className={styles.tableCell}>{displayData?.businessInfo.businessRegistrationNumber}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -219,7 +219,7 @@ const DetailPage = () => {
                                 비고
                             </th>
                         </tr>
-                        {logData?.records.map((data) => {
+                        {displayData?.records.map((data: DrivingRecord) => {
                             const isCommutePurpose = data.drivingInfo.businessDrivingDetails.usePurpose === 'COMMUTE'
                             const drivingDistance = data.drivingInfo.businessDrivingDetails.drivingDistance
 
@@ -256,17 +256,19 @@ const DetailPage = () => {
                             <th scope='row' className={styles.tableHeader}>
                                 과세기간 총 주행 거리
                             </th>
-                            <td className={styles.tableCell}>{logData?.taxPeriodDistance.toLocaleString('ko-KR')}km</td>
+                            <td className={styles.tableCell}>
+                                {displayData?.taxPeriodDistance.toLocaleString('ko-KR')}km
+                            </td>
                             <th scope='row' className={styles.tableHeader}>
                                 과세기간 업무용 사용 거리
                             </th>
                             <td className={styles.tableCell}>
-                                {logData?.taxPeriodBusinessDistance.toLocaleString('ko-KR')}km
+                                {displayData?.taxPeriodBusinessDistance.toLocaleString('ko-KR')}km
                             </td>
                             <th scope='row' className={styles.tableHeader}>
                                 업무사용비율
                             </th>
-                            <td className={styles.tableCell}>{logData?.businessUseRatio}%</td>
+                            <td className={styles.tableCell}>{displayData?.businessUseRatio}%</td>
                         </tr>
                     </tbody>
                 </table>

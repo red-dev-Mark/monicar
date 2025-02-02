@@ -26,7 +26,7 @@ interface User {
     name: string
 }
 
-interface Record {
+export interface DrivingRecord {
     id: number
     usageDate: string
     user: User
@@ -41,5 +41,5 @@ export interface DetailResponse {
     taxPeriodBusinessDistance: number
     businessUseRatio: number
     vehicleType: VehicleType
-    records: Record[]
+    records: DrivingRecord[]
 }
