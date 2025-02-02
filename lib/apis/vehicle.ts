@@ -36,7 +36,6 @@ export const vehicleService = {
 
         return response.data.result
     },
-
     // getVehicleRoutesData: async () => {
     // getVehicleRoutesData: async (vehicleId: string, startDate: DateTime, endDate: DateTime, interval = 60) => {
     fetchVehicleRoutesData: async () => {

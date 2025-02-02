@@ -62,6 +62,7 @@ export const useSearchSingleVehicle = () => {
         isOpen,
         handleVehicleSearch,
         handleSearchChange,
+        updateMapLocation,
         closeModal,
     }
 }
