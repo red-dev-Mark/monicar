@@ -11,7 +11,7 @@ import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import { ZOOM_LEVEL } from '@/constants/map'
 import { useSearchVehicle } from '@/hooks/useSearchVehicle'
-import { vehicleService } from '@/lib/apis'
+import { routeService } from '@/lib/apis/route'
 import { formatISODateToKorean } from '@/lib/utils/date'
 import { validateDateSelection } from '@/lib/utils/validation'
 import { LatLng } from '@/types/location'
@@ -59,7 +59,7 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange }: RouteSearchPan
             return
         }
 
-        const routesData = await vehicleService.fetchVehicleRoutesData()
+        const routesData = await routeService.fetchVehicleRoutesData()
         // const routesData = await vehicleService.fetchVehicleRoutesData(searchedVehicle.vehicleId, startDate, endDate)
         const paths = routesData.result.routes.map((route) => ({
             lat: route.lat,

@@ -1,6 +1,6 @@
 'use client'
 
-// import { createPortal } from 'react-dom'
+import { createPortal } from 'react-dom'
 
 import { AlertIcon } from '@/public/icons'
 
@@ -24,8 +24,8 @@ const Modal = ({
     variant,
     onClose,
 }: ModalProps) => {
-    // const modalRoot = document.getElementById('modal-root')
-    // if (!isOpen || !modalRoot) return null
+    const modalRoot = document.getElementById('modal-root')
+    if (!isOpen || !modalRoot) return null
     if (!isOpen) return null
 
     const handleOverlayClick = () => {
@@ -34,8 +34,8 @@ const Modal = ({
         }
     }
 
-    // return createPortal(
-    return (
+    return createPortal(
+        // return (
         <>
             <div
                 className={`${styles.overlay} ${variant.variant === 'alert' ? styles.clickableOverlay : ''}`}
@@ -60,8 +60,8 @@ const Modal = ({
                     )}
                 </div>
             </div>
-        </>
-        // modalRoot,
+        </>,
+        modalRoot,
     )
 }
 

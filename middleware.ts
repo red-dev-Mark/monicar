@@ -25,9 +25,9 @@ export const middleware = async (request: NextRequest) => {
         }
     }
 
-    if (pathname === '/signin' && accessToken) {
-        return NextResponse.redirect(new URL('/dashboard', request.url))
-    }
+    // if (pathname === '/signin' && accessToken) {
+    //     return NextResponse.redirect(new URL('/dashboard', request.url))
+    // }
 
     return NextResponse.next()
 }

@@ -2,7 +2,6 @@ import { RegisterVehicleModel, VehicleTypeModel } from '@/app/(main)/log/registe
 import { httpClient } from '@/lib/apis/client'
 import { normalizeVehicleResponse } from '@/lib/utils/normalize'
 import { removeSpaces } from '@/lib/utils/string'
-import mockRoutesData from '@/mock/vehicle_route_data.json'
 
 export const vehicleService = {
     // 개별차량 검색 조회
@@ -22,44 +21,35 @@ export const vehicleService = {
         const normalizeResult = normalizeVehicleResponse(response.data.result)
         return { isValid: true, value: normalizeResult }
     },
-
     // 개별차량 상세정보 조회
     getVehicleDetailInfo: async (vehicleId: string) => {
         const response = await httpClient.get(`api/v1/vehicle/${vehicleId}`)
 
         return response.data.result
     },
-
     // 시동 여부에 따른 차량 현황 조회
     getVehicleStatus: async () => {
         const response = await httpClient.get(`api/v1/vehicle/status`)
 
         return response.data.result
     },
-    // getVehicleRoutesData: async () => {
-    // getVehicleRoutesData: async (vehicleId: string, startDate: DateTime, endDate: DateTime, interval = 60) => {
-    fetchVehicleRoutesData: async () => {
-        // fetchVehicleRoutesData: async (vehicleId: string, startDate: DateTime, endDate: DateTime, interval = 60) => {
-        // const formattedStartDate = formatToISODate(startDate)
-        // const formattedEndDate = formatToISODate(endDate)
-        // const response = await apiClient.get(
-        //     `${API_URL}/api/vi/vehicle/${vehicleId}/routes?startTime=${formattedStartDate}&endTime=${formattedEndDate}&interval=${interval}`,
-        // )
-        // console.log(formattedStartDate, formattedEndDate, vehicleId, interval)
+    getVehicleOperationPeriod: async (vehicleNumber: string) => {
+        const response = await httpClient.get(`api/v1/vehicle`, {
+            params: {
+                'vehicle-number': removeSpaces(vehicleNumber),
+            },
+        })
 
-        // return response.result
-
-        return mockRoutesData
+        console.log(response)
     },
-
     getVehicleType: async (): Promise<VehicleTypeModel[]> => {
-        const response = await httpClient.get(`/api/v1/log/vehicle-type`)
+        const response = await httpClient.get(`api/v1/log/vehicle-type`)
 
         return response.data.result
     },
 
     postVehicleInfo: async (data: RegisterVehicleModel) => {
-        const response = await httpClient.post(`/api/v1/vehicle/register`, data)
+        const response = await httpClient.post(`api/v1/vehicle/register`, data)
 
         if (!response.data.isSuccess) {
             if (response.data.errorCode === 1001) {
@@ -76,12 +66,11 @@ export const vehicleService = {
             }
         }
 
-        console.log('post!!!!: ', response.data)
         return response.data.result
     },
 
     deleteVehicle: async (id: number) => {
-        const response = await httpClient.delete(`/api/v1/vehicle/${id}`)
+        const response = await httpClient.delete(`api/v1/vehicle/${id}`)
 
         if (!response.data && response.data.errorCode === 1006) {
             return {
