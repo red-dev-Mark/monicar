@@ -31,19 +31,30 @@ const DetailPage = () => {
     const { id } = useParams()
     const router = useRouter()
     const { logData, isLoading, error } = useDetailData({ url: `${API_ENDPOINTS.LOG}/${id}` })
-    const { isOpen, modalMessage, closeModal, showMessage } = useModal()
+    const {
+        isOpen: isConfirmModalOpen,
+        modalMessage: confirmModalMessage,
+        closeModal: closeConfirmModal,
+        showMessage: showConfirmMessage,
+    } = useModal()
+    const {
+        isOpen: isAlertModalOpen,
+        modalMessage: alertModalMessage,
+        closeModal: closeAlertModal,
+        showMessage: showAlertMessage,
+    } = useModal()
 
     const handleExcelButtonClick = async () => {
         try {
             await downloadExcel(logData)
         } catch (error) {
             console.error('엑셀 다운로드 에러', error)
-            showMessage('엑셀 다운로드에 실패했습니다')
+            showAlertMessage('엑셀 다운로드에 실패했습니다')
         }
     }
 
     const handleDeleteButtonClick = () => {
-        showMessage('선택한 차량을 삭제하시겠습니까?')
+        showConfirmMessage('선택한 차량을 삭제하시겠습니까?')
     }
 
     const confirmDeleteVehicle = () => {
@@ -57,7 +68,7 @@ const DetailPage = () => {
             router.push('/log')
         } catch (error) {
             console.error('차량 삭제 실패', error)
-            showMessage('차량 삭제에 실패했습니다.')
+            showAlertMessage('차량 삭제에 실패했습니다')
         }
     }
 
@@ -114,11 +125,18 @@ const DetailPage = () => {
             />
 
             <Modal
-                isOpen={isOpen}
-                message={modalMessage as ModalMessageType}
+                isOpen={isConfirmModalOpen}
+                message={confirmModalMessage as ModalMessageType}
                 variant={{ variant: 'confirm', confirmButton: '확인', cancelButton: '취소' }}
-                onClose={closeModal}
+                onClose={closeConfirmModal}
                 onConfirm={confirmDeleteVehicle}
+            />
+
+            <Modal
+                isOpen={isAlertModalOpen}
+                message={alertModalMessage as ModalMessageType}
+                variant={{ variant: 'alert', confirmButton: '확인' }}
+                onClose={closeAlertModal}
             />
 
             <div className={styles.tableWrapper}>
