@@ -28,4 +28,9 @@ export const authService = {
 
         return { isSuccess: true }
     },
+    postSignOut: async () => {
+        const response = await httpClient.post(`api/v1/logout`)
+
+        console.log(response)
+    },
 }

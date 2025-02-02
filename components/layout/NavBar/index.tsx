@@ -1,12 +1,19 @@
+'use client'
+
 import Image from 'next/image'
 
 import Switch from '@/components/common/Switch'
 import NavItem from '@/components/layout/NavBar/NavItem'
 import { navigationItems } from '@/constants/navigation'
+import { authService } from '@/lib/apis/auth'
 
 import * as styles from './styles.css'
 
 const NavBar = () => {
+    const handleLogoutButtonClick = async () => {
+        await authService.postSignOut()
+    }
+
     return (
         <aside className={styles.navbar}>
             <nav className={styles.navContainer}>
@@ -27,7 +34,10 @@ const NavBar = () => {
             </nav>
 
             <footer className={styles.sideFooter}>
-                <NavItem label='로그아웃' path='/logout' iconSrc='/icons/sign-out-icon.svg' />
+                <button className={styles.logoutButton} onClick={handleLogoutButtonClick}>
+                    <Image src='/icons/sign-out-icon.svg' alt={`로그아웃 아이콘`} width={20} height={20} />
+                    <span>로그아웃</span>
+                </button>
                 <div className={styles.themeControl}>
                     <div className={styles.themeInfo}>
                         <Image src='/icons/sun-icon.svg' alt='아이콘' width={20} height={20} />
