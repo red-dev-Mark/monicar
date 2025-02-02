@@ -8,7 +8,6 @@ import Breadcrumb from '@/components/common/Breadcrumb'
 import ExcelButton from '@/components/common/Button/ExcelButton'
 import LinkButton from '@/components/common/Button/LinkButton'
 import ControlLayout from '@/components/common/ControlLayout'
-import ErrorMessage from '@/components/common/ErrorMessage'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
@@ -119,7 +118,6 @@ const LogPage = () => {
                     </Group>
                 </Pagination.Root>
             </div>
-            <ErrorMessage></ErrorMessage>
         </div>
     )
 }
