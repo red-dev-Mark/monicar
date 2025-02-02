@@ -29,9 +29,13 @@ const LogPage = () => {
     const { isOpen, modalMessage, closeModal, showMessage } = useModal()
     const { logData, isLoading, error } = useLogData(activePage - 1, searchVehicleNumber)
 
-    const handleExcelButtonClick = () => {
-        if (!logData?.content) return
-        downloadExcel(logData.content)
+    const handleExcelButtonClick = async () => {
+        try {
+            await downloadExcel()
+        } catch (error) {
+            console.error('엑셀 다운로드 에러', error)
+            showMessage('엑셀 다운로드에 실패했습니다')
+        }
     }
 
     const handleItemClick = (id: number) => {
