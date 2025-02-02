@@ -5,14 +5,12 @@ import Image from 'next/image'
 import Switch from '@/components/common/Switch'
 import NavItem from '@/components/layout/NavBar/NavItem'
 import { navigationItems } from '@/constants/navigation'
-import { authService } from '@/lib/apis/auth'
+import { useAuth } from '@/hooks/useAuth'
 
 import * as styles from './styles.css'
 
 const NavBar = () => {
-    const handleLogoutButtonClick = async () => {
-        await authService.postSignOut()
-    }
+    const { logout } = useAuth()
 
     return (
         <aside className={styles.navbar}>
@@ -34,7 +32,7 @@ const NavBar = () => {
             </nav>
 
             <footer className={styles.sideFooter}>
-                <button className={styles.logoutButton} onClick={handleLogoutButtonClick}>
+                <button className={styles.logoutButton} onClick={logout}>
                     <Image src='/icons/sign-out-icon.svg' alt={`로그아웃 아이콘`} width={20} height={20} />
                     <span>로그아웃</span>
                 </button>

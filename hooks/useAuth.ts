@@ -16,8 +16,17 @@ export const useAuth = () => {
         }
     }
 
-    const handleLogout = () => {
-        logout()
+    const handleLogout = async () => {
+        setAuthLoading(true)
+        try {
+            await authService.postSignOut()
+            logout()
+        } catch (error) {
+            setAuthError(error instanceof Error ? error.message : '로그인에 실패하였습니다')
+        } finally {
+            window.location.href = '/signin'
+            setAuthLoading(false)
+        }
     }
 
     return {
