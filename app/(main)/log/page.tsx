@@ -1,5 +1,5 @@
 'use client'
-import { Group, Pagination } from '@mantine/core'
+import { Group, Loader, Pagination } from '@mantine/core'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -8,6 +8,7 @@ import Breadcrumb from '@/components/common/Breadcrumb'
 import ExcelButton from '@/components/common/Button/ExcelButton'
 import LinkButton from '@/components/common/Button/LinkButton'
 import ControlLayout from '@/components/common/ControlLayout'
+import ErrorMessage from '@/components/common/ErrorMessage'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
@@ -64,10 +65,14 @@ const LogPage = () => {
     }
 
     if (isLoading) {
-        return <div> 로딩 중...</div>
+        return (
+            <div className={styles.loader}>
+                <Loader color='pink' />
+            </div>
+        )
     }
     if (error) {
-        return <div>Error: {error}</div>
+        return <ErrorMessage />
     }
 
     return (

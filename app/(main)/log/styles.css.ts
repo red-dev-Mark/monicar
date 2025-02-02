@@ -38,3 +38,10 @@ export const pagination = style({
     justifyContent: 'center',
     display: 'flex',
 })
+
+export const loader = style({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+})
