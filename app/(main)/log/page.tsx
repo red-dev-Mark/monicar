@@ -13,7 +13,8 @@ import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import ListHeader from '@/components/domain/vehicle/ListHeader'
 import { LOG_TITLES } from '@/constants/listHeader'
-import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
+import { useModal } from '@/hooks/useModal'
+import { validateSearchTerm } from '@/lib/utils/validation'
 
 import ListItem from './components/ListItem/index'
 import { useLogData } from './hooks/useLogData'
@@ -24,8 +25,9 @@ const LogPage = () => {
     const router = useRouter()
     const [activePage, setActivePage] = useState(1)
     const [searchVehicleNumber, setSearchVehicleNumber] = useState<string>()
+    const [searchTerm, setSearchTerm] = useState('')
+    const { isOpen, modalMessage, closeModal, showMessage } = useModal()
     const { logData, isLoading, error } = useLogData(activePage - 1, searchVehicleNumber)
-    const { modalMessage, isOpen, searchTerm, handleSearchChange, closeModal } = useSearchSingleVehicle()
 
     const handleExcelButtonClick = () => {
         if (!logData?.content) return
@@ -36,13 +38,24 @@ const LogPage = () => {
         router.push(`/log/${id}`)
     }
 
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(event.target.value)
+    }
+
     const handleSearchVehicleNumber = () => {
         if (!searchTerm) {
             setSearchVehicleNumber(undefined)
             return
         }
 
-        setSearchVehicleNumber(searchTerm)
+        const validation = validateSearchTerm(searchTerm)
+
+        if (!validation.isValid) {
+            showMessage(validation.message!)
+            return
+        }
+
+        setSearchVehicleNumber(validation.value)
         setActivePage(1)
     }
 
