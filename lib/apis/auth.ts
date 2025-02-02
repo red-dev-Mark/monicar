@@ -32,4 +32,10 @@ export const authService = {
 
         console.log(response)
     },
+    getUserInfo: async () => {
+        const response = await httpClient.get(`api/v1/me`)
+
+        const { nickname, email, departmentName, companyName } = response.data.result
+        return { nickname, email, departmentName, companyName }
+    },
 }

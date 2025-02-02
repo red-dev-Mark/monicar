@@ -1,5 +1,5 @@
 export interface User {
-    useId: string
+    email: string
     nickname?: string
     companyName: string
     departmentName: string

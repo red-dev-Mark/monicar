@@ -9,10 +9,10 @@ import { RoundButton } from '@/components/common/Button/RoundButton'
 import SignInInput from '@/components/common/Input/SignInInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
+import { useAuth } from '@/hooks/useAuth'
 import { useModal } from '@/hooks/useModal'
-import { authService } from '@/lib/apis/auth'
 import { validateEmail, validatePassword } from '@/lib/utils/validation'
-// import { useAuthStore } from '@/stores/useAuthStore'
+import { useAuthStore } from '@/stores/useAuthStore'
 
 import * as styles from './styles.css'
 
@@ -26,10 +26,11 @@ const SignInPage = () => {
         email: '',
         password: '',
     })
-    const [isLoading, setIsLoading] = useState(false)
+    // const [isLoading, setIsLoading] = useState(false)
 
-    // const login = useAuthStore((state) => state.login)
+    const { login } = useAuth()
     const { isOpen, modalMessage, closeModal, showMessage } = useModal()
+    const { isAuthLoading, authError } = useAuthStore()
 
     const router = useRouter()
 
@@ -54,11 +55,10 @@ const SignInPage = () => {
         const validate = validateFormData(formData)
         if (!validate.isValid) return
 
-        setIsLoading(true)
-        const response = await authService.postSignIn(formData.email, formData.password)
+        await login(formData.email, formData.password)
 
-        if (!response.isSuccess) {
-            switch (response.error) {
+        if (authError) {
+            switch (authError) {
                 case 'INVALID_CREDENTIALS':
                     showMessage('이메일 또는 비밀번호가 일치하지 않습니다')
                     break
@@ -69,7 +69,6 @@ const SignInPage = () => {
                     showMessage('서비스 이용에 불편을 드려 죄송합니다\n잠시 후에 다시 시도해주세요')
                     break
             }
-            setIsLoading(false)
             return
         }
 
@@ -116,9 +115,9 @@ const SignInPage = () => {
                             color='secondary'
                             className={styles.resetButton}
                             onClick={handleSubmit}
-                            disabled={isLoading}
+                            disabled={isAuthLoading}
                         >
-                            {isLoading ? (
+                            {isAuthLoading ? (
                                 <ColorRing
                                     visible={true}
                                     height='40'
