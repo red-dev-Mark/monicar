@@ -12,7 +12,10 @@ import LinkButton from '@/components/common/Button/LinkButton'
 import { RoundButton } from '@/components/common/Button/RoundButton'
 import ControlLayout from '@/components/common/ControlLayout'
 import ErrorMessage from '@/components/common/ErrorMessage'
+import Modal from '@/components/common/Modal'
+import { ModalMessageType } from '@/components/common/Modal/types'
 import { API_ENDPOINTS } from '@/constants/api'
+import { useModal } from '@/hooks/useModal'
 import { vehicleService } from '@/lib/apis/vehicle'
 import { CalendarIcon } from '@/public/icons'
 
@@ -20,6 +23,7 @@ import '@mantine/dates/styles.css'
 import 'dayjs/locale/ko'
 import { useDetailData } from './hooks/useDetailData'
 import * as styles from './styles.css'
+import { downloadExcel } from './utils/excel'
 
 const DetailPage = () => {
     const [value, setValue] = useState<[Date | null, Date | null]>([null, null])
@@ -27,6 +31,20 @@ const DetailPage = () => {
     const { id } = useParams()
     const router = useRouter()
     const { logData, isLoading, error } = useDetailData({ url: `${API_ENDPOINTS.LOG}/${id}` })
+    const { isOpen, modalMessage, closeModal, showMessage } = useModal()
+
+    const handleExcelButtonClick = async () => {
+        downloadExcel(logData)
+    }
+
+    const handleDeleteButtonClick = () => {
+        showMessage('선택한 차량을 삭제하시겠습니까?')
+    }
+
+    const confirmDeleteVehicle = () => {
+        if (!id) return
+        deleteVehicle(Number(id))
+    }
 
     const deleteVehicle = async (id: number) => {
         try {
@@ -34,12 +52,8 @@ const DetailPage = () => {
             router.push('/log')
         } catch (error) {
             console.error('차량 삭제 실패', error)
+            showMessage('차량 삭제에 실패했습니다.')
         }
-    }
-
-    const handleDeleteButtonClick = () => {
-        if (!id) return
-        deleteVehicle(Number(id))
     }
 
     if (isLoading) {
@@ -83,7 +97,7 @@ const DetailPage = () => {
                         }}
                     />
                 }
-                primaryButton={<ExcelButton />}
+                primaryButton={<ExcelButton onClick={handleExcelButtonClick} />}
                 secondaryButton={
                     <RoundButton color='primary' size={'small'} onClick={handleDeleteButtonClick}>
                         <div className={styles.button}>
@@ -92,6 +106,14 @@ const DetailPage = () => {
                         </div>
                     </RoundButton>
                 }
+            />
+
+            <Modal
+                isOpen={isOpen}
+                message={modalMessage as ModalMessageType}
+                variant={{ variant: 'confirm', confirmButton: '확인', cancelButton: '취소' }}
+                onClose={closeModal}
+                onConfirm={confirmDeleteVehicle}
             />
 
             <div className={styles.tableWrapper}>
@@ -183,14 +205,20 @@ const DetailPage = () => {
                                     <td className={styles.tableCell}>{data.usageDate}</td>
                                     <td className={styles.tableCell}>{data.user.departmentName}</td>
                                     <td className={styles.tableCell}>{data.user.name}</td>
-                                    <td className={styles.tableCell}>{data.drivingInfo.drivingBefore}km</td>
-                                    <td className={styles.tableCell}>{data.drivingInfo.drivingAfter}km</td>
-                                    <td className={styles.tableCell}>{data.drivingInfo.totalDriving}km</td>
                                     <td className={styles.tableCell}>
-                                        {isCommutePurpose ? drivingDistance + 'km' : '0km'}
+                                        {data.drivingInfo.drivingBefore.toLocaleString('ko-KR')}km
                                     </td>
                                     <td className={styles.tableCell}>
-                                        {!isCommutePurpose ? drivingDistance + 'km' : '0km'}
+                                        {data.drivingInfo.drivingAfter.toLocaleString('ko-KR')}km
+                                    </td>
+                                    <td className={styles.tableCell}>
+                                        {data.drivingInfo.totalDriving.toLocaleString('ko-KR')}km
+                                    </td>
+                                    <td className={styles.tableCell}>
+                                        {isCommutePurpose ? drivingDistance.toLocaleString('ko-KR') + 'km' : '0km'}
+                                    </td>
+                                    <td className={styles.tableCell}>
+                                        {!isCommutePurpose ? drivingDistance.toLocaleString('ko-KR') + 'km' : '0km'}
                                     </td>
                                     <td className={styles.tableCell}>{data.drivingInfo.notes}</td>
                                 </tr>
