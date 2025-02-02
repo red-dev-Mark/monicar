@@ -5,7 +5,7 @@ import { vars } from '@/styles/theme.css'
 export const container = style({
     height: '100vh',
     padding: '40px 44px',
-    overflowY: 'auto',
+    overflow: 'auto',
 })
 
 export const title = style({

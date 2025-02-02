@@ -4,13 +4,13 @@ import { Select } from '@mantine/core'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import VehicleRegisterForm from '@/app/(main)/log/components/VehicleRegisterForm'
 import Breadcrumb from '@/components/common/Breadcrumb'
 import SquareButton from '@/components/common/Button/SquareButton'
 import BaseInput from '@/components/common/Input/BaseInput'
 import SearchInput from '@/components/common/Input/SearchInput'
 import { vehicleService } from '@/lib/apis/vehicle'
 
+import VehicleRegisterForm from './components/VehicleRegisterForm'
 import * as styles from './styles.css'
 import { VehicleTypeModel } from './types'
 
