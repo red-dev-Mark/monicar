@@ -6,9 +6,11 @@ import { CustomOverlayMap } from 'react-kakao-maps-sdk'
 import CustomMarker from '@/app/(main)/location/components/CustomMarker'
 import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
 import Map from '@/components/domain/map/Map'
-import ClusteringData from '@/mock/clustering.json'
+import { useMapStatus } from '@/hooks/useCurrentMapStatus'
+import { clusterService } from '@/lib/apis/cluster'
+// import ClusteringData from '@/mock/clustering.json'
 import { LatLng } from '@/types/location'
-import { MapState } from '@/types/map'
+import { ClusterPoint, MapState } from '@/types/map'
 import { VehicleInfoModel } from '@/types/vehicle'
 
 interface MapSectionProps {
@@ -20,34 +22,33 @@ interface MapSectionProps {
 }
 
 const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleClick, onClick }: MapSectionProps) => {
+    const [clusterInfo, setClusterInfo] = useState<ClusterPoint[]>([])
     const [isMapLoaded, setIsMapLoaded] = useState(false)
-
     const mapRef = useRef<kakao.maps.Map>(null)
 
+    const { currentMapState, updateMapStatus } = useMapStatus(mapRef.current)
+
     useEffect(() => {
-        const getInfo = () => {
-            if (!isMapLoaded || !mapRef.current) return
-            const map = mapRef.current
+        if (!isMapLoaded) return
 
-            if (!map) return
+        updateMapStatus()
+    }, [isMapLoaded])
 
-            const level = map.getLevel()
+    useEffect(() => {
+        if (!isMapLoaded || !currentMapState) return
+        const getClusterInfo = async () => {
+            const clusterInfo: ClusterPoint[] = await clusterService.getClusterInfo(currentMapState)
 
-            const bounds = map.getBounds()
-            const swLat = bounds.getSouthWest()
-            const swLng = bounds.getSouthWest().getLng()
-            const neLat = bounds.getNorthEast().getLat()
-            const neLng = bounds.getNorthEast().getLng()
+            if (!clusterInfo) return
 
-            console.log(`level: ${level}`)
-            console.log(`swLat: ${swLat}, swLng: ${swLng}, neLat: ${neLat}, neLng: ${neLng}`)
+            setClusterInfo(clusterInfo)
+            // await clusterService.getClusterDetailInfo(currentMapState)
         }
-        getInfo()
-    }, [isMapLoaded, mapRef])
 
-    const handleZoomChanged = (level: number) => {
-        console.log(level)
-    }
+        getClusterInfo()
+    }, [isMapLoaded, currentMapState])
+
+    console.log(clusterInfo)
 
     return (
         <Map
@@ -55,13 +56,25 @@ const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleCl
             center={mapState.center}
             zoom={mapState.level}
             onLoad={() => setIsMapLoaded(true)}
-            onZoomChanged={handleZoomChanged}
+            onMapStatusChanged={updateMapStatus}
         >
-            {ClusteringData.result.map((loc, index) => {
-                // console.log(mapState.center, mapState.level)
+            {/* {ClusteringData.result.map((loc, index) => {
                 return (
                     <CustomOverlayMap key={index} position={loc.coordinate}>
                         <CustomMarker count={loc.count} onClick={() => onClick(loc.coordinate, mapState.level - 1)} />
+                    </CustomOverlayMap>
+                )
+            })} */}
+            {clusterInfo.map((point) => {
+                return (
+                    <CustomOverlayMap
+                        key={`${point.coordinate.lat}-${point.coordinate.lat}`}
+                        position={point.coordinate}
+                    >
+                        <CustomMarker
+                            count={point.count}
+                            onClick={() => onClick(point.coordinate, mapState.level - 1)}
+                        />
                     </CustomOverlayMap>
                 )
             })}
