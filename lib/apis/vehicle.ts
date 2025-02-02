@@ -4,14 +4,6 @@ import { normalizeVehicleResponse } from '@/lib/utils/normalize'
 import { removeSpaces } from '@/lib/utils/string'
 import mockRoutesData from '@/mock/vehicle_route_data.json'
 
-// interface ClusteringModel {
-//     level: number
-//     neLat: number
-//     neLng: number
-//     swLat: number
-//     swLng: number
-// }
-
 export const vehicleService = {
     // 개별차량 검색 조회
     getVehicleInfo: async (vehicleNumber: string) => {
@@ -44,29 +36,6 @@ export const vehicleService = {
 
         return response.data.result
     },
-    // 지도 뷰포트 클러스터링 조회
-    getClusteringInfo: async () => {
-        // getClusteringInfo: async ({ level, neLat, neLng, swLat, swLng }: ClusteringModel) => {
-        const response = await httpClient.get(`api/v1/vehicle/cluster`, {
-            // params: {
-            //     level,
-            //     neLat,
-            //     neLng,
-            //     swLat,
-            //     swLng,
-            // },
-            params: {
-                level: 12,
-                neLat: 38650929,
-                neLng: 132286492,
-                swLat: 35519341,
-                swLng: 124703415,
-            },
-        })
-
-        console.log(response)
-    },
-
     // getVehicleRoutesData: async () => {
     // getVehicleRoutesData: async (vehicleId: string, startDate: DateTime, endDate: DateTime, interval = 60) => {
     fetchVehicleRoutesData: async () => {
