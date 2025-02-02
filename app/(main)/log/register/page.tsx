@@ -40,7 +40,7 @@ const RegisterPage = () => {
     }, [])
 
     const handleCancelButtonClick = () => {
-        router.push('/log')
+        router.back()
     }
 
     const postVehicleInfo = async () => {
