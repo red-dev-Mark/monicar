@@ -1,5 +1,6 @@
 'use client'
 
+import { Loader } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
@@ -10,6 +11,7 @@ import ExcelButton from '@/components/common/Button/ExcelButton'
 import LinkButton from '@/components/common/Button/LinkButton'
 import { RoundButton } from '@/components/common/Button/RoundButton'
 import ControlLayout from '@/components/common/ControlLayout'
+import ErrorMessage from '@/components/common/ErrorMessage'
 import { API_ENDPOINTS } from '@/constants/api'
 import { vehicleService } from '@/lib/apis/vehicle'
 import { CalendarIcon } from '@/public/icons'
@@ -41,10 +43,14 @@ const DetailPage = () => {
     }
 
     if (isLoading) {
-        return <div> 로딩 중...</div>
+        return (
+            <div className={styles.loader}>
+                <Loader color='pink' />
+            </div>
+        )
     }
     if (error) {
-        return <div>Error: {error}</div>
+        return <ErrorMessage />
     }
 
     return (
