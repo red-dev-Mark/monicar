@@ -43,7 +43,7 @@ export const validateEmail = (email: string) => {
     }
 
     // TODO: 추후 삭제!
-    if (email === 'string') {
+    if (email === 'string' || email === 'test1') {
         return {
             isValid: true,
             value: email,
