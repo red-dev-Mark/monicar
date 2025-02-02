@@ -1,8 +1,6 @@
 import { create } from 'zustand'
 
-interface User {
-    email: string
-}
+import { User } from '@/types/auth'
 
 interface AuthState {
     user: User | null
@@ -12,7 +10,7 @@ interface AuthState {
 
     setAuthLoading: (isAuthLoading: boolean) => void
     setAuthError: (authError: string) => void
-    login: (email: string) => void
+    login: ({ useId, nickname, companyName, departmentName }: User) => void
     logout: () => void
 }
 
@@ -25,9 +23,9 @@ export const useAuthStore = create<AuthState>((set) => ({
     setAuthLoading: (isAuthLoading: boolean) => set({ isAuthLoading }),
     setAuthError: (authError: string) => set({ authError }),
 
-    login: (email: string) =>
+    login: ({ useId, nickname, companyName, departmentName }: User) =>
         set({
-            user: { email },
+            user: { useId, nickname, companyName, departmentName },
             isAuthenticated: true,
             isAuthLoading: false,
             authError: null,

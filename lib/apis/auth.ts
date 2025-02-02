@@ -1,15 +1,14 @@
 import { httpClient } from '@/lib/apis/client'
 
 interface SignInRequestModel {
-    // TODO: userId -> email 요청
     userId: string
     password: string
 }
 
 export const authService = {
-    postSignIn: async (email: string, password: string) => {
+    postSignIn: async (userId: string, password: string) => {
         const signInData: SignInRequestModel = {
-            userId: email,
+            userId,
             password,
         }
 

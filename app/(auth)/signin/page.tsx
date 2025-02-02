@@ -12,7 +12,7 @@ import { ModalMessageType } from '@/components/common/Modal/types'
 import { useModal } from '@/hooks/useModal'
 import { authService } from '@/lib/apis/auth'
 import { validateEmail, validatePassword } from '@/lib/utils/validation'
-import { useAuthStore } from '@/stores/useAuthStore'
+// import { useAuthStore } from '@/stores/useAuthStore'
 
 import * as styles from './styles.css'
 
@@ -28,7 +28,7 @@ const SignInPage = () => {
     })
     const [isLoading, setIsLoading] = useState(false)
 
-    const login = useAuthStore((state) => state.login)
+    // const login = useAuthStore((state) => state.login)
     const { isOpen, modalMessage, closeModal, showMessage } = useModal()
 
     const router = useRouter()
@@ -73,7 +73,7 @@ const SignInPage = () => {
             return
         }
 
-        login(formData.email)
+        // login(formData.email)
         router.push('/dashboard')
     }
 
