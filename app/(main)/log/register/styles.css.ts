@@ -28,3 +28,10 @@ export const buttonsWrapper = style({
     maxWidth: '400px',
     margin: '0 auto',
 })
+
+export const loader = style({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+})
