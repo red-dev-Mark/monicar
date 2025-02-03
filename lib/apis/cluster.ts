@@ -20,6 +20,8 @@ export const clusterService = {
             params,
         })
 
+        // console.log(response.data.result)
+
         const normalizedClusterInfo = normalizeClusterResponse(response.data.result).filter(
             (cluster) => cluster.count > 10, // TODO: 10 매직넘버 처리
         )
@@ -43,8 +45,15 @@ export const clusterService = {
             params,
         })
 
-        const normalizedClusterInfo = normalizeClusterResponse(response.data.result)
+        const normalizedClusterDetailInfo = {
+            vehicleId: response.data.result.vehicleId ?? null,
+            vehicleNumber: response.data.result.vehicleNumber ?? null,
+            coordinate: {
+                lat: response.data.result.lat ?? null,
+                lng: response.data.result.lng ?? null,
+            },
+        }
 
-        return normalizedClusterInfo
+        return normalizedClusterDetailInfo
     },
 }
