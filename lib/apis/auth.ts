@@ -1,15 +1,14 @@
 import { httpClient } from '@/lib/apis/client'
 
 interface SignInRequestModel {
-    // TODO: userId -> email 요청
     userId: string
     password: string
 }
 
 export const authService = {
-    postSignIn: async (email: string, password: string) => {
+    postSignIn: async (userId: string, password: string) => {
         const signInData: SignInRequestModel = {
-            userId: email,
+            userId,
             password,
         }
 
@@ -27,5 +26,16 @@ export const authService = {
         }
 
         return { isSuccess: true }
+    },
+    postSignOut: async () => {
+        const response = await httpClient.post(`api/v1/logout`)
+
+        console.log(response)
+    },
+    getUserInfo: async () => {
+        const response = await httpClient.get(`api/v1/me`)
+
+        const { nickname, email, departmentName, companyName } = response.data.result
+        return { nickname, email, departmentName, companyName }
     },
 }
