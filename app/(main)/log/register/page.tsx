@@ -1,25 +1,32 @@
 'use client'
 
-import { Select } from '@mantine/core'
+import { Loader, Select } from '@mantine/core'
+import { DatePickerInput } from '@mantine/dates'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import VehicleRegisterForm from '@/app/(main)/log/components/VehicleRegisterForm'
 import Breadcrumb from '@/components/common/Breadcrumb'
 import SquareButton from '@/components/common/Button/SquareButton'
+import ErrorMessage from '@/components/common/ErrorMessage'
 import BaseInput from '@/components/common/Input/BaseInput'
 import SearchInput from '@/components/common/Input/SearchInput'
 import { vehicleService } from '@/lib/apis/vehicle'
+import { CalendarIcon } from '@/public/icons'
 
+import '@mantine/dates/styles.css'
+import 'dayjs/locale/ko'
+import VehicleRegisterForm from './components/VehicleRegisterForm'
 import * as styles from './styles.css'
 import { VehicleTypeModel } from './types'
 
 const RegisterPage = () => {
     const [vehicleType, setVehicleType] = useState<VehicleTypeModel[] | null>(null)
     const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState<Error | null>(null)
+    const [value, setValue] = useState<Date | null>(null)
     const [vehicleNumber, setVehicleNumber] = useState<string>('')
     const [vehicleTypeId, setVehicleTypeId] = useState<number>()
-    const [deliveryDate, setDeliveryDate] = useState<string>('1995-11-02')
+    const [deliveryDate, setDeliveryDate] = useState<string | null>(null)
     const [drivingDistance, setDrivingDistance] = useState<number>(1)
 
     const router = useRouter()
@@ -32,6 +39,7 @@ const RegisterPage = () => {
                 setVehicleType(vehicleType)
             } catch (error) {
                 console.error(error)
+                setError(error as Error)
             } finally {
                 setIsLoading(false)
             }
@@ -40,7 +48,7 @@ const RegisterPage = () => {
     }, [])
 
     const handleCancelButtonClick = () => {
-        router.push('/log')
+        router.back()
     }
 
     const postVehicleInfo = async () => {
@@ -48,7 +56,6 @@ const RegisterPage = () => {
         if (!vehicleTypeId || !drivingDistance) {
             return
         }
-
         try {
             await vehicleService.postVehicleInfo({
                 vehicleNumber,
@@ -62,21 +69,33 @@ const RegisterPage = () => {
         }
     }
 
-    if (isLoading || !vehicleType) return
+    if (isLoading) {
+        return (
+            <div className={styles.loader}>
+                <Loader color='pink' />
+            </div>
+        )
+    }
+
+    if (error) {
+        return <ErrorMessage />
+    }
 
     const formFields = [
         {
             id: 'vehicleNumber',
-            label: '차량번호',
-            component: <SearchInput onChange={(event) => setVehicleNumber(event.target.value)} icon={''} />,
+            label: '차량 번호',
+            component: (
+                <SearchInput icon='/icons/search-icon.svg' onChange={(event) => setVehicleNumber(event.target.value)} />
+            ),
             isError: false,
         },
         {
             id: 'vehicleType',
-            label: '차량종류',
+            label: '차량 종류',
             component: (
                 <Select
-                    placeholder='차량종류를 선택하세요.'
+                    placeholder='차량 종류'
                     data={
                         vehicleType?.map((item) => ({
                             value: item.id.toString(),
@@ -86,7 +105,7 @@ const RegisterPage = () => {
                     onChange={(event) => {
                         setVehicleTypeId(Number(event))
                     }}
-                    size='md'
+                    size='lg'
                     radius='xl'
                     checkIconPosition='right'
                 />
@@ -95,14 +114,39 @@ const RegisterPage = () => {
         },
         {
             id: 'mileage',
-            label: '운행거리',
-            component: <BaseInput onChange={(event) => setDeliveryDate(event.target.value)} />,
+            label: '운행 거리',
+            component: (
+                <BaseInput placeholder={'0km'} onChange={(event) => setDrivingDistance(Number(event.target.value))} />
+            ),
             isError: false,
         },
         {
             id: 'releaseDate',
-            label: '출고일',
-            component: <BaseInput onChange={(event) => setDrivingDistance(Number(event))} />,
+            label: '차량 출고',
+            component: (
+                <DatePickerInput
+                    locale='ko'
+                    rightSection={
+                        <div style={{ width: '24px', height: '24px' }}>
+                            <CalendarIcon size={16} stroke={1} />
+                        </div>
+                    }
+                    rightSectionPointerEvents='none'
+                    size='lg'
+                    radius='xl'
+                    placeholder='0000-00-00'
+                    styles={{
+                        input: {
+                            color: '#222222',
+                        },
+                    }}
+                    value={value}
+                    onChange={(newValue) => {
+                        setValue(newValue)
+                        setDeliveryDate(newValue ? newValue.toISOString().slice(0, 10) : null)
+                    }}
+                />
+            ),
             isError: false,
         },
     ]
