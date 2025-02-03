@@ -41,7 +41,7 @@ const NoticeListBoard = () => {
                         <Link key={notice.id} href={`/dashboard/notice/${notice.id}`} className={styles.noticeItem}>
                             <div className={styles.imageWrapper}>
                                 <Image
-                                    src={notice.imageUrl}
+                                    src={notice.imageUrl || '/images/notice-1.jpg'}
                                     alt={notice.title}
                                     width={280}
                                     height={240}

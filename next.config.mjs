@@ -27,6 +27,16 @@ const nextConfig = {
 
         return config
     },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'github.com',
+                port: '',
+                pathname: '/**',
+            },
+        ],
+    },
 }
 
 export default withVanillaExtract(nextConfig)

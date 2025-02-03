@@ -11,6 +11,7 @@ export const container = style({
     gap: '20px',
     backgroundColor: vars.colors.white,
     borderRadius: '12px',
+    fontWeight: vars.fontWeights.bold,
 })
 
 const iconWrapperBase = style({
