@@ -1,17 +1,17 @@
 import { LatLng } from '@/types/location'
 import { ClusterInfoModel, ClusterPoint } from '@/types/map'
-import { VehicleInfoModel } from '@/types/vehicle'
+import { VehicleInfoModel, VehicleInfoResponse } from '@/types/vehicle'
 
 export const normalizeCoordinate = (coordinateValue: number): number => coordinateValue / 1000000
 export const denormalizeCoordinate = (coordinateValue: number): number => Math.round(coordinateValue * 1000000)
 
 export const getNormalizedZoomLevel = (level: number) => (level % 2 === 0 ? level - 1 : level)
 
-export const normalizeVehicleResponse = (data: VehicleInfoModel) => {
+export const normalizeVehicleResponse = (data: VehicleInfoResponse): VehicleInfoModel => {
     return {
-        ...data,
-        recentCycleInfo: {
-            ...data.recentCycleInfo,
+        vehicleId: data.vehicleId,
+        vehicleNumber: data.vehicleNumber,
+        coordinate: {
             lat: normalizeCoordinate(data.recentCycleInfo.lat),
             lng: normalizeCoordinate(data.recentCycleInfo.lng),
         },

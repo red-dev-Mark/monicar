@@ -23,6 +23,7 @@ interface MapSectionProps {
 
 const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleClick, onClick }: MapSectionProps) => {
     const [clusterInfo, setClusterInfo] = useState<ClusterPoint[]>([])
+    const [clusterDetailInfo, setClusterDetailInfo] = useState<VehicleInfoModel | null>(null)
     const [isMapLoaded, setIsMapLoaded] = useState(false)
     const mapRef = useRef<kakao.maps.Map>(null)
 
@@ -38,14 +39,12 @@ const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleCl
         if (!isMapLoaded || !currentMapState) return
         const getClusterInfo = async () => {
             const clusterInfo: ClusterPoint[] = await clusterService.getClusterInfo(currentMapState)
-
-            // console.log(clusterInfo)
-
-            if (!clusterInfo) return
-
-            setClusterInfo(clusterInfo)
             const clusterDetailInfo = await clusterService.getClusterDetailInfo(currentMapState)
 
+            setClusterInfo(clusterInfo)
+            setClusterDetailInfo(clusterDetailInfo)
+
+            // console.log(clusterInfo)
             console.log(clusterDetailInfo)
         }
 
@@ -80,6 +79,7 @@ const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleCl
                     </CustomOverlayMap>
                 )
             })}
+            {clusterDetailInfo && <VehicleMarker vehicleInfo={clusterDetailInfo} />}
             {isVehicleMarkerVisible && <VehicleMarker vehicleInfo={vehicleInfo} onVehicleClick={onVehicleClick} />}
         </Map>
     )

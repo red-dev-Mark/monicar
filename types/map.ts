@@ -22,11 +22,3 @@ export interface ClusterPoint {
     coordinate: LatLng
     count: number
 }
-
-// 서버 응답 상세 클러스터링 데이터
-export interface ClusterDetailInfoModel {
-    vehicle: number
-    vehicleNumber: string
-    lat: number
-    lng: number
-}

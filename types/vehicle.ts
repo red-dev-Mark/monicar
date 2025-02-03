@@ -1,8 +1,17 @@
-export interface VehicleInfoModel {
+import { LatLng } from '@/types/location'
+
+export interface VehicleInfoResponse {
     vehicleId: string
     vehicleNumber: string
     recentCycleInfo: RecentCycleInfo
     status: string
+}
+
+// 상세 클러스터링 데이터 (차량 10대 미만)
+export interface VehicleInfoModel {
+    vehicleId: string
+    vehicleNumber: string
+    coordinate: LatLng
 }
 
 interface RecentCycleInfo {

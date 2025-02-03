@@ -24,14 +24,10 @@ const VehicleMarker = ({ vehicleInfo, onVehicleClick }: VehicleMarkerProps) => {
     }, [])
 
     const vehicleNumber = addSpaceVehicleNumber(vehicleInfo.vehicleNumber)
-    const vehicleCurrentLocation = {
-        lat: vehicleInfo?.recentCycleInfo.lat,
-        lng: vehicleInfo?.recentCycleInfo.lng,
-    }
 
     return (
-        <CustomOverlayMap position={vehicleCurrentLocation}>
-            <MapMarker position={vehicleCurrentLocation} image={MARKER_IMAGE} />
+        <CustomOverlayMap position={vehicleInfo.coordinate}>
+            <MapMarker position={vehicleInfo.coordinate} image={MARKER_IMAGE} />
             <p className={styles.vehicleCard} onClick={onVehicleClick} role='presentation'>
                 {vehicleNumber}
             </p>
