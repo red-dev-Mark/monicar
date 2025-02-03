@@ -11,6 +11,11 @@ import ErrorMessage from '@/components/common/ErrorMessage'
 import BaseInput from '@/components/common/Input/BaseInput'
 import SearchInput from '@/components/common/Input/SearchInput'
 import { vehicleService } from '@/lib/apis/vehicle'
+import {
+    handleDrivingDistanceKeyPress,
+    isValidVehicleNumberFormat,
+    validateDrivingDistance,
+} from '@/lib/utils/validation'
 import { CalendarIcon } from '@/public/icons'
 
 import '@mantine/dates/styles.css'
@@ -86,7 +91,17 @@ const RegisterPage = () => {
             id: 'vehicleNumber',
             label: '차량 번호',
             component: (
-                <SearchInput icon='/icons/search-icon.svg' onChange={(event) => setVehicleNumber(event.target.value)} />
+                <SearchInput
+                    icon='/icons/search-icon.svg'
+                    onChange={(event) => setVehicleNumber(event.target.value)}
+                    onSubmit={() => {
+                        if (isValidVehicleNumberFormat(vehicleNumber)) {
+                            console.log('차량번호 형식이 유효합니다.')
+                        } else {
+                            console.log('차량번호 형식이 유효하지 않습니다.')
+                        }
+                    }}
+                />
             ),
             isError: false,
         },
@@ -116,7 +131,17 @@ const RegisterPage = () => {
             id: 'mileage',
             label: '운행 거리',
             component: (
-                <BaseInput placeholder={'0km'} onChange={(event) => setDrivingDistance(Number(event.target.value))} />
+                <BaseInput
+                    type='number'
+                    placeholder={'0km'}
+                    onChange={(event) => {
+                        const value = event.target.value
+                        if (validateDrivingDistance(value)) {
+                            setDrivingDistance(Number(value))
+                        }
+                    }}
+                    onKeyPress={handleDrivingDistanceKeyPress}
+                />
             ),
             isError: false,
         },
