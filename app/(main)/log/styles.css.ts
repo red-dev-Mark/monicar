@@ -33,7 +33,7 @@ export const linkButton = style({
 })
 
 export const pagination = style({
-    margin: '30px',
+    marginTop: '50px',
     alignItems: 'center',
     justifyContent: 'center',
     display: 'flex',

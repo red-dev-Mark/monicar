@@ -5,7 +5,7 @@ import { vars } from '@/styles/theme.css'
 export const container = style({
     height: '100vh',
     padding: '40px 44px',
-    overflowY: 'auto',
+    overflow: 'auto',
 })
 
 export const title = style({
@@ -27,4 +27,11 @@ export const buttonsWrapper = style({
     padding: '30px',
     maxWidth: '400px',
     margin: '0 auto',
+})
+
+export const loader = style({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
 })
