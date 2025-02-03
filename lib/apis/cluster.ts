@@ -17,10 +17,13 @@ export const clusterService = {
             neLng: denormalizeCoordinate(neCoord.lng),
         }
 
+        console.log(params)
+        await httpClient.post(`api/v1/logout`)
         const response = await httpClient.get(`api/v1/vehicle/cluster`, {
             params,
         })
 
+        console.log(response.data.result)
         // console.log(response.data.result.filter((cluster) => cluster.coordinate !== null))
 
         const normalizedClusterInfo = normalizeClusterResponse(response.data.result).filter(

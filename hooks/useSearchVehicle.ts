@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { useModal } from '@/hooks/useModal'
+import { vehicleService } from '@/lib/apis'
 import { validateVehicleNumber } from '@/lib/utils/validation'
 import { VehicleDateModel } from '@/types/vehicle'
 
@@ -28,6 +29,8 @@ export const useSearchVehicle = (vehicleNumber: string = '') => {
                     lastDateAt: '2024-02-02T11:11:11',
                 },
             }
+
+            await vehicleService.getVehicleOperationPeriod(vehicleNumber)
 
             // TODO: 등록되지 않는 차량 API 에러 메세지로 대체
             if (validation.value !== response.vehicleNumber) {

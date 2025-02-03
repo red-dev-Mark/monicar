@@ -36,7 +36,7 @@ export const vehicleService = {
     getVehicleOperationPeriod: async (vehicleNumber: string) => {
         const response = await httpClient.get(`api/v1/vehicle`, {
             params: {
-                'vehicle-number': removeSpaces(vehicleNumber),
+                vehicleNumber: removeSpaces(vehicleNumber),
             },
         })
 
