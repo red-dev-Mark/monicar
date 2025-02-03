@@ -15,6 +15,8 @@ export const useFilteredData = (logData: DetailResponse | null | undefined) => {
     const handleDateRangeChange = (value: [Date | null, Date | null]) => {
         setDateRange(value)
 
+        if (!value[1]) return
+
         if (!logData || !value[0] || !value[1]) {
             setFilteredData(logData || null)
             return
