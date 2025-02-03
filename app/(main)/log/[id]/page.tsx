@@ -7,7 +7,6 @@ import { useParams, useRouter } from 'next/navigation'
 
 import Breadcrumb from '@/components/common/Breadcrumb'
 import ExcelButton from '@/components/common/Button/ExcelButton'
-import LinkButton from '@/components/common/Button/LinkButton'
 import { RoundButton } from '@/components/common/Button/RoundButton'
 import ControlLayout from '@/components/common/ControlLayout'
 import ErrorMessage from '@/components/common/ErrorMessage'
@@ -15,6 +14,7 @@ import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import { API_ENDPOINTS } from '@/constants/api'
 import { vehicleService } from '@/lib/apis/vehicle'
+import { addSpaceVehicleNumber } from '@/lib/utils/string'
 import { CalendarIcon } from '@/public/icons'
 
 import '@mantine/dates/styles.css'
@@ -32,12 +32,14 @@ const DetailPage = () => {
     const router = useRouter()
     const { dateRange, handleDateRangeChange, getFormattedDates } = useSearchDate()
     const dates = getFormattedDates()
-
     const { detailData, isLoading, error } = useDetailData({
         url: `${API_ENDPOINTS.LOG}/${id}`,
         startDate: dates?.startDate,
         endDate: dates?.endDate,
     })
+    const formattedVehicleNumber = detailData?.vehicleType.vehicleNumber
+        ? addSpaceVehicleNumber(detailData.vehicleType.vehicleNumber)
+        : ''
 
     const {
         isConfirmModalOpen,
@@ -106,7 +108,7 @@ const DetailPage = () => {
                         type='range'
                         size='lg'
                         radius='xl'
-                        placeholder='날짜를 검색하세요.'
+                        placeholder='과세기간 범위 선택'
                         value={dateRange}
                         onChange={handleDateRangeChange}
                         styles={{
@@ -157,7 +159,7 @@ const DetailPage = () => {
                             </th>
                         </tr>
                         <tr>
-                            <td className={styles.tableCell}>{detailData?.vehicleType.vehicleNumber}</td>
+                            <td className={styles.tableCell}>{formattedVehicleNumber}</td>
                             <td className={styles.tableCell}>{detailData?.vehicleType.vehicleModel}</td>
                         </tr>
                     </tbody>
@@ -280,9 +282,10 @@ const DetailPage = () => {
                 </table>
             </div>
 
+            {/* TODO: LinkButton 다시 적용
             <LinkButton href={`/log/${id}/daily`} className={styles.linkButton}>
                 일별 및 시간별 조회
-            </LinkButton>
+            </LinkButton> */}
         </div>
     )
 }

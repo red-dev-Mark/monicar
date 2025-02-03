@@ -113,7 +113,12 @@ const LogPage = () => {
             </div>
 
             <div className={styles.pagination}>
-                <Pagination.Root total={logData?.totalPages || 1} value={activePage} onChange={setActivePage}>
+                <Pagination.Root
+                    total={logData?.totalPages || 1}
+                    value={activePage}
+                    onChange={setActivePage}
+                    color='#ff385c'
+                >
                     <Group gap={5} justify='center'>
                         <Pagination.First />
                         <Pagination.Previous />
