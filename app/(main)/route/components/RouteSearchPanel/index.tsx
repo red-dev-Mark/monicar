@@ -13,7 +13,9 @@ import { ZOOM_LEVEL } from '@/constants/map'
 import { useSearchVehicle } from '@/hooks/useSearchVehicle'
 import { routeService } from '@/lib/apis/route'
 import { formatISODateToKorean } from '@/lib/utils/date'
+import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { validateDateSelection } from '@/lib/utils/validation'
+import { vars } from '@/styles/theme.css'
 import { LatLng } from '@/types/location'
 import { VehicleRoutePoint } from '@/types/map'
 
@@ -38,7 +40,7 @@ const RouteSearchPanel = ({ onPathsChange }: RouteSearchPanelProps) => {
         }
     }, [searchedVehicle, setSearchableDates])
 
-    const { isValidDate, isAllSelected, isWithSearchableRange, isValidSelectRange } = validateDateSelection(
+    const { isValidDate, isAllSelected, isValidSelectRange } = validateDateSelection(
         startDate,
         endDate,
         searchableDates,
@@ -50,10 +52,10 @@ const RouteSearchPanel = ({ onPathsChange }: RouteSearchPanelProps) => {
             return
         }
 
-        if (!isWithSearchableRange()) {
-            alert(`조회 가능한 일은 ${searchableDates.firstDateAt} ~ ${searchableDates.lastDateAt}`)
-            return
-        }
+        // if (!isWithSearchableRange()) {
+        //     alert(`조회 가능한 일은 ${searchableDates.firstDateAt} ~ ${searchableDates.lastDateAt}`)
+        //     return
+        // }
 
         if (!isValidSelectRange()) {
             alert('종료 일시는 시작 일시보다 같거나 빠르면 안됩니다')
@@ -65,9 +67,10 @@ const RouteSearchPanel = ({ onPathsChange }: RouteSearchPanelProps) => {
         }
 
         const vehiclePaths = await routeService.getVehicleRoutesData(searchedVehicle.vehicleId, startDate, endDate)
+
         const paths = vehiclePaths.routes.map((route: VehicleRoutePoint) => ({
-            lat: route.lat,
-            lng: route.lng,
+            lat: normalizeCoordinate(route.lat),
+            lng: normalizeCoordinate(route.lng),
         }))
 
         onPathsChange(paths)
@@ -101,7 +104,7 @@ const RouteSearchPanel = ({ onPathsChange }: RouteSearchPanelProps) => {
                                 <p className={styles.searchableDate}>
                                     <span className={styles.searchableDateSpan}>조회 가능 기간</span>
                                     {formatISODateToKorean(searchableDates.firstDateAt)}
-                                    <span style={{ color: '#d3d3d3' }}>~</span>
+                                    <span style={{ color: vars.colors.gray[400] }}>~</span>
                                     {formatISODateToKorean(searchableDates.lastDateAt)}
                                 </p>
                             )}
