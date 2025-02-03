@@ -8,6 +8,7 @@ import { ModalMessageType } from '@/components/common/Modal/types'
 import Map from '@/components/domain/map/Map'
 import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
 import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from '@/public/icons'
+import { useAuthStore } from '@/stores/useAuthStore'
 
 import InspectionStatus from './components/InspectionStatus'
 import NoticeListBoard from './components/NoticeListBoard'
@@ -27,6 +28,8 @@ const DashboardPage = () => {
         closeModal,
     } = useSearchSingleVehicle()
 
+    const user = useAuthStore((state) => state.user)
+
     const isVehicleMarkerVisible = !!(isVehicleVisible && vehicleInfo)
 
     return (
@@ -35,7 +38,7 @@ const DashboardPage = () => {
                 <header className={styles.header}>
                     <p className={styles.introduce}>
                         안녕하세요,
-                        <span className={styles.userName}>쏘카님 👋</span>
+                        <span className={styles.userName}>{user?.companyName} 님 👋</span>
                     </p>
 
                     <div className={styles.searchInputWrapper}>
