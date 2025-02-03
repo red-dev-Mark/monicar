@@ -135,7 +135,8 @@ export const validateDateSelection = (startDate: DateTime, endDate: DateTime, se
     // 윤년 체크 (e.g. 2월 31일)
     const isValidDate = () => {
         const newStartDate = new Date(Number(startDate.year), Number(startDate.month) - 1, Number(startDate.date))
-        const newEndDate = new Date(Number(startDate.year), Number(startDate.month) - 1, Number(startDate.date))
+        const newEndDate = new Date(Number(endDate.year), Number(endDate.month) - 1, Number(endDate.date))
+
         return (
             newStartDate.getMonth() === Number(startDate.month) - 1 &&
             newEndDate.getMonth() === Number(endDate.month) - 1
