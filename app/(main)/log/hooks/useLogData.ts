@@ -9,8 +9,6 @@ export const useLogData = (page: number, keyword?: string) => {
     const params = useMemo(
         () => ({
             page,
-            size: 8,
-            sort: 'CREATED_AT_DESC',
             ...(keyword && { keyword }),
         }),
         [page, keyword],

@@ -28,7 +28,7 @@ const LogPage = () => {
     const [searchVehicleNumber, setSearchVehicleNumber] = useState<string>()
     const [searchTerm, setSearchTerm] = useState('')
     const { isOpen, modalMessage, closeModal, showMessage } = useModal()
-    const { logData, isLoading, error } = useLogData(activePage - 1, searchVehicleNumber)
+    const { logData, isLoading, error } = useLogData(activePage, searchVehicleNumber)
 
     const handleExcelButtonClick = async () => {
         try {
