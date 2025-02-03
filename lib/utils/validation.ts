@@ -43,7 +43,7 @@ export const validateEmail = (email: string) => {
     }
 
     // TODO: 추후 삭제!
-    if (email === 'string') {
+    if (email === 'string' || email === 'test1') {
         return {
             isValid: true,
             value: email,
@@ -135,7 +135,8 @@ export const validateDateSelection = (startDate: DateTime, endDate: DateTime, se
     // 윤년 체크 (e.g. 2월 31일)
     const isValidDate = () => {
         const newStartDate = new Date(Number(startDate.year), Number(startDate.month) - 1, Number(startDate.date))
-        const newEndDate = new Date(Number(startDate.year), Number(startDate.month) - 1, Number(startDate.date))
+        const newEndDate = new Date(Number(endDate.year), Number(endDate.month) - 1, Number(endDate.date))
+
         return (
             newStartDate.getMonth() === Number(startDate.month) - 1 &&
             newEndDate.getMonth() === Number(endDate.month) - 1
@@ -171,5 +172,30 @@ export const validateDateSelection = (startDate: DateTime, endDate: DateTime, se
         isAllSelected,
         isWithSearchableRange,
         isValidSelectRange,
+    }
+}
+
+// 검색어 유효성 검증 (특수문자, 영어, 자음/모음만 체크)
+export const validateSearchTerm = (searchTerm: string) => {
+    if (!trimValue(searchTerm)) {
+        return {
+            isValid: false,
+            message: '검색어를 입력해주세요',
+        }
+    }
+
+    // 특수문자, 영어, 자음/모음만 있는지 체크
+    const invalidChars = /[^가-힣0-9\s]|[ㄱ-ㅎㅏ-ㅣ]/
+
+    if (invalidChars.test(searchTerm)) {
+        return {
+            isValid: false,
+            message: '완성된 한글이나 숫자만 입력 가능합니다',
+        }
+    }
+
+    return {
+        isValid: true,
+        value: searchTerm,
     }
 }

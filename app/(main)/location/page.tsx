@@ -31,6 +31,7 @@ const LocationPage = () => {
         isOpen,
         handleVehicleSearch,
         handleSearchChange,
+        updateMapLocation,
         closeModal,
     } = useSearchSingleVehicle()
 
@@ -52,6 +53,7 @@ const LocationPage = () => {
                 vehicleInfo={vehicleInfo as VehicleInfoModel}
                 isVehicleMarkerVisible={isVehicleMarkerVisible}
                 onVehicleClick={handleVehicleClick}
+                onClick={updateMapLocation}
             />
             <div className={styles.searchInputWrapper}>
                 <SearchInput
@@ -65,6 +67,7 @@ const LocationPage = () => {
             {isVehicleDetailsVisible && (
                 <VehicleDetailsCard vehicleDetails={vehicleDetails} onCloseButtonClick={setIsDetailsCardVisible} />
             )}
+
             <Modal
                 isOpen={isOpen}
                 message={modalMessage as ModalMessageType}

@@ -15,7 +15,7 @@ export const useData = <T>({ url, params }: UseDataRequest) => {
                 const response = await httpClient.get(url, { params })
                 setData(response.data.result)
             } catch (error) {
-                setError('데이터 불러오기 실패')
+                setError('👾 데이터를 불러오지 못했습니다. 다시 시도해 주세요.')
                 console.error('Error', error)
             } finally {
                 setIsLoading(false)

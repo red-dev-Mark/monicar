@@ -39,10 +39,8 @@ export const setupResponseInterceptor = (instance: AxiosInstance) => {
                 !originalRequest.isRequestAlready
             ) {
                 const logout = useAuthStore.getState().logout
-                // TODO:  isRequestAlready 동작 여부 확인 (무한 요청이 이루어지는지 등)
                 originalRequest.isRequestAlready = true
 
-                console.log(error.response?.data?.errorCode)
                 try {
                     switch (errorCode) {
                         case 9995:
@@ -50,7 +48,6 @@ export const setupResponseInterceptor = (instance: AxiosInstance) => {
                             return httpClient(originalRequest)
 
                         case 9994:
-                            console.log('리프레시 재발급!!')
                             await httpClient.post(`${API_URL}/auth/refresh`)
                             return httpClient(originalRequest)
 

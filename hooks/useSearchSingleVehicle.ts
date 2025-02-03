@@ -38,8 +38,8 @@ export const useSearchSingleVehicle = () => {
 
         updateMapLocation(
             {
-                lat: vehicleInfo?.recentCycleInfo.lat,
-                lng: vehicleInfo?.recentCycleInfo.lng,
+                lat: vehicleInfo?.coordinate.lat,
+                lng: vehicleInfo?.coordinate.lng,
             },
             ZOOM_LEVEL.SINGLE_VEHICLE,
         )
@@ -62,6 +62,7 @@ export const useSearchSingleVehicle = () => {
         isOpen,
         handleVehicleSearch,
         handleSearchChange,
+        updateMapLocation,
         closeModal,
     }
 }

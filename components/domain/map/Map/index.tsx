@@ -1,42 +1,32 @@
 'use client'
 
-import { LegacyRef, memo, useEffect } from 'react'
-import { Map as KakaoMap } from 'react-kakao-maps-sdk'
+import { memo } from 'react'
+import { Map as KakaoMap, ZoomControl } from 'react-kakao-maps-sdk'
 
+import { ZOOM_LEVEL } from '@/constants/map'
 import { useKakaoLoader } from '@/hooks/useKakaoLoader'
 import { LatLng } from '@/types/location'
 
 interface MapProps {
+    ref?: React.RefObject<kakao.maps.Map>
     center?: LatLng
     zoom?: number
-    ref?: LegacyRef<kakao.maps.Map>
     children?: React.ReactNode
     onLoad?: (isMapLoaded: boolean) => void
-    onZoomChanged?: (level: number) => void
+    onMapStatusChanged?: () => void
 }
 
 const Map = memo(
-    ({
-        center = { lat: 37.5665, lng: 126.978 },
-        zoom = 10,
-        ref,
-        children,
-        onLoad,
-        onZoomChanged,
-        ...props
-    }: MapProps) => {
+    ({ ref, center = { lat: 37.5665, lng: 126.978 }, zoom = 10, children, onLoad, onMapStatusChanged }: MapProps) => {
         const { loading, error } = useKakaoLoader()
 
-        const handleZoomChanged = (map: kakao.maps.Map) => {
-            const currentZoom = map.getLevel()
-            onZoomChanged?.(currentZoom)
+        const handleCreate = () => {
+            onLoad?.(true)
         }
 
-        useEffect(() => {
-            if (!loading && !error) {
-                onLoad?.(true)
-            }
-        }, [loading, error, onLoad])
+        const handleMapStatusChange = () => {
+            onMapStatusChanged?.()
+        }
 
         if (loading) return <div>지도를 불러오는 중...</div>
         if (error) return <div>지도를 불러오는데 실패했습니다</div>
@@ -46,11 +36,15 @@ const Map = memo(
                 ref={ref}
                 center={center}
                 level={zoom}
+                maxLevel={ZOOM_LEVEL.MAX}
+                minLevel={ZOOM_LEVEL.MIN}
                 style={{ width: '100%', height: '100%' }}
-                onZoomChanged={handleZoomChanged}
-                {...props}
+                onCreate={handleCreate}
+                onZoomChanged={handleMapStatusChange}
+                onDragEnd={handleMapStatusChange}
             >
                 {children}
+                <ZoomControl />
             </KakaoMap>
         )
     },
