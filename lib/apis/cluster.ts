@@ -5,7 +5,6 @@ import { VehicleInfoModel } from '@/types/vehicle'
 
 export const clusterService = {
     // 뷰포트 영역 내 클러스터링 정보 조회
-
     getClusterInfo: async ({ level, swCoord, neCoord }: MapState): Promise<ClusterPoint[]> => {
         if (!level || !swCoord || !neCoord) return []
 
@@ -17,14 +16,9 @@ export const clusterService = {
             neLng: denormalizeCoordinate(neCoord.lng),
         }
 
-        console.log(params)
-        // await httpClient.post(`api/v1/logout`)
         const response = await httpClient.get(`api/v1/vehicle/cluster`, {
             params,
         })
-
-        console.log(response.data.result)
-        // console.log(response.data.result.filter((cluster) => cluster.coordinate !== null))
 
         const normalizedClusterInfo = normalizeClusterResponse(response.data.result).filter(
             (cluster) => cluster.count > 10, // TODO: 10 매직넘버 처리
@@ -48,8 +42,6 @@ export const clusterService = {
         const response = await httpClient.get(`api/v1/vehicle/cluster/details`, {
             params,
         })
-
-        console.log(response.data.result)
 
         const normalizedClusterDetailInfo: VehicleInfoModel = {
             vehicleId: response.data.result.vehicleId ?? null,

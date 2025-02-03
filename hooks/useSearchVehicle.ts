@@ -32,8 +32,8 @@ export const useSearchVehicle = (vehicleNumber: string = '') => {
                 vehicleId: response.value.vehicleId,
                 vehicleNumber: response.value.vehicleNumber,
                 searchableDates: {
-                    firstDateAt: response.value.firstDataAt,
-                    lastDateAt: response.value.lastDataAt,
+                    firstDateAt: response.value.firstDateAt,
+                    lastDateAt: response.value.lastDateAt,
                 },
             }
 

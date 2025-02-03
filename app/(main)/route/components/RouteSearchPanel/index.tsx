@@ -15,6 +15,7 @@ import { routeService } from '@/lib/apis/route'
 import { formatISODateToKorean } from '@/lib/utils/date'
 import { validateDateSelection } from '@/lib/utils/validation'
 import { LatLng } from '@/types/location'
+import { VehicleRoutePoint } from '@/types/map'
 
 import * as styles from './styles.css'
 
@@ -23,7 +24,7 @@ interface RouteSearchPanelProps {
     onMapLocationChange: (location: LatLng, level: (typeof ZOOM_LEVEL)[keyof typeof ZOOM_LEVEL]) => void
 }
 
-const RouteSearchPanel = ({ onPathsChange, onMapLocationChange }: RouteSearchPanelProps) => {
+const RouteSearchPanel = ({ onPathsChange }: RouteSearchPanelProps) => {
     const [inputValue, setInputValue] = useState('')
     const [startDate, setStartDate] = useState<DateTime>({ year: '', month: '', date: '', hour: '', minute: '' })
     const [endDate, setEndDate] = useState<DateTime>({ year: '', month: '', date: '', hour: '', minute: '' })
@@ -34,7 +35,6 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange }: RouteSearchPan
     useEffect(() => {
         if (!searchedVehicle) {
             setSearchableDates({ firstDateAt: '', lastDateAt: '' })
-            setStartDate({ year: '', month: '', date: '', hour: '', minute: '' })
         }
     }, [searchedVehicle, setSearchableDates])
 
@@ -64,15 +64,14 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange }: RouteSearchPan
             return
         }
 
-        const routesData = await routeService.fetchVehicleRoutesData()
-        // const routesData = await vehicleService.fetchVehicleRoutesData(searchedVehicle.vehicleId, startDate, endDate)
-        const paths = routesData.result.routes.map((route) => ({
+        const vehiclePaths = await routeService.getVehicleRoutesData(searchedVehicle.vehicleId, startDate, endDate)
+        const paths = vehiclePaths.routes.map((route: VehicleRoutePoint) => ({
             lat: route.lat,
-            lng: route.lon,
+            lng: route.lng,
         }))
 
         onPathsChange(paths)
-        onMapLocationChange({ lat: 37.417117, lng: 126.98816 }, 8)
+        // onMapLocationChange({ lat: 37.417117, lng: 126.98816 }, 8)
         // onMapLocationChange(INITIAL_MAP_STATE.center, 12)
     }
 
