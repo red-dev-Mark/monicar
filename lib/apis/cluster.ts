@@ -18,7 +18,7 @@ export const clusterService = {
         }
 
         console.log(params)
-        await httpClient.post(`api/v1/logout`)
+        // await httpClient.post(`api/v1/logout`)
         const response = await httpClient.get(`api/v1/vehicle/cluster`, {
             params,
         })

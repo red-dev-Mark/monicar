@@ -21,7 +21,7 @@ interface RecentCycleInfo {
     lastUpdated: string
 }
 
-export interface VehicleDateModel {
+export interface VehicleOperationPeriodModel {
     vehicleId: string
     vehicleNumber: string
     searchableDates: {

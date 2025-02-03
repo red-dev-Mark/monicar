@@ -40,7 +40,11 @@ export const vehicleService = {
             },
         })
 
-        console.log(response)
+        if (!response.data.result) {
+            return { isValid: false, value: '등록되지 않은 차량입니다.' }
+        }
+
+        return { isValid: true, value: response.data.result }
     },
     getVehicleType: async (): Promise<VehicleTypeModel[]> => {
         const response = await httpClient.get(`api/v1/log/vehicle-type`)
