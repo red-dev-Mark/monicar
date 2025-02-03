@@ -8,7 +8,6 @@ import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
 import Map from '@/components/domain/map/Map'
 import { useMapStatus } from '@/hooks/useCurrentMapStatus'
 import { clusterService } from '@/lib/apis/cluster'
-// import ClusteringData from '@/mock/clustering.json'
 import { LatLng } from '@/types/location'
 import { ClusterPoint, MapState } from '@/types/map'
 import { VehicleInfoModel } from '@/types/vehicle'
@@ -23,6 +22,7 @@ interface MapSectionProps {
 
 const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleClick, onClick }: MapSectionProps) => {
     const [clusterInfo, setClusterInfo] = useState<ClusterPoint[]>([])
+    const [clusterDetailInfo, setClusterDetailInfo] = useState<VehicleInfoModel | null>(null)
     const [isMapLoaded, setIsMapLoaded] = useState(false)
     const mapRef = useRef<kakao.maps.Map>(null)
 
@@ -38,17 +38,17 @@ const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleCl
         if (!isMapLoaded || !currentMapState) return
         const getClusterInfo = async () => {
             const clusterInfo: ClusterPoint[] = await clusterService.getClusterInfo(currentMapState)
-
-            if (!clusterInfo) return
+            const clusterDetailInfo = await clusterService.getClusterDetailInfo(currentMapState)
 
             setClusterInfo(clusterInfo)
-            // await clusterService.getClusterDetailInfo(currentMapState)
+            setClusterDetailInfo(clusterDetailInfo)
+
+            // console.log(clusterInfo)
+            console.log(clusterDetailInfo)
         }
 
         getClusterInfo()
     }, [isMapLoaded, currentMapState])
-
-    console.log(clusterInfo)
 
     return (
         <Map
@@ -78,6 +78,7 @@ const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleCl
                     </CustomOverlayMap>
                 )
             })}
+            {clusterDetailInfo && <VehicleMarker vehicleInfo={clusterDetailInfo} />}
             {isVehicleMarkerVisible && <VehicleMarker vehicleInfo={vehicleInfo} onVehicleClick={onVehicleClick} />}
         </Map>
     )

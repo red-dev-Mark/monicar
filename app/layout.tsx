@@ -1,5 +1,7 @@
 import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from '@mantine/core'
 
+import AuthGuard from '@/components/layout/AuthGuard'
+
 import '@/styles'
 
 import type { Metadata } from 'next'
@@ -19,7 +21,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             </head>
             <body>
                 <MantineProvider>
-                    {children}
+                    <AuthGuard>{children}</AuthGuard>
                     <div id='modal-root'></div>
                 </MantineProvider>
             </body>

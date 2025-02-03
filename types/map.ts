@@ -22,3 +22,11 @@ export interface ClusterPoint {
     coordinate: LatLng
     count: number
 }
+
+// 경로 개별 데이터
+export interface VehicleRoutePoint {
+    lat: number
+    lng: number
+    spd: number
+    timestamp: string
+}
