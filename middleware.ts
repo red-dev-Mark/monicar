@@ -4,6 +4,7 @@ export const middleware = async (request: NextRequest) => {
     const accessToken = request.cookies.get('access_token')
 
     const { pathname } = request.nextUrl
+
     console.log('----------------------------------------------')
     console.log('액세스 토큰: ', accessToken)
     console.log('----------------------------------------------')
