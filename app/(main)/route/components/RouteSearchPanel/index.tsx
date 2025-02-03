@@ -1,7 +1,7 @@
 'use client'
 
 import { Accordion } from '@mantine/core'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 
 import DateTimeSelect from '@/app/(main)/route/components/RouteSearchPanel/DateTimeSelect'
 import { DateTime } from '@/app/(main)/route/types/date'
@@ -28,16 +28,21 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange }: RouteSearchPan
     const [startDate, setStartDate] = useState<DateTime>({ year: '', month: '', date: '', hour: '', minute: '' })
     const [endDate, setEndDate] = useState<DateTime>({ year: '', month: '', date: '', hour: '', minute: '' })
 
-    const { searchedVehicle, searchableDates, isOpen, modalMessage, searchVehicle, closeModal } =
+    const { searchedVehicle, searchableDates, isOpen, modalMessage, searchVehicle, setSearchableDates, closeModal } =
         useSearchVehicle(inputValue)
+
+    useEffect(() => {
+        if (!searchedVehicle) {
+            setSearchableDates({ firstDateAt: '', lastDateAt: '' })
+            setStartDate({ year: '', month: '', date: '', hour: '', minute: '' })
+        }
+    }, [searchedVehicle, setSearchableDates])
 
     const { isValidDate, isAllSelected, isWithSearchableRange, isValidSelectRange } = validateDateSelection(
         startDate,
         endDate,
         searchableDates,
     )
-
-    const isSelectable = !!searchableDates.firstDateAt && !!searchableDates.lastDateAt
 
     const handleSubmit = async () => {
         if (!isValidDate()) {
@@ -70,6 +75,8 @@ const RouteSearchPanel = ({ onPathsChange, onMapLocationChange }: RouteSearchPan
         onMapLocationChange({ lat: 37.417117, lng: 126.98816 }, 8)
         // onMapLocationChange(INITIAL_MAP_STATE.center, 12)
     }
+
+    const isSelectable = !!searchableDates.firstDateAt && !!searchableDates.lastDateAt
 
     return (
         <Accordion defaultValue='경로조회' className={styles.accordion} unstyled>
