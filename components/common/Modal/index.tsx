@@ -24,8 +24,8 @@ const Modal = ({
     variant,
     onClose,
 }: ModalProps) => {
-    const modalRoot = document.getElementById('modal-root')
-    if (!isOpen || !modalRoot) return null
+    // const modalRoot = document.getElementById('modal-root')
+    // if (!isOpen || !modalRoot) return null
     if (!isOpen) return null
 
     const handleOverlayClick = () => {
