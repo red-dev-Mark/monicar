@@ -28,7 +28,7 @@ const LogPage = () => {
     const [searchVehicleNumber, setSearchVehicleNumber] = useState<string>()
     const [searchTerm, setSearchTerm] = useState('')
     const { isOpen, modalMessage, closeModal, showMessage } = useModal()
-    const { logData, isLoading, error } = useLogData(activePage - 1, searchVehicleNumber)
+    const { logData, isLoading, error } = useLogData(activePage, searchVehicleNumber)
 
     const handleExcelButtonClick = async () => {
         try {
@@ -113,7 +113,12 @@ const LogPage = () => {
             </div>
 
             <div className={styles.pagination}>
-                <Pagination.Root total={logData?.totalPages || 1} value={activePage} onChange={setActivePage}>
+                <Pagination.Root
+                    total={logData?.totalPages || 1}
+                    value={activePage}
+                    onChange={setActivePage}
+                    color='#ff385c'
+                >
                     <Group gap={5} justify='center'>
                         <Pagination.First />
                         <Pagination.Previous />

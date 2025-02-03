@@ -14,6 +14,13 @@ export const container = style({
     borderRadius: '30px 30px 0 0',
 })
 
+export const button = style({
+    display: 'flex',
+    width: '200px',
+    justifyContent: 'center',
+    gap: '6px',
+})
+
 export const tableWrapper = style({
     flex: 1,
     display: 'flex',
@@ -40,13 +47,6 @@ export const tableCell = style({
     color: vars.colors.black,
 })
 
-export const button = style({
-    display: 'flex',
-    width: '200px',
-    justifyContent: 'center',
-    gap: '6px',
-})
-
 export const deleteButton = style({
     backgroundColor: vars.colors.primary,
     color: vars.colors.white,
@@ -63,4 +63,11 @@ export const linkButton = style({
     ':hover': {
         backgroundColor: vars.colors.gray[800],
     },
+})
+
+export const loader = style({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
 })

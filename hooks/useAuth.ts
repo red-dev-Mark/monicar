@@ -19,6 +19,7 @@ export const useAuth = () => {
             localStorage.setItem('userEmail', email)
             login({ email, nickname, companyName, departmentName })
         } catch (error) {
+            console.error(error)
             setAuthError(error instanceof Error ? error.message : '로그인에 실패하였습니다')
         } finally {
             setAuthLoading(false)
