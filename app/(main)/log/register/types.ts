@@ -6,6 +6,6 @@ export interface VehicleTypeModel {
 export interface RegisterVehicleModel {
     vehicleNumber: string
     vehicleTypeId: number
-    deliveryDate: string
+    deliveryDate: string | null
     drivingDistance: number
 }

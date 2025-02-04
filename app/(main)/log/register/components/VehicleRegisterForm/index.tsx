@@ -9,6 +9,7 @@ interface FormField {
     label: string
     isError?: boolean
     component: React.ReactNode
+    message?: string
 }
 
 interface VehicleRegisterFormProps {
@@ -18,13 +19,13 @@ interface VehicleRegisterFormProps {
 const VehicleRegisterForm = ({ fields }: VehicleRegisterFormProps) => {
     return (
         <div className={styles.container}>
-            {fields.map((filed) => (
-                <div key={filed.id} className={styles.contentsWrapper}>
+            {fields.map((field) => (
+                <div key={field.id} className={styles.contentsWrapper}>
                     <div className={styles.fieldWrapper}>
-                        <div className={styles.textWrapper}>{filed.label}</div>
-                        <div className={styles.inputWrapper}>{filed.component}</div>
+                        <div className={styles.textWrapper}>{field.label}</div>
+                        <div className={styles.inputWrapper}>{field.component}</div>
                     </div>
-                    {filed.isError && <Message message={''} />}
+                    {field.message && <Message message={field.message} isError={field.isError} />}
                 </div>
             ))}
         </div>
