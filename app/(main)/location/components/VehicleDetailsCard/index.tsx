@@ -18,8 +18,10 @@ interface VehicleDetailsCardProps {
 }
 
 const VehicleDetailsCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetailsCardProps) => {
+    console.log(vehicleDetails)
     const {
-        recentVehicleInfo: { vehicleNumber, status, lastEngineOn, lastEngineOff },
+        recentVehicleInfo: { vehicleNumber, status, lastEngineOn },
+        // recentVehicleInfo: { vehicleNumber, status, lastEngineOn, lastEngineOff },
         recentCycleInfo: { speed, lat, lng, lastUpdated },
         todayDrivingHistory,
     } = vehicleDetails
@@ -32,8 +34,10 @@ const VehicleDetailsCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetai
     // TODO: 다른 데이터 오류 가능성 체크
     const isDriving = status === 'ON'
     const formattedVehicleNumber = addSpaceVehicleNumber(vehicleNumber)
-    const formattedLastEngineOn = formatISODateToDot(lastEngineOn)
-    const formattedLastEngineOff = formatISODateToDot(lastEngineOff)
+    // TODO: 없을경우 오류발생
+    const formattedLastEngineOn = formatISODateToDot(lastEngineOn) || '2025-01-12T18:01:02'
+    // const formattedLastEngineOff = formatISODateToDot(lastEngineOff)
+    const formattedLastEngineOff = formatISODateToDot('2025-01-12T18:01:02')
     const todayDrivingTime = todayDrivingHistory ? todayDrivingHistory.drivingTime : 0
     const todayDrivingDistance = todayDrivingHistory ? todayDrivingHistory.distance : 0
 
