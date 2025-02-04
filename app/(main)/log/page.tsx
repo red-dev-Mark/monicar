@@ -78,23 +78,24 @@ const LogPage = () => {
     return (
         <div className={styles.container}>
             <Breadcrumb type={'운행기록'} />
-
             <div className={styles.contents}>
                 <ControlLayout
                     control={
-                        <SearchInput
-                            icon='/icons/search-icon.svg'
-                            value={searchTerm}
-                            onChange={handleSearchChange}
-                            onSubmit={handleSearchVehicleNumber}
-                        />
+                        <div className={styles.searchInputWrapper}>
+                            <SearchInput
+                                icon='/icons/search-icon.svg'
+                                value={searchTerm}
+                                onChange={handleSearchChange}
+                                onSubmit={handleSearchVehicleNumber}
+                            />
+                        </div>
                     }
                     primaryButton={<ExcelButton onClick={handleExcelButtonClick} />}
                     secondaryButton={
                         <LinkButton href={'/log/register'}>
                             <div className={styles.linkButton}>
                                 <Image src='/icons/white-add-icon.svg' alt='add' width={18} height={18} />
-                                등록
+                                차량등록
                             </div>
                         </LinkButton>
                     }
@@ -118,6 +119,7 @@ const LogPage = () => {
                     value={activePage}
                     onChange={setActivePage}
                     color='#ff385c'
+                    boundaries={0}
                 >
                     <Group gap={5} justify='center'>
                         <Pagination.First />
