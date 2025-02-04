@@ -119,7 +119,7 @@ const DetailPage = () => {
                 }
                 primaryButton={<ExcelButton onClick={handleExcelButtonClick} />}
                 secondaryButton={
-                    <RoundButton color='primary' size={'small'} onClick={handleDeleteButtonClick}>
+                    <RoundButton color='primary' size='small' onClick={handleDeleteButtonClick}>
                         <div className={styles.button}>
                             <Image src='/icons/white-trash-icon.svg' alt='add' width={18} height={18} />
                             삭제
