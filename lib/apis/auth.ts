@@ -32,6 +32,24 @@ export const authService = {
 
         console.log(response)
     },
+    postSignUp: async (email: string, nickname: string, loginId: string, password: string) => {
+        const signUpData = {
+            email,
+            nickname,
+            loginId,
+            password,
+        }
+
+        const response = await httpClient.post(`api/v1/sign-up`, signUpData)
+
+        if (!response.data.isSuccess) {
+            if (response.data.errorCode) {
+                return { isSuccess: false, message: response.data.errorMessage }
+            }
+        }
+
+        return { isSuccess: true }
+    },
     getUserInfo: async () => {
         const response = await httpClient.get(`api/v1/me`)
 

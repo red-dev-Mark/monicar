@@ -44,7 +44,7 @@ export const validateEmail = (userId: string) => {
     if (!trimValue(userId)) {
         return {
             isValid: false,
-            message: '이메일을 입력해주세요',
+            message: '아이디를 입력해주세요',
         }
     }
 
