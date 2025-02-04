@@ -60,7 +60,7 @@ const SignInPage = () => {
         if (authError) {
             switch (authError) {
                 case 'INVALID_CREDENTIALS':
-                    showMessage('이메일 또는 비밀번호가 일치하지 않습니다')
+                    showMessage('아이디 또는 비밀번호가 일치하지 않습니다')
                     break
                 case 'SERVICE_ERROR':
                     showMessage('일시적인 오류가 발생했습니다\n잠시 후에 다시 시도해주세요')
