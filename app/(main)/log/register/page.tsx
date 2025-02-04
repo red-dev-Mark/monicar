@@ -10,6 +10,10 @@ import SquareButton from '@/components/common/Button/SquareButton'
 import ErrorMessage from '@/components/common/ErrorMessage'
 import BaseInput from '@/components/common/Input/BaseInput'
 import SearchInput from '@/components/common/Input/SearchInput'
+import Message from '@/components/common/Message'
+import Modal from '@/components/common/Modal'
+import { ModalMessageType } from '@/components/common/Modal/types'
+import { useModal } from '@/hooks/useModal'
 import { vehicleService } from '@/lib/apis/vehicle'
 import {
     handleDrivingDistanceKeyPress,
@@ -32,7 +36,10 @@ const RegisterPage = () => {
     const [vehicleNumber, setVehicleNumber] = useState<string>('')
     const [vehicleTypeId, setVehicleTypeId] = useState<number>()
     const [deliveryDate, setDeliveryDate] = useState<string | null>(null)
-    const [drivingDistance, setDrivingDistance] = useState<number>(1)
+    const [drivingDistance, setDrivingDistance] = useState<number>()
+    const { isOpen, modalMessage, showMessage, closeModal } = useModal()
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+    const [showErrorMessage, setShowErrorMessage] = useState(false)
 
     const router = useRouter()
 
@@ -57,10 +64,26 @@ const RegisterPage = () => {
     }
 
     const postVehicleInfo = async () => {
-        // TODO: 유효성검사
-        if (!vehicleTypeId || !drivingDistance) {
+        if (!vehicleNumber) {
+            showMessage('차량번호를 입력해주세요.')
             return
         }
+
+        if (!vehicleTypeId) {
+            showMessage('차량 종류를 선택해주세요.')
+            return
+        }
+
+        if (!drivingDistance) {
+            showMessage('운행거리를 입력해주세요.')
+            return
+        }
+
+        if (!deliveryDate) {
+            showMessage('출고일을 선택해주세요.')
+            return
+        }
+
         try {
             await vehicleService.postVehicleInfo({
                 vehicleNumber,
@@ -68,9 +91,11 @@ const RegisterPage = () => {
                 deliveryDate,
                 drivingDistance,
             })
+            showMessage('차량이 성공적으로 등록되었습니다.')
             router.push('/log')
         } catch (error) {
             console.error(error)
+            showMessage('차량 등록에 실패했습니다.')
         }
     }
 
@@ -91,17 +116,23 @@ const RegisterPage = () => {
             id: 'vehicleNumber',
             label: '차량 번호',
             component: (
-                <SearchInput
-                    icon='/icons/search-icon.svg'
-                    onChange={(event) => setVehicleNumber(event.target.value)}
-                    onSubmit={() => {
-                        if (isValidVehicleNumberFormat(vehicleNumber)) {
-                            console.log('차량번호 형식이 유효합니다.')
-                        } else {
-                            console.log('차량번호 형식이 유효하지 않습니다.')
-                        }
-                    }}
-                />
+                <>
+                    <SearchInput
+                        icon='/icons/search-icon.svg'
+                        onChange={(event) => setVehicleNumber(event.target.value)}
+                        onSubmit={() => {
+                            if (isValidVehicleNumberFormat(vehicleNumber)) {
+                                setShowSuccessMessage(true)
+                                setShowErrorMessage(false)
+                            } else {
+                                setShowErrorMessage(true)
+                                setShowSuccessMessage(false)
+                            }
+                        }}
+                    />
+                    {showSuccessMessage && <Message message={'등록 가능한 차량번호입니다.'} isError={false} />}
+                    {showErrorMessage && <Message message={'올바르지 않은 차량번호입니다.'} isError={true} />}
+                </>
             ),
             isError: false,
         },
@@ -192,6 +223,13 @@ const RegisterPage = () => {
                     등록
                 </SquareButton>
             </div>
+
+            <Modal
+                isOpen={isOpen}
+                message={modalMessage as ModalMessageType}
+                variant={{ variant: 'alert', confirmButton: '확인' }}
+                onClose={closeModal}
+            />
         </div>
     )
 }
