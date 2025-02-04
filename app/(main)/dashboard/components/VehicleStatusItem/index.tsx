@@ -17,7 +17,7 @@ const VehicleStatusItem = ({ total, current, color, children }: VehicleStatusIte
         <div className={styles.container}>
             <span className={styles.circle} style={{ background: color }} />
             <p className={styles.title}>
-                {children} <span className={styles.count}>{`( ${current} )`}</span>
+                {children} <span className={styles.count}>{`( ${current.toLocaleString()} )`}</span>
             </p>
             <div className={styles.progressWrapper}>
                 <Progress color={color} radius='md' size='lg' value={percent} />

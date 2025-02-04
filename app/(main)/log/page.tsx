@@ -1,5 +1,5 @@
 'use client'
-import { Group, Loader, Pagination } from '@mantine/core'
+import { Group, Pagination } from '@mantine/core'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -12,6 +12,7 @@ import ErrorMessage from '@/components/common/ErrorMessage'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
+import PageLoader from '@/components/common/PageLoader'
 import ListHeader from '@/components/domain/vehicle/ListHeader'
 import { LOG_TITLES } from '@/constants/listHeader'
 import { useModal } from '@/hooks/useModal'
@@ -65,11 +66,7 @@ const LogPage = () => {
     }
 
     if (isLoading) {
-        return (
-            <div className={styles.loader}>
-                <Loader color='pink' />
-            </div>
-        )
+        return <PageLoader />
     }
     if (error) {
         return <ErrorMessage />
@@ -78,23 +75,24 @@ const LogPage = () => {
     return (
         <div className={styles.container}>
             <Breadcrumb type={'운행기록'} />
-
             <div className={styles.contents}>
                 <ControlLayout
                     control={
-                        <SearchInput
-                            icon='/icons/search-icon.svg'
-                            value={searchTerm}
-                            onChange={handleSearchChange}
-                            onSubmit={handleSearchVehicleNumber}
-                        />
+                        <div className={styles.searchInputWrapper}>
+                            <SearchInput
+                                icon='/icons/search-icon.svg'
+                                value={searchTerm}
+                                onChange={handleSearchChange}
+                                onSubmit={handleSearchVehicleNumber}
+                            />
+                        </div>
                     }
                     primaryButton={<ExcelButton onClick={handleExcelButtonClick} />}
                     secondaryButton={
                         <LinkButton href={'/log/register'}>
                             <div className={styles.linkButton}>
                                 <Image src='/icons/white-add-icon.svg' alt='add' width={18} height={18} />
-                                등록
+                                차량등록
                             </div>
                         </LinkButton>
                     }
@@ -118,6 +116,7 @@ const LogPage = () => {
                     value={activePage}
                     onChange={setActivePage}
                     color='#ff385c'
+                    boundaries={0}
                 >
                     <Group gap={5} justify='center'>
                         <Pagination.First />

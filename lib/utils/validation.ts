@@ -3,19 +3,25 @@ import { formatToISODate } from '@/lib/utils/date'
 import { removeSpaces, trimValue } from '@/lib/utils/string'
 
 // 이메일 형식 검증
-const isValidEmailFormat = (email: string) => {
+export const isValidEmailFormat = (email: string) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
     return emailRegex.test(email)
 }
 
+// 영어+숫자 (한글, 공백 제외)영어과 숫자만 허용 (한글, 공백 제외)
+const isAlphanumeric = (value: string) => {
+    const alphanumericRegex = /^[A-Za-z0-9]+$/
+    return alphanumericRegex.test(trimValue(value))
+}
+
 // 한글과 숫자만 허용
-const isKoreanAndNumbersOnly = (value: string) => {
+export const isKoreanAndNumbersOnly = (value: string) => {
     const koreanNumberRegex = /^[\u3131-\uD79D0-9]+$/
     return koreanNumberRegex.test(value)
 }
 
 // 차량 번호 형식 검증
-const isValidVehicleNumberFormat = (value: string) => {
+export const isValidVehicleNumberFormat = (value: string) => {
     const vehicleNumberRegex = /^(\d{2}|\d{3})[가-힣]\d{4}$/
     return vehicleNumberRegex.test(value)
 }
@@ -34,39 +40,38 @@ const isDateWithinRange = (targetDate: Date, rangeStart: Date, rangeEnd: Date) =
 }
 
 // 로그인 입력 유효성 검증
-export const validateEmail = (email: string) => {
-    if (!trimValue(email)) {
+export const validateEmail = (userId: string) => {
+    if (!trimValue(userId)) {
         return {
             isValid: false,
-            message: '이메일을 입력해주세요',
+            message: '아이디를 입력해주세요',
         }
     }
 
-    // TODO: 추후 삭제!
-    if (email === 'string' || email === 'test1') {
+    if (!isAlphanumeric(userId)) {
         return {
-            isValid: true,
-            value: email,
+            isValid: false,
+            message: '영문과 숫자만 입력해주세요',
         }
     }
 
-    if (!isValidEmailFormat(email)) {
+    if (userId.length < 4) {
         return {
             isValid: false,
-            message: '올바른 이메일 형식이 아닙니다\n(예시 : b6f2@monicar.com)',
+            message: '아이디를 4자 이상 입력해주세요',
         }
     }
 
-    if (email.length > 50) {
+    if (userId.length > 50) {
         return {
             isValid: false,
-            message: '이메일은 50자를 초과할 수 없습니다',
+            message: '아이디은 50자를 초과할 수 없습니다',
         }
     }
 
     return {
         isValid: true,
-        value: email,
+        value: userId,
     }
 }
 
@@ -197,5 +202,36 @@ export const validateSearchTerm = (searchTerm: string) => {
     return {
         isValid: true,
         value: searchTerm,
+    }
+}
+
+// 운행거리 유효성 검증 함수
+export const validateDrivingDistance = (value: string): boolean => {
+    if (!value) return false
+
+    // 숫자만 허용하는 정규식으로 변경
+    if (!/^[0-9]+$/.test(value)) return false
+
+    const numValue = Number(value)
+    if (numValue > 999999) return false
+
+    if (numValue < 0) return false
+
+    return true
+}
+
+// 운행거리 입력 제한 함수
+export const handleDrivingDistanceKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    // 숫자 키만 허용하도록 변경
+    if (!/^[0-9]$/.test(event.key)) {
+        event.preventDefault()
+        return
+    }
+
+    const currentValue = event.currentTarget.value
+    const newValue = currentValue + event.key
+
+    if (Number(newValue) > 999999) {
+        event.preventDefault()
     }
 }
