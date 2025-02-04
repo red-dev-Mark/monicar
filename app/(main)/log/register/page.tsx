@@ -1,6 +1,6 @@
 'use client'
 
-import { Loader, Select } from '@mantine/core'
+import { Select } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -13,6 +13,7 @@ import SearchInput from '@/components/common/Input/SearchInput'
 import Message from '@/components/common/Message'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
+import PageLoader from '@/components/common/PageLoader'
 import { useModal } from '@/hooks/useModal'
 import { vehicleService } from '@/lib/apis/vehicle'
 import {
@@ -100,11 +101,7 @@ const RegisterPage = () => {
     }
 
     if (isLoading) {
-        return (
-            <div className={styles.loader}>
-                <Loader color='pink' />
-            </div>
-        )
+        return <PageLoader />
     }
 
     if (error) {

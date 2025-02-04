@@ -3,6 +3,8 @@
 import { memo } from 'react'
 import { Map as KakaoMap, ZoomControl } from 'react-kakao-maps-sdk'
 
+import ErrorMessage from '@/components/common/ErrorMessage'
+import PageLoader from '@/components/common/PageLoader'
 import { ZOOM_LEVEL } from '@/constants/map'
 import { useKakaoLoader } from '@/hooks/useKakaoLoader'
 import { LatLng } from '@/types/location'
@@ -28,8 +30,8 @@ const Map = memo(
             onMapStatusChanged?.()
         }
 
-        if (loading) return <div>지도를 불러오는 중...</div>
-        if (error) return <div>지도를 불러오는데 실패했습니다</div>
+        if (loading) return <PageLoader />
+        if (error) return <ErrorMessage />
 
         return (
             <KakaoMap
