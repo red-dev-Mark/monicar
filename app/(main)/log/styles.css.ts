@@ -18,6 +18,10 @@ export const searchInputWrapper = style({
     width: '300px',
 })
 
+export const excelButtonWrapper = style({
+    width: '90px',
+})
+
 export const linkButton = style({
     backgroundColor: vars.colors.primary,
     color: vars.colors.white,

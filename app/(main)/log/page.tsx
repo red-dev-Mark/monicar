@@ -87,7 +87,11 @@ const LogPage = () => {
                             />
                         </div>
                     }
-                    primaryButton={<ExcelButton onClick={handleExcelButtonClick} />}
+                    primaryButton={
+                        <div className={styles.excelButtonWrapper}>
+                            <ExcelButton onClick={handleExcelButtonClick} />
+                        </div>
+                    }
                     secondaryButton={
                         <LinkButton href={'/log/register'}>
                             <div className={styles.linkButton}>

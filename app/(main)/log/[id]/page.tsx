@@ -117,14 +117,20 @@ const DetailPage = () => {
                         }}
                     />
                 }
-                primaryButton={<ExcelButton onClick={handleExcelButtonClick} />}
+                primaryButton={
+                    <div className={styles.excelButtonWrapper}>
+                        <ExcelButton onClick={handleExcelButtonClick} />
+                    </div>
+                }
                 secondaryButton={
-                    <RoundButton color='primary' size='small' onClick={handleDeleteButtonClick}>
-                        <div className={styles.button}>
-                            <Image src='/icons/white-trash-icon.svg' alt='add' width={18} height={18} />
-                            삭제
-                        </div>
-                    </RoundButton>
+                    <div className={styles.deleteButtonWrapper}>
+                        <RoundButton color='primary' size='small' onClick={handleDeleteButtonClick}>
+                            <div className={styles.deleteButton}>
+                                <Image src='/icons/white-trash-icon.svg' alt='add' width={18} height={18} />
+                                차량삭제
+                            </div>
+                        </RoundButton>
+                    </div>
                 }
             />
 
