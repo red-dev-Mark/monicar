@@ -64,10 +64,3 @@ export const linkButton = style({
         backgroundColor: vars.colors.gray[800],
     },
 })
-
-export const loader = style({
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh',
-})

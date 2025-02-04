@@ -16,6 +16,8 @@ export const useAuth = () => {
 
             const { nickname, email, departmentName, companyName } = await authService.getUserInfo()
             login({ email, nickname, companyName, departmentName })
+            localStorage.setItem('email', email)
+            localStorage.setItem('company_name', companyName)
         } catch (error) {
             console.error(error)
             setAuthError(error instanceof Error ? error.message : '로그인에 실패하였습니다')
