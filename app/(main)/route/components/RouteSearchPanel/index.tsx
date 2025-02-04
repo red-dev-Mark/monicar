@@ -40,7 +40,7 @@ const RouteSearchPanel = ({ onPathsChange }: RouteSearchPanelProps) => {
         }
     }, [searchedVehicle, setSearchableDates])
 
-    const { isValidDate, isAllSelected, isValidSelectRange } = validateDateSelection(
+    const { isValidDate, isAllSelected, isWithSearchableRange, isValidSelectRange } = validateDateSelection(
         startDate,
         endDate,
         searchableDates,
@@ -52,10 +52,10 @@ const RouteSearchPanel = ({ onPathsChange }: RouteSearchPanelProps) => {
             return
         }
 
-        // if (!isWithSearchableRange()) {
-        //     alert(`조회 가능한 일은 ${searchableDates.firstDateAt} ~ ${searchableDates.lastDateAt}`)
-        //     return
-        // }
+        if (!isWithSearchableRange()) {
+            alert(`조회 가능한 일은 ${searchableDates.firstDateAt} ~ ${searchableDates.lastDateAt}`)
+            return
+        }
 
         if (!isValidSelectRange()) {
             alert('종료 일시는 시작 일시보다 같거나 빠르면 안됩니다')
