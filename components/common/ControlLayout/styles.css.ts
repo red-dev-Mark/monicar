@@ -16,7 +16,6 @@ export const container = style({
 
 export const buttonGroup = style({
     display: 'flex',
-    width: '200px',
     justifyContent: 'center',
     gap: '12px',
 })
