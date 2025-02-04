@@ -3,9 +3,15 @@ import { formatToISODate } from '@/lib/utils/date'
 import { removeSpaces, trimValue } from '@/lib/utils/string'
 
 // 이메일 형식 검증
-const isValidEmailFormat = (email: string) => {
+export const isValidEmailFormat = (email: string) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
     return emailRegex.test(email)
+}
+
+// 영어+숫자 (한글, 공백 제외)영어과 숫자만 허용 (한글, 공백 제외)
+const isAlphanumeric = (value: string) => {
+    const alphanumericRegex = /^[A-Za-z0-9]+$/
+    return alphanumericRegex.test(trimValue(value))
 }
 
 // 한글과 숫자만 허용
@@ -34,39 +40,38 @@ const isDateWithinRange = (targetDate: Date, rangeStart: Date, rangeEnd: Date) =
 }
 
 // 로그인 입력 유효성 검증
-export const validateEmail = (email: string) => {
-    if (!trimValue(email)) {
+export const validateEmail = (userId: string) => {
+    if (!trimValue(userId)) {
         return {
             isValid: false,
             message: '이메일을 입력해주세요',
         }
     }
 
-    // TODO: 추후 삭제!
-    if (email === 'string' || email === 'test1') {
+    if (!isAlphanumeric(userId)) {
         return {
-            isValid: true,
-            value: email,
+            isValid: false,
+            message: '영문과 숫자만 입력해주세요',
         }
     }
 
-    if (!isValidEmailFormat(email)) {
+    if (userId.length < 4) {
         return {
             isValid: false,
-            message: '올바른 이메일 형식이 아닙니다\n(예시 : b6f2@monicar.com)',
+            message: '아이디를 4자 이상 입력해주세요',
         }
     }
 
-    if (email.length > 50) {
+    if (userId.length > 50) {
         return {
             isValid: false,
-            message: '이메일은 50자를 초과할 수 없습니다',
+            message: '아이디은 50자를 초과할 수 없습니다',
         }
     }
 
     return {
         isValid: true,
-        value: email,
+        value: userId,
     }
 }
 

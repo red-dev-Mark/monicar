@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+
 import Calendar from '@/app/(main)/dashboard/components/Calendar'
 import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
 import SearchInput from '@/components/common/Input/SearchInput'
@@ -8,7 +10,7 @@ import { ModalMessageType } from '@/components/common/Modal/types'
 import Map from '@/components/domain/map/Map'
 import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
 import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from '@/public/icons'
-import { useAuthStore } from '@/stores/useAuthStore'
+// import { useAuthStore } from '@/stores/useAuthStore'
 
 import InspectionStatus from './components/InspectionStatus'
 import NoticeListBoard from './components/NoticeListBoard'
@@ -28,7 +30,14 @@ const DashboardPage = () => {
         closeModal,
     } = useSearchSingleVehicle()
 
-    const user = useAuthStore((state) => state.user)
+    const [companyName, setCompanyName] = useState<string>('')
+
+    // const user = useAuthStore((state) => state.user)
+    useEffect(() => {
+        const companyName = localStorage.getItem('company_name') || '모니카'
+
+        setCompanyName(companyName)
+    }, [])
 
     const isVehicleMarkerVisible = !!(isVehicleVisible && vehicleInfo)
 
@@ -38,7 +47,7 @@ const DashboardPage = () => {
                 <header className={styles.header}>
                     <p className={styles.introduce}>
                         안녕하세요,
-                        <span className={styles.userName}>{user?.companyName} 님 👋</span>
+                        <span className={styles.userName}>{companyName} 님 👋</span>
                     </p>
 
                     <div className={styles.searchInputWrapper}>
