@@ -100,11 +100,7 @@ const RegisterPage = () => {
     }
 
     if (isLoading) {
-        return (
-            <div className={styles.loader}>
-                <Loader color='pink' />
-            </div>
-        )
+        return <Loader color='pink' />
     }
 
     if (error) {
