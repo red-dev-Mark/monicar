@@ -1,6 +1,5 @@
 'use client'
 
-import { Loader } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
@@ -12,6 +11,7 @@ import ControlLayout from '@/components/common/ControlLayout'
 import ErrorMessage from '@/components/common/ErrorMessage'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
+import PageLoader from '@/components/common/PageLoader'
 import { API_ENDPOINTS } from '@/constants/api'
 import { vehicleService } from '@/lib/apis/vehicle'
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
@@ -81,11 +81,7 @@ const DetailPage = () => {
     }
 
     if (isLoading) {
-        return (
-            <div className={styles.loader}>
-                <Loader color='pink' />
-            </div>
-        )
+        return <PageLoader />
     }
     if (error) {
         return <ErrorMessage />

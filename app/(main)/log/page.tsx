@@ -1,5 +1,5 @@
 'use client'
-import { Group, Loader, Pagination } from '@mantine/core'
+import { Group, Pagination } from '@mantine/core'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -12,6 +12,7 @@ import ErrorMessage from '@/components/common/ErrorMessage'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
+import PageLoader from '@/components/common/PageLoader'
 import ListHeader from '@/components/domain/vehicle/ListHeader'
 import { LOG_TITLES } from '@/constants/listHeader'
 import { useModal } from '@/hooks/useModal'
@@ -65,11 +66,7 @@ const LogPage = () => {
     }
 
     if (isLoading) {
-        return (
-            <div className={styles.loader}>
-                <Loader color='pink' />
-            </div>
-        )
+        return <PageLoader />
     }
     if (error) {
         return <ErrorMessage />
