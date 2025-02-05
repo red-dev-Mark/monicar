@@ -19,7 +19,7 @@ export const middleware = async (request: NextRequest) => {
         }
     }
 
-    if (pathname === '/signin' && accessToken) {
+    if (pathname === '/signin' && (accessToken || refreshToken)) {
         return NextResponse.redirect(new URL('/dashboard', request.url))
     }
 
