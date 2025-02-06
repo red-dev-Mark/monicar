@@ -49,15 +49,6 @@ const DashboardPage = () => {
                         안녕하세요,
                         <span className={styles.userName}>{companyName} 님 👋</span>
                     </p>
-
-                    <div className={styles.searchInputWrapper}>
-                        <SearchInput
-                            icon='/icons/search-icon.svg'
-                            value={searchTerm}
-                            onChange={handleSearchChange}
-                            onSubmit={handleVehicleSearch}
-                        />
-                    </div>
                 </header>
 
                 <InspectionStatus
@@ -92,6 +83,14 @@ const DashboardPage = () => {
                 <VehicleStatusPanel />
 
                 <div className={styles.mapWrapper}>
+                    <div className={styles.searchInputWrapper}>
+                        <SearchInput
+                            icon='/icons/search-icon.svg'
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            onSubmit={handleVehicleSearch}
+                        />
+                    </div>
                     <Map center={mapState.center} zoom={mapState.level}>
                         {isVehicleMarkerVisible && <VehicleMarker vehicleInfo={vehicleInfo} />}
                     </Map>

@@ -46,7 +46,7 @@ const Map = memo(
                 onDragEnd={handleMapStatusChange}
             >
                 {children}
-                <ZoomControl />
+                <ZoomControl position={'BOTTOMRIGHT'} />
             </KakaoMap>
         )
     },
