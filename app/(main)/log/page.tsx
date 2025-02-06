@@ -28,7 +28,7 @@ const LogPage = () => {
     const [activePage, setActivePage] = useState(1)
     const [searchVehicleNumber, setSearchVehicleNumber] = useState<string>()
     const [searchTerm, setSearchTerm] = useState('')
-    const { isOpen, modalMessage, closeModal, showMessage } = useModal()
+    const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
     const { logData, isLoading, error } = useLogData(activePage, searchVehicleNumber)
 
     const handleExcelButtonClick = async () => {
@@ -36,7 +36,7 @@ const LogPage = () => {
             await downloadExcel()
         } catch (error) {
             console.error('엑셀 다운로드 에러', error)
-            showMessage('엑셀 다운로드에 실패했습니다')
+            openModalWithMessage('엑셀 다운로드에 실패했습니다')
         }
     }
 
@@ -57,7 +57,7 @@ const LogPage = () => {
         const validation = validateSearchTerm(searchTerm)
 
         if (!validation.isValid) {
-            showMessage(validation.message!)
+            openModalWithMessage(validation.message!)
             return
         }
 
@@ -102,8 +102,8 @@ const LogPage = () => {
                     }
                 />
                 <Modal
-                    isOpen={isOpen}
-                    message={modalMessage as ModalMessageType}
+                    isOpen={isModalOpen}
+                    message={message as ModalMessageType}
                     variant={{ variant: 'alert', confirmButton: '확인' }}
                     onClose={closeModal}
                 />

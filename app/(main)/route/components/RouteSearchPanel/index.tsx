@@ -31,7 +31,7 @@ const RouteSearchPanel = ({ onPathsChange }: RouteSearchPanelProps) => {
     const [startDate, setStartDate] = useState<DateTime>({ year: '', month: '', date: '', hour: '', minute: '' })
     const [endDate, setEndDate] = useState<DateTime>({ year: '', month: '', date: '', hour: '', minute: '' })
 
-    const { searchedVehicle, searchableDates, isOpen, modalMessage, searchVehicle, setSearchableDates, closeModal } =
+    const { searchedVehicle, searchableDates, isModalOpen, message, searchVehicle, setSearchableDates, closeModal } =
         useSearchVehicle(inputValue)
 
     useEffect(() => {
@@ -128,8 +128,8 @@ const RouteSearchPanel = ({ onPathsChange }: RouteSearchPanelProps) => {
                         </SquareButton>
 
                         <Modal
-                            isOpen={isOpen}
-                            message={modalMessage as ModalMessageType}
+                            isOpen={isModalOpen}
+                            message={message as ModalMessageType}
                             variant={{ variant: 'alert', confirmButton: '확인' }}
                             onClose={closeModal}
                         />

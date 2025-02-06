@@ -4,22 +4,35 @@ import { useEffect, useRef, useState } from 'react'
 // import { CustomOverlayMap } from 'react-kakao-maps-sdk'
 
 // import CustomMarker from '@/app/(main)/location/components/CustomMarker'
+import VehicleDetailsCard from '@/app/(main)/location/components/VehicleDetailCard'
 import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
 import Map from '@/components/domain/map/Map'
 import { useMapStatus } from '@/hooks/useCurrentMapStatus'
 // import { clusterService } from '@/lib/apis/cluster'
 import { LatLng } from '@/types/location'
 import { MapState } from '@/types/map'
-import { VehicleInfoModel } from '@/types/vehicle'
+import { VehicleDetailModel, VehicleInfoModel } from '@/types/vehicle'
 
 interface MapSectionProps {
-    mapState: MapState
+    mapState?: MapState
     vehicleInfo: VehicleInfoModel
-    isVehicleMarkerVisible: boolean
-    onClick: (location: LatLng, level: number) => void
+    vehicleDetail: VehicleDetailModel
+    isVehicleVisible: boolean
+    isDetailCardVisible: boolean
+    onClick?: (location: LatLng, level: number) => void
+    onVehicleClose: () => void
+    onDetailCardClose: () => void
 }
 
-const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible }: MapSectionProps) => {
+const MapSection = ({
+    // mapState,
+    vehicleInfo,
+    vehicleDetail,
+    isVehicleVisible,
+    isDetailCardVisible,
+    // onVehicleClose,
+    onDetailCardClose,
+}: MapSectionProps) => {
     // const [clusterInfo, setClusterInfo] = useState<ClusterPoint[]>([])
     // const [clusterDetailInfo, setClusterDetailInfo] = useState<VehicleInfoModel | null>(null)
     const [isMapLoaded, setIsMapLoaded] = useState(false)
@@ -47,11 +60,19 @@ const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible }: MapSectio
         getClusterInfo()
     }, [isMapLoaded, currentMapState])
 
+    // const handleVehicleDetailCardClose = () => {
+    //     setIsVehicleDetailsVisible(false)
+    // }
+
+    const shouldShowVehicleDetailCard = isVehicleVisible && isDetailCardVisible
+
+    console.log(isVehicleVisible, shouldShowVehicleDetailCard)
+
     return (
         <Map
             ref={mapRef}
-            center={mapState.center}
-            zoom={mapState.level}
+            // center={mapState?.center}
+            // zoom={mapState?.level}
             onLoad={() => setIsMapLoaded(true)}
             onMapStatusChanged={updateMapStatus}
         >
@@ -76,7 +97,10 @@ const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible }: MapSectio
                 )
             })}
             {clusterDetailInfo && <VehicleMarker vehicleInfo={clusterDetailInfo} />} */}
-            {isVehicleMarkerVisible && <VehicleMarker vehicleInfo={vehicleInfo} />}
+            {isVehicleVisible && <VehicleMarker vehicleInfo={vehicleInfo} />}
+            {shouldShowVehicleDetailCard && (
+                <VehicleDetailsCard vehicleDetails={vehicleDetail} onCloseButtonClick={onDetailCardClose} />
+            )}
         </Map>
     )
 }

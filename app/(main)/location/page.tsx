@@ -1,14 +1,18 @@
 'use client'
 
+import { useDisclosure } from '@mantine/hooks'
 import dynamic from 'next/dynamic'
+import { ChangeEventHandler, useState } from 'react'
 
-// import VehicleDetailsCard from '@/app/(main)/location/components/VehicleDetailsCard'
 import VehicleStatusPanel from '@/app/(main)/location/components/VehicleStatusPanel'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
-import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
-import { VehicleInfoModel } from '@/types/vehicle'
+import { ZOOM_LEVEL } from '@/constants/map'
+import { useMapControl } from '@/hooks/useMapControl'
+import { useVehicleLocationSearch } from '@/hooks/useVehicleLocationSearch'
+import { vehicleService } from '@/lib/apis'
+import { VehicleDetailModel, VehicleInfoModel } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
@@ -17,57 +21,68 @@ const MapSection = dynamic(() => import('./components/MapSection'), {
 })
 
 const LocationPage = () => {
-    // const [isDetailsCardVisible, setIsDetailsCardVisible] = useState(false)
-    // const [vehicleDetails, setVehicleDetails] = useState<VehicleDetailsModel>()
+    const [inputValue, setInputValue] = useState('')
+    const [vehicleDetail, setVehicleDetail] = useState<VehicleDetailModel>()
 
-    const {
-        vehicleInfo,
-        mapState,
-        isVehicleVisible,
-        searchTerm,
-        modalMessage,
-        isOpen,
-        handleVehicleSearch,
-        handleSearchChange,
-        updateMapLocation,
-        closeModal,
-    } = useSearchSingleVehicle()
+    const { vehicleInfo, isModalOpen, message, closeModal, searchVehicleWithNumber } =
+        useVehicleLocationSearch(inputValue)
+    const [isSearchedVehicleVisible, { open: showSearchedVehicle, close: hideSearchedVehicle }] = useDisclosure()
+    const [isVehicleDetailCardVisible, { open: showVehicleDetailCard, close: hideVehicleDetailCard }] = useDisclosure()
 
-    // const handleVehicleClick = async () => {
-    //     const { vehicleId } = vehicleInfo as VehicleInfoModel
-    //     const vehicleDetailsData = await vehicleService.getVehicleDetailInfo(vehicleId)
+    const { mapState, updateMapLocation } = useMapControl()
 
-    //     setVehicleDetails(vehicleDetailsData)
-    //     setIsDetailsCardVisible(true)
-    // }
+    const handleInputSubmit = async () => {
+        const vehicle = await searchVehicleWithNumber()
 
-    const isVehicleMarkerVisible = !!(isVehicleVisible && vehicleInfo)
-    // const isVehicleDetailsVisible = !!(isDetailsCardVisible && vehicleDetails)
+        if (vehicle && vehicleInfo) {
+            const { vehicleId } = vehicleInfo as VehicleInfoModel
+            const vehicleDetail = await vehicleService.getVehicleDetail(vehicleId)
+
+            if (vehicleInfo) {
+                updateMapLocation(
+                    {
+                        lat: vehicleInfo?.coordinate.lat,
+                        lng: vehicleInfo?.coordinate.lng,
+                    },
+                    ZOOM_LEVEL.SINGLE_VEHICLE,
+                )
+            }
+
+            setVehicleDetail(vehicleDetail)
+            showSearchedVehicle()
+            showVehicleDetailCard()
+            setInputValue('')
+        }
+    }
+
+    const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+        setInputValue(event.target.value)
+    }
 
     return (
         <div className={styles.container}>
             <MapSection
                 mapState={mapState}
                 vehicleInfo={vehicleInfo as VehicleInfoModel}
-                isVehicleMarkerVisible={isVehicleMarkerVisible}
-                onClick={updateMapLocation}
+                vehicleDetail={vehicleDetail as VehicleDetailModel}
+                isVehicleVisible={isSearchedVehicleVisible}
+                isDetailCardVisible={isVehicleDetailCardVisible}
+                onVehicleClose={hideSearchedVehicle}
+                onDetailCardClose={hideVehicleDetailCard}
             />
             <div className={styles.searchInputWrapper}>
                 <SearchInput
                     icon='/icons/search-icon.svg'
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                    onSubmit={handleVehicleSearch}
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    onSubmit={handleInputSubmit}
                 />
             </div>
             <VehicleStatusPanel />
-            {/* {isVehicleDetailsVisible && (
-                <VehicleDetailsCard vehicleDetails={vehicleDetails} onCloseButtonClick={setIsDetailsCardVisible} />
-            )} */}
 
             <Modal
-                isOpen={isOpen}
-                message={modalMessage as ModalMessageType}
+                isOpen={isModalOpen}
+                message={message as ModalMessageType}
                 variant={{ variant: 'alert', confirmButton: '확인' }}
                 onClose={closeModal}
             />
