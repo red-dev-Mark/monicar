@@ -3,7 +3,7 @@ import { style } from '@vanilla-extract/css'
 import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
-    height: '100vh',
+    height: '130vh',
     backgroundColor: vars.colors.dashboard,
     display: 'flex',
     gap: '34px',
@@ -125,7 +125,11 @@ export const userName = style({
 })
 
 export const searchInputWrapper = style({
+    position: 'absolute',
+    right: 14,
+    top: 18,
     width: '358px',
+    zIndex: vars.zIndex.four,
 
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
@@ -135,6 +139,7 @@ export const searchInputWrapper = style({
 })
 
 export const mapWrapper = style({
+    position: 'relative',
     height: '100%',
     borderRadius: '14px',
     overflow: 'hidden',

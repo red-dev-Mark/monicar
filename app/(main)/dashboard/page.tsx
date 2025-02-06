@@ -11,7 +11,6 @@ import { ModalMessageType } from '@/components/common/Modal/types'
 import Map from '@/components/domain/map/Map'
 import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
 import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from '@/public/icons'
-// import { useAuthStore } from '@/stores/useAuthStore'
 
 import InspectionStatus from './components/InspectionStatus'
 import NoticeListBoard from './components/NoticeListBoard'
@@ -31,13 +30,19 @@ const DashboardPage = () => {
         closeModal,
     } = useSearchSingleVehicle()
 
-    const [companyName, setCompanyName] = useState<string>('')
+    const [userInfo, setUserInfo] = useState({
+        companyName: '',
+        nickname: '',
+    })
 
-    // const user = useAuthStore((state) => state.user)
     useEffect(() => {
-        const companyName = localStorage.getItem('company_name') || '모니카'
+        const companyName = localStorage.getItem('company_name') || ''
+        const nickname = localStorage.getItem('nickname') || ''
 
-        setCompanyName(companyName)
+        setUserInfo(() => ({
+            companyName,
+            nickname,
+        }))
     }, [])
 
     const isVehicleMarkerVisible = !!(isVehicleVisible && vehicleInfo)
@@ -52,17 +57,10 @@ const DashboardPage = () => {
                 <header className={styles.header}>
                     <p className={styles.introduce}>
                         안녕하세요,
-                        <span className={styles.userName}>{companyName} 님 👋</span>
+                        <span className={styles.userName}>
+                            {userInfo.companyName}, {userInfo.nickname} 님 👋
+                        </span>
                     </p>
-
-                    <div className={styles.searchInputWrapper}>
-                        <SearchInput
-                            icon='/icons/search-icon.svg'
-                            value={searchTerm}
-                            onChange={handleSearchChange}
-                            onSubmit={handleVehicleSearch}
-                        />
-                    </div>
                 </header>
 
                 <InspectionStatus
@@ -99,6 +97,14 @@ const DashboardPage = () => {
                 </div>
 
                 <div className={styles.mapWrapper}>
+                    <div className={styles.searchInputWrapper}>
+                        <SearchInput
+                            icon='/icons/search-icon.svg'
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            onSubmit={handleVehicleSearch}
+                        />
+                    </div>
                     <Map center={mapState.center} zoom={mapState.level}>
                         {isVehicleMarkerVisible && <VehicleMarker vehicleInfo={vehicleInfo} />}
                     </Map>
@@ -137,6 +143,30 @@ const DashboardPage = () => {
                         ]}
                     />
                 </div>
+                <Calendar
+                    calendarData={[
+                        {
+                            id: 1,
+                            message: '즐거운 아침! 음악과 함께 시작.',
+                            isActive: false,
+                        },
+                        {
+                            id: 2,
+                            message: '눈 오는 날은 차량 운행에 주의하세요.',
+                            isActive: true,
+                        },
+                        {
+                            id: 3,
+                            message: '점심에는 스트레칭을 해볼까요?',
+                            isActive: false,
+                        },
+                        {
+                            id: 4,
+                            message: '따뜻한 커피 한 잔은 건강에 좋아요.',
+                            isActive: false,
+                        },
+                    ]}
+                />
 
                 <div className={styles.noticeWrapper}>
                     <NoticeListBoard />
