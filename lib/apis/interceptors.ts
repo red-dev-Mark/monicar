@@ -4,6 +4,8 @@ import { API_URL } from '@/constants/api'
 import { httpClient } from '@/lib/apis/client'
 import { useAuthStore } from '@/stores/useAuthStore'
 
+import { authService } from './auth'
+
 interface CustomRequestConfig extends InternalAxiosRequestConfig {
     isRequestAlready?: boolean
 }
@@ -60,6 +62,7 @@ export const setupResponseInterceptor = (instance: AxiosInstance) => {
                     }
                 } catch (retryError) {
                     console.log(retryError)
+                    await authService.postSignOut()
                     logout()
                     window.location.href = '/signin'
                 }
