@@ -33,7 +33,7 @@ const LogPage = () => {
 
     const handleExcelButtonClick = async () => {
         try {
-            await downloadExcel()
+            await downloadExcel(searchTerm)
         } catch (error) {
             console.error('엑셀 다운로드 에러', error)
             showMessage('엑셀 다운로드에 실패했습니다')

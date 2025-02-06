@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 import Calendar from '@/app/(main)/dashboard/components/Calendar'
@@ -43,6 +44,10 @@ const DashboardPage = () => {
 
     return (
         <div className={styles.container}>
+            <div className={styles.logoWrapper}>
+                <Image src={'/text-logo.png'} width={152} height={30} alt='로고' />
+            </div>
+
             <section className={styles.leftSection}>
                 <header className={styles.header}>
                     <p className={styles.introduce}>
@@ -89,7 +94,9 @@ const DashboardPage = () => {
                     ]}
                 />
 
-                <VehicleStatusPanel />
+                <div className={styles.vehicleStatusPanelWrapper}>
+                    <VehicleStatusPanel />
+                </div>
 
                 <div className={styles.mapWrapper}>
                     <Map center={mapState.center} zoom={mapState.level}>
@@ -99,37 +106,41 @@ const DashboardPage = () => {
             </section>
 
             <section className={styles.rightSection}>
-                <Calendar
-                    calendarData={[
-                        {
-                            id: 1,
-                            message: '즐거운 아침! 음악과 함께 시작.',
-                            isActive: false,
-                        },
-                        {
-                            id: 2,
-                            message: '따뜻한 커피 한 잔은 건강에 좋아요.',
-                            isActive: false,
-                        },
-                        {
-                            id: 3,
-                            message: '점심에는 스트레칭을 해볼까요?',
-                            isActive: true,
-                        },
-                        {
-                            id: 4,
-                            message: '바이오리듬을 지키세요!',
-                            isActive: false,
-                        },
-                        {
-                            id: 5,
-                            message: '눈 오는 날은 차량 운행에 주의하세요.',
-                            isActive: false,
-                        },
-                    ]}
-                />
+                <div className={styles.calendarWrapper}>
+                    <Calendar
+                        calendarData={[
+                            {
+                                id: 1,
+                                message: '즐거운 아침! 음악과 함께 시작.',
+                                isActive: false,
+                            },
+                            {
+                                id: 2,
+                                message: '따뜻한 커피 한 잔은 건강에 좋아요.',
+                                isActive: false,
+                            },
+                            {
+                                id: 3,
+                                message: '점심에는 스트레칭을 해볼까요?',
+                                isActive: true,
+                            },
+                            {
+                                id: 4,
+                                message: '바이오리듬을 지키세요!',
+                                isActive: false,
+                            },
+                            {
+                                id: 5,
+                                message: '눈 오는 날은 차량 운행에 주의하세요.',
+                                isActive: false,
+                            },
+                        ]}
+                    />
+                </div>
 
-                <NoticeListBoard />
+                <div className={styles.noticeWrapper}>
+                    <NoticeListBoard />
+                </div>
             </section>
 
             <Modal
