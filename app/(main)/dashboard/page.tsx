@@ -122,6 +122,11 @@ const DashboardPage = () => {
                             message: '점심에는 스트레칭을 해볼까요?',
                             isActive: false,
                         },
+                        {
+                            id: 4,
+                            message: '따뜻한 커피 한 잔은 건강에 좋아요.',
+                            isActive: false,
+                        },
                     ]}
                 />
 
