@@ -7,6 +7,8 @@ export const useModal = () => {
     const openModal = () => setIsOpen(true)
     const closeModal = () => setIsOpen(false)
 
+    console.log('Hook: ', isOpen)
+
     const showMessage = (message: string) => {
         setModalMessage(message)
         openModal()
