@@ -16,11 +16,10 @@ interface MapSectionProps {
     mapState: MapState
     vehicleInfo: VehicleInfoModel
     isVehicleMarkerVisible: boolean
-    onVehicleClick: () => void
     onClick: (location: LatLng, level: number) => void
 }
 
-const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleClick }: MapSectionProps) => {
+const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible }: MapSectionProps) => {
     // const [clusterInfo, setClusterInfo] = useState<ClusterPoint[]>([])
     // const [clusterDetailInfo, setClusterDetailInfo] = useState<VehicleInfoModel | null>(null)
     const [isMapLoaded, setIsMapLoaded] = useState(false)
@@ -77,7 +76,7 @@ const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleCl
                 )
             })}
             {clusterDetailInfo && <VehicleMarker vehicleInfo={clusterDetailInfo} />} */}
-            {isVehicleMarkerVisible && <VehicleMarker vehicleInfo={vehicleInfo} onVehicleClick={onVehicleClick} />}
+            {isVehicleMarkerVisible && <VehicleMarker vehicleInfo={vehicleInfo} />}
         </Map>
     )
 }
