@@ -135,38 +135,9 @@ const DashboardPage = () => {
                                 message: '바이오리듬을 지키세요!',
                                 isActive: false,
                             },
-                            {
-                                id: 5,
-                                message: '눈 오는 날은 차량 운행에 주의하세요.',
-                                isActive: false,
-                            },
                         ]}
                     />
                 </div>
-                <Calendar
-                    calendarData={[
-                        {
-                            id: 1,
-                            message: '즐거운 아침! 음악과 함께 시작.',
-                            isActive: false,
-                        },
-                        {
-                            id: 2,
-                            message: '눈 오는 날은 차량 운행에 주의하세요.',
-                            isActive: true,
-                        },
-                        {
-                            id: 3,
-                            message: '점심에는 스트레칭을 해볼까요?',
-                            isActive: false,
-                        },
-                        {
-                            id: 4,
-                            message: '따뜻한 커피 한 잔은 건강에 좋아요.',
-                            isActive: false,
-                        },
-                    ]}
-                />
 
                 <div className={styles.noticeWrapper}>
                     <NoticeListBoard />
