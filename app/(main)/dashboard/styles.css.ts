@@ -14,7 +14,7 @@ export const leftSection = style({
     width: '60%',
     display: 'flex',
     flexDirection: 'column',
-    gap: '28px',
+    gap: '24px',
 })
 
 export const rightSection = style({
