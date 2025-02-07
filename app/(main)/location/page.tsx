@@ -12,7 +12,7 @@ import { ZOOM_LEVEL } from '@/constants/map'
 import { useMapControl } from '@/hooks/useMapControl'
 import { useVehicleLocationSearch } from '@/hooks/useVehicleLocationSearch'
 import { vehicleService } from '@/lib/apis'
-import { routeService } from '@/lib/apis/route'
+// import { routeService } from '@/lib/apis/route'
 import { VehicleDetailModel, VehicleInfoModel } from '@/types/vehicle'
 
 import * as styles from './styles.css'
@@ -35,38 +35,36 @@ const LocationPage = () => {
     const handleInputSubmit = async () => {
         const vehicleInfo = await searchVehicleWithNumber()
 
-        if (vehicleInfo) {
-            const { vehicleId } = vehicleInfo as VehicleInfoModel
-            const vehicleDetail = await vehicleService.getVehicleDetail(vehicleId)
+        if (!vehicleInfo) return
 
-            if (vehicleInfo) {
-                updateMapLocation(
-                    {
-                        lat: vehicleInfo?.coordinate.lat,
-                        lng: vehicleInfo?.coordinate.lng,
-                    },
-                    ZOOM_LEVEL.SINGLE_VEHICLE,
-                )
-            }
+        const { vehicleId } = vehicleInfo as VehicleInfoModel
+        const vehicleDetail = await vehicleService.getVehicleDetail(vehicleId)
 
-            setVehicleDetail(vehicleDetail)
-            showSearchedVehicle()
-            showVehicleDetailCard()
-            setInputValue('')
-        }
+        updateMapLocation(
+            {
+                lat: vehicleInfo.coordinate.lat,
+                lng: vehicleInfo.coordinate.lng,
+            },
+            ZOOM_LEVEL.SINGLE_VEHICLE,
+        )
+
+        setVehicleDetail(vehicleDetail)
+        showSearchedVehicle()
+        showVehicleDetailCard()
+        setInputValue('')
     }
 
     const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
         setInputValue(event.target.value)
     }
 
-    const handleStart = async () => {
-        await routeService.getVehicleLiveRoutesData('1')
-    }
+    // const handleStart = async () => {
+    //     await routeService.getVehicleLiveRoutesData('1')
+    // }
 
     return (
         <div className={styles.container}>
-            <button onClick={handleStart}>시작!!!!!!!!!</button>
+            {/* <button onClick={handleStart}>시작!!!!!!!!!</button> */}
 
             <MapSection
                 mapState={mapState}

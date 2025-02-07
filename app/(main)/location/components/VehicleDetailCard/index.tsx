@@ -39,7 +39,6 @@ const VehicleDetailCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetail
     const formattedLastUpdated = lastUpdated ? formatISODateToDot(lastUpdated) : '-'
 
     const todayDrivingTime = todayDrivingHistory ? formatMinuteToHour(todayDrivingHistory.drivingTime) : 0
-    // const todayDrivingTime = todayDrivingHistory ? formatWithCommas(todayDrivingHistory.drivingTime) : 0
     const todayDrivingDistance = todayDrivingHistory ? formatWithCommas(todayDrivingHistory.distance) : 0
 
     const address = useCoordToAddress(normalizedCoordinate.lat, normalizedCoordinate.lng)
@@ -83,7 +82,7 @@ const VehicleDetailCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetail
                             <th scope='row' className={styles.tableHeader}>
                                 당일주행시간
                             </th>
-                            <td className={styles.tableCell}>{todayDrivingTime} 분</td>
+                            <td className={styles.tableCell}>{todayDrivingTime}</td>
                             <th scope='row' className={styles.tableHeader}>
                                 당일주행거리
                             </th>

@@ -25,7 +25,7 @@ interface MapSectionProps {
 }
 
 const MapSection = ({
-    // mapState,
+    mapState,
     vehicleInfo,
     vehicleDetail,
     isVehicleVisible,
@@ -69,8 +69,8 @@ const MapSection = ({
     return (
         <Map
             ref={mapRef}
-            // center={mapState?.center}
-            // zoom={mapState?.level}
+            center={mapState?.center}
+            zoom={mapState?.level}
             onLoad={() => setIsMapLoaded(true)}
             onMapStatusChanged={updateMapStatus}
         >
