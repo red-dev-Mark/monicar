@@ -4,12 +4,12 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 import Calendar from '@/app/(main)/dashboard/components/Calendar'
-import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
-import SearchInput from '@/components/common/Input/SearchInput'
-import Modal from '@/components/common/Modal'
-import { ModalMessageType } from '@/components/common/Modal/types'
-import Map from '@/components/domain/map/Map'
-import { useSearchSingleVehicle } from '@/hooks/useSearchSingleVehicle'
+// import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
+// import SearchInput from '@/components/common/Input/SearchInput'
+// import Modal from '@/components/common/Modal'
+// import { ModalMessageType } from '@/components/common/Modal/types'
+// import Map from '@/components/domain/map/Map'
+// import { useSearchSingleVehicle } from '@/hooks/useVehicleLocationSearch'
 import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from '@/public/icons'
 
 import InspectionStatus from './components/InspectionStatus'
@@ -18,17 +18,17 @@ import VehicleStatusPanel from './components/VehicleStatusPanel'
 import * as styles from './styles.css'
 
 const DashboardPage = () => {
-    const {
-        vehicleInfo,
-        mapState,
-        isVehicleVisible,
-        searchTerm,
-        modalMessage,
-        isOpen,
-        handleVehicleSearch,
-        handleSearchChange,
-        closeModal,
-    } = useSearchSingleVehicle()
+    // const {
+    //     vehicleInfo,
+    //     mapState,
+    //     isVehicleVisible,
+    //     searchTerm,
+    //     modalMessage,
+    //     isOpen,
+    //     handleVehicleSearch,
+    //     handleSearchChange,
+    //     closeModal,
+    // } = useSearchSingleVehicle()
 
     const [userInfo, setUserInfo] = useState({
         companyName: '',
@@ -45,7 +45,7 @@ const DashboardPage = () => {
         }))
     }, [])
 
-    const isVehicleMarkerVisible = !!(isVehicleVisible && vehicleInfo)
+    // const isVehicleMarkerVisible = !!(isVehicleVisible && vehicleInfo)
 
     return (
         <div className={styles.container}>
@@ -97,17 +97,17 @@ const DashboardPage = () => {
                 </div>
 
                 <div className={styles.mapWrapper}>
-                    <div className={styles.searchInputWrapper}>
+                    {/* <div className={styles.searchInputWrapper}>
                         <SearchInput
                             icon='/icons/search-icon.svg'
                             value={searchTerm}
                             onChange={handleSearchChange}
                             onSubmit={handleVehicleSearch}
                         />
-                    </div>
-                    <Map center={mapState.center} zoom={mapState.level}>
+                    </div> */}
+                    {/* <Map center={mapState.center} zoom={mapState.level}>
                         {isVehicleMarkerVisible && <VehicleMarker vehicleInfo={vehicleInfo} />}
-                    </Map>
+                    </Map> */}
                 </div>
             </section>
 
@@ -144,12 +144,12 @@ const DashboardPage = () => {
                 </div>
             </section>
 
-            <Modal
+            {/* <Modal
                 isOpen={isOpen}
                 message={modalMessage as ModalMessageType}
                 variant={{ variant: 'alert', confirmButton: '확인' }}
                 onClose={closeModal}
-            />
+            /> */}
         </div>
     )
 }
