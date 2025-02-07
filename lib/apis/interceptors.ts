@@ -5,8 +5,6 @@ import { authService } from '@/lib/apis/auth'
 import { httpClient } from '@/lib/apis/client'
 import { useAuthStore } from '@/stores/useAuthStore'
 
-import { authService } from './auth'
-
 interface CustomRequestConfig extends InternalAxiosRequestConfig {
     isRequestAlready?: boolean
 }
