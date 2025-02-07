@@ -13,10 +13,6 @@ export const container = style({
     flexDirection: 'column',
 
     '@media': {
-        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
-            width: '100%',
-            overflowY: 'auto',
-        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             padding: '0px',
             marginTop: '40px',

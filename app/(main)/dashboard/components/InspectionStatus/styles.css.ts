@@ -88,7 +88,7 @@ export const statusText = style({
 
 export const mobileStatusWrapper = style({
     '@media': {
-        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',

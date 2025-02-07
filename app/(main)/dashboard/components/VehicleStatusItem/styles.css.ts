@@ -33,9 +33,6 @@ export const count = style({
     padding: '0px 4px',
 
     '@media': {
-        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
-            display: 'none',
-        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
         },

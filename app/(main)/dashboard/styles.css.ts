@@ -10,17 +10,15 @@ export const container = style({
     padding: '24px',
 
     '@media': {
-        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
-            height: 'auto',
-            flexDirection: 'column',
-            gap: '24px',
-        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             backgroundColor: vars.colors.white,
             flexDirection: 'column',
             height: 'auto',
-            padding: '16px ',
+            padding: '0px 60px ',
             gap: '0px',
+        },
+        [`screen and (max-width: ${breakPoints.mobileMini}px)`]: {
+            padding: '0px 16px ',
         },
     },
 })
@@ -45,9 +43,6 @@ export const leftSection = style({
     gap: '24px',
 
     '@media': {
-        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
-            width: '100%',
-        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             width: '100%',
             gap: '20px',
@@ -62,9 +57,6 @@ export const rightSection = style({
     gap: '24px',
 
     '@media': {
-        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
-            width: '100%',
-        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             width: '100%',
             height: '40vh',
@@ -82,9 +74,6 @@ export const vehicleStatusPanelWrapper = style({
 
 export const calendarWrapper = style({
     '@media': {
-        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
-            display: 'none',
-        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
         },
@@ -114,12 +103,9 @@ export const introduce = style({
     marginLeft: '24px',
 
     '@media': {
-        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
-            display: 'none',
-            overflowY: 'auto',
-        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
+            overflowY: 'auto',
         },
     },
 })
@@ -127,9 +113,6 @@ export const introduce = style({
 export const userName = style({
     fontSize: vars.fontSizes.xlarge,
     '@media': {
-        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
-            display: 'none',
-        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
         },
@@ -144,9 +127,6 @@ export const searchInputWrapper = style({
     zIndex: vars.zIndex.four,
 
     '@media': {
-        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
-            display: 'none',
-        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
         },
@@ -160,9 +140,6 @@ export const mapWrapper = style({
     overflow: 'hidden',
 
     '@media': {
-        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
-            display: 'none',
-        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
         },

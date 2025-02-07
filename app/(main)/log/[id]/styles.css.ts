@@ -16,9 +16,6 @@ export const container = style({
 
 export const breadcrumbWrapper = style({
     '@media': {
-        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
-            display: 'none',
-        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
         },
