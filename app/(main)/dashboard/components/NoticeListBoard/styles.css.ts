@@ -13,6 +13,10 @@ export const container = style({
     flexDirection: 'column',
 
     '@media': {
+        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
+            width: '100%',
+            overflowY: 'auto',
+        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             padding: '0px',
             marginTop: '40px',
@@ -48,6 +52,10 @@ export const noticeItem = style({
     display: 'flex',
     gap: '20px',
     marginBottom: '20px',
+    transition: 'transform 0.3s ease',
+    ':hover': {
+        transform: 'scale(1.1)',
+    },
 })
 
 export const imageWrapper = style({

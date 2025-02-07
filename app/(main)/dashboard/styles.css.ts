@@ -3,7 +3,7 @@ import { style } from '@vanilla-extract/css'
 import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
-    height: '130vh',
+    height: 'auto',
     backgroundColor: vars.colors.dashboard,
     display: 'flex',
     gap: '34px',
@@ -11,7 +11,9 @@ export const container = style({
 
     '@media': {
         [`screen and (max-width: ${breakPoints.tablet}px)`]: {
+            height: 'auto',
             flexDirection: 'column',
+            gap: '24px',
         },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             backgroundColor: vars.colors.white,
@@ -77,8 +79,12 @@ export const vehicleStatusPanelWrapper = style({
         },
     },
 })
+
 export const calendarWrapper = style({
     '@media': {
+        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
+            display: 'none',
+        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
         },
@@ -90,7 +96,6 @@ export const noticeWrapper = style({
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             width: '100%',
             padding: '0px',
-            overflowY: 'auto',
         },
     },
 })
@@ -109,6 +114,10 @@ export const introduce = style({
     marginLeft: '24px',
 
     '@media': {
+        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
+            display: 'none',
+            overflowY: 'auto',
+        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
         },
@@ -118,6 +127,9 @@ export const introduce = style({
 export const userName = style({
     fontSize: vars.fontSizes.xlarge,
     '@media': {
+        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
+            display: 'none',
+        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
         },
@@ -132,6 +144,9 @@ export const searchInputWrapper = style({
     zIndex: vars.zIndex.four,
 
     '@media': {
+        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
+            display: 'none',
+        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
         },
@@ -145,6 +160,9 @@ export const mapWrapper = style({
     overflow: 'hidden',
 
     '@media': {
+        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
+            display: 'none',
+        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
         },

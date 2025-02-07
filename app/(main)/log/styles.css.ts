@@ -1,11 +1,34 @@
 import { style } from '@vanilla-extract/css'
 
-import { vars } from '@/styles/theme.css'
+import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
     height: '100vh',
     padding: '40px 44px',
     overflowY: 'auto',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            padding: '16px',
+        },
+    },
+})
+
+export const breadcrumbWrapper = style({
+    '@media': {
+        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
+            display: 'none',
+        },
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+        },
+    },
+})
+
+export const header = style({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
 })
 
 export const contents = style({
@@ -38,6 +61,15 @@ export const linkButton = style({
     boxShadow: `0px 4px 4px 0px ${vars.colors.shadow[100]}`,
     ':hover': {
         opacity: vars.opacity[80],
+    },
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
+            display: 'none',
+        },
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+        },
     },
 })
 

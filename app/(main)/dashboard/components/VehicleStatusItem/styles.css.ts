@@ -24,10 +24,18 @@ export const circle = style({
 
 export const count = style({
     marginLeft: '8px',
-    fontSize: vars.fontSizes.mediumPlus,
+    // fontSize: vars.fontSizes.small,
     fontWeight: vars.fontWeights.bold,
+    background: vars.colors.yellow[100],
+    color: vars.colors.yellow[200],
+    border: `solid 1px ${vars.colors.yellow[200]}`,
+    borderRadius: '6px',
+    padding: '0px 4px',
 
     '@media': {
+        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
+            display: 'none',
+        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
         },

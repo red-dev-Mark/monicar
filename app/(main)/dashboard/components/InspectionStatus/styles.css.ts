@@ -17,7 +17,7 @@ export const container = style({
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'flex',
             alignItems: 'center',
-            gap: '12px',
+            gap: '8px',
             padding: '0px',
             fontSize: vars.fontSizes.small,
             backgroundColor: 'transparent',
@@ -65,9 +65,13 @@ export const statusCard = recipe({
 })
 
 export const mobileStatusCard = style({
+    transition: 'transform 0.3s ease',
+    ':hover': {
+        transform: 'scale(1.1)',
+    },
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
-            padding: '5px',
+            padding: '8px',
         },
     },
 })
@@ -84,7 +88,7 @@ export const statusText = style({
 
 export const mobileStatusWrapper = style({
     '@media': {
-        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+        [`screen and (max-width: ${breakPoints.tablet}px)`]: {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',

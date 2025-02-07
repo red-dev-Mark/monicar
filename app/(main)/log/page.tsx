@@ -74,40 +74,45 @@ const LogPage = () => {
 
     return (
         <div className={styles.container}>
-            <Breadcrumb type={'운행기록'} />
-            <div className={styles.contents}>
-                <ControlLayout
-                    control={
-                        <div className={styles.searchInputWrapper}>
-                            <SearchInput
-                                icon='/icons/search-icon.svg'
-                                value={searchTerm}
-                                onChange={handleSearchChange}
-                                onSubmit={handleSearchVehicleNumber}
-                            />
-                        </div>
-                    }
-                    primaryButton={
-                        <div className={styles.excelButtonWrapper}>
-                            <ExcelButton onClick={handleExcelButtonClick} />
-                        </div>
-                    }
-                    secondaryButton={
-                        <LinkButton href={'/log/register'}>
-                            <div className={styles.linkButton}>
-                                <Image src='/icons/white-add-icon.svg' alt='add' width={18} height={18} />
-                                차량등록
+            <div className={styles.header}>
+                <Breadcrumb type={'운행기록'} />
+                <div className={styles.contents}>
+                    <ControlLayout
+                        control={
+                            <div className={styles.searchInputWrapper}>
+                                <SearchInput
+                                    icon='/icons/search-icon.svg'
+                                    value={searchTerm}
+                                    onChange={handleSearchChange}
+                                    onSubmit={handleSearchVehicleNumber}
+                                />
                             </div>
-                        </LinkButton>
-                    }
-                />
-                <Modal
-                    isOpen={isOpen}
-                    message={modalMessage as ModalMessageType}
-                    variant={{ variant: 'alert', confirmButton: '확인' }}
-                    onClose={closeModal}
-                />
+                        }
+                        primaryButton={
+                            <div className={styles.excelButtonWrapper}>
+                                <ExcelButton onClick={handleExcelButtonClick} />
+                            </div>
+                        }
+                        secondaryButton={
+                            <LinkButton href={'/log/register'}>
+                                <div className={styles.linkButton}>
+                                    <Image src='/icons/white-add-icon.svg' alt='add' width={18} height={18} />
+                                    차량등록
+                                </div>
+                            </LinkButton>
+                        }
+                    />
+                </div>
+            </div>
 
+            <Modal
+                isOpen={isOpen}
+                message={modalMessage as ModalMessageType}
+                variant={{ variant: 'alert', confirmButton: '확인' }}
+                onClose={closeModal}
+            />
+
+            <div className={styles.contents}>
                 <ListHeader headerTitles={LOG_TITLES} />
                 {logData?.content.map((log) => (
                     <ListItem key={log.id} data={log} onClick={() => handleItemClick(log.id)} />

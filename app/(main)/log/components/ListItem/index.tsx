@@ -17,13 +17,18 @@ const ListItem = ({ data, onClick }: ListItemProps) => {
     return (
         <button className={styles.container} onClick={onClick} type='button'>
             <ul className={styles.list}>
-                <li className={styles.itemWrapper}>{formattedVehicleNumber}</li>
-                <li className={styles.itemWrapper}>{vehicleModel}</li>
-                <li className={styles.itemWrapper}>{drivingDays.toLocaleString('ko-KR')}일</li>
-                <li className={styles.itemWrapper}>{totalDistance.toLocaleString('ko-KR')}km</li>
-                <li className={styles.itemWrapper}>
-                    <Badge shape={'rectangle'} variant={status} />
-                </li>
+                <div className={styles.leftSection}>
+                    <li className={styles.itemWrapper}>{formattedVehicleNumber}</li>
+                    <li className={styles.itemWrapper}>{vehicleModel}</li>
+                    <li className={styles.itemWrapper}>{drivingDays.toLocaleString('ko-KR')}일</li>
+                </div>
+
+                <div className={styles.rightSection}>
+                    <li className={styles.itemWrapper}>{totalDistance.toLocaleString('ko-KR')}km</li>
+                    <li className={styles.badge}>
+                        <Badge shape={'rectangle'} variant={status} />
+                    </li>
+                </div>
             </ul>
             <div className={styles.icon}>
                 <RightIcon />
