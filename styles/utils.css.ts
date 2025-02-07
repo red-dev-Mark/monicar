@@ -3,7 +3,6 @@ import { style } from '@vanilla-extract/css'
 import { breakPoints } from './theme.css'
 
 export const mediaQuery = {
-    tablet: `screen and (max-width: ${breakPoints.mobileMini}px)`,
     mobile: `screen and (max-width: ${breakPoints.mobile}px)`,
     desktop: `screen and (max-width: ${breakPoints.desktop}px)`,
 } as const

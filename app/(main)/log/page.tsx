@@ -75,34 +75,35 @@ const LogPage = () => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <Breadcrumb type={'운행기록'} />
-                <div className={styles.contents}>
-                    <ControlLayout
-                        control={
-                            <div className={styles.searchInputWrapper}>
-                                <SearchInput
-                                    icon='/icons/search-icon.svg'
-                                    value={searchTerm}
-                                    onChange={handleSearchChange}
-                                    onSubmit={handleSearchVehicleNumber}
-                                />
-                            </div>
-                        }
-                        primaryButton={
-                            <div className={styles.excelButtonWrapper}>
-                                <ExcelButton onClick={handleExcelButtonClick} />
-                            </div>
-                        }
-                        secondaryButton={
-                            <LinkButton href={'/log/register'}>
-                                <div className={styles.linkButton}>
-                                    <Image src='/icons/white-add-icon.svg' alt='add' width={18} height={18} />
-                                    차량등록
-                                </div>
-                            </LinkButton>
-                        }
-                    />
+                <div className={styles.breadcrumbWrapper}>
+                    <Breadcrumb type={'운행기록'} />
                 </div>
+
+                <ControlLayout
+                    control={
+                        <div className={styles.searchInputWrapper}>
+                            <SearchInput
+                                icon='/icons/search-icon.svg'
+                                value={searchTerm}
+                                onChange={handleSearchChange}
+                                onSubmit={handleSearchVehicleNumber}
+                            />
+                        </div>
+                    }
+                    primaryButton={
+                        <div className={styles.excelButtonWrapper}>
+                            <ExcelButton onClick={handleExcelButtonClick} />
+                        </div>
+                    }
+                    secondaryButton={
+                        <LinkButton href={'/log/register'}>
+                            <div className={styles.linkButton}>
+                                <Image src='/icons/white-add-icon.svg' alt='add' width={18} height={18} />
+                                차량등록
+                            </div>
+                        </LinkButton>
+                    }
+                />
             </div>
 
             <Modal

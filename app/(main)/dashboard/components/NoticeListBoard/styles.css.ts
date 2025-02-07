@@ -50,7 +50,7 @@ export const noticeItem = style({
     marginBottom: '20px',
     transition: 'transform 0.3s ease',
     ':hover': {
-        transform: 'scale(1.1)',
+        transform: 'scale(1.05)',
     },
 })
 

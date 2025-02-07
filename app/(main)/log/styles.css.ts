@@ -9,7 +9,7 @@ export const container = style({
 
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
-            padding: '16px',
+            padding: '20px',
         },
     },
 })
@@ -26,12 +26,6 @@ export const header = style({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-})
-
-export const contents = style({
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: '20px',
 })
 
 export const searchInputWrapper = style({
@@ -65,6 +59,13 @@ export const linkButton = style({
             display: 'none',
         },
     },
+})
+
+export const contents = style({
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'column',
+    marginTop: '20px',
 })
 
 export const pagination = style({

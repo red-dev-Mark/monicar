@@ -33,7 +33,7 @@ export const list = style({
     width: '100%',
     transition: 'transform 0.3s ease',
     ':hover': {
-        transform: 'scale(1.1)',
+        transform: 'scale(1.02)',
     },
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
@@ -70,33 +70,6 @@ export const badge = style({
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             flex: 'none',
-        },
-    },
-})
-
-export const leftSection = style({
-    display: 'flex',
-    gap: '8px',
-
-    '@media': {
-        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            flex: 1,
-        },
-    },
-})
-
-export const rightSection = style({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-end',
-    gap: '8px',
-
-    '@media': {
-        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
-            alignItems: 'flex-end',
-            justifyContent: 'space-between',
         },
     },
 })

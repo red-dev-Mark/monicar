@@ -67,7 +67,7 @@ export const statusCard = recipe({
 export const mobileStatusCard = style({
     transition: 'transform 0.3s ease',
     ':hover': {
-        transform: 'scale(1.1)',
+        transform: 'scale(1.05)',
     },
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {

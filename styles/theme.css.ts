@@ -3,7 +3,6 @@ import { createGlobalTheme } from '@vanilla-extract/css'
 import { FONT_WEIGHT } from '@/styles/font.css'
 
 export const breakPoints = {
-    mobileMini: '768',
     mobile: '1024',
     desktop: '1280',
 }

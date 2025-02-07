@@ -15,10 +15,14 @@ export const container = style({
             flexDirection: 'column',
             height: 'auto',
             padding: '0px 60px ',
-            gap: '0px',
+            gap: '10px',
         },
-        [`screen and (max-width: ${breakPoints.mobileMini}px)`]: {
-            padding: '0px 16px ',
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            backgroundColor: vars.colors.white,
+            flexDirection: 'column',
+            height: 'auto',
+            gap: '0px',
+            padding: '0px 20x ',
         },
     },
 })
@@ -93,6 +97,13 @@ export const header = style({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+            overflowY: 'auto',
+        },
+    },
 })
 
 export const introduce = style({
@@ -112,6 +123,7 @@ export const introduce = style({
 
 export const userName = style({
     fontSize: vars.fontSizes.xlarge,
+
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
