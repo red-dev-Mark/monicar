@@ -8,7 +8,7 @@ export const container = style({
     borderRadius: '12px',
     flexDirection: 'column',
     padding: '24px',
-    gap: '16px',
+    gap: '12px',
     color: vars.colors.gray[800],
     fontWeight: vars.fontWeights.bold,
 })

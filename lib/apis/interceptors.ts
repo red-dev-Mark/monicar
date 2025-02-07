@@ -1,6 +1,7 @@
 import { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
 import { API_URL } from '@/constants/api'
+import { authService } from '@/lib/apis/auth'
 import { httpClient } from '@/lib/apis/client'
 import { useAuthStore } from '@/stores/useAuthStore'
 
@@ -41,6 +42,7 @@ export const setupResponseInterceptor = (instance: AxiosInstance) => {
                 !originalRequest.isRequestAlready
             ) {
                 const logout = useAuthStore.getState().logout
+                // const { logout } = useAuth()
                 originalRequest.isRequestAlready = true
 
                 try {
