@@ -12,6 +12,7 @@ import { ZOOM_LEVEL } from '@/constants/map'
 import { useMapControl } from '@/hooks/useMapControl'
 import { useVehicleLocationSearch } from '@/hooks/useVehicleLocationSearch'
 import { vehicleService } from '@/lib/apis'
+import { routeService } from '@/lib/apis/route'
 import { VehicleDetailModel, VehicleInfoModel } from '@/types/vehicle'
 
 import * as styles from './styles.css'
@@ -32,9 +33,9 @@ const LocationPage = () => {
     const { mapState, updateMapLocation } = useMapControl()
 
     const handleInputSubmit = async () => {
-        const vehicle = await searchVehicleWithNumber()
+        const vehicleInfo = await searchVehicleWithNumber()
 
-        if (vehicle && vehicleInfo) {
+        if (vehicleInfo) {
             const { vehicleId } = vehicleInfo as VehicleInfoModel
             const vehicleDetail = await vehicleService.getVehicleDetail(vehicleId)
 
@@ -59,8 +60,14 @@ const LocationPage = () => {
         setInputValue(event.target.value)
     }
 
+    const handleStart = async () => {
+        await routeService.getVehicleLiveRoutesData('1')
+    }
+
     return (
         <div className={styles.container}>
+            <button onClick={handleStart}>시작!!!!!!!!!</button>
+
             <MapSection
                 mapState={mapState}
                 vehicleInfo={vehicleInfo as VehicleInfoModel}

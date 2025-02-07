@@ -6,6 +6,7 @@ import Badge from '@/components/common/Badge'
 import SquareButton from '@/components/common/Button/SquareButton'
 import { useCoordToAddress } from '@/hooks/useCoordToAddress'
 import { formatISODateToDot } from '@/lib/utils/date'
+import { formatMinuteToHour, formatWithCommas } from '@/lib/utils/format'
 import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
 import { VehicleDetailModel } from '@/types/vehicle'
@@ -30,11 +31,16 @@ const VehicleDetailCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetail
     }
 
     const isDriving = status === 'ON'
+
+    const formattedSpeed = formatWithCommas(speed)
     const formattedVehicleNumber = addSpaceVehicleNumber(vehicleNumber)
     const formattedLastEngineOn = lastEngineOn ? formatISODateToDot(lastEngineOn) : '-'
     const formattedLastEngineOff = lastEngineOff ? formatISODateToDot(lastEngineOff) : '-'
-    const todayDrivingTime = todayDrivingHistory ? todayDrivingHistory.drivingTime : 0
-    const todayDrivingDistance = todayDrivingHistory ? todayDrivingHistory.distance : 0
+    const formattedLastUpdated = lastUpdated ? formatISODateToDot(lastUpdated) : '-'
+
+    const todayDrivingTime = todayDrivingHistory ? formatMinuteToHour(todayDrivingHistory.drivingTime) : 0
+    // const todayDrivingTime = todayDrivingHistory ? formatWithCommas(todayDrivingHistory.drivingTime) : 0
+    const todayDrivingDistance = todayDrivingHistory ? formatWithCommas(todayDrivingHistory.distance) : 0
 
     const address = useCoordToAddress(normalizedCoordinate.lat, normalizedCoordinate.lng)
 
@@ -61,7 +67,7 @@ const VehicleDetailCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetail
                             <th scope='row' className={styles.tableHeader}>
                                 속도
                             </th>
-                            <td className={styles.tableCell}>{speed} km/h</td>
+                            <td className={styles.tableCell}>{formattedSpeed} km/h</td>
                         </tr>
                         <tr>
                             <th scope='row' className={styles.tableHeader}>
@@ -88,7 +94,7 @@ const VehicleDetailCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetail
                                 최종수신
                             </th>
                             <td colSpan={3} className={styles.tableCell}>
-                                {formatISODateToDot(lastUpdated)}
+                                {formattedLastUpdated}
                             </td>
                         </tr>
                         <tr>

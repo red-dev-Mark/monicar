@@ -64,9 +64,7 @@ const MapSection = ({
     //     setIsVehicleDetailsVisible(false)
     // }
 
-    const shouldShowVehicleDetailCard = isVehicleVisible && isDetailCardVisible
-
-    console.log(isVehicleVisible, shouldShowVehicleDetailCard)
+    // console.log(isVehicleVisible, shouldShowVehicleDetailCard)
 
     return (
         <Map
@@ -98,7 +96,7 @@ const MapSection = ({
             })}
             {clusterDetailInfo && <VehicleMarker vehicleInfo={clusterDetailInfo} />} */}
             {isVehicleVisible && <VehicleMarker vehicleInfo={vehicleInfo} />}
-            {shouldShowVehicleDetailCard && (
+            {isDetailCardVisible && (
                 <VehicleDetailsCard vehicleDetails={vehicleDetail} onCloseButtonClick={onDetailCardClose} />
             )}
         </Map>
