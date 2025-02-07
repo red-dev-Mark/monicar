@@ -92,7 +92,10 @@ const DetailPage = () => {
 
     return (
         <div className={styles.container}>
-            <Breadcrumb type={'운행일지'} />
+            <div className={styles.breadcrumbWrapper}>
+                <Breadcrumb type={'운행일지'} />
+            </div>
+
             <ControlLayout
                 control={
                     <DatePickerInput

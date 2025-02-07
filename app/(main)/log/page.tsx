@@ -33,7 +33,7 @@ const LogPage = () => {
 
     const handleExcelButtonClick = async () => {
         try {
-            await downloadExcel()
+            await downloadExcel(searchTerm)
         } catch (error) {
             console.error('엑셀 다운로드 에러', error)
             openModalWithMessage('엑셀 다운로드에 실패했습니다')
@@ -74,8 +74,11 @@ const LogPage = () => {
 
     return (
         <div className={styles.container}>
-            <Breadcrumb type={'운행기록'} />
-            <div className={styles.contents}>
+            <div className={styles.header}>
+                <div className={styles.breadcrumbWrapper}>
+                    <Breadcrumb type={'운행기록'} />
+                </div>
+
                 <ControlLayout
                     control={
                         <div className={styles.searchInputWrapper}>
@@ -107,7 +110,9 @@ const LogPage = () => {
                     variant={{ variant: 'alert', confirmButton: '확인' }}
                     onClose={closeModal}
                 />
+            </div>
 
+            <div className={styles.contents}>
                 <ListHeader headerTitles={LOG_TITLES} />
                 {logData?.content.map((log) => (
                     <ListItem key={log.id} data={log} onClick={() => handleItemClick(log.id)} />
