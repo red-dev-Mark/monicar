@@ -24,7 +24,6 @@ export const circle = style({
 
 export const count = style({
     marginLeft: '8px',
-    // fontSize: vars.fontSizes.small,
     fontWeight: vars.fontWeights.bold,
     background: vars.colors.yellow[100],
     color: vars.colors.yellow[200],
