@@ -29,7 +29,7 @@ const MapSection = ({
     vehicleDetail,
     isSearchedVehicleVisible,
     isDetailCardVisible,
-    // onVehicleClose,
+    onVehicleClose,
     onDetailCardClose,
 }: MapSectionProps) => {
     const [clusterInfo, setClusterInfo] = useState<TransformedClusterInfo[]>([])
@@ -66,6 +66,11 @@ const MapSection = ({
         }
     }, [isMapLoaded, currentMapState])
 
+    const clearVehicleAndCard = () => {
+        onVehicleClose()
+        onDetailCardClose()
+    }
+
     // TODO: 매직넘버 4 처리
     const isClusterVisible = currentMapState.level > 4
     const isClusterDetailVisible = currentMapState.level <= 4
@@ -92,7 +97,9 @@ const MapSection = ({
                         </CustomOverlayMap>
                     )
                 })}
-            {isSearchedVehicleVisible && <VehicleMarker vehicleInfo={vehicleInfo} useHoverEffect={false} />}
+            {isSearchedVehicleVisible && (
+                <VehicleMarker vehicleInfo={vehicleInfo} useHoverEffect={false} onClose={clearVehicleAndCard} />
+            )}
             {isDetailCardVisible && (
                 <VehicleDetailsCard vehicleDetails={vehicleDetail} onCloseButtonClick={onDetailCardClose} />
             )}

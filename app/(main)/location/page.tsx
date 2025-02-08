@@ -1,9 +1,10 @@
 'use client'
 
 import { useDisclosure } from '@mantine/hooks'
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
 import { ChangeEventHandler, useState } from 'react'
 
+import MapSection from '@/app/(main)/location/components/MapSection'
 import VehicleStatusPanel from '@/app/(main)/location/components/VehicleStatusPanel'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
@@ -16,9 +17,9 @@ import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
-const MapSection = dynamic(() => import('./components/MapSection'), {
-    ssr: false,
-})
+// const MapSection = dynamic(() => import('./components/MapSection'), {
+//     ssr: false,
+// })
 
 const LocationPage = () => {
     const [inputValue, setInputValue] = useState('')

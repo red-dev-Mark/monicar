@@ -36,3 +36,30 @@ export const vehicleCard = style({
         },
     },
 })
+
+export const closeButton = style({
+    width: '24px',
+    height: '24px',
+    paddingTop: '1px',
+    position: 'absolute',
+    top: '-10px',
+    right: '-10px',
+
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+
+    color: vars.colors.white,
+    fontSize: vars.fontSizes.xsmall,
+    backgroundColor: vars.colors.black,
+    border: `1.5px solid ${vars.colors.white}`,
+    borderRadius: '50%',
+    cursor: 'pointer',
+
+    opacity: 0.7,
+    transition: 'opacity 0.2s ease',
+
+    ':hover': {
+        opacity: 1,
+    },
+})
