@@ -15,7 +15,6 @@ import { ModalMessageType } from '@/components/common/Modal/types'
 import PageLoader from '@/components/common/PageLoader'
 import { API_ENDPOINTS } from '@/constants/api'
 import { vehicleService } from '@/lib/apis/vehicle'
-import { addSpaceVehicleNumber } from '@/lib/utils/string'
 import { CalendarIcon } from '@/public/icons'
 
 import '@mantine/dates/styles.css'
@@ -40,9 +39,10 @@ const DetailPage = () => {
         enabled: isDateRangeValid,
     })
 
-    const formattedVehicleNumber = detailData?.vehicleInfo.vehicleNumber
-        ? addSpaceVehicleNumber(detailData.vehicleInfo.vehicleNumber)
-        : ''
+    // TODO: API 수정시 주석 풀기
+    // const formattedVehicleNumber = detailData?.vehicleInfo.vehicleNumber
+    //     ? addSpaceVehicleNumber(detailData.vehicleInfo.vehicleNumber)
+    //     : ''
 
     const {
         isConfirmModalOpen,
@@ -179,8 +179,8 @@ const DetailPage = () => {
                             </th>
                         </tr>
                         <tr>
-                            <td className={styles.tableCell}>{formattedVehicleNumber}</td>
-                            <td className={styles.tableCell}>{detailData?.vehicleInfo.vehicleModel}</td>
+                            {/* <td className={styles.tableCell}>{formattedVehicleNumber}</td> */}
+                            {/* <td className={styles.tableCell}>{detailData?.vehicleInfo.vehicleModel}</td> */}
                         </tr>
                     </tbody>
                 </table>
