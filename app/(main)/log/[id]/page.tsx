@@ -40,8 +40,8 @@ const DetailPage = () => {
         enabled: isDateRangeValid,
     })
 
-    const formattedVehicleNumber = detailData?.vehicleType.vehicleNumber
-        ? addSpaceVehicleNumber(detailData.vehicleType.vehicleNumber)
+    const formattedVehicleNumber = detailData?.vehicleInfo.vehicleNumber
+        ? addSpaceVehicleNumber(detailData.vehicleInfo.vehicleNumber)
         : ''
 
     const {
@@ -139,12 +139,14 @@ const DetailPage = () => {
                     secondaryButton={
                         true ? (
                             <div className={styles.deleteButtonWrapper}>
-                                <RoundButton color='primary' size='small' onClick={handleDeleteButtonClick}>
-                                    <div className={styles.deleteButton}>
-                                        <Image src='/icons/white-trash-icon.svg' alt='add' width={18} height={18} />
-                                        차량삭제
-                                    </div>
-                                </RoundButton>
+                                {detailData?.status === 'IN_OPERATION' && (
+                                    <RoundButton color='primary' size='small' onClick={handleDeleteButtonClick}>
+                                        <div className={styles.deleteButton}>
+                                            <Image src='/icons/white-trash-icon.svg' alt='add' width={18} height={18} />
+                                            차량삭제
+                                        </div>
+                                    </RoundButton>
+                                )}
                             </div>
                         ) : (
                             <></>
@@ -178,7 +180,7 @@ const DetailPage = () => {
                         </tr>
                         <tr>
                             <td className={styles.tableCell}>{formattedVehicleNumber}</td>
-                            <td className={styles.tableCell}>{detailData?.vehicleType.vehicleModel}</td>
+                            <td className={styles.tableCell}>{detailData?.vehicleInfo.vehicleModel}</td>
                         </tr>
                     </tbody>
                 </table>

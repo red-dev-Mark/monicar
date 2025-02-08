@@ -137,7 +137,7 @@ const RegisterPage = () => {
             label: '차량 종류',
             component: (
                 <Select
-                    placeholder='차량 종류'
+                    placeholder='차량 종류를 선택하세요.'
                     data={
                         vehicleType?.map((item) => ({
                             value: item.id.toString(),
@@ -159,8 +159,7 @@ const RegisterPage = () => {
             label: '운행 거리',
             component: (
                 <BaseInput
-                    type='number'
-                    placeholder={'0km'}
+                    placeholder={'운행 거리(km)를 입력하세요.'}
                     onChange={(event) => {
                         const value = event.target.value
                         if (validateDrivingDistance(value)) {
@@ -187,7 +186,7 @@ const RegisterPage = () => {
                     rightSectionPointerEvents='none'
                     size='lg'
                     radius='xl'
-                    placeholder='0000-00-00'
+                    placeholder='출고일을 선택하세요.'
                     styles={{
                         input: {
                             color: '#222222',

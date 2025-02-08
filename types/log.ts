@@ -4,7 +4,7 @@ export interface ListItemModel {
     vehicleModel: string
     drivingDays: number
     totalDistance: number
-    status: VehicleStatusType
+    status: OperationStatusType
 }
 
-type VehicleStatusType = '운행중' | '미운행' | '미관제'
+export type OperationStatusType = 'NOT_REGISTERED' | 'NOT_DRIVEN' | 'IN_OPERATION'

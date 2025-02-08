@@ -1,4 +1,5 @@
 import Badge from '@/components/common/Badge'
+import { OPERATION_STATUS } from '@/components/common/Badge/constants'
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
 import { RightIcon } from '@/public/icons'
 import { ListItemModel } from '@/types/log'
@@ -23,7 +24,7 @@ const ListItem = ({ data, onClick }: ListItemProps) => {
 
                 <li className={styles.itemWrapper}>{totalDistance.toLocaleString('ko-KR')}km</li>
                 <li className={styles.badge}>
-                    <Badge shape={'rectangle'} variant={status} />
+                    <Badge shape={'rectangle'} variant={OPERATION_STATUS[status]} />
                 </li>
             </ul>
             <div className={styles.icon}>

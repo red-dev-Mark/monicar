@@ -1,9 +1,11 @@
+import { OperationStatusType } from '@/types/log'
+
 interface BusinessInfo {
     businessName: string
     businessRegistrationNumber: string
 }
 
-interface VehicleType {
+interface VehicleInfo {
     vehicleNumber: string
     vehicleModel: string
 }
@@ -40,6 +42,7 @@ export interface DetailResponse {
     taxPeriodDistance: number
     taxPeriodBusinessDistance: number
     businessUseRatio: number
-    vehicleType: VehicleType
+    vehicleInfo: VehicleInfo
+    status: OperationStatusType
     records: DrivingRecord[]
 }
