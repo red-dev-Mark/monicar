@@ -71,10 +71,7 @@ export const vehicleService = {
 
         if (!response.data.isSuccess) {
             if (response.data.errorCode === 1001) {
-                return {
-                    isSuccess: false,
-                    message: response.data.errorMessage,
-                }
+                return response.data.errorMessage
             }
         }
 

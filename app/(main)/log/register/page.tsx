@@ -16,11 +16,7 @@ import PageLoader from '@/components/common/PageLoader'
 import { useModal } from '@/hooks/useModal'
 import { vehicleService } from '@/lib/apis'
 import { removeSpaces } from '@/lib/utils/string'
-import {
-    handleDrivingDistanceKeyPress,
-    isValidVehicleNumberFormat,
-    validateDrivingDistance,
-} from '@/lib/utils/validation'
+import { isValidVehicleNumberFormat, validateDrivingDistance } from '@/lib/utils/validation'
 import { CalendarIcon } from '@/public/icons'
 
 import '@mantine/dates/styles.css'
@@ -34,10 +30,10 @@ const RegisterPage = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<Error | null>(null)
     const [value, setValue] = useState<Date | null>(null)
-    const [vehicleNumber, setVehicleNumber] = useState<string>('')
+    const [vehicleNumber, setVehicleNumber] = useState('')
     const [vehicleTypeId, setVehicleTypeId] = useState<number>()
     const [deliveryDate, setDeliveryDate] = useState<string | null>(null)
-    const [drivingDistance, setDrivingDistance] = useState<number>()
+    const [drivingDistance, setDrivingDistance] = useState('')
     const { isModalOpen, message, openModalWithMessage, closeModal } = useModal()
     const [showSuccessMessage, setShowSuccessMessage] = useState(false)
     const [showErrorMessage, setShowErrorMessage] = useState(false)
@@ -75,7 +71,7 @@ const RegisterPage = () => {
             return
         }
 
-        if (!drivingDistance) {
+        if (!validateDrivingDistance(drivingDistance)) {
             openModalWithMessage('운행거리를 입력해주세요.')
             return
         }
@@ -85,19 +81,20 @@ const RegisterPage = () => {
             return
         }
 
-        try {
-            await vehicleService.registerVehicle({
-                vehicleNumber,
-                vehicleTypeId,
-                deliveryDate,
-                drivingDistance,
-            })
-            openModalWithMessage('차량이 성공적으로 등록되었습니다.')
-            router.push('/log')
-        } catch (error) {
-            console.error(error)
-            openModalWithMessage('차량 등록에 실패했습니다.')
+        const response = await vehicleService.registerVehicle({
+            vehicleNumber,
+            vehicleTypeId,
+            deliveryDate,
+            drivingDistance: drivingDistance as string,
+        })
+
+        if (!response.isSuccess) {
+            openModalWithMessage(response.errorMessage)
+            return
         }
+
+        openModalWithMessage('차량이 성공적으로 등록되었습니다.')
+        router.push('/log')
     }
 
     if (isLoading) {
@@ -161,13 +158,14 @@ const RegisterPage = () => {
             component: (
                 <BaseInput
                     placeholder={'운행 거리(km)를 입력하세요.'}
+                    value={drivingDistance}
                     onChange={(event) => {
                         const value = event.target.value
+
                         if (validateDrivingDistance(value)) {
-                            setDrivingDistance(Number(value))
+                            setDrivingDistance(value)
                         }
                     }}
-                    onKeyPress={handleDrivingDistanceKeyPress}
                 />
             ),
             isError: false,
@@ -183,6 +181,7 @@ const RegisterPage = () => {
                             <CalendarIcon size={16} stroke={1} />
                         </div>
                     }
+                    maxDate={new Date()}
                     valueFormat='YYYY년 MM월 DD일'
                     rightSectionPointerEvents='none'
                     size='lg'
