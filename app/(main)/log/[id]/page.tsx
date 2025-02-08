@@ -118,11 +118,11 @@ const DetailPage = () => {
                         placeholder='과세기간 범위 선택'
                         value={dateRange}
                         onChange={handleDateRangeChange}
-                        valueFormat='YYYY-MM-DD'
+                        valueFormat='YYYY년 MM월 DD일'
                         clearable={true}
                         styles={{
                             input: {
-                                width: '300px',
+                                width: '360px',
                                 height: '48px',
                                 fontSize: '16px',
                                 color: '#222222',

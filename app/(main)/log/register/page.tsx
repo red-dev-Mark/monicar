@@ -183,6 +183,7 @@ const RegisterPage = () => {
                             <CalendarIcon size={16} stroke={1} />
                         </div>
                     }
+                    valueFormat='YYYY년 MM월 DD일'
                     rightSectionPointerEvents='none'
                     size='lg'
                     radius='xl'
