@@ -104,13 +104,14 @@ const LogPage = () => {
                         </LinkButton>
                     }
                 />
-                <Modal
-                    isOpen={isModalOpen}
-                    message={message as ModalMessageType}
-                    variant={{ variant: 'alert', confirmButton: '확인' }}
-                    onClose={closeModal}
-                />
             </div>
+
+            <Modal
+                isOpen={isModalOpen}
+                message={message as ModalMessageType}
+                variant={{ variant: 'alert', confirmButton: '확인' }}
+                onClose={closeModal}
+            />
 
             <div className={styles.contents}>
                 <ListHeader headerTitles={LOG_TITLES} />

@@ -14,7 +14,15 @@ export const container = style({
     borderRadius: '30px 30px 0 0',
 })
 
+export const header = style({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+})
+
 export const breadcrumbsWrapper = style({
+    minWidth: '220px',
+
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',

@@ -92,64 +92,66 @@ const DetailPage = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.breadcrumbsWrapper}>
-                <Breadcrumbs
-                    breadcrumbsData={[
-                        { title: '운행기록', isActive: false },
-                        { title: '운행일지', isActive: true },
-                    ]}
+            <div className={styles.header}>
+                <div className={styles.breadcrumbsWrapper}>
+                    <Breadcrumbs
+                        breadcrumbsData={[
+                            { title: '운행기록', isActive: false },
+                            { title: '운행일지', isActive: true },
+                        ]}
+                    />
+                </div>
+
+                <ControlLayout
+                    control={
+                        <DatePickerInput
+                            locale='ko'
+                            leftSection={
+                                <div style={{ width: '24px', height: '24px' }}>
+                                    <CalendarIcon size={16} stroke={1} />
+                                </div>
+                            }
+                            maxDate={new Date()}
+                            leftSectionPointerEvents='none'
+                            type='range'
+                            size='lg'
+                            radius='xl'
+                            placeholder='과세기간 범위 선택'
+                            value={dateRange}
+                            onChange={handleDateRangeChange}
+                            valueFormat='YYYY년 MM월 DD일'
+                            clearable={true}
+                            styles={{
+                                input: {
+                                    width: '360px',
+                                    height: '48px',
+                                    fontSize: '16px',
+                                    color: '#222222',
+                                },
+                            }}
+                        />
+                    }
+                    primaryButton={
+                        <div className={styles.excelButtonWrapper}>
+                            <ExcelButton onClick={handleExcelButtonClick} />
+                        </div>
+                    }
+                    secondaryButton={
+                        true ? (
+                            <div className={styles.deleteButtonWrapper}>
+                                <RoundButton color='primary' size='small' onClick={handleDeleteButtonClick}>
+                                    <div className={styles.deleteButton}>
+                                        <Image src='/icons/white-trash-icon.svg' alt='add' width={18} height={18} />
+                                        차량삭제
+                                    </div>
+                                </RoundButton>
+                            </div>
+                        ) : (
+                            <></>
+                        )
+                    }
                 />
             </div>
-
-            <ControlLayout
-                control={
-                    <DatePickerInput
-                        locale='ko'
-                        leftSection={
-                            <div style={{ width: '24px', height: '24px' }}>
-                                <CalendarIcon size={16} stroke={1} />
-                            </div>
-                        }
-                        maxDate={new Date()}
-                        leftSectionPointerEvents='none'
-                        type='range'
-                        size='lg'
-                        radius='xl'
-                        placeholder='과세기간 범위 선택'
-                        value={dateRange}
-                        onChange={handleDateRangeChange}
-                        valueFormat='YYYY년 MM월 DD일'
-                        clearable={true}
-                        styles={{
-                            input: {
-                                width: '360px',
-                                height: '48px',
-                                fontSize: '16px',
-                                color: '#222222',
-                            },
-                        }}
-                    />
-                }
-                primaryButton={
-                    <div className={styles.excelButtonWrapper}>
-                        <ExcelButton onClick={handleExcelButtonClick} />
-                    </div>
-                }
-                secondaryButton={
-                    true ? (
-                        <div className={styles.deleteButtonWrapper}>
-                            <RoundButton color='primary' size='small' onClick={handleDeleteButtonClick}>
-                                <div className={styles.deleteButton}>
-                                    <Image src='/icons/white-trash-icon.svg' alt='add' width={18} height={18} />
-                                    차량삭제
-                                </div>
-                            </RoundButton>
-                        </div>
-                    ) : (
-                        <></>
-                    )
-                }
-            />
             <Modal
                 isOpen={isConfirmModalOpen}
                 message={confirmModalMessage as ModalMessageType}
