@@ -6,8 +6,6 @@ export const container = style({
     width: '100%',
     height: '100vh',
     position: 'relative',
-    backgroundSize: 'cover',
-
     display: 'flex',
     alignItems: 'center',
 })
