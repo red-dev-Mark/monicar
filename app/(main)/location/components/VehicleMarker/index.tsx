@@ -8,18 +8,17 @@ import * as styles from './styles.css'
 
 interface VehicleMarkerProps {
     vehicleInfo: VehicleLocation
+    isVehicleNumberVisible?: boolean
     onClick?: () => void
 }
 
-const VehicleMarker = ({ vehicleInfo, onClick }: VehicleMarkerProps) => {
+const VehicleMarker = ({ vehicleInfo, isVehicleNumberVisible = true, onClick }: VehicleMarkerProps) => {
     const vehicleNumber = addSpaceVehicleNumber(vehicleInfo.vehicleNumber)
 
     return (
         <CustomOverlayMap position={vehicleInfo.coordinate}>
-            <div onClick={onClick} role='presentation'>
-                <p className={styles.vehicleCard}>{vehicleNumber}</p>
-                <MapMarker position={vehicleInfo.coordinate} image={MARKER_IMAGE} />
-            </div>
+            {isVehicleNumberVisible && <p className={styles.vehicleCard}>{vehicleNumber}</p>}
+            <MapMarker position={vehicleInfo.coordinate} image={MARKER_IMAGE} onClick={onClick} />
         </CustomOverlayMap>
     )
 }

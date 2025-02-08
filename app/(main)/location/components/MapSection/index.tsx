@@ -43,8 +43,10 @@ const MapSection = ({
     const [isMapLoaded, setIsMapLoaded] = useState(false)
     const mapRef = useRef<kakao.maps.Map>(null)
 
-    const { currentMapState, updateMapStatus } = useMapStatus(mapRef.current)
     console.log(clusterDetailInfo)
+
+    const { currentMapState, updateMapStatus } = useMapStatus(mapRef.current)
+
     useEffect(() => {
         if (!isMapLoaded) return
 
@@ -97,7 +99,7 @@ const MapSection = ({
                 )
             })}
             {/* {clusterDetailInfo && <VehicleMarker vehicleInfo={clusterDetailInfo} />} */}
-            {isVehicleVisible && <VehicleMarker vehicleInfo={vehicleInfo} />}
+            {isVehicleVisible && <VehicleMarker vehicleInfo={vehicleInfo} onClick={() => console.log('asdfasdf')} />}
             {isDetailCardVisible && (
                 <VehicleDetailsCard vehicleDetails={vehicleDetail} onCloseButtonClick={onDetailCardClose} />
             )}
