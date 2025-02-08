@@ -13,7 +13,7 @@ import { useMapControl } from '@/hooks/useMapControl'
 import { useVehicleLocationSearch } from '@/hooks/useVehicleLocationSearch'
 import { vehicleService } from '@/lib/apis'
 // import { routeService } from '@/lib/apis'
-import { VehicleDetailModel, VehicleInfoModel } from '@/types/vehicle'
+import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
@@ -23,7 +23,7 @@ const MapSection = dynamic(() => import('./components/MapSection'), {
 
 const LocationPage = () => {
     const [inputValue, setInputValue] = useState('')
-    const [vehicleDetail, setVehicleDetail] = useState<VehicleDetailModel>()
+    const [vehicleDetail, setVehicleDetail] = useState<VehicleDetail>()
 
     const { vehicleInfo, isModalOpen, message, closeModal, searchVehicleWithNumber } =
         useVehicleLocationSearch(inputValue)
@@ -37,7 +37,7 @@ const LocationPage = () => {
 
         if (!vehicleInfo) return
 
-        const { vehicleId } = vehicleInfo as VehicleInfoModel
+        const { vehicleId } = vehicleInfo as VehicleLocation
         const vehicleDetail = await vehicleService.getVehicleDetail(vehicleId)
 
         updateMapLocation(
@@ -68,8 +68,8 @@ const LocationPage = () => {
 
             <MapSection
                 mapState={mapState}
-                vehicleInfo={vehicleInfo as VehicleInfoModel}
-                vehicleDetail={vehicleDetail as VehicleDetailModel}
+                vehicleInfo={vehicleInfo as VehicleLocation}
+                vehicleDetail={vehicleDetail as VehicleDetail}
                 isVehicleVisible={isSearchedVehicleVisible}
                 isDetailCardVisible={isVehicleDetailCardVisible}
                 onVehicleClose={hideSearchedVehicle}

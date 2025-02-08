@@ -16,8 +16,8 @@ import { formatISODateToKorean } from '@/lib/utils/date'
 import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { validateDateSelection } from '@/lib/utils/validation'
 import { vars } from '@/styles/theme.css'
-import { LatLng } from '@/types/location'
-import { VehicleRoutePoint } from '@/types/map'
+import { LatLng } from '@/types/map'
+import { Route } from '@/types/route'
 
 import * as styles from './styles.css'
 
@@ -68,7 +68,7 @@ const RouteSearchPanel = ({ onPathsChange }: RouteSearchPanelProps) => {
 
         const vehiclePaths = await routeService.getVehicleRoutesData(searchedVehicle.vehicleId, startDate, endDate)
 
-        const paths = vehiclePaths.routes.map((route: VehicleRoutePoint) => ({
+        const paths = vehiclePaths.routes.map((route: Route) => ({
             lat: normalizeCoordinate(route.lat),
             lng: normalizeCoordinate(route.lng),
         }))

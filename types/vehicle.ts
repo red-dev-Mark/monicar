@@ -1,35 +1,24 @@
-import { LatLng } from '@/types/location'
+import { LatLng } from '@/types/map'
 
-export interface VehicleInfoResponse {
-    vehicleId: string
-    vehicleNumber: string
-    recentCycleInfo: RecentCycleInfo
-    status: string
-}
-
-export interface VehicleInfoModel {
+// 차량의 현재 위치 정보
+export interface VehicleLocation {
     vehicleId: string
     vehicleNumber: string
     coordinate: LatLng
 }
 
-interface RecentCycleInfo {
-    speed: number
-    lat: number
-    lng: number
-    lastUpdated: string
-}
-
-export interface VehicleOperationPeriodModel {
+// 차량의 운행 이력 정보
+export interface VehicleOperationHistory {
     vehicleId: string
     vehicleNumber: string
-    searchableDates: {
+    operationPeriod: {
         firstDateAt: string
         lastDateAt: string
     }
 }
 
-export interface VehicleDetailModel {
+// 차량 상세 정보
+export interface VehicleDetail {
     recentVehicleInfo: {
         vehicleId: number
         vehicleNumber: string
@@ -52,7 +41,8 @@ export interface VehicleDetailModel {
     }
 }
 
-export interface VehicleStatusModel {
+// 차량 운행 상태별 현황 요약 정보
+export interface VehicleStatusSummary {
     allVehicles: number
     engineOnVehicles: number
     engineOffVehicles: number

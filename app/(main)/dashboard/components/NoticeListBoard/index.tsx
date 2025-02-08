@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react'
 
 import PageLoader from '@/components/common/PageLoader'
 import { noticeService } from '@/lib/apis'
-import { NoticeModel } from '@/types/notice'
+import { Notice } from '@/types/notice'
 
 import * as styles from './styles.css'
 
 const NoticeListBoard = () => {
-    const [noticeList, setNoticeList] = useState<NoticeModel[]>([])
+    const [noticeList, setNoticeList] = useState<Notice[]>([])
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {

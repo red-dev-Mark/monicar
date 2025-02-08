@@ -16,6 +16,7 @@ import { ModalMessageType } from '@/components/common/Modal/types'
 import PageLoader from '@/components/common/PageLoader'
 import { useModal } from '@/hooks/useModal'
 import { vehicleService } from '@/lib/apis'
+import { removeSpaces } from '@/lib/utils/string'
 import {
     handleDrivingDistanceKeyPress,
     isValidVehicleNumberFormat,
@@ -118,7 +119,7 @@ const RegisterPage = () => {
                         icon='/icons/search-icon.svg'
                         onChange={(event) => setVehicleNumber(event.target.value)}
                         onSubmit={() => {
-                            if (isValidVehicleNumberFormat(vehicleNumber)) {
+                            if (isValidVehicleNumberFormat(removeSpaces(vehicleNumber))) {
                                 setShowSuccessMessage(true)
                                 setShowErrorMessage(false)
                             } else {

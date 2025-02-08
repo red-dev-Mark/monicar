@@ -3,10 +3,10 @@ import { useState } from 'react'
 import { useModal } from '@/hooks/useModal'
 import { vehicleService } from '@/lib/apis'
 import { validateVehicleNumber } from '@/lib/utils/validation'
-import { VehicleInfoModel } from '@/types/vehicle'
+import { VehicleLocation } from '@/types/vehicle'
 
 export const useVehicleLocationSearch = (vehicleNumber: string) => {
-    const [vehicleInfo, setVehicleInfo] = useState<VehicleInfoModel>()
+    const [vehicleInfo, setVehicleInfo] = useState<VehicleLocation>()
 
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
 

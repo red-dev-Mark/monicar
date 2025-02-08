@@ -1,7 +1,7 @@
 import { DateTime } from '@/app/(main)/route/types/date'
 import { httpClient } from '@/lib/apis'
 import { formatToISODate } from '@/lib/utils/date'
-import { LiveRouteParams, RouteParams } from '@/types/map'
+import { LiveRouteParams, RouteParams } from '@/types/api/route'
 
 export const routeService = {
     // 차량 이동 경로 이력 조회

@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 import RouteSearchPanel from '@/app/(main)/route/components/RouteSearchPanel'
 import { useMapControl } from '@/hooks/useMapControl'
-import { LatLng } from '@/types/location'
+import { LatLng } from '@/types/map'
 
 import * as styles from './styles.css'
 

@@ -6,7 +6,7 @@ import { Map as KakaoMap, ZoomControl } from 'react-kakao-maps-sdk'
 import ErrorMessage from '@/components/common/ErrorMessage'
 import PageLoader from '@/components/common/PageLoader'
 import { useKakaoLoader } from '@/hooks/useKakaoLoader'
-import { LatLng } from '@/types/location'
+import { LatLng } from '@/types/map'
 
 interface MapProps {
     ref?: React.RefObject<kakao.maps.Map>
