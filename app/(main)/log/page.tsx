@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import Breadcrumb from '@/components/common/Breadcrumb'
+import Breadcrumbs from '@/components/common/Breadcrumbs'
 import ExcelButton from '@/components/common/Button/ExcelButton'
 import LinkButton from '@/components/common/Button/LinkButton'
 import ControlLayout from '@/components/common/ControlLayout'
@@ -75,8 +75,8 @@ const LogPage = () => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <div className={styles.breadcrumbWrapper}>
-                    <Breadcrumb type={'운행기록'} />
+                <div className={styles.breadcrumbsWrapper}>
+                    <Breadcrumbs breadcrumbsData={[{ title: '운행기록', isActive: true }]} />
                 </div>
 
                 <ControlLayout
@@ -104,13 +104,14 @@ const LogPage = () => {
                         </LinkButton>
                     }
                 />
-                <Modal
-                    isOpen={isModalOpen}
-                    message={message as ModalMessageType}
-                    variant={{ variant: 'alert', confirmButton: '확인' }}
-                    onClose={closeModal}
-                />
             </div>
+
+            <Modal
+                isOpen={isModalOpen}
+                message={message as ModalMessageType}
+                variant={{ variant: 'alert', confirmButton: '확인' }}
+                onClose={closeModal}
+            />
 
             <div className={styles.contents}>
                 <ListHeader headerTitles={LOG_TITLES} />

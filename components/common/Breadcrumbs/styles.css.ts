@@ -18,9 +18,7 @@ export const item = style({
     backgroundColor: vars.colors.white,
     border: `1px solid ${vars.colors.gray[300]}`,
     boxShadow: vars.colors.shadow[100],
-    ':hover': {
-        backgroundColor: vars.colors.gray[50],
-    },
+    fontWeight: vars.fontWeights.bold,
     selectors: {
         '&:not(:first-child)': {
             marginLeft: '-16px',
@@ -37,11 +35,8 @@ export const item = style({
     },
 })
 
-export const link = style({
-    selectors: {
-        '&[aria-current="page"]': {
-            fontWeight: vars.fontWeights.extraBold,
-            color: vars.colors.gray[600],
-        },
-    },
+export const activeItem = style({
+    fontWeight: vars.fontWeights.bold,
+    color: vars.colors.gray[600],
+    backgroundColor: vars.colors.gray[200],
 })
