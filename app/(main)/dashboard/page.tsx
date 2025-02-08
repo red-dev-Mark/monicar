@@ -117,22 +117,22 @@ const DashboardPage = () => {
                         calendarData={[
                             {
                                 id: 1,
-                                message: '즐거운 아침! 음악과 함께 시작.',
+                                message: '주행거리 높은 순',
                                 isActive: false,
                             },
                             {
                                 id: 2,
-                                message: '따뜻한 커피 한 잔은 건강에 좋아요.',
+                                message: '45가 3838 (49km)',
                                 isActive: false,
                             },
                             {
                                 id: 3,
-                                message: '점심에는 스트레칭을 해볼까요?',
+                                message: '38모 1537 (38Km)',
                                 isActive: true,
                             },
                             {
                                 id: 4,
-                                message: '바이오리듬을 지키세요!',
+                                message: '37하 4537 (21Km)',
                                 isActive: false,
                             },
                         ]}
