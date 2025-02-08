@@ -3,14 +3,20 @@ import { style } from '@vanilla-extract/css'
 import { vars } from '@/styles/theme.css'
 
 export const container = style({
-    height: '100%',
+    width: '100%',
+    height: '100vh',
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+})
+
+export const content = style({
+    position: 'absolute',
     padding: '24px',
     display: 'flex',
     gap: '276px',
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundImage: `url('/images/sign-in-background-desktop.jpg')`,
-    backgroundSize: 'cover',
 })
 
 export const introSection = style({
