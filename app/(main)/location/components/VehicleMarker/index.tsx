@@ -2,12 +2,12 @@ import { CustomOverlayMap, MapMarker } from 'react-kakao-maps-sdk'
 
 import { MARKER_IMAGE } from '@/constants/map'
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
-import { VehicleInfoModel } from '@/types/vehicle'
+import { VehicleLocation } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
 interface VehicleMarkerProps {
-    vehicleInfo: VehicleInfoModel
+    vehicleInfo: VehicleLocation
 }
 
 const VehicleMarker = ({ vehicleInfo }: VehicleMarkerProps) => {

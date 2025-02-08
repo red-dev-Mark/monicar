@@ -9,12 +9,12 @@ import { formatISODateToDot } from '@/lib/utils/date'
 import { formatMinuteToHour, formatWithCommas } from '@/lib/utils/format'
 import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
-import { VehicleDetailModel } from '@/types/vehicle'
+import { VehicleDetail } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
 interface VehicleDetailCardProps {
-    vehicleDetails: VehicleDetailModel
+    vehicleDetails: VehicleDetail
     onCloseButtonClick: (showDetailsCard: boolean) => void
 }
 

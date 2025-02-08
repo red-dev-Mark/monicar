@@ -11,13 +11,13 @@ import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import { ZOOM_LEVEL } from '@/constants/map'
 import { useSearchVehicle } from '@/hooks/useSearchVehicle'
-import { routeService } from '@/lib/apis/route'
+import { routeService } from '@/lib/apis'
 import { formatISODateToKorean } from '@/lib/utils/date'
 import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { validateDateSelection } from '@/lib/utils/validation'
 import { vars } from '@/styles/theme.css'
-import { LatLng } from '@/types/location'
-import { VehicleRoutePoint } from '@/types/map'
+import { LatLng } from '@/types/map'
+import { Route } from '@/types/route'
 
 import * as styles from './styles.css'
 
@@ -68,7 +68,7 @@ const RouteSearchPanel = ({ onPathsChange }: RouteSearchPanelProps) => {
 
         const vehiclePaths = await routeService.getVehicleRoutesData(searchedVehicle.vehicleId, startDate, endDate)
 
-        const paths = vehiclePaths.routes.map((route: VehicleRoutePoint) => ({
+        const paths = vehiclePaths.routes.map((route: Route) => ({
             lat: normalizeCoordinate(route.lat),
             lng: normalizeCoordinate(route.lng),
         }))

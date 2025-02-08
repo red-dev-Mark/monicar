@@ -11,16 +11,17 @@ import VehicleDetailsCard from '@/app/(main)/location/components/VehicleDetailCa
 import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
 import Map from '@/components/domain/map/Map'
 import { useMapStatus } from '@/hooks/useCurrentMapStatus'
-// import { clusterService } from '@/lib/apis/cluster'
-import { clusterService } from '@/lib/apis/cluster'
-import { LatLng } from '@/types/location'
-import { ClusterInfoModel, MapState } from '@/types/map'
-import { VehicleDetailModel, VehicleInfoModel } from '@/types/vehicle'
+// import { clusterService } from '@/lib/apis'
+import { clusterService } from '@/lib/apis'
+import { TransformedClusterInfo } from '@/types/cluster'
+import { LatLng } from '@/types/map'
+import { MapState } from '@/types/map'
+import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
 interface MapSectionProps {
     mapState?: MapState
-    vehicleInfo: VehicleInfoModel
-    vehicleDetail: VehicleDetailModel
+    vehicleInfo: VehicleLocation
+    vehicleDetail: VehicleDetail
     isVehicleVisible: boolean
     isDetailCardVisible: boolean
     onClick?: (location: LatLng, level: number) => void
@@ -37,8 +38,8 @@ const MapSection = ({
     // onVehicleClose,
     onDetailCardClose,
 }: MapSectionProps) => {
-    const [clusterInfo, setClusterInfo] = useState<ClusterInfoModel[]>([])
-    // const [clusterDetailInfo, setClusterDetailInfo] = useState<VehicleInfoModel | null>(null)
+    const [clusterInfo, setClusterInfo] = useState<TransformedClusterInfo[]>([])
+    const [clusterDetailInfo, setClusterDetailInfo] = useState<VehicleLocation | null>(null)
     const [isMapLoaded, setIsMapLoaded] = useState(false)
     const mapRef = useRef<kakao.maps.Map>(null)
 
@@ -52,19 +53,25 @@ const MapSection = ({
 
     useEffect(() => {
         if (!isMapLoaded || !currentMapState) return
+
         const getClusterInfo = async () => {
-            // await clusterService.getClusterInfo(currentMapState)
-            const clusterInfo: ClusterInfoModel[] = await clusterService.getClusterInfo(currentMapState)
-            // const clusterDetailInfo = await clusterService.getClusterDetailInfo(currentMapState)
+            const clusterInfo = (await clusterService.getClusterInfo(currentMapState)) || []
             setClusterInfo(clusterInfo)
-            // setClusterDetailInfo(clusterDetailInfo)
-            // console.log(clusterDetailInfo)
         }
 
-        getClusterInfo()
+        const getClusterDetails = async () => {
+            const clusterDetails = await clusterService.getVehicleDetails(currentMapState)
+            setClusterDetailInfo(clusterDetails)
+        }
+
+        if (currentMapState.level > 4) {
+            getClusterInfo()
+        } else {
+            getClusterDetails()
+        }
     }, [isMapLoaded, currentMapState])
 
-    console.log(clusterInfo)
+    console.log(clusterDetailInfo)
     // const handleVehicleDetailCardClose = () => {
     //     setIsVehicleDetailsVisible(false)
     // }
@@ -88,7 +95,7 @@ const MapSection = ({
             })} */}
             {clusterInfo.map((point, index) => {
                 return (
-                    <CustomOverlayMap key={index} position={point}>
+                    <CustomOverlayMap key={index} position={{ lat: point.coordinate.lat, lng: point.coordinate.lng }}>
                         <CustomMarker
                             count={point.count}
                             // onClick={() => onClick(point. mapState.level - 1)}

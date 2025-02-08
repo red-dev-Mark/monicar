@@ -14,7 +14,8 @@ import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import PageLoader from '@/components/common/PageLoader'
 import { useModal } from '@/hooks/useModal'
-import { vehicleService } from '@/lib/apis/vehicle'
+import { vehicleService } from '@/lib/apis'
+import { removeSpaces } from '@/lib/utils/string'
 import {
     handleDrivingDistanceKeyPress,
     isValidVehicleNumberFormat,
@@ -47,7 +48,7 @@ const RegisterPage = () => {
         const getVehicleType = async () => {
             try {
                 setIsLoading(true)
-                const vehicleType = await vehicleService.getVehicleType()
+                const vehicleType = await vehicleService.getAvailableVehicleTypes()
                 setVehicleType(vehicleType)
             } catch (error) {
                 console.error(error)
@@ -85,7 +86,7 @@ const RegisterPage = () => {
         }
 
         try {
-            await vehicleService.postVehicleInfo({
+            await vehicleService.registerVehicle({
                 vehicleNumber,
                 vehicleTypeId,
                 deliveryDate,
@@ -117,7 +118,7 @@ const RegisterPage = () => {
                         icon='/icons/search-icon.svg'
                         onChange={(event) => setVehicleNumber(event.target.value)}
                         onSubmit={() => {
-                            if (isValidVehicleNumberFormat(vehicleNumber)) {
+                            if (isValidVehicleNumberFormat(removeSpaces(vehicleNumber))) {
                                 setShowSuccessMessage(true)
                                 setShowErrorMessage(false)
                             } else {

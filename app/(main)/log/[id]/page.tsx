@@ -14,7 +14,7 @@ import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import PageLoader from '@/components/common/PageLoader'
 import { API_ENDPOINTS } from '@/constants/api'
-import { vehicleService } from '@/lib/apis/vehicle'
+import { vehicleService } from '@/lib/apis'
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
 import { CalendarIcon } from '@/public/icons'
 
