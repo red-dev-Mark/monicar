@@ -156,17 +156,19 @@ const RegisterPage = () => {
             id: 'mileage',
             label: '운행 거리',
             component: (
-                <BaseInput
-                    placeholder={'운행 거리(km)를 입력하세요.'}
-                    value={drivingDistance}
-                    onChange={(event) => {
-                        const value = event.target.value
-
-                        if (validateDrivingDistance(value)) {
-                            setDrivingDistance(value)
-                        }
-                    }}
-                />
+                <div className={styles.inputWrapper}>
+                    <BaseInput
+                        placeholder={'운행 거리를 입력하세요.'}
+                        value={drivingDistance}
+                        onChange={(event) => {
+                            const value = event.target.value
+                            if (validateDrivingDistance(value)) {
+                                setDrivingDistance(value)
+                            }
+                        }}
+                    />
+                    <div className={styles.km}>km</div>
+                </div>
             ),
             isError: false,
         },
