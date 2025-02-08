@@ -25,3 +25,13 @@ export interface VehicleRoutePoint {
     spd: number
     timestamp: string
 }
+
+export interface RouteParams {
+    startTime: string
+    endTime: string
+    interval: number
+}
+
+export interface LiveRouteParams {
+    currentTime: string
+}

@@ -12,7 +12,7 @@ import { ZOOM_LEVEL } from '@/constants/map'
 import { useMapControl } from '@/hooks/useMapControl'
 import { useVehicleLocationSearch } from '@/hooks/useVehicleLocationSearch'
 import { vehicleService } from '@/lib/apis'
-// import { routeService } from '@/lib/apis/route'
+// import { routeService } from '@/lib/apis'
 import { VehicleDetailModel, VehicleInfoModel } from '@/types/vehicle'
 
 import * as styles from './styles.css'
@@ -59,7 +59,7 @@ const LocationPage = () => {
     }
 
     // const handleStart = async () => {
-    //     await routeService.getVehicleLiveRoutesData('1')
+    //     await routeService.getVehicleLiveRoutes('1')
     // }
 
     return (

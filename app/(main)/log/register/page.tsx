@@ -15,7 +15,7 @@ import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import PageLoader from '@/components/common/PageLoader'
 import { useModal } from '@/hooks/useModal'
-import { vehicleService } from '@/lib/apis/vehicle'
+import { vehicleService } from '@/lib/apis'
 import {
     handleDrivingDistanceKeyPress,
     isValidVehicleNumberFormat,

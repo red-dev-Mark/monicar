@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import { noticeService } from '@/lib/apis/notice'
+import { noticeService } from '@/lib/apis'
 import { formatISODateToKorean } from '@/lib/utils/date'
 import { NoticeModel } from '@/types/notice'
 

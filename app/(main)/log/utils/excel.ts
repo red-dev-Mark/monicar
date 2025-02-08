@@ -1,7 +1,7 @@
 import * as XLSX from 'xlsx'
 
 import { API_ENDPOINTS } from '@/constants/api'
-import { httpClient } from '@/lib/apis/client'
+import { httpClient } from '@/lib/apis'
 import { ListItemModel } from '@/types/log'
 
 import { EXCEL_FILE_NAME, EXCEL_SHEET_NAME } from '../constants'

@@ -1,5 +1,5 @@
 import { RegisterVehicleModel, VehicleTypeModel } from '@/app/(main)/log/register/types'
-import { httpClient } from '@/lib/apis/client'
+import { httpClient } from '@/lib/apis'
 import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { removeSpaces } from '@/lib/utils/string'
 

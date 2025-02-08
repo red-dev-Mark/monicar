@@ -4,3 +4,8 @@ export interface User {
     companyName: string
     departmentName: string
 }
+
+export interface SignInRequestModel {
+    userId: string
+    password: string
+}

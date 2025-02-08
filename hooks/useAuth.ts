@@ -1,4 +1,4 @@
-import { authService } from '@/lib/apis/auth'
+import { authService } from '@/lib/apis'
 import { useAuthStore } from '@/stores/useAuthStore'
 
 export const useAuth = () => {

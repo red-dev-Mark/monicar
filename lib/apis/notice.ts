@@ -1,4 +1,4 @@
-import { httpClient } from '@/lib/apis/client'
+import { httpClient } from '@/lib/apis'
 
 export const noticeService = {
     // 공지사항 목록 조회

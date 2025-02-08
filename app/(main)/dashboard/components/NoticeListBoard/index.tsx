@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 import PageLoader from '@/components/common/PageLoader'
-import { noticeService } from '@/lib/apis/notice'
+import { noticeService } from '@/lib/apis'
 import { NoticeModel } from '@/types/notice'
 
 import * as styles from './styles.css'
