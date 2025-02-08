@@ -14,7 +14,7 @@ export const container = style({
     borderRadius: '30px 30px 0 0',
 })
 
-export const breadcrumbWrapper = style({
+export const breadcrumbsWrapper = style({
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',

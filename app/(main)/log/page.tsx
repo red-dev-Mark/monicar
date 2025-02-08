@@ -75,8 +75,8 @@ const LogPage = () => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <div className={styles.breadcrumbWrapper}>
-                    <Breadcrumbs type={'운행기록'} />
+                <div className={styles.breadcrumbsWrapper}>
+                    <Breadcrumbs breadcrumbsData={[{ title: '운행기록', isActive: true }]} />
                 </div>
 
                 <ControlLayout

@@ -92,8 +92,13 @@ const DetailPage = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.breadcrumbWrapper}>
-                <Breadcrumbs type={'운행일지'} />
+            <div className={styles.breadcrumbsWrapper}>
+                <Breadcrumbs
+                    breadcrumbsData={[
+                        { title: '운행기록', isActive: false },
+                        { title: '운행일지', isActive: true },
+                    ]}
+                />
             </div>
 
             <ControlLayout
