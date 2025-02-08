@@ -12,7 +12,6 @@ import { ZOOM_LEVEL } from '@/constants/map'
 import { useMapControl } from '@/hooks/useMapControl'
 import { useVehicleLocationSearch } from '@/hooks/useVehicleLocationSearch'
 import { vehicleService } from '@/lib/apis'
-// import { routeService } from '@/lib/apis'
 import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
 import * as styles from './styles.css'
@@ -58,14 +57,8 @@ const LocationPage = () => {
         setInputValue(event.target.value)
     }
 
-    // const handleStart = async () => {
-    //     await routeService.getVehicleLiveRoutes('1')
-    // }
-
     return (
         <div className={styles.container}>
-            {/* <button onClick={handleStart}>시작!!!!!!!!!</button> */}
-
             <MapSection
                 mapState={mapState}
                 vehicleInfo={vehicleInfo as VehicleLocation}

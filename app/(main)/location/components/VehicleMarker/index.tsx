@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { CustomOverlayMap, MapMarker } from 'react-kakao-maps-sdk'
 
 import { MARKER_IMAGE } from '@/constants/map'
@@ -13,12 +14,19 @@ interface VehicleMarkerProps {
 }
 
 const VehicleMarker = ({ vehicleInfo, isVehicleNumberVisible = true, onClick }: VehicleMarkerProps) => {
+    const [isHovered, setIsHovered] = useState(false)
     const vehicleNumber = addSpaceVehicleNumber(vehicleInfo.vehicleNumber)
 
     return (
         <CustomOverlayMap position={vehicleInfo.coordinate}>
-            {isVehicleNumberVisible && <p className={styles.vehicleCard}>{vehicleNumber}</p>}
-            <MapMarker position={vehicleInfo.coordinate} image={MARKER_IMAGE} onClick={onClick} />
+            {isHovered && isVehicleNumberVisible && <p className={styles.vehicleCard}>{vehicleNumber}</p>}
+            <MapMarker
+                position={vehicleInfo.coordinate}
+                image={MARKER_IMAGE}
+                onClick={onClick}
+                onMouseOver={() => setIsHovered(true)}
+                onMouseOut={() => setIsHovered(false)}
+            />
         </CustomOverlayMap>
     )
 }

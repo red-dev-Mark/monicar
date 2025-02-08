@@ -1,20 +1,15 @@
 'use client'
 
-// import { CustomOverlayMap } from 'react-kakao-maps-sdk'
-
-// import CustomMarker from '@/app/(main)/location/components/CustomMarker'
 import { useEffect, useRef, useState } from 'react'
 import { CustomOverlayMap } from 'react-kakao-maps-sdk'
 
-import CustomMarker from '@/app/(main)/location/components/CustomMarker'
+import ClusterMarker from '@/app/(main)/location/components/ClusterMarker'
 import VehicleDetailsCard from '@/app/(main)/location/components/VehicleDetailCard'
 import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
 import Map from '@/components/domain/map/Map'
 import { useMapStatus } from '@/hooks/useCurrentMapStatus'
-// import { clusterService } from '@/lib/apis'
 import { clusterService } from '@/lib/apis'
 import { TransformedClusterInfo } from '@/types/cluster'
-import { LatLng } from '@/types/map'
 import { MapState } from '@/types/map'
 import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
@@ -24,7 +19,6 @@ interface MapSectionProps {
     vehicleDetail: VehicleDetail
     isVehicleVisible: boolean
     isDetailCardVisible: boolean
-    onClick?: (location: LatLng, level: number) => void
     onVehicleClose: () => void
     onDetailCardClose: () => void
 }
@@ -39,11 +33,9 @@ const MapSection = ({
     onDetailCardClose,
 }: MapSectionProps) => {
     const [clusterInfo, setClusterInfo] = useState<TransformedClusterInfo[]>([])
-    const [clusterDetailInfo, setClusterDetailInfo] = useState<VehicleLocation | null>(null)
+    const [clusterDetail, setClusterDetail] = useState<VehicleLocation[]>([])
     const [isMapLoaded, setIsMapLoaded] = useState(false)
     const mapRef = useRef<kakao.maps.Map>(null)
-
-    console.log(clusterDetailInfo)
 
     const { currentMapState, updateMapStatus } = useMapStatus(mapRef.current)
 
@@ -62,8 +54,9 @@ const MapSection = ({
         }
 
         const getClusterDetails = async () => {
-            const clusterDetails = await clusterService.getVehicleDetails(currentMapState)
-            setClusterDetailInfo(clusterDetails)
+            const clusterDetail = await clusterService.getVehicleDetail(currentMapState)
+            console.log(clusterDetail)
+            setClusterDetail(Array.isArray(clusterDetail) ? clusterDetail : [])
         }
 
         if (currentMapState.level > 4) {
@@ -73,6 +66,10 @@ const MapSection = ({
         }
     }, [isMapLoaded, currentMapState])
 
+    // TODO: 매직넘버 4 처리
+    const isClusterVisible = currentMapState.level > 4
+    const isClusterDetailVisible = currentMapState.level <= 4
+
     return (
         <Map
             ref={mapRef}
@@ -81,28 +78,28 @@ const MapSection = ({
             onLoad={() => setIsMapLoaded(true)}
             onMapStatusChanged={updateMapStatus}
         >
-            {/* {ClusteringData.result.map((loc, index) => {
-                return (
-                    <CustomOverlayMap key={index} position={loc.coordinate}>
-                        <CustomMarker count={loc.count} onClick={() => onClick(loc.coordinate, mapState.level - 1)} />
-                    </CustomOverlayMap>
-                )
-            })} */}
-            {clusterInfo.map((point, index) => {
-                return (
-                    <CustomOverlayMap key={index} position={{ lat: point.coordinate.lat, lng: point.coordinate.lng }}>
-                        <CustomMarker
-                            count={point.count}
-                            // onClick={() => onClick(point. mapState.level - 1)}
-                        />
-                    </CustomOverlayMap>
-                )
-            })}
-            {/* {clusterDetailInfo && <VehicleMarker vehicleInfo={clusterDetailInfo} />} */}
+            {isClusterVisible &&
+                clusterInfo.map((cluster, index) => {
+                    return (
+                        <CustomOverlayMap
+                            key={index}
+                            position={{ lat: cluster.coordinate.lat, lng: cluster.coordinate.lng }}
+                        >
+                            <ClusterMarker
+                                count={cluster.count}
+                                // onClick={() => onClick(point. mapState.level - 1)}
+                            />
+                        </CustomOverlayMap>
+                    )
+                })}
             {isVehicleVisible && <VehicleMarker vehicleInfo={vehicleInfo} onClick={() => console.log('asdfasdf')} />}
             {isDetailCardVisible && (
                 <VehicleDetailsCard vehicleDetails={vehicleDetail} onCloseButtonClick={onDetailCardClose} />
             )}
+            {isClusterDetailVisible &&
+                clusterDetail.map((cluster) => {
+                    return <VehicleMarker key={cluster.vehicleId} vehicleInfo={cluster} />
+                })}
         </Map>
     )
 }

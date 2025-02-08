@@ -1,12 +1,12 @@
 import { getMarkerColor } from '@/lib/utils/map'
 import { vars } from '@/styles/theme.css'
 
-interface CustomMarkerProps {
+interface ClusterMarkerProps {
     count: number
     onClick?: () => void
 }
 
-const CustomMarker = ({ count, onClick }: CustomMarkerProps) => {
+const ClusterMarker = ({ count, onClick }: ClusterMarkerProps) => {
     const colors = getMarkerColor(count)
 
     return (
@@ -43,4 +43,4 @@ const CustomMarker = ({ count, onClick }: CustomMarkerProps) => {
     )
 }
 
-export default CustomMarker
+export default ClusterMarker

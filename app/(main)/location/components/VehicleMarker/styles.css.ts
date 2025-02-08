@@ -1,6 +1,11 @@
-import { style } from '@vanilla-extract/css'
+import { style, keyframes } from '@vanilla-extract/css'
 
 import { vars } from '@/styles/theme.css'
+
+const fadeIn = keyframes({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+})
 
 export const vehicleCard = style({
     padding: '6px 16px',
@@ -8,6 +13,9 @@ export const vehicleCard = style({
     bottom: '48px',
     left: '50%',
     transform: 'translateX(-50%)',
+
+    transition: 'opacity 0.3s ease-in-out',
+    animation: `${fadeIn} 0.3s ease-in-out forwards`,
 
     color: vars.colors.white,
     fontWeight: vars.fontWeights.bold,
@@ -27,19 +35,4 @@ export const vehicleCard = style({
             borderTop: `8px solid ${vars.colors.black}`,
         },
     },
-})
-
-export const description = style({
-    padding: '8px 16px',
-    position: 'absolute',
-    top: '34px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-
-    borderRadius: '12px',
-    color: vars.colors.white,
-    fontSize: vars.fontSizes.xsmall,
-    fontWeight: vars.fontWeights.bold,
-    backgroundColor: vars.colors.gray[800],
-    textAlign: 'center',
 })
