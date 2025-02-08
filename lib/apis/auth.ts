@@ -1,5 +1,5 @@
 import { httpClient } from '@/lib/apis'
-import { SignInRequestModel } from '@/types/api/auth'
+import { SignInRequestModel } from '@/types/apis/auth'
 
 export const authService = {
     // 로그인 요청

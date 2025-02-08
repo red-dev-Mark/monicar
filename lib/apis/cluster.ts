@@ -1,6 +1,6 @@
 import { httpClient } from '@/lib/apis/client'
 import { denormalizeCoordinate, normalizeCoordinate } from '@/lib/utils/normalize'
-import { ClusterInfo } from '@/types/api/cluster'
+import { ClusterInfo } from '@/types/apis/cluster'
 import { TransformedClusterInfo } from '@/types/cluster'
 import { MapState } from '@/types/map'
 import { VehicleLocation } from '@/types/vehicle'
