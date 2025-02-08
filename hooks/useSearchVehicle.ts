@@ -20,7 +20,7 @@ export const useSearchVehicle = (vehicleNumber: string = '') => {
         }
 
         try {
-            const response = await vehicleService.getVehicleOperationPeriod(vehicleNumber)
+            const response = await vehicleService.getVehicleOperationHistory(vehicleNumber)
 
             if (!response.isValid) {
                 openModalWithMessage('등록되지 않은 차량번호입니다.')

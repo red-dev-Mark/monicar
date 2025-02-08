@@ -54,7 +54,7 @@ const MapSection = ({
         if (!isMapLoaded || !currentMapState) return
         const getClusterInfo = async () => {
             // await clusterService.getClusterInfo(currentMapState)
-            const clusterInfo: ClusterInfoModel[] = await clusterService.getClusterInfo(currentMapState)
+            const clusterInfo = (await clusterService.getClusterInfo(currentMapState)) || []
             // const clusterDetailInfo = await clusterService.getClusterDetailInfo(currentMapState)
             setClusterInfo(clusterInfo)
             // setClusterDetailInfo(clusterDetailInfo)

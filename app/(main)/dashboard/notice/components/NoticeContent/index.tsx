@@ -7,7 +7,7 @@ import { NoticeModel } from '@/types/notice'
 import * as styles from './styles.css'
 
 const NoticeContent = async ({ noticeId }: { noticeId: string }) => {
-    const noticeItem: NoticeModel = await noticeService.getNoticeItem(noticeId)
+    const noticeItem: NoticeModel = await noticeService.getNoticeDetail(noticeId)
     const createdDate = noticeItem?.createdAt ? formatISODateToKorean(noticeItem.createdAt, false) : ''
 
     if (!noticeItem) return

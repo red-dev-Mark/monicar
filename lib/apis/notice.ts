@@ -8,7 +8,7 @@ export const noticeService = {
         return response.data.result
     },
     // 공지사항 개별항목 조회
-    getNoticeItem: async (noticeId: string) => {
+    getNoticeDetail: async (noticeId: string) => {
         const response = await httpClient.get(`api/v1/notice/${noticeId}`)
 
         return response.data.result

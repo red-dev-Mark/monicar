@@ -62,7 +62,7 @@ export const setupResponseInterceptor = (instance: AxiosInstance) => {
                     }
                 } catch (retryError) {
                     console.log(retryError)
-                    await authService.postSignOut()
+                    await authService.signOut()
                     logout()
                     window.location.href = '/signin'
                 }

@@ -48,7 +48,7 @@ const RegisterPage = () => {
         const getVehicleType = async () => {
             try {
                 setIsLoading(true)
-                const vehicleType = await vehicleService.getVehicleType()
+                const vehicleType = await vehicleService.getAvailableVehicleTypes()
                 setVehicleType(vehicleType)
             } catch (error) {
                 console.error(error)
@@ -86,7 +86,7 @@ const RegisterPage = () => {
         }
 
         try {
-            await vehicleService.postVehicleInfo({
+            await vehicleService.registerVehicle({
                 vehicleNumber,
                 vehicleTypeId,
                 deliveryDate,

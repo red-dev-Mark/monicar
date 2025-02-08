@@ -7,7 +7,7 @@ export const useAuth = () => {
     const handleLogin = async (userId: string, password: string) => {
         setAuthLoading(true)
         try {
-            const response = await authService.postSignIn(userId, password)
+            const response = await authService.signIn(userId, password)
 
             if (!response.isSuccess) {
                 setAuthError(response.error as string)
@@ -31,7 +31,7 @@ export const useAuth = () => {
     const handleLogout = async () => {
         setAuthLoading(true)
         try {
-            await authService.postSignOut()
+            await authService.signOut()
             logout()
         } catch (error) {
             setAuthError(error instanceof Error ? error.message : '로그아웃에 실패하였습니다')
