@@ -4,7 +4,7 @@ import { DatePickerInput } from '@mantine/dates'
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
 
-import Breadcrumb from '@/components/common/Breadcrumb'
+import Breadcrumbs from '@/components/common/Breadcrumbs'
 import ExcelButton from '@/components/common/Button/ExcelButton'
 import LinkButton from '@/components/common/Button/LinkButton'
 import { RoundButton } from '@/components/common/Button/RoundButton'
@@ -93,7 +93,7 @@ const DetailPage = () => {
     return (
         <div className={styles.container}>
             <div className={styles.breadcrumbWrapper}>
-                <Breadcrumb type={'운행일지'} />
+                <Breadcrumbs type={'운행일지'} />
             </div>
 
             <ControlLayout

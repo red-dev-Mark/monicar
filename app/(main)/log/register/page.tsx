@@ -5,7 +5,6 @@ import { DatePickerInput } from '@mantine/dates'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import Breadcrumb from '@/components/common/Breadcrumb'
 import SquareButton from '@/components/common/Button/SquareButton'
 import ErrorMessage from '@/components/common/ErrorMessage'
 import BaseInput from '@/components/common/Input/BaseInput'
@@ -206,12 +205,10 @@ const RegisterPage = () => {
 
     return (
         <div className={styles.container}>
-            <Breadcrumb type={'차량등록'} />
             <div className={styles.title}>차량등록📝</div>
             <div className={styles.formWrapper}>
                 <VehicleRegisterForm fields={formFields} />
             </div>
-
             <div className={styles.buttonsWrapper}>
                 <SquareButton color={'white'} onClick={handleCancelButtonClick}>
                     취소
@@ -220,7 +217,6 @@ const RegisterPage = () => {
                     등록
                 </SquareButton>
             </div>
-
             <Modal
                 isOpen={isModalOpen}
                 message={message as ModalMessageType}

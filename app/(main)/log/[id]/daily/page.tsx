@@ -2,7 +2,7 @@
 
 import { Select } from '@mantine/core'
 
-import Breadcrumb from '@/components/common/Breadcrumb'
+import Breadcrumbs from '@/components/common/Breadcrumbs'
 import ExcelButton from '@/components/common/Button/ExcelButton'
 import ListHeader from '@/components/domain/vehicle/ListHeader'
 import { DAILY_TITLES, HOURLY_TITLES } from '@/constants/listHeader'
@@ -13,7 +13,7 @@ import * as styles from './styles.css'
 const DailyPage = () => {
     return (
         <div className={styles.container}>
-            <Breadcrumb type={'일별 및 시간별 운행기록'} />
+            <Breadcrumbs type={'일별 및 시간별 운행기록'} />
 
             <div className={styles.contents}>
                 <div className={styles.leftSection}>

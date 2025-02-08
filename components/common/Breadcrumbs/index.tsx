@@ -4,15 +4,15 @@ import Link from 'next/link'
 import { useParams } from 'next/navigation'
 
 import * as styles from './styles.css'
-import { breadcrumbPath, BreadcrumbType, logPath } from './types'
+import { breadcrumbsPath, BreadcrumbType, logPath } from './types'
 
 interface BreadcrumbProps {
     type: BreadcrumbType
 }
 
-const Breadcrumb = ({ type }: BreadcrumbProps) => {
+const Breadcrumbs = ({ type }: BreadcrumbProps) => {
     const { id } = useParams()
-    const paths = breadcrumbPath[type as keyof typeof breadcrumbPath] ?? logPath
+    const paths = breadcrumbsPath[type as keyof typeof breadcrumbsPath] ?? logPath
     const index = paths.findIndex((item) => item.label === type)
     const visibleItems = paths.slice(0, index + 1)
 
@@ -37,4 +37,4 @@ const Breadcrumb = ({ type }: BreadcrumbProps) => {
     )
 }
 
-export default Breadcrumb
+export default Breadcrumbs
