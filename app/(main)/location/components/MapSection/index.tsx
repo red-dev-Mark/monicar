@@ -17,7 +17,7 @@ interface MapSectionProps {
     mapState?: MapState
     vehicleInfo: VehicleLocation
     vehicleDetail: VehicleDetail
-    isVehicleVisible: boolean
+    isSearchedVehicleVisible: boolean
     isDetailCardVisible: boolean
     onVehicleClose: () => void
     onDetailCardClose: () => void
@@ -27,7 +27,7 @@ const MapSection = ({
     mapState,
     vehicleInfo,
     vehicleDetail,
-    isVehicleVisible,
+    isSearchedVehicleVisible,
     isDetailCardVisible,
     // onVehicleClose,
     onDetailCardClose,
@@ -92,7 +92,7 @@ const MapSection = ({
                         </CustomOverlayMap>
                     )
                 })}
-            {isVehicleVisible && <VehicleMarker vehicleInfo={vehicleInfo} onClick={() => console.log('asdfasdf')} />}
+            {isSearchedVehicleVisible && <VehicleMarker vehicleInfo={vehicleInfo} useHoverEffect={false} />}
             {isDetailCardVisible && (
                 <VehicleDetailsCard vehicleDetails={vehicleDetail} onCloseButtonClick={onDetailCardClose} />
             )}

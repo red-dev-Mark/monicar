@@ -10,16 +10,24 @@ import * as styles from './styles.css'
 interface VehicleMarkerProps {
     vehicleInfo: VehicleLocation
     isVehicleNumberVisible?: boolean
+    useHoverEffect?: boolean
     onClick?: () => void
 }
 
-const VehicleMarker = ({ vehicleInfo, isVehicleNumberVisible = true, onClick }: VehicleMarkerProps) => {
+const VehicleMarker = ({
+    vehicleInfo,
+    isVehicleNumberVisible = true,
+    useHoverEffect = true,
+    onClick,
+}: VehicleMarkerProps) => {
     const [isHovered, setIsHovered] = useState(false)
     const vehicleNumber = addSpaceVehicleNumber(vehicleInfo.vehicleNumber)
 
+    const shouldShowNumber = useHoverEffect ? isHovered : true
+
     return (
         <CustomOverlayMap position={vehicleInfo.coordinate}>
-            {isHovered && isVehicleNumberVisible && <p className={styles.vehicleCard}>{vehicleNumber}</p>}
+            {shouldShowNumber && isVehicleNumberVisible && <p className={styles.vehicleCard}>{vehicleNumber}</p>}
             <MapMarker
                 position={vehicleInfo.coordinate}
                 image={MARKER_IMAGE}

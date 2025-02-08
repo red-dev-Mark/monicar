@@ -63,7 +63,7 @@ const LocationPage = () => {
                 mapState={mapState}
                 vehicleInfo={vehicleInfo as VehicleLocation}
                 vehicleDetail={vehicleDetail as VehicleDetail}
-                isVehicleVisible={isSearchedVehicleVisible}
+                isSearchedVehicleVisible={isSearchedVehicleVisible}
                 isDetailCardVisible={isVehicleDetailCardVisible}
                 onVehicleClose={hideSearchedVehicle}
                 onDetailCardClose={hideVehicleDetailCard}
