@@ -15,6 +15,7 @@ import { ModalMessageType } from '@/components/common/Modal/types'
 import PageLoader from '@/components/common/PageLoader'
 import { API_ENDPOINTS } from '@/constants/api'
 import { vehicleService } from '@/lib/apis/vehicle'
+import { addSpaceVehicleNumber } from '@/lib/utils/string'
 import { CalendarIcon } from '@/public/icons'
 
 import '@mantine/dates/styles.css'
@@ -39,10 +40,9 @@ const DetailPage = () => {
         enabled: isDateRangeValid,
     })
 
-    // TODO: API 수정시 주석 풀기
-    // const formattedVehicleNumber = detailData?.vehicleInfo.vehicleNumber
-    //     ? addSpaceVehicleNumber(detailData.vehicleInfo.vehicleNumber)
-    //     : ''
+    const formattedVehicleNumber = detailData?.vehicleInfo.vehicleNumber
+        ? addSpaceVehicleNumber(detailData.vehicleInfo.vehicleNumber)
+        : ''
 
     const {
         isConfirmModalOpen,
@@ -137,16 +137,14 @@ const DetailPage = () => {
                         </div>
                     }
                     secondaryButton={
-                        true ? (
+                        detailData?.vehicleInfo.status !== 'IN_OPERATION' ? (
                             <div className={styles.deleteButtonWrapper}>
-                                {detailData?.status === 'IN_OPERATION' && (
-                                    <RoundButton color='primary' size='small' onClick={handleDeleteButtonClick}>
-                                        <div className={styles.deleteButton}>
-                                            <Image src='/icons/white-trash-icon.svg' alt='add' width={18} height={18} />
-                                            차량삭제
-                                        </div>
-                                    </RoundButton>
-                                )}
+                                <RoundButton color='primary' size='small' onClick={handleDeleteButtonClick}>
+                                    <div className={styles.deleteButton}>
+                                        <Image src='/icons/white-trash-icon.svg' alt='add' width={18} height={18} />
+                                        차량삭제
+                                    </div>
+                                </RoundButton>
                             </div>
                         ) : (
                             <></>
@@ -179,8 +177,8 @@ const DetailPage = () => {
                             </th>
                         </tr>
                         <tr>
-                            {/* <td className={styles.tableCell}>{formattedVehicleNumber}</td> */}
-                            {/* <td className={styles.tableCell}>{detailData?.vehicleInfo.vehicleModel}</td> */}
+                            <td className={styles.tableCell}>{formattedVehicleNumber}</td>
+                            <td className={styles.tableCell}>{detailData?.vehicleInfo.vehicleModel}</td>
                         </tr>
                     </tbody>
                 </table>

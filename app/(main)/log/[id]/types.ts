@@ -8,6 +8,7 @@ interface BusinessInfo {
 interface VehicleInfo {
     vehicleNumber: string
     vehicleModel: string
+    status: OperationStatusType
 }
 
 interface BusinessDrivingDetails {
@@ -43,6 +44,5 @@ export interface DetailResponse {
     taxPeriodBusinessDistance: number
     businessUseRatio: number
     vehicleInfo: VehicleInfo
-    status: OperationStatusType
     records: DrivingRecord[]
 }
