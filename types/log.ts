@@ -1,4 +1,4 @@
-export interface ListItemModel {
+export interface LogListItemModel {
     id: number
     vehicleNumber: string
     vehicleModel: string

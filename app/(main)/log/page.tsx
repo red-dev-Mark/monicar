@@ -18,7 +18,7 @@ import { LOG_TITLES } from '@/constants/listHeader'
 import { useModal } from '@/hooks/useModal'
 import { validateSearchTerm } from '@/lib/utils/validation'
 
-import ListItem from './components/ListItem/index'
+import LogListItem from './components/LogListItem/index'
 import { useLogData } from './hooks/useLogData'
 import * as styles from './styles.css'
 import { downloadExcel } from './utils/excel'
@@ -116,7 +116,7 @@ const LogPage = () => {
             <div className={styles.contents}>
                 <ListHeader headerTitles={LOG_TITLES} />
                 {logData?.content.map((log) => (
-                    <ListItem key={log.id} data={log} onClick={() => handleItemClick(log.id)} />
+                    <LogListItem key={log.id} data={log} onClick={() => handleItemClick(log.id)} />
                 ))}
             </div>
 
