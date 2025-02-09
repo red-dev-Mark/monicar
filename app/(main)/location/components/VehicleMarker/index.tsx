@@ -28,7 +28,7 @@ const VehicleMarker = ({ vehicleInfo, useHoverEffect = true, onClick, onClose }:
     return (
         <CustomOverlayMap position={vehicleInfo.coordinate}>
             {shouldShowNumber && (
-                <p className={styles.vehicleCard} onClick={useHoverEffect ? undefined : onClick} role='presentation'>
+                <p className={styles.vehicleNumber} onClick={useHoverEffect ? undefined : onClick} role='presentation'>
                     {vehicleNumber}
                     {!useHoverEffect && (
                         <button className={styles.closeButton} onClick={handleCloseButtonClick} aria-label='닫기'>

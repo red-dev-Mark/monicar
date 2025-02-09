@@ -7,7 +7,7 @@ const fadeIn = keyframes({
     to: { opacity: 1 },
 })
 
-export const vehicleCard = style({
+export const vehicleNumber = style({
     padding: '6px 16px',
     position: 'absolute',
     bottom: '48px',
@@ -22,6 +22,7 @@ export const vehicleCard = style({
     backgroundColor: vars.colors.black,
     borderRadius: '12px',
     cursor: 'pointer',
+    zIndex: vars.zIndex.four,
 
     selectors: {
         '&:after': {

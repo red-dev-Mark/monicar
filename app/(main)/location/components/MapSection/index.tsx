@@ -105,7 +105,7 @@ const MapSection = ({
                         >
                             <ClusterMarker
                                 count={cluster.count}
-                                // onClick={() => onClick(point. mapState.level - 1)}
+                                // onClick={() => currentMapState.level - 1}
                             />
                         </CustomOverlayMap>
                     )
