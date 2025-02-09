@@ -64,6 +64,7 @@ export const getMapStatus = (map: kakao.maps.Map): MapState => {
 // 현재 지도 상태가 지정된 경계를 벗어날 경우, 경계값으로 보정
 export const getBoundedMapStatus = (map: kakao.maps.Map): MapState => {
     const mapState = getMapStatus(map)
+
     const { swCoord, neCoord } = mapState
 
     if (!swCoord || !neCoord) return mapState
@@ -89,6 +90,7 @@ export const getBoundedMapStatus = (map: kakao.maps.Map): MapState => {
             lng: isOutOfBounds.ne.lng ? neCoord.lng : MAP_BOUNDS.NE_LNG,
         },
     }
+
     return {
         ...mapState,
         swCoord: boundedCoords.sw,

@@ -8,6 +8,7 @@ import ClusterOverlay from '@/components/domain/cluster/ClusterOverlay'
 import VehicleOverlay from '@/components/domain/cluster/VehicleOverlay'
 import Map from '@/components/domain/map/Map'
 import VehicleMarker from '@/components/domain/vehicle/VehicleMarker'
+import { MAP_CONFIG } from '@/constants/map'
 import { useCluster } from '@/hooks/useCluster'
 import { useMapStatus } from '@/hooks/useMapStatus'
 import { MapRefType } from '@/types/map'
@@ -18,7 +19,7 @@ interface MapSectionProps {
     vehicleInfo: VehicleLocation
     vehicleDetail: VehicleDetail
     isSearchedVehicleVisible: boolean
-    isDetailCardVisible: boolean
+    isSearchDetailVisible: boolean
     onVehicleClose: () => void
     onDetailCardOpen: () => void
     onDetailCardClose: () => void
@@ -30,7 +31,7 @@ const MapSection = memo(
         vehicleInfo,
         vehicleDetail,
         isSearchedVehicleVisible,
-        isDetailCardVisible,
+        isSearchDetailVisible,
         onVehicleClose,
         onDetailCardOpen,
         onDetailCardClose,
@@ -46,10 +47,44 @@ const MapSection = memo(
             updateMapStatus()
         }, [isMapLoaded])
 
+        // const handleVehicleClick = async (vehicleId: string, vehicleNumber: string) => {
+        //     const vehicleDetail = await vehicleService.getVehicleDetail(vehicleId)
+
+        //     // TODO: 지금 API 응답 위치가 다름
+        //     // const {
+        //     //     recentCycleInfo: { lat, lng },
+        //     // } = vehicleDetail
+
+        //     const params = new URLSearchParams(searchParams)
+        //     params.set('vehicleNumber', removeSpaces(trimValue(vehicleNumber)))
+        //     router.replace(`/location?${params.toString()}`)
+
+        //     setVehicleDetail(vehicleDetail)
+        //     showVehicleDetailCard()
+
+        //     // TODO: 지금 API 응답 위치가 다름
+        //     // controlMapStatus({
+        //     //     lat: normalizeCoordinate(lat),
+        //     //     lng: normalizeCoordinate(lng),
+        //     // })
+
+        //     // TODO: 지금 API 응답 위치가 다름
+        //     const filteredCoord = clusterDetail.filter((cluster) => {
+        //         return cluster.vehicleId === vehicleId
+        //     })
+        //     // TODO: 지금 API 응답 위치가 다름
+        //     controlMapStatus({
+        //         lat: filteredCoord[0].coordinate.lat,
+        //         lng: filteredCoord[0].coordinate.lng,
+        //     })
+        // }
+
         const clearVehicleAndCard = () => {
             onVehicleClose()
             onDetailCardClose()
         }
+
+        const isViewportVehicleListVisible = mapState.level <= MAP_CONFIG.CLUSTER.VISIBLE_LEVEL
 
         return (
             <Map
@@ -68,7 +103,7 @@ const MapSection = memo(
                         onClose={clearVehicleAndCard}
                     />
                 )}
-                {isDetailCardVisible && (
+                {isSearchDetailVisible && (
                     <VehicleDetailCard vehicleDetails={vehicleDetail} onClose={onDetailCardClose} />
                 )}
 
@@ -77,10 +112,11 @@ const MapSection = memo(
                 <VehicleOverlay
                     mapState={mapState}
                     clusterDetail={clusterDetail}
+                    selectedVehicleId={''}
                     onVehicleClick={() => console.log('차량 클릭!')}
                 />
 
-                <ViewportVehicleList clusterDetail={clusterDetail} onClose={() => console.log('닫기')} />
+                {isViewportVehicleListVisible && <ViewportVehicleList mapRef={mapRef} clusterDetail={clusterDetail} />}
             </Map>
         )
     },

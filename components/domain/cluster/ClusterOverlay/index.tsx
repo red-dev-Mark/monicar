@@ -8,7 +8,7 @@ import { LatLng, MapState } from '@/types/map'
 interface ClusterOverlayProps {
     mapState: MapState
     clusterInfo: TransformedClusterInfo[]
-    onClusterClick: (level: number, location: LatLng) => void
+    onClusterClick: (location: LatLng, level: number) => void
 }
 
 const ClusterOverlay = ({ mapState, clusterInfo, onClusterClick }: ClusterOverlayProps) => {
@@ -20,10 +20,13 @@ const ClusterOverlay = ({ mapState, clusterInfo, onClusterClick }: ClusterOverla
                 <ClusterMarker
                     count={cluster.count}
                     onClick={() =>
-                        onClusterClick(mapState.level - MAP_CONFIG.CLUSTER.ZOOM_INCREMENT, {
-                            lat: cluster.coordinate.lat,
-                            lng: cluster.coordinate.lng,
-                        })
+                        onClusterClick(
+                            {
+                                lat: cluster.coordinate.lat,
+                                lng: cluster.coordinate.lng,
+                            },
+                            mapState.level - MAP_CONFIG.CLUSTER.ZOOM_INCREMENT,
+                        )
                     }
                 />
             </CustomOverlayMap>

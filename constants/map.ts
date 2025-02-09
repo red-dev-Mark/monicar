@@ -8,7 +8,7 @@ export const MAP_CONFIG = {
         center: { lat: 36.5, lng: 127.5 },
     },
     SEARCH_VEHICLE: {
-        ZOOM_INCREMENT: 7,
+        ZOOM_INCREMENT: 4,
     },
     CLUSTER: {
         VISIBLE_LEVEL: 4,

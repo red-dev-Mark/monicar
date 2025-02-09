@@ -6,14 +6,22 @@ import { VehicleLocation } from '@/types/vehicle'
 interface VehicleOverlayProps {
     mapState: MapState
     clusterDetail: VehicleLocation[]
+    selectedVehicleId?: string
     onVehicleClick?: () => void
 }
 
-const VehicleOverlay = ({ mapState, clusterDetail, onVehicleClick }: VehicleOverlayProps) => {
+const VehicleOverlay = ({ mapState, clusterDetail, selectedVehicleId, onVehicleClick }: VehicleOverlayProps) => {
     if (mapState.level > MAP_CONFIG.CLUSTER.VISIBLE_LEVEL) return null
 
     return clusterDetail.map((cluster) => {
-        return <VehicleMarker key={cluster.vehicleId} vehicleInfo={cluster} onClick={onVehicleClick} />
+        return (
+            <VehicleMarker
+                key={cluster.vehicleId}
+                vehicleInfo={cluster}
+                useHoverEffect={selectedVehicleId === cluster.vehicleId ? false : true}
+                onClick={onVehicleClick}
+            />
+        )
     })
 }
 

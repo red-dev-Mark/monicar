@@ -29,7 +29,7 @@ const LocationPage = () => {
     const { vehicleInfo, isModalOpen, message, closeModal, searchVehicleWithNumber } =
         useVehicleLocationSearch(inputValue)
     const [isSearchedVehicleVisible, { open: showSearchedVehicle, close: hideSearchedVehicle }] = useDisclosure()
-    const [isVehicleDetailCardVisible, { open: showVehicleDetailCard, close: hideVehicleDetailCard }] = useDisclosure()
+    const [isSearchDetailVisible, { open: showSearchedDetail, close: hideSearchedDetail }] = useDisclosure()
 
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -52,12 +52,15 @@ const LocationPage = () => {
 
         setVehicleDetail(vehicleDetail)
         showSearchedVehicle()
-        showVehicleDetailCard()
+        showSearchedDetail()
 
-        controlMapStatus(MAP_CONFIG.SEARCH_VEHICLE.ZOOM_INCREMENT, {
-            lat: vehicleInfo.coordinate.lat,
-            lng: vehicleInfo.coordinate.lng,
-        })
+        controlMapStatus(
+            {
+                lat: vehicleInfo.coordinate.lat,
+                lng: vehicleInfo.coordinate.lng,
+            },
+            MAP_CONFIG.SEARCH_VEHICLE.ZOOM_INCREMENT,
+        )
     }
 
     const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -77,10 +80,10 @@ const LocationPage = () => {
                 vehicleInfo={vehicleInfo as VehicleLocation}
                 vehicleDetail={vehicleDetail as VehicleDetail}
                 isSearchedVehicleVisible={isSearchedVehicleVisible}
-                isDetailCardVisible={isVehicleDetailCardVisible}
+                isSearchDetailVisible={isSearchDetailVisible}
                 onVehicleClose={resetVehicleSearch}
-                onDetailCardOpen={showVehicleDetailCard}
-                onDetailCardClose={hideVehicleDetailCard}
+                onDetailCardOpen={showSearchedDetail}
+                onDetailCardClose={hideSearchedDetail}
             />
             <div className={styles.searchInputWrapper}>
                 <SearchInput

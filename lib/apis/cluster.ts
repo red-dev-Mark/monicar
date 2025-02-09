@@ -59,7 +59,8 @@ export const clusterService = {
 
         return result.map((clusterInfo: ClusterDetail) => {
             return {
-                ...clusterInfo,
+                vehicleId: clusterInfo.vehicleId,
+                vehicleNumber: clusterInfo.vehicleNumber,
                 coordinate: {
                     lat: normalizeCoordinate(clusterInfo.lat),
                     lng: normalizeCoordinate(clusterInfo.lng),

@@ -18,7 +18,7 @@ export const useMapStatus = (map: kakao.maps.Map | null | undefined) => {
         setCurrentMapState(getBoundedMapStatus(map))
     }
 
-    const controlMapStatus = (level: number, location: LatLng) => {
+    const controlMapStatus = (location: LatLng, level?: number) => {
         if (!map) {
             console.warn('카카오맵 인스턴스 생성에 실패하였습니다.')
             return
@@ -26,7 +26,9 @@ export const useMapStatus = (map: kakao.maps.Map | null | undefined) => {
 
         try {
             map.setCenter(new kakao.maps.LatLng(location.lat, location.lng))
-            map.setLevel(level)
+            if (level) {
+                map.setLevel(level)
+            }
 
             setCurrentMapState(getBoundedMapStatus(map))
         } catch (error) {
