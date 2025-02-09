@@ -13,6 +13,7 @@ import { useDisclosure } from '@/hooks/useDisclosure'
 import { useMapStatus } from '@/hooks/useMapStatus'
 import { useVehicleLocationSearch } from '@/hooks/useVehicleLocationSearch'
 import { vehicleService } from '@/lib/apis'
+import { removeSpaces, trimValue } from '@/lib/utils/string'
 import { cleanUrlParams } from '@/lib/utils/url'
 import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
@@ -46,7 +47,7 @@ const LocationPage = () => {
         const vehicleDetail = await vehicleService.getVehicleDetail(vehicleId)
 
         const params = new URLSearchParams(searchParams)
-        params.set('vehicleNumber', inputValue)
+        params.set('vehicleNumber', removeSpaces(trimValue(inputValue)))
         router.replace(`/location?${params.toString()}`)
 
         setVehicleDetail(vehicleDetail)
