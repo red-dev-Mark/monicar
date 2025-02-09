@@ -19,12 +19,19 @@ export const useMapStatus = (map: kakao.maps.Map | null | undefined) => {
     }
 
     const controlMapStatus = (level: number, location: LatLng) => {
-        if (!map) return
+        if (!map) {
+            console.warn('카카오맵 인스턴스 생성에 실패하였습니다.')
+            return
+        }
 
-        map.setCenter(new kakao.maps.LatLng(location.lat, location.lng))
-        map.setLevel(level)
+        try {
+            map.setCenter(new kakao.maps.LatLng(location.lat, location.lng))
+            map.setLevel(level)
 
-        setCurrentMapState(getBoundedMapStatus(map))
+            setCurrentMapState(getBoundedMapStatus(map))
+        } catch (error) {
+            console.error('지도상태 변경 실패', error)
+        }
     }
 
     return { mapState, updateMapStatus, controlMapStatus }
