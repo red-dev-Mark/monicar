@@ -235,7 +235,7 @@ const RegisterPage = () => {
                     취소
                 </SquareButton>
                 <SquareButton color={'dark'} onClick={postVehicleInfo} disabled={isLoading}>
-                    {isLoading ? <PageLoader /> : '로그인'}
+                    {isLoading ? <PageLoader /> : '등록'}
                 </SquareButton>
             </div>
             <Modal

@@ -37,7 +37,6 @@ export const list = style({
     },
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
-            flexDirection: 'column',
             gap: '8px',
         },
     },
