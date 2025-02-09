@@ -29,16 +29,6 @@ const Map = memo(
             onMapStatusChanged?.()
         }
 
-        // useImperativeHandle(ref, {
-        //     f1: () => {
-        //         alert('1')
-        //     }
-        // });
-
-        // const handleasdf = () => {
-        //     ref?.current.updateMapLocation()
-        // }
-
         if (loading) return <PageLoader />
         if (error) return <ErrorMessage />
 

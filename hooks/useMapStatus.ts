@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { INITIAL_MAP_STATE } from '@/constants/map'
 import { getBoundedMapStatus } from '@/lib/utils/map'
-import { MapState } from '@/types/map'
+import { LatLng, MapState } from '@/types/map'
 
 export const useMapStatus = (map: kakao.maps.Map | null) => {
     const [currentMapState, setCurrentMapState] = useState<MapState>({
@@ -18,5 +18,19 @@ export const useMapStatus = (map: kakao.maps.Map | null) => {
         setCurrentMapState(getBoundedMapStatus(map))
     }
 
-    return { currentMapState, updateMapStatus }
+    const controlMapStatus = (location: LatLng, level: number) => {
+        if (!map) return
+
+        map.setLevel(level)
+        map.setCenter(new kakao.maps.LatLng(location.lat, location.lng))
+        // const bounds = getBoundedMapStatus(map)
+
+        // setCurrentMapState({
+        //     ...bounds,
+        //     level,
+        //     center: location,
+        // })
+    }
+
+    return { currentMapState, updateMapStatus, controlMapStatus }
 }

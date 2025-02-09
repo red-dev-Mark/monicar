@@ -7,7 +7,7 @@ import ClusterMarker from '@/app/(main)/location/components/ClusterMarker'
 import VehicleDetailCard from '@/app/(main)/location/components/VehicleDetailCard'
 import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
 import Map from '@/components/domain/map/Map'
-import { useMapStatus } from '@/hooks/useCurrentMapStatus'
+import { useMapStatus } from '@/hooks/useMapStatus'
 import { clusterService } from '@/lib/apis'
 import { TransformedClusterInfo } from '@/types/cluster'
 import { MapState } from '@/types/map'
@@ -37,6 +37,7 @@ const MapSection = ({
     const [clusterInfo, setClusterInfo] = useState<TransformedClusterInfo[]>([])
     const [clusterDetail, setClusterDetail] = useState<VehicleLocation[]>([])
     const [isMapLoaded, setIsMapLoaded] = useState(false)
+
     const mapRef = useRef<kakao.maps.Map>(null)
 
     const { currentMapState, updateMapStatus } = useMapStatus(mapRef.current)
@@ -47,6 +48,7 @@ const MapSection = ({
         updateMapStatus()
     }, [isMapLoaded])
 
+    console.log(currentMapState)
     useEffect(() => {
         if (!isMapLoaded || !currentMapState) return
 
