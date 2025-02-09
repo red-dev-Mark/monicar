@@ -4,10 +4,11 @@ import { vars } from '@/styles/theme.css'
 
 export const container = style({
     width: '390px',
+    height: '436px',
     position: 'absolute',
     bottom: 0,
     left: 0,
-    zIndex: 10,
+    zIndex: 2,
     display: 'flex',
     flexDirection: 'column',
     padding: '16px',
@@ -19,20 +20,18 @@ export const container = style({
 export const header = style({
     paddingBottom: '8px',
     display: 'flex',
-    justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
     borderBottom: `1px solid ${vars.colors.gray[200]}`,
 })
 
-export const headerContent = style({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '16px',
+export const closeButton = style({
+    position: 'absolute',
+    right: '16px',
 })
 
 export const vehicleNumber = style({
-    marginLeft: '-36px',
+    marginLeft: '54px',
     fontSize: vars.fontSizes.large,
     fontWeight: vars.fontWeights.bold,
 })
@@ -51,7 +50,6 @@ export const table = style({
 })
 
 export const tableHeader = style({
-    // width: '35%',
     padding: '8px',
     textAlign: 'left',
     fontWeight: vars.fontWeights.bold,

@@ -32,7 +32,7 @@ const VehicleDetailCard = ({ vehicleDetails, onClose }: VehicleDetailCardProps) 
             <header className={styles.header}>
                 <Badge shape='circle' variant={isDriving ? '운행중' : '미운행'} />
                 <h2 className={styles.vehicleNumber}>{vehicleNumber}</h2>
-                <button onClick={onClose} aria-label='차량 상세 정보 닫기'>
+                <button className={styles.closeButton} onClick={onClose} aria-label='차량 상세 정보 닫기'>
                     <Image src={'/icons/clear-icon.svg'} width={36} height={36} alt='닫기 버튼' />
                 </button>
             </header>

@@ -2,10 +2,11 @@
 
 import { memo, useEffect, useState } from 'react'
 
+import VehicleDetailCard from '@/app/(main)/location/components/VehicleDetailCard'
+import ViewportVehicleList from '@/app/(main)/location/components/ViewportVehicleList'
 import ClusterOverlay from '@/components/domain/cluster/ClusterOverlay'
 import VehicleOverlay from '@/components/domain/cluster/VehicleOverlay'
 import Map from '@/components/domain/map/Map'
-import VehicleDetailCard from '@/components/domain/vehicle/VehicleDetailCard'
 import VehicleMarker from '@/components/domain/vehicle/VehicleMarker'
 import { useCluster } from '@/hooks/useCluster'
 import { useMapStatus } from '@/hooks/useMapStatus'
@@ -78,6 +79,8 @@ const MapSection = memo(
                     clusterDetail={clusterDetail}
                     onVehicleClick={() => console.log('차량 클릭!')}
                 />
+
+                <ViewportVehicleList clusterDetail={clusterDetail} onClose={() => console.log('닫기')} />
             </Map>
         )
     },
