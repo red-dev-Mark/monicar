@@ -36,7 +36,7 @@ const RegisterPage = () => {
     const [drivingDistance, setDrivingDistance] = useState('')
     const { isModalOpen, message, openModalWithMessage, closeModal } = useModal()
     const [showSuccessMessage, setShowSuccessMessage] = useState(false)
-    const [showErrorMessage, setShowErrorMessage] = useState(false)
+    const [showErrorMessage, setShowErrorMessage] = useState<string>('')
 
     const router = useRouter()
 
@@ -55,6 +55,16 @@ const RegisterPage = () => {
         }
         getVehicleType()
     }, [])
+
+    const checkVehicleNumber = async () => {
+        try {
+            await vehicleService.getAvailableVehicleNumber(vehicleNumber)
+            setShowSuccessMessage(true)
+        } catch (error) {
+            console.error(error)
+            setShowErrorMessage(error as string)
+        }
+    }
 
     const handleCancelButtonClick = () => {
         router.back()
@@ -120,16 +130,15 @@ const RegisterPage = () => {
                         onChange={(event) => setVehicleNumber(event.target.value)}
                         onSubmit={() => {
                             if (isValidVehicleNumberFormat(removeSpaces(vehicleNumber))) {
-                                setShowSuccessMessage(true)
-                                setShowErrorMessage(false)
+                                checkVehicleNumber()
                             } else {
-                                setShowErrorMessage(true)
+                                setShowErrorMessage('차량번호 형식이 맞지 않습니다.')
                                 setShowSuccessMessage(false)
                             }
                         }}
                     />
                     {showSuccessMessage && <Message message={'등록 가능한 차량번호입니다.'} isError={false} />}
-                    {showErrorMessage && <Message message={'올바르지 않은 차량번호입니다.'} isError={true} />}
+                    {showErrorMessage && <Message message={showErrorMessage} isError={true} />}
                 </>
             ),
             isError: false,
