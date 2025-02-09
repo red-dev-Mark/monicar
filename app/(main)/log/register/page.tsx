@@ -81,12 +81,16 @@ const RegisterPage = () => {
             return
         }
 
+        setIsLoading(true)
+
         const response = await vehicleService.registerVehicle({
             vehicleNumber,
             vehicleTypeId,
             deliveryDate,
             drivingDistance: drivingDistance as string,
         })
+
+        setIsLoading(false)
 
         if (!response.isSuccess) {
             openModalWithMessage(response.errorMessage)
@@ -215,8 +219,8 @@ const RegisterPage = () => {
                 <SquareButton color={'white'} onClick={handleCancelButtonClick}>
                     취소
                 </SquareButton>
-                <SquareButton color={'dark'} onClick={postVehicleInfo}>
-                    등록
+                <SquareButton color={'dark'} onClick={postVehicleInfo} disabled={isLoading}>
+                    {isLoading ? <PageLoader /> : '로그인'}
                 </SquareButton>
             </div>
             <Modal

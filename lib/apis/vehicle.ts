@@ -65,6 +65,7 @@ export const vehicleService = {
 
         return response.data.result
     },
+
     // 신규 차량 정보 등록
     registerVehicle: async (data: RegisterVehicleModel) => {
         const response = await httpClient.post(`api/v1/vehicle/register`, data)
@@ -75,8 +76,9 @@ export const vehicleService = {
             }
         }
 
-        return response.data.result
+        return response.data
     },
+
     // 등록된 차량 정보 삭제
     deleteVehicle: async (vehicleId: number) => {
         const response = await httpClient.delete(`api/v1/vehicle/${vehicleId}`)
