@@ -39,8 +39,6 @@ const MapSection = memo(
         const { mapState, updateMapStatus, controlMapStatus } = useMapStatus(mapRef?.current)
         const { clusterInfo, clusterDetail } = useCluster(mapState, isMapLoaded)
 
-        console.log(mapState.level, mapState.center)
-
         useEffect(() => {
             if (!isMapLoaded) return
 

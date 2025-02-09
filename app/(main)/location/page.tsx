@@ -1,6 +1,7 @@
 'use client'
 
-import { ChangeEventHandler, useRef, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { ChangeEventHandler, useEffect, useRef, useState } from 'react'
 
 import MapSection from '@/app/(main)/location/components/MapSection'
 import VehicleStatusPanel from '@/app/(main)/location/components/VehicleStatusPanel'
@@ -12,6 +13,7 @@ import { useDisclosure } from '@/hooks/useDisclosure'
 import { useMapStatus } from '@/hooks/useMapStatus'
 import { useVehicleLocationSearch } from '@/hooks/useVehicleLocationSearch'
 import { vehicleService } from '@/lib/apis'
+import { cleanUrlParams } from '@/lib/utils/url'
 import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
 import * as styles from './styles.css'
@@ -28,6 +30,13 @@ const LocationPage = () => {
     const [isSearchedVehicleVisible, { open: showSearchedVehicle, close: hideSearchedVehicle }] = useDisclosure()
     const [isVehicleDetailCardVisible, { open: showVehicleDetailCard, close: hideVehicleDetailCard }] = useDisclosure()
 
+    const router = useRouter()
+    const searchParams = useSearchParams()
+
+    useEffect(() => {
+        return () => cleanUrlParams()
+    }, [])
+
     const handleInputSubmit = async () => {
         const vehicleInfo = await searchVehicleWithNumber()
 
@@ -36,18 +45,28 @@ const LocationPage = () => {
         const { vehicleId } = vehicleInfo as VehicleLocation
         const vehicleDetail = await vehicleService.getVehicleDetail(vehicleId)
 
-        controlMapStatus(MAP_CONFIG.SEARCH_VEHICLE.ZOOM_INCREMENT, {
-            lat: vehicleInfo.coordinate.lat,
-            lng: vehicleInfo.coordinate.lng,
-        })
+        const params = new URLSearchParams(searchParams)
+        params.set('vehicleNumber', inputValue)
+        router.replace(`/location?${params.toString()}`)
 
         setVehicleDetail(vehicleDetail)
         showSearchedVehicle()
         showVehicleDetailCard()
+
+        controlMapStatus(MAP_CONFIG.SEARCH_VEHICLE.ZOOM_INCREMENT, {
+            lat: vehicleInfo.coordinate.lat,
+            lng: vehicleInfo.coordinate.lng,
+        })
     }
 
     const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
         setInputValue(event.target.value)
+    }
+
+    const resetVehicleSearch = () => {
+        cleanUrlParams()
+        hideSearchedVehicle()
+        setInputValue('')
     }
 
     return (
@@ -58,7 +77,7 @@ const LocationPage = () => {
                 vehicleDetail={vehicleDetail as VehicleDetail}
                 isSearchedVehicleVisible={isSearchedVehicleVisible}
                 isDetailCardVisible={isVehicleDetailCardVisible}
-                onVehicleClose={hideSearchedVehicle}
+                onVehicleClose={resetVehicleSearch}
                 onDetailCardOpen={showVehicleDetailCard}
                 onDetailCardClose={hideVehicleDetailCard}
             />
