@@ -7,9 +7,8 @@ import ClusterMarker from '@/app/(main)/location/components/ClusterMarker'
 import VehicleDetailCard from '@/app/(main)/location/components/VehicleDetailCard'
 import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
 import Map from '@/components/domain/map/Map'
+import { useCluster } from '@/hooks/useCluster'
 import { useMapStatus } from '@/hooks/useMapStatus'
-import { clusterService } from '@/lib/apis'
-import { TransformedClusterInfo } from '@/types/cluster'
 import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
 interface MapSectionProps {
@@ -33,39 +32,16 @@ const MapSection = ({
     onDetailCardOpen,
     onDetailCardClose,
 }: MapSectionProps) => {
-    const [clusterInfo, setClusterInfo] = useState<TransformedClusterInfo[]>([])
-    const [clusterDetail, setClusterDetail] = useState<VehicleLocation[]>([])
     const [isMapLoaded, setIsMapLoaded] = useState(false)
 
     const { mapState, updateMapStatus, controlMapStatus } = useMapStatus(mapRef?.current)
-
-    console.log(mapState.level, mapState.center)
+    const { clusterInfo, clusterDetail } = useCluster(mapState, isMapLoaded)
 
     useEffect(() => {
         if (!isMapLoaded) return
 
         updateMapStatus()
     }, [isMapLoaded])
-
-    useEffect(() => {
-        if (!isMapLoaded || !mapState) return
-
-        const getClusterInfo = async () => {
-            const clusterInfo = (await clusterService.getClusterInfo(mapState)) || []
-            setClusterInfo(clusterInfo)
-        }
-
-        const getClusterDetails = async () => {
-            const clusterDetail = await clusterService.getVehicleDetail(mapState)
-            setClusterDetail(Array.isArray(clusterDetail) ? clusterDetail : [])
-        }
-
-        if (mapState.level > 4) {
-            getClusterInfo()
-        } else {
-            getClusterDetails()
-        }
-    }, [isMapLoaded, mapState])
 
     const clearVehicleAndCard = () => {
         onVehicleClose()
