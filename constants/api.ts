@@ -8,4 +8,5 @@ export interface UseDataRequest {
 
 export const API_ENDPOINTS = {
     LOG: '/api/v1/log',
+    DAILY: '/api/v1/log/daily',
 } as const

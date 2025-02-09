@@ -8,3 +8,17 @@ export interface LogListItemModel {
 }
 
 export type OperationStatusType = 'NOT_REGISTERED' | 'NOT_DRIVEN' | 'IN_OPERATION'
+
+export interface DailyResponse {
+    isSuccess: boolean
+    message: string
+    result: DailyListItemModel[]
+}
+
+export interface DailyListItemModel {
+    drivingDate: string
+    totalDistance: number
+    totalDrivingSeconds: number
+}
+
+export type DailyLogPeriodType = 'WEEK' | 'MONTH' | 'THREE_MONTHS'
