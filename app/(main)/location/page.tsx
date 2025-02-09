@@ -7,7 +7,7 @@ import VehicleStatusPanel from '@/app/(main)/location/components/VehicleStatusPa
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
-import { ZOOM_LEVEL } from '@/constants/map'
+import { MAP_CONFIG } from '@/constants/map'
 import { useDisclosure } from '@/hooks/useDisclosure'
 import { useMapStatus } from '@/hooks/useMapStatus'
 import { useVehicleLocationSearch } from '@/hooks/useVehicleLocationSearch'
@@ -37,7 +37,7 @@ const LocationPage = () => {
         const { vehicleId } = vehicleInfo as VehicleLocation
         const vehicleDetail = await vehicleService.getVehicleDetail(vehicleId)
 
-        controlMapStatus(ZOOM_LEVEL.SINGLE_VEHICLE, {
+        controlMapStatus(MAP_CONFIG.SEARCH_VEHICLE.ZOOM_INCREMENT, {
             lat: vehicleInfo.coordinate.lat,
             lng: vehicleInfo.coordinate.lng,
         })
@@ -54,7 +54,6 @@ const LocationPage = () => {
     return (
         <div className={styles.container}>
             <MapSection
-                // mapState={mapState}
                 mapRef={mapRef}
                 vehicleInfo={vehicleInfo as VehicleLocation}
                 vehicleDetail={vehicleDetail as VehicleDetail}

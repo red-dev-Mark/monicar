@@ -1,13 +1,13 @@
 import { useState } from 'react'
 
-import { INITIAL_MAP_STATE } from '@/constants/map'
+import { MAP_CONFIG } from '@/constants/map'
 import { getBoundedMapStatus } from '@/lib/utils/map'
 import { LatLng, MapState } from '@/types/map'
 
 export const useMapStatus = (map: kakao.maps.Map | null | undefined) => {
     const [mapState, setCurrentMapState] = useState<MapState>({
-        level: 7,
-        center: INITIAL_MAP_STATE.center,
+        level: MAP_CONFIG.INIT.level,
+        center: MAP_CONFIG.INIT.center,
         swCoord: null,
         neCoord: null,
     })

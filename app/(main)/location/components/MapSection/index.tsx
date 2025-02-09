@@ -7,12 +7,14 @@ import ClusterMarker from '@/app/(main)/location/components/ClusterMarker'
 import VehicleDetailCard from '@/app/(main)/location/components/VehicleDetailCard'
 import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
 import Map from '@/components/domain/map/Map'
+import { MAP_CONFIG } from '@/constants/map'
 import { useCluster } from '@/hooks/useCluster'
 import { useMapStatus } from '@/hooks/useMapStatus'
+import { MapRefType } from '@/types/map'
 import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
 interface MapSectionProps {
-    mapRef?: React.RefObject<kakao.maps.Map>
+    mapRef?: MapRefType
     vehicleInfo: VehicleLocation
     vehicleDetail: VehicleDetail
     isSearchedVehicleVisible: boolean
@@ -48,15 +50,14 @@ const MapSection = ({
         onDetailCardClose()
     }
 
-    // TODO: 매직넘버 4 처리
-    const isClusterVisible = mapState.level > 4
-    const isClusterDetailVisible = mapState.level <= 4
+    const isClusterVisible = mapState.level > MAP_CONFIG.CLUSTER.VISIBLE_LEVEL
+    const isClusterDetailVisible = mapState.level <= MAP_CONFIG.CLUSTER.VISIBLE_LEVEL
 
     return (
         <Map
             ref={mapRef}
+            level={mapState?.level}
             center={mapState?.center}
-            zoom={mapState?.level}
             onLoad={() => setIsMapLoaded(true)}
             onMapStatusChanged={updateMapStatus}
         >
@@ -82,7 +83,7 @@ const MapSection = ({
                             <ClusterMarker
                                 count={cluster.count}
                                 onClick={() =>
-                                    controlMapStatus(mapState.level - 2, {
+                                    controlMapStatus(mapState.level - MAP_CONFIG.CLUSTER.ZOOM_INCREMENT, {
                                         lat: cluster.coordinate.lat,
                                         lng: cluster.coordinate.lng,
                                     })

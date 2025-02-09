@@ -11,3 +11,5 @@ export interface MapState {
     swCoord?: LatLng | null
     neCoord?: LatLng | null
 }
+
+export type MapRefType = React.RefObject<kakao.maps.Map>
