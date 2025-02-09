@@ -18,21 +18,21 @@ export const convertCoordsToAddress = (lat: number, lng: number): Promise<string
 
 // 마커의 개수에 따라 정해진 색상을 반환
 export const getMarkerColor = (count: number) => {
-    if (count <= 100) {
+    if (count <= 50) {
         return {
-            outer: '#fdced440',
-            inner: '#fdced480',
+            outer: '#fdced460',
+            inner: '#fdced4a0',
         }
     }
-    if (count <= 1000) {
+    if (count <= 500) {
         return {
-            outer: '#fb7da740',
-            inner: '#fb7da780',
+            outer: '#fb7da760',
+            inner: '#fb7da7a0',
         }
     }
     return {
-        outer: '#f41d4e40',
-        inner: '#f41d4e80',
+        outer: '#f41d4e60',
+        inner: '#f41d4ea0',
     }
 }
 

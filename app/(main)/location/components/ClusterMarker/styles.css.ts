@@ -1,23 +1,25 @@
-import { createVar, style } from '@vanilla-extract/css'
+import { style } from '@vanilla-extract/css'
 
-// export const marker = style({
-//     width: '75px !important',
-//     height: '75px !important',
-//     backgroundColor: 'red !important',
-//     borderRadius: '50%',
-// })
+import { vars } from '@/styles/theme.css'
 
-// vars를 사용하여 스타일 변수 정의
-export const markerSize = createVar()
-export const markerColor = createVar()
-
-export const marker = style({
-    width: markerSize,
-    height: markerSize,
-    backgroundColor: markerColor,
+export const outer = style({
+    width: '56px',
+    height: '56px',
     borderRadius: '50%',
-    vars: {
-        [markerSize]: '75px',
-        [markerColor]: 'red',
-    },
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+})
+
+export const inner = style({
+    width: '44px',
+    height: '44px',
+    borderRadius: '50%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: vars.colors.black,
+    fontSize: vars.fontSizes.small,
+    fontWeight: vars.fontWeights.bold,
+    userSelect: 'none',
 })
