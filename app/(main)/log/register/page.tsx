@@ -60,9 +60,11 @@ const RegisterPage = () => {
         try {
             await vehicleService.getAvailableVehicleNumber(vehicleNumber)
             setShowSuccessMessage(true)
+            setShowErrorMessage('')
         } catch (error) {
             console.error(error)
             setShowErrorMessage(error as string)
+            setShowSuccessMessage(false)
         }
     }
 
@@ -127,7 +129,11 @@ const RegisterPage = () => {
                 <>
                     <SearchInput
                         icon='/icons/search-icon.svg'
-                        onChange={(event) => setVehicleNumber(event.target.value)}
+                        onChange={(event) => {
+                            setVehicleNumber(event.target.value)
+                            setShowSuccessMessage(false)
+                            setShowErrorMessage('')
+                        }}
                         onSubmit={() => {
                             if (isValidVehicleNumberFormat(removeSpaces(vehicleNumber))) {
                                 checkVehicleNumber()
