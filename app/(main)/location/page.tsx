@@ -20,14 +20,13 @@ const LocationPage = () => {
     const [inputValue, setInputValue] = useState('')
     const [vehicleDetail, setVehicleDetail] = useState<VehicleDetail>()
 
+    const mapRef = useRef<kakao.maps.Map>(null)
+
+    const { controlMapStatus } = useMapStatus(mapRef.current)
     const { vehicleInfo, isModalOpen, message, closeModal, searchVehicleWithNumber } =
         useVehicleLocationSearch(inputValue)
     const [isSearchedVehicleVisible, { open: showSearchedVehicle, close: hideSearchedVehicle }] = useDisclosure()
     const [isVehicleDetailCardVisible, { open: showVehicleDetailCard, close: hideVehicleDetailCard }] = useDisclosure()
-
-    const mapRef = useRef<kakao.maps.Map>(null)
-
-    const { controlMapStatus } = useMapStatus(mapRef.current)
 
     const handleInputSubmit = async () => {
         const vehicleInfo = await searchVehicleWithNumber()
