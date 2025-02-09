@@ -1,6 +1,6 @@
 'use client'
 
-import { ChangeEventHandler, useState } from 'react'
+import { ChangeEventHandler, useRef, useState } from 'react'
 
 import MapSection from '@/app/(main)/location/components/MapSection'
 import VehicleStatusPanel from '@/app/(main)/location/components/VehicleStatusPanel'
@@ -9,7 +9,7 @@ import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import { ZOOM_LEVEL } from '@/constants/map'
 import { useDisclosure } from '@/hooks/useDisclosure'
-import { useMapControl } from '@/hooks/useMapControl'
+import { useMapStatus } from '@/hooks/useMapStatus'
 import { useVehicleLocationSearch } from '@/hooks/useVehicleLocationSearch'
 import { vehicleService } from '@/lib/apis'
 import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
@@ -25,7 +25,9 @@ const LocationPage = () => {
     const [isSearchedVehicleVisible, { open: showSearchedVehicle, close: hideSearchedVehicle }] = useDisclosure()
     const [isVehicleDetailCardVisible, { open: showVehicleDetailCard, close: hideVehicleDetailCard }] = useDisclosure()
 
-    const { mapState, updateMapLocation } = useMapControl()
+    const mapRef = useRef<kakao.maps.Map>(null)
+
+    const { controlMapStatus } = useMapStatus(mapRef.current)
 
     const handleInputSubmit = async () => {
         const vehicleInfo = await searchVehicleWithNumber()
@@ -35,13 +37,10 @@ const LocationPage = () => {
         const { vehicleId } = vehicleInfo as VehicleLocation
         const vehicleDetail = await vehicleService.getVehicleDetail(vehicleId)
 
-        updateMapLocation(
-            {
-                lat: vehicleInfo.coordinate.lat,
-                lng: vehicleInfo.coordinate.lng,
-            },
-            ZOOM_LEVEL.SINGLE_VEHICLE,
-        )
+        controlMapStatus(ZOOM_LEVEL.SINGLE_VEHICLE, {
+            lat: vehicleInfo.coordinate.lat,
+            lng: vehicleInfo.coordinate.lng,
+        })
 
         setVehicleDetail(vehicleDetail)
         showSearchedVehicle()
@@ -55,7 +54,8 @@ const LocationPage = () => {
     return (
         <div className={styles.container}>
             <MapSection
-                mapState={mapState}
+                // mapState={mapState}
+                mapRef={mapRef}
                 vehicleInfo={vehicleInfo as VehicleLocation}
                 vehicleDetail={vehicleDetail as VehicleDetail}
                 isSearchedVehicleVisible={isSearchedVehicleVisible}

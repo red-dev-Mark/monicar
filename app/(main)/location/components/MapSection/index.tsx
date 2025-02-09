@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CustomOverlayMap } from 'react-kakao-maps-sdk'
 
 import ClusterMarker from '@/app/(main)/location/components/ClusterMarker'
@@ -10,11 +10,10 @@ import Map from '@/components/domain/map/Map'
 import { useMapStatus } from '@/hooks/useMapStatus'
 import { clusterService } from '@/lib/apis'
 import { TransformedClusterInfo } from '@/types/cluster'
-import { MapState } from '@/types/map'
 import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
 interface MapSectionProps {
-    mapState?: MapState
+    mapRef?: React.RefObject<kakao.maps.Map>
     vehicleInfo: VehicleLocation
     vehicleDetail: VehicleDetail
     isSearchedVehicleVisible: boolean
@@ -25,7 +24,7 @@ interface MapSectionProps {
 }
 
 const MapSection = ({
-    mapState,
+    mapRef,
     vehicleInfo,
     vehicleDetail,
     isSearchedVehicleVisible,
@@ -38,9 +37,9 @@ const MapSection = ({
     const [clusterDetail, setClusterDetail] = useState<VehicleLocation[]>([])
     const [isMapLoaded, setIsMapLoaded] = useState(false)
 
-    const mapRef = useRef<kakao.maps.Map>(null)
+    const { mapState, updateMapStatus, controlMapStatus } = useMapStatus(mapRef?.current)
 
-    const { currentMapState, updateMapStatus } = useMapStatus(mapRef.current)
+    console.log(mapState.level, mapState.center)
 
     useEffect(() => {
         if (!isMapLoaded) return
@@ -48,26 +47,25 @@ const MapSection = ({
         updateMapStatus()
     }, [isMapLoaded])
 
-    console.log(currentMapState)
     useEffect(() => {
-        if (!isMapLoaded || !currentMapState) return
+        if (!isMapLoaded || !mapState) return
 
         const getClusterInfo = async () => {
-            const clusterInfo = (await clusterService.getClusterInfo(currentMapState)) || []
+            const clusterInfo = (await clusterService.getClusterInfo(mapState)) || []
             setClusterInfo(clusterInfo)
         }
 
         const getClusterDetails = async () => {
-            const clusterDetail = await clusterService.getVehicleDetail(currentMapState)
+            const clusterDetail = await clusterService.getVehicleDetail(mapState)
             setClusterDetail(Array.isArray(clusterDetail) ? clusterDetail : [])
         }
 
-        if (currentMapState.level > 4) {
+        if (mapState.level > 4) {
             getClusterInfo()
         } else {
             getClusterDetails()
         }
-    }, [isMapLoaded, currentMapState])
+    }, [isMapLoaded, mapState])
 
     const clearVehicleAndCard = () => {
         onVehicleClose()
@@ -75,8 +73,8 @@ const MapSection = ({
     }
 
     // TODO: 매직넘버 4 처리
-    const isClusterVisible = currentMapState.level > 4
-    const isClusterDetailVisible = currentMapState.level <= 4
+    const isClusterVisible = mapState.level > 4
+    const isClusterDetailVisible = mapState.level <= 4
 
     return (
         <Map
@@ -107,7 +105,12 @@ const MapSection = ({
                         >
                             <ClusterMarker
                                 count={cluster.count}
-                                // onClick={() => currentMapState.level - 1}
+                                onClick={() =>
+                                    controlMapStatus(mapState.level - 2, {
+                                        lat: cluster.coordinate.lat,
+                                        lng: cluster.coordinate.lng,
+                                    })
+                                }
                             />
                         </CustomOverlayMap>
                     )

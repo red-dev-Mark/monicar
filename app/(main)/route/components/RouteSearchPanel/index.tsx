@@ -9,7 +9,7 @@ import SquareButton from '@/components/common/Button/SquareButton'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
-import { ZOOM_LEVEL } from '@/constants/map'
+// import { ZOOM_LEVEL } from '@/constants/map'
 import { useSearchVehicle } from '@/hooks/useSearchVehicle'
 import { routeService } from '@/lib/apis'
 import { formatISODateToKorean } from '@/lib/utils/date'
@@ -23,7 +23,7 @@ import * as styles from './styles.css'
 
 interface RouteSearchPanelProps {
     onPathsChange: (paths: LatLng[]) => void
-    onMapLocationChange: (location: LatLng, level: (typeof ZOOM_LEVEL)[keyof typeof ZOOM_LEVEL]) => void
+    // onMapLocationChange: (location: LatLng, level: (typeof ZOOM_LEVEL)[keyof typeof ZOOM_LEVEL]) => void
 }
 
 const RouteSearchPanel = ({ onPathsChange }: RouteSearchPanelProps) => {
