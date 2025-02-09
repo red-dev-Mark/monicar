@@ -15,10 +15,10 @@ import * as styles from './styles.css'
 
 interface VehicleDetailCardProps {
     vehicleDetails: VehicleDetail
-    onCloseButtonClick: (showDetailsCard: boolean) => void
+    onClose: () => void
 }
 
-const VehicleDetailCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetailCardProps) => {
+const VehicleDetailCard = ({ vehicleDetails, onClose }: VehicleDetailCardProps) => {
     const {
         recentVehicleInfo: { vehicleNumber, status, lastEngineOn, lastEngineOff },
         recentCycleInfo: { speed, lat, lng, lastUpdated },
@@ -50,7 +50,7 @@ const VehicleDetailCard = ({ vehicleDetails, onCloseButtonClick }: VehicleDetail
                     <Badge shape='circle' variant={isDriving ? '운행중' : '미운행'} />
                     <h2 className={styles.vehicleNumber}>{formattedVehicleNumber}</h2>
                 </div>
-                <button onClick={() => onCloseButtonClick(false)} aria-label='차량 상세 정보 닫기'>
+                <button onClick={onClose} aria-label='차량 상세 정보 닫기'>
                     <Image src={'/icons/clear-icon.svg'} width={36} height={36} alt='닫기 버튼' />
                 </button>
             </header>

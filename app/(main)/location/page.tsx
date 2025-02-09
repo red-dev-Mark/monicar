@@ -1,7 +1,5 @@
 'use client'
 
-import { useDisclosure } from '@mantine/hooks'
-// import dynamic from 'next/dynamic'
 import { ChangeEventHandler, useState } from 'react'
 
 import MapSection from '@/app/(main)/location/components/MapSection'
@@ -10,16 +8,13 @@ import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import { ZOOM_LEVEL } from '@/constants/map'
+import { useDisclosure } from '@/hooks/useDisclosure'
 import { useMapControl } from '@/hooks/useMapControl'
 import { useVehicleLocationSearch } from '@/hooks/useVehicleLocationSearch'
 import { vehicleService } from '@/lib/apis'
 import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
 import * as styles from './styles.css'
-
-// const MapSection = dynamic(() => import('./components/MapSection'), {
-//     ssr: false,
-// })
 
 const LocationPage = () => {
     const [inputValue, setInputValue] = useState('')
@@ -51,7 +46,6 @@ const LocationPage = () => {
         setVehicleDetail(vehicleDetail)
         showSearchedVehicle()
         showVehicleDetailCard()
-        setInputValue('')
     }
 
     const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -67,6 +61,7 @@ const LocationPage = () => {
                 isSearchedVehicleVisible={isSearchedVehicleVisible}
                 isDetailCardVisible={isVehicleDetailCardVisible}
                 onVehicleClose={hideSearchedVehicle}
+                onDetailCardOpen={showVehicleDetailCard}
                 onDetailCardClose={hideVehicleDetailCard}
             />
             <div className={styles.searchInputWrapper}>

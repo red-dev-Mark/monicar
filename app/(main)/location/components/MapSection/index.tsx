@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { CustomOverlayMap } from 'react-kakao-maps-sdk'
 
 import ClusterMarker from '@/app/(main)/location/components/ClusterMarker'
-import VehicleDetailsCard from '@/app/(main)/location/components/VehicleDetailCard'
+import VehicleDetailCard from '@/app/(main)/location/components/VehicleDetailCard'
 import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
 import Map from '@/components/domain/map/Map'
 import { useMapStatus } from '@/hooks/useCurrentMapStatus'
@@ -20,6 +20,7 @@ interface MapSectionProps {
     isSearchedVehicleVisible: boolean
     isDetailCardVisible: boolean
     onVehicleClose: () => void
+    onDetailCardOpen: () => void
     onDetailCardClose: () => void
 }
 
@@ -30,6 +31,7 @@ const MapSection = ({
     isSearchedVehicleVisible,
     isDetailCardVisible,
     onVehicleClose,
+    onDetailCardOpen,
     onDetailCardClose,
 }: MapSectionProps) => {
     const [clusterInfo, setClusterInfo] = useState<TransformedClusterInfo[]>([])
@@ -55,7 +57,6 @@ const MapSection = ({
 
         const getClusterDetails = async () => {
             const clusterDetail = await clusterService.getVehicleDetail(currentMapState)
-            console.log(clusterDetail)
             setClusterDetail(Array.isArray(clusterDetail) ? clusterDetail : [])
         }
 
@@ -83,6 +84,18 @@ const MapSection = ({
             onLoad={() => setIsMapLoaded(true)}
             onMapStatusChanged={updateMapStatus}
         >
+            {/* 차량 번호로 검색 */}
+            {isSearchedVehicleVisible && (
+                <VehicleMarker
+                    vehicleInfo={vehicleInfo}
+                    useHoverEffect={false}
+                    onClick={onDetailCardOpen}
+                    onClose={clearVehicleAndCard}
+                />
+            )}
+            {isDetailCardVisible && <VehicleDetailCard vehicleDetails={vehicleDetail} onClose={onDetailCardClose} />}
+
+            {/* 클러스터링 */}
             {isClusterVisible &&
                 clusterInfo.map((cluster, index) => {
                     return (
@@ -97,12 +110,6 @@ const MapSection = ({
                         </CustomOverlayMap>
                     )
                 })}
-            {isSearchedVehicleVisible && (
-                <VehicleMarker vehicleInfo={vehicleInfo} useHoverEffect={false} onClose={clearVehicleAndCard} />
-            )}
-            {isDetailCardVisible && (
-                <VehicleDetailsCard vehicleDetails={vehicleDetail} onCloseButtonClick={onDetailCardClose} />
-            )}
             {isClusterDetailVisible &&
                 clusterDetail.map((cluster) => {
                     return <VehicleMarker key={cluster.vehicleId} vehicleInfo={cluster} />

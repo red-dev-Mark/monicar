@@ -38,19 +38,19 @@ export const vehicleCard = style({
 })
 
 export const closeButton = style({
-    width: '24px',
-    height: '24px',
+    width: '20px',
+    height: '20px',
     paddingTop: '1px',
     position: 'absolute',
-    top: '-10px',
-    right: '-10px',
+    top: '-6px',
+    right: '-6px',
 
     display: 'flex',
     justifyContent: 'center',
     alignContent: 'center',
 
     color: vars.colors.white,
-    fontSize: vars.fontSizes.xsmall,
+    fontSize: '10px',
     backgroundColor: vars.colors.black,
     border: `1.5px solid ${vars.colors.white}`,
     borderRadius: '50%',

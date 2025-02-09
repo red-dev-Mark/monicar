@@ -1,5 +1,6 @@
-import { useDisclosure } from '@mantine/hooks'
 import { useState } from 'react'
+
+import { useDisclosure } from '@/hooks/useDisclosure'
 
 export const useModal = () => {
     const [message, setMessage] = useState('')

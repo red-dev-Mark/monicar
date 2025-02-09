@@ -1,7 +1,7 @@
 'use client'
 
 import { memo } from 'react'
-import { Map as KakaoMap, ZoomControl } from 'react-kakao-maps-sdk'
+import { Map as KakaoMap } from 'react-kakao-maps-sdk'
 
 import ErrorMessage from '@/components/common/ErrorMessage'
 import PageLoader from '@/components/common/PageLoader'
@@ -55,7 +55,6 @@ const Map = memo(
                 onDragEnd={handleMapStatusChange}
             >
                 {children}
-                <ZoomControl position={'BOTTOMRIGHT'} />
             </KakaoMap>
         )
     },

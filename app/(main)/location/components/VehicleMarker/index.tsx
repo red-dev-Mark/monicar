@@ -9,21 +9,13 @@ import * as styles from './styles.css'
 
 interface VehicleMarkerProps {
     vehicleInfo: VehicleLocation
-    isVehicleNumberVisible?: boolean
     useHoverEffect?: boolean
     onClick?: () => void
     onClose?: () => void
 }
 
-const VehicleMarker = ({
-    vehicleInfo,
-    isVehicleNumberVisible = true,
-    useHoverEffect = true,
-    onClick,
-    onClose,
-}: VehicleMarkerProps) => {
+const VehicleMarker = ({ vehicleInfo, useHoverEffect = true, onClick, onClose }: VehicleMarkerProps) => {
     const [isHovered, setIsHovered] = useState(false)
-    const vehicleNumber = addSpaceVehicleNumber(vehicleInfo.vehicleNumber)
 
     const handleCloseButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation()
@@ -31,11 +23,12 @@ const VehicleMarker = ({
     }
 
     const shouldShowNumber = useHoverEffect ? isHovered : true
+    const vehicleNumber = addSpaceVehicleNumber(vehicleInfo.vehicleNumber)
 
     return (
         <CustomOverlayMap position={vehicleInfo.coordinate}>
-            {shouldShowNumber && isVehicleNumberVisible && (
-                <p className={styles.vehicleCard}>
+            {shouldShowNumber && (
+                <p className={styles.vehicleCard} onClick={useHoverEffect ? undefined : onClick} role='presentation'>
                     {vehicleNumber}
                     {!useHoverEffect && (
                         <button className={styles.closeButton} onClick={handleCloseButtonClick} aria-label='닫기'>
