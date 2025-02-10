@@ -1,8 +1,12 @@
+import { Group, Pagination } from '@mantine/core'
 import Image from 'next/image'
+import { useState } from 'react'
 
 import * as styles from './styles.css'
 
 const VehicleRouteTimeline = () => {
+    const [activePage, setActivePage] = useState(1)
+
     return (
         <div className={styles.container}>
             <div className={styles.tableHeader}>
@@ -58,6 +62,27 @@ const VehicleRouteTimeline = () => {
                     <p className={styles.speed}>213km</p>
                     <p className={styles.location}>서울특별시 양천구 목동 6단지</p>
                 </div>
+            </div>
+
+            <div className={styles.pagination}>
+                <Pagination.Root
+                    // total={logData?.totalPages || 100}
+                    total={100}
+                    value={activePage}
+                    // value={activePage}
+                    onChange={setActivePage}
+                    // onChange={setActivePage}
+                    color='#ff385c'
+                    boundaries={0}
+                >
+                    <Group gap={5} justify='center'>
+                        <Pagination.First />
+                        <Pagination.Previous />
+                        <Pagination.Items />
+                        <Pagination.Next />
+                        <Pagination.Last />
+                    </Group>
+                </Pagination.Root>
             </div>
         </div>
     )

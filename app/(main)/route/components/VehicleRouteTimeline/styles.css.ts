@@ -40,6 +40,10 @@ export const tableItem = style({
     fontSize: vars.fontSizes.mediumPlus,
 })
 
+export const pagination = style({
+    margin: '6px 0',
+})
+
 export const closeButton = style({
     position: 'absolute',
     top: '12px',
