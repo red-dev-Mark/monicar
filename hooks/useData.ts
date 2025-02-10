@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { UseDataRequest } from '@/constants/api'
-import { httpClient } from '@/lib/apis/client'
+import { httpClient } from '@/lib/apis'
 
 export const useData = <T>({ url, params, enabled = true }: UseDataRequest) => {
     const [data, setData] = useState<T>()

@@ -5,21 +5,20 @@ import { vars } from '@/styles/theme.css'
 export const container = style({
     width: '100%',
     height: '100vh',
-    background: `linear-gradient(${vars.colors.shadow[200]}, ${vars.colors.shadow[200]}), url('/images/page-not-found-desktop.jpg')`,
-    backgroundSize: 'cover',
-
+    position: 'relative',
     display: 'flex',
     alignItems: 'center',
+})
 
-    selectors: {
-        '&:after': {
-            backgroundColor: vars.colors.shadow[500],
-        },
-    },
+export const overlay = style({
+    position: 'absolute',
+    inset: 0,
+    backgroundColor: vars.colors.shadow[400],
 })
 
 export const content = style({
-    marginLeft: '120px',
+    position: 'absolute',
+    left: '120px',
     display: 'flex',
     gap: '380px',
     flexDirection: 'column',

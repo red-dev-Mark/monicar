@@ -20,6 +20,12 @@ export const isKoreanAndNumbersOnly = (value: string) => {
     return koreanNumberRegex.test(value)
 }
 
+// 숫자만 허용
+export const isNumbersOnly = (value: string) => {
+    const numberRegex = /^\d+$/
+    return numberRegex.test(value)
+}
+
 // 차량 번호 형식 검증
 export const isValidVehicleNumberFormat = (value: string) => {
     const vehicleNumberRegex = /^(\d{2}|\d{3})[가-힣]\d{4}$/
@@ -206,32 +212,14 @@ export const validateSearchTerm = (searchTerm: string) => {
 }
 
 // 운행거리 유효성 검증 함수
-export const validateDrivingDistance = (value: string): boolean => {
+export const validateDrivingDistance = (value: string | undefined): boolean => {
     if (!value) return false
-
-    // 숫자만 허용하는 정규식으로 변경
-    if (!/^[0-9]+$/.test(value)) return false
+    if (!isNumbersOnly(value)) return false
 
     const numValue = Number(value)
-    if (numValue > 999999) return false
 
-    if (numValue < 0) return false
+    if (numValue === 0) return true
+    if (numValue < 0 || numValue > 999999) return false
 
     return true
-}
-
-// 운행거리 입력 제한 함수
-export const handleDrivingDistanceKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    // 숫자 키만 허용하도록 변경
-    if (!/^[0-9]$/.test(event.key)) {
-        event.preventDefault()
-        return
-    }
-
-    const currentValue = event.currentTarget.value
-    const newValue = currentValue + event.key
-
-    if (Number(newValue) > 999999) {
-        event.preventDefault()
-    }
 }

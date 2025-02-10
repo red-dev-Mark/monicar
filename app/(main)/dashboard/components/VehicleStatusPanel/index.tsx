@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react'
 import VehicleStatusItem from '@/app/(main)/dashboard/components/VehicleStatusItem'
 import { vehicleService } from '@/lib/apis'
 import { vars } from '@/styles/theme.css'
-import { VehicleStatusModel } from '@/types/vehicle'
+import { VehicleStatusSummary } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
 // TODO: location VehicleStatusPanel 컴포넌트와 통합해보기
 const VehicleStatusPanel = () => {
-    const [vehicleStatus, setVehicleStatus] = useState<VehicleStatusModel>()
+    const [vehicleStatus, setVehicleStatus] = useState<VehicleStatusSummary>()
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {

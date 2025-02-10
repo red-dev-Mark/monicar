@@ -25,9 +25,16 @@ const NavBar = () => {
         <aside className={styles.navbar}>
             <nav className={styles.navContainer}>
                 <div className={styles.logoWrapper}>
-                    <Image src='/box-logo.png' alt='박스 로고 이미지' width={48} height={48} />
+                    <Image src='/box-logo.png' alt='박스 로고 이미지' width={48} height={48} priority />
                     <div className={styles.logoInfo}>
-                        <Image src='/text-logo.png' alt='텍스트 로고 이미지' width={104} height={22} />
+                        <Image
+                            src='/text-logo.png'
+                            alt='텍스트 로고 이미지'
+                            width={104}
+                            height={22}
+                            priority
+                            style={{ width: '104px', height: '22px' }}
+                        />
                         <p className={styles.userEmail}>{useEmail}</p>
                     </div>
                 </div>

@@ -3,7 +3,7 @@ export const formatWithCommas = (value: number) => value.toLocaleString()
 
 // MM을 60분 단위로, HH시간 MM분
 export const formatMinuteToHour = (minute: number) => {
-    const hour = minute / 60
+    const hour = Math.floor(minute / 60).toLocaleString()
     const formattedMinute = Number(minute) % 60
 
     return formattedMinute === 0 ? `${hour}시간` : `${hour}시간 ${formattedMinute}분`

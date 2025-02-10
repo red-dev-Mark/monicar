@@ -8,7 +8,7 @@ import Calendar from '@/app/(main)/dashboard/components/Calendar'
 // import SearchInput from '@/components/common/Input/SearchInput'
 // import Modal from '@/components/common/Modal'
 // import { ModalMessageType } from '@/components/common/Modal/types'
-// import Map from '@/components/domain/map/Map'
+import Map from '@/components/domain/map/Map'
 // import { useSearchSingleVehicle } from '@/hooks/useVehicleLocationSearch'
 import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from '@/public/icons'
 
@@ -50,7 +50,13 @@ const DashboardPage = () => {
     return (
         <div className={styles.container}>
             <div className={styles.logoWrapper}>
-                <Image src={'/text-logo.png'} width={152} height={30} alt='로고' />
+                <Image
+                    src={'/text-logo.png'}
+                    width={152}
+                    height={30}
+                    alt='로고'
+                    style={{ width: '152px', height: '30px' }}
+                />
             </div>
 
             <section className={styles.leftSection}>
@@ -105,9 +111,7 @@ const DashboardPage = () => {
                             onSubmit={handleVehicleSearch}
                         />
                     </div> */}
-                    {/* <Map center={mapState.center} zoom={mapState.level}>
-                        {isVehicleMarkerVisible && <VehicleMarker vehicleInfo={vehicleInfo} />}
-                    </Map> */}
+                    <Map />
                 </div>
             </section>
 
@@ -117,31 +121,29 @@ const DashboardPage = () => {
                         calendarData={[
                             {
                                 id: 1,
-                                message: '즐거운 아침! 음악과 함께 시작.',
+                                message: '주행거리 높은 순',
                                 isActive: false,
                             },
                             {
                                 id: 2,
-                                message: '따뜻한 커피 한 잔은 건강에 좋아요.',
+                                message: '45가 3838 (49km)',
                                 isActive: false,
                             },
                             {
                                 id: 3,
-                                message: '점심에는 스트레칭을 해볼까요?',
+                                message: '38모 1537 (38Km)',
                                 isActive: true,
                             },
                             {
                                 id: 4,
-                                message: '바이오리듬을 지키세요!',
+                                message: '37하 4537 (21Km)',
                                 isActive: false,
                             },
                         ]}
                     />
                 </div>
 
-                <div className={styles.noticeWrapper}>
-                    <NoticeListBoard />
-                </div>
+                <NoticeListBoard />
             </section>
 
             {/* <Modal
