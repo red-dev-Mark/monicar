@@ -31,18 +31,21 @@ export const vehicleService = {
 
         return { isValid: true, value: normalizeResult }
     },
+
     // 차량 상세정보 조회
     getVehicleDetail: async (vehicleId: string) => {
         const response = await httpClient.get(`api/v1/vehicle/${vehicleId}`)
 
         return response.data.result
     },
+
     // 차량 운행 상태별 현황 조회 (전체/운행중/미운행)
     getVehicleStatus: async () => {
         const response = await httpClient.get(`api/v1/vehicle/status`)
 
         return response.data.result
     },
+
     // 차량번호로 운행 이력 기간 조회
     getVehicleOperationHistory: async (vehicleNumber: string) => {
         const response = await httpClient.get(`api/v1/vehicle`, {
@@ -59,27 +62,36 @@ export const vehicleService = {
 
         return { isValid: true, value: result }
     },
+
+    // 등록 가능한 차량 번호 조회
+    getAvailableVehicleNumber: async (vehicleNumber: string) => {
+        const response = await httpClient.get(`api/v1/vehicle/check`, { params: { vehicleNumber } })
+        if (!response.data.isSuccess) {
+            throw response.data.errorMessage
+        }
+        return response.data
+    },
+
     // 등록 가능한 차량 유형 목록 조회
     getAvailableVehicleTypes: async (): Promise<VehicleTypeModel[]> => {
         const response = await httpClient.get(`api/v1/log/vehicle-type`)
 
         return response.data.result
     },
+
     // 신규 차량 정보 등록
     registerVehicle: async (data: RegisterVehicleModel) => {
         const response = await httpClient.post(`api/v1/vehicle/register`, data)
 
         if (!response.data.isSuccess) {
             if (response.data.errorCode === 1001) {
-                return {
-                    isSuccess: false,
-                    message: response.data.errorMessage,
-                }
+                return response.data.errorMessage
             }
         }
 
-        return response.data.result
+        return response.data
     },
+
     // 등록된 차량 정보 삭제
     deleteVehicle: async (vehicleId: number) => {
         const response = await httpClient.delete(`api/v1/vehicle/${vehicleId}`)

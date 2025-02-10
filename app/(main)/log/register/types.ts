@@ -7,5 +7,5 @@ export interface RegisterVehicleModel {
     vehicleNumber: string
     vehicleTypeId: number
     deliveryDate: string | null
-    drivingDistance: number
+    drivingDistance: string
 }

@@ -111,8 +111,8 @@ const DetailPage = () => {
                                     <CalendarIcon size={16} stroke={1} />
                                 </div>
                             }
-                            maxDate={new Date()}
                             leftSectionPointerEvents='none'
+                            maxDate={new Date()}
                             type='range'
                             size='lg'
                             radius='xl'

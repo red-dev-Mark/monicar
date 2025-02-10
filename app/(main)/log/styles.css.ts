@@ -9,7 +9,7 @@ export const container = style({
 
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
-            padding: '20px',
+            padding: '50px 20px',
         },
     },
 })
@@ -32,10 +32,22 @@ export const header = style({
 
 export const searchInputWrapper = style({
     width: '300px',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            width: '350px',
+        },
+    },
 })
 
 export const excelButtonWrapper = style({
     width: '90px',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+        },
+    },
 })
 
 export const linkButton = style({
@@ -75,4 +87,10 @@ export const pagination = style({
     alignItems: 'center',
     justifyContent: 'center',
     display: 'flex',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            marginBottom: '60px',
+        },
+    },
 })

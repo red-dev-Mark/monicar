@@ -16,7 +16,7 @@ export const container = style({
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             padding: '0px',
             marginTop: '40px',
-            gap: '16px',
+            gap: '10px',
         },
     },
 })

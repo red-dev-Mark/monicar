@@ -28,3 +28,16 @@ export const buttonsWrapper = style({
     maxWidth: '400px',
     margin: '0 auto',
 })
+
+export const inputWrapper = style({
+    position: 'relative',
+})
+
+export const km = style({
+    position: 'absolute',
+    right: '20px',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    pointerEvents: 'none',
+    color: vars.colors.gray[700],
+})
