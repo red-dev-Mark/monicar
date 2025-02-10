@@ -30,7 +30,6 @@ const LogPage = () => {
     const [searchTerm, setSearchTerm] = useState('')
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
     const { logData, isLoading, error } = useLogData(activePage, searchVehicleNumber)
-    // const [showNotification, setShowNotification] = useState(false)
 
     const handleExcelButtonClick = async () => {
         try {
@@ -65,15 +64,6 @@ const LogPage = () => {
         setSearchVehicleNumber(validation.value)
         setActivePage(1)
     }
-
-    // useEffect(() => {
-    //     if (showNotification) {
-    //         const timer = setTimeout(() => {
-    //             setShowNotification(false)
-    //         }, 3000)
-    //         return () => clearTimeout(timer)
-    //     }
-    // }, [showNotification])
 
     if (isLoading) {
         return <PageLoader />
@@ -129,15 +119,6 @@ const LogPage = () => {
                     <LogListItem key={log.id} data={log} onClick={() => handleItemClick(log.id)} />
                 ))}
             </div>
-
-            {/* TODO: 전역 상태 관리 */}
-            {/* <>
-                {showNotification && (
-                    <Notification withCloseButton={false} color='pink' title='차량 등록 성공'>
-                        차량이 성공적으로 등록되었습니다.
-                    </Notification>
-                )}
-            </> */}
 
             <div className={styles.pagination}>
                 <Pagination.Root

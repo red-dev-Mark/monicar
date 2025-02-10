@@ -32,6 +32,7 @@ export const header = style({
 
 export const searchInputWrapper = style({
     width: '300px',
+    justifyContent: 'flex-end',
 
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
