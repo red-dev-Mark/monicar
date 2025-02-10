@@ -39,15 +39,6 @@ const ViewportVehicleList = ({ clusterDetail, selectedVehicleDetail, onItemClick
         <article className={styles.container}>
             <header className={styles.header}>
                 <h2 className={styles.title}>차량 목록</h2>
-                <button className={styles.closeButton} aria-label='차량 상세 정보 닫기'>
-                    <Image
-                        src={'/icons/clear-icon.svg'}
-                        width={36}
-                        height={36}
-                        alt='닫기 버튼'
-                        style={{ width: '36px', height: '36px' }}
-                    />
-                </button>
             </header>
 
             {hasVehicles ? (
@@ -74,9 +65,9 @@ const ViewportVehicleList = ({ clusterDetail, selectedVehicleDetail, onItemClick
                     })}
                 </main>
             ) : (
-                <div className={styles.emptyState}>
+                <div className={styles.emptyText}>
                     <p>현재 영역에서 찾은 차량이 없습니다</p>
-                    <small>지도를 이동하여 차량을 찾아보세요</small>
+                    <small className={styles.description}>지도를 이동하여 차량을 찾아보세요</small>
                 </div>
             )}
 

@@ -38,6 +38,7 @@ export const useVehicleDisclosure = () => {
     const hideSelectedVehicle = () => {
         cleanUrlParams()
         setInputValue('')
+        setSelectVehicleId(null)
         setSelectedVehicleVisible(false)
     }
 
