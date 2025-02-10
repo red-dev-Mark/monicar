@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { vars } from '@/styles/theme.css'
+import { breakPoints, vars } from '@/styles/theme.css'
 
 export const vehicleNumber = style({
     padding: '4px 0px',
@@ -32,16 +32,22 @@ export const button = style({
     gap: '12px',
 })
 
-export const contents = style({
-    backgroundColor: vars.colors.white,
-    borderRadius: '12px',
-    padding: '40px',
-    textAlign: 'center',
-})
-
 export const title = style({
     fontSize: vars.fontSizes.large,
     fontWeight: vars.fontWeights.extraBold,
     color: vars.colors.black,
     marginBottom: '10px',
+})
+
+export const contents = style({
+    backgroundColor: vars.colors.white,
+    borderRadius: '12px',
+    padding: '40px',
+    textAlign: 'center',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            padding: '20px',
+        },
+    },
 })

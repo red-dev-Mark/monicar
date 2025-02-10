@@ -104,4 +104,16 @@ export const vehicleService = {
         }
         return response.data
     },
+    // 일별 운행기록
+    // getVehicleDailyLog: async (vehicleId: string) => {
+    //     const response = await httpClient.get(`api/v1/log/daily/${vehicleId}`)
+
+    //     if (!response.data.isSuccess) {
+    //         return {
+    //             errorMessage: response.data.errorMessage,
+    //         }
+    //     }
+
+    //     return response.data.result
+    // },
 }
