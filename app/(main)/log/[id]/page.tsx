@@ -1,6 +1,7 @@
 'use client'
 
 import { DatePickerInput } from '@mantine/dates'
+import { useMediaQuery } from '@mantine/hooks'
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
 
@@ -17,7 +18,7 @@ import { API_ENDPOINTS } from '@/constants/api'
 import { vehicleService } from '@/lib/apis'
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
 import { CalendarIcon } from '@/public/icons'
-
+import { breakPoints } from '@/styles/theme.css'
 import '@mantine/dates/styles.css'
 import 'dayjs/locale/ko'
 
@@ -33,6 +34,8 @@ const DetailPage = () => {
     const router = useRouter()
     const { dateRange, handleDateRangeChange, getFormattedDates, isDateRangeValid } = useSearchDate()
     const dates = getFormattedDates()
+    const isMobile = useMediaQuery(`(max-width: ${breakPoints.mobile}px)`)
+
     const { detailData, isLoading, error } = useDetailData({
         url: `${API_ENDPOINTS.LOG}/${id}`,
         startDate: dates?.startDate,
@@ -86,6 +89,7 @@ const DetailPage = () => {
     if (isLoading) {
         return <PageLoader />
     }
+
     if (error) {
         return <ErrorMessage />
     }
@@ -104,32 +108,26 @@ const DetailPage = () => {
 
                 <ControlLayout
                     control={
-                        <DatePickerInput
-                            locale='ko'
-                            leftSection={
-                                <div style={{ width: '24px', height: '24px' }}>
-                                    <CalendarIcon size={16} stroke={1} />
-                                </div>
-                            }
-                            leftSectionPointerEvents='none'
-                            maxDate={new Date()}
-                            type='range'
-                            size='lg'
-                            radius='xl'
-                            placeholder='과세기간 범위 선택'
-                            value={dateRange}
-                            onChange={handleDateRangeChange}
-                            valueFormat='YYYY년 MM월 DD일'
-                            clearable={true}
-                            styles={{
-                                input: {
-                                    width: '360px',
-                                    height: '48px',
-                                    fontSize: '16px',
-                                    color: '#222222',
-                                },
-                            }}
-                        />
+                        <div className={styles.datePickerInputWrapper}>
+                            <DatePickerInput
+                                locale='ko'
+                                leftSection={
+                                    <div style={{ width: '24px', height: '24px' }}>
+                                        <CalendarIcon size={16} stroke={1} />
+                                    </div>
+                                }
+                                leftSectionPointerEvents='none'
+                                maxDate={new Date()}
+                                size={isMobile ? 'md' : 'lg'}
+                                type='range'
+                                radius='xl'
+                                placeholder='과세기간 범위 선택'
+                                value={dateRange}
+                                onChange={handleDateRangeChange}
+                                valueFormat='YYYY년 MM월 DD일'
+                                clearable={true}
+                            />
+                        </div>
                     }
                     primaryButton={
                         <div className={styles.excelButtonWrapper}>

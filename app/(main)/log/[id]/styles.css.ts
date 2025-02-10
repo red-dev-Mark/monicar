@@ -3,8 +3,7 @@ import { style } from '@vanilla-extract/css'
 import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
-    width: '80%',
-    position: 'absolute',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
@@ -12,6 +11,14 @@ export const container = style({
     gap: '30px',
     backgroundColor: vars.colors.white,
     borderRadius: '30px 30px 0 0',
+    position: 'relative',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            width: '100%',
+            padding: '40px 20px',
+        },
+    },
 })
 
 export const header = style({
@@ -24,6 +31,9 @@ export const breadcrumbsWrapper = style({
     minWidth: '220px',
 
     '@media': {
+        [`screen and (max-width: 1166px)`]: {
+            display: 'none',
+        },
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
         },
@@ -35,7 +45,6 @@ export const tableWrapper = style({
     display: 'flex',
     flexDirection: 'column',
     gap: '30px',
-    overflowY: 'auto',
 })
 
 export const tableHeader = style({
@@ -56,15 +65,41 @@ export const tableCell = style({
     color: vars.colors.black,
 })
 
+export const datePickerInputWrapper = style({
+    width: '100%',
+    minWidth: '390px',
+    height: '48px',
+    color: vars.colors.black,
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            width: '100%',
+            minWidth: '360px',
+        },
+    },
+})
+
 export const excelButtonWrapper = style({
     display: 'flex',
     width: '90px',
     justifyContent: 'center',
     gap: '6px',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+        },
+    },
 })
 
 export const deleteButtonWrapper = style({
     width: '110px',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+        },
+    },
 })
 
 export const deleteButton = style({
@@ -80,7 +115,18 @@ export const linkButton = style({
     textAlign: 'center',
     borderRadius: '8px',
     marginTop: 'auto',
+    position: 'sticky',
+    zIndex: vars.zIndex.default,
+    bottom: '80px',
+    width: '100%',
     ':hover': {
         backgroundColor: vars.colors.gray[800],
+    },
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            textAlign: 'center',
+            justifyContent: 'center',
+        },
     },
 })

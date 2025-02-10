@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { vars } from '@/styles/theme.css'
+import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
     top: '2rem',
@@ -11,6 +11,12 @@ export const container = style({
     width: '100%',
     justifyContent: 'flex-end',
     zIndex: vars.zIndex.four,
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'block',
+        },
+    },
 })
 
 export const buttonGroup = style({

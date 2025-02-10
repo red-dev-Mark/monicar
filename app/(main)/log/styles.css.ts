@@ -35,7 +35,7 @@ export const searchInputWrapper = style({
 
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
-            width: '350px',
+            width: '100%',
         },
     },
 })
