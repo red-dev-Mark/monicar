@@ -18,7 +18,11 @@ export const useVehicleDisclosure = () => {
         setInputValue,
     } = useVehicleVisibleStore()
 
-    const showSearchedVehicle = () => {
+    const showSearchedVehicle = (vehicleNumber: string) => {
+        const params = new URLSearchParams(searchParams)
+        params.set('vehicleNumber', removeSpaces(trimValue(vehicleNumber)))
+        router.replace(`/location?${params.toString()}`)
+
         setSearchedVehicleVisible(true)
     }
 
