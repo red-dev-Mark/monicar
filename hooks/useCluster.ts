@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { MAP_CONFIG } from '@/constants/map'
 import { clusterService } from '@/lib/apis'
 import { TransformedClusterInfo } from '@/types/cluster'
 import { MapState } from '@/types/map'
@@ -22,7 +23,7 @@ export const useCluster = (mapState: MapState, isMapLoaded: boolean) => {
             setClusterDetail(Array.isArray(clusterDetail) ? clusterDetail : [])
         }
 
-        if (mapState.level > 4) {
+        if (mapState.level > MAP_CONFIG.CLUSTER.VISIBLE_LEVEL) {
             getClusterInfo()
         } else {
             getClusterDetails()
