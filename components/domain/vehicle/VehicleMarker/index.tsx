@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from 'react'
+import { useState } from 'react'
 import { CustomOverlayMap, MapMarker } from 'react-kakao-maps-sdk'
 
 import { MARKER_IMAGE } from '@/constants/map'
@@ -11,16 +11,10 @@ interface VehicleMarkerProps {
     vehicleInfo: VehicleLocation
     useHoverEffect?: boolean
     onClick?: () => void
-    onClose?: () => void
 }
 
-const VehicleMarker = ({ vehicleInfo, useHoverEffect = true, onClick, onClose }: VehicleMarkerProps) => {
+const VehicleMarker = ({ vehicleInfo, useHoverEffect = true, onClick }: VehicleMarkerProps) => {
     const [isHovered, setIsHovered] = useState(false)
-
-    const handleCloseButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
-        event.stopPropagation()
-        onClose?.()
-    }
 
     const shouldShowNumber = useHoverEffect ? isHovered : true
     const vehicleNumber = addSpaceVehicleNumber(vehicleInfo.vehicleNumber)
@@ -30,11 +24,6 @@ const VehicleMarker = ({ vehicleInfo, useHoverEffect = true, onClick, onClose }:
             {shouldShowNumber && (
                 <p className={styles.vehicleNumber} onClick={useHoverEffect ? undefined : onClick} role='presentation'>
                     {vehicleNumber}
-                    {!useHoverEffect && (
-                        <button className={styles.closeButton} onClick={handleCloseButtonClick} aria-label='닫기'>
-                            X
-                        </button>
-                    )}
                 </p>
             )}
             <MapMarker

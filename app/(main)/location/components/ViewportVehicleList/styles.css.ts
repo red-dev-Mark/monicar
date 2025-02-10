@@ -90,6 +90,13 @@ export const vehicleNumber = style({
 export const closeButton = style({
     position: 'absolute',
     right: '16px',
+
+    opacity: 0.7,
+    transition: 'opacity 0.2s ease',
+
+    ':hover': {
+        opacity: 1,
+    },
 })
 
 export const emptyState = style({

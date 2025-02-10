@@ -29,7 +29,6 @@ const LocationPage = () => {
     const { vehicleInfo, isModalOpen, message, closeModal, searchVehicleWithNumber } =
         useVehicleLocationSearch(inputValue)
     const [isSearchedVehicleVisible, { open: showSearchedVehicle, close: hideSearchedVehicle }] = useDisclosure()
-    const [isSearchDetailVisible, { open: showSearchedDetail, close: hideSearchedDetail }] = useDisclosure()
 
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -52,7 +51,6 @@ const LocationPage = () => {
 
         setVehicleDetail(vehicleDetail)
         showSearchedVehicle()
-        showSearchedDetail()
 
         controlMapStatus(
             {
@@ -80,10 +78,7 @@ const LocationPage = () => {
                 vehicleInfo={vehicleInfo as VehicleLocation}
                 vehicleDetail={vehicleDetail as VehicleDetail}
                 isSearchedVehicleVisible={isSearchedVehicleVisible}
-                isSearchDetailVisible={isSearchDetailVisible}
-                onVehicleClose={resetVehicleSearch}
-                onDetailCardOpen={showSearchedDetail}
-                onDetailCardClose={hideSearchedDetail}
+                onSearchedVehicleClose={resetVehicleSearch}
             />
             <div className={styles.searchInputWrapper}>
                 <SearchInput

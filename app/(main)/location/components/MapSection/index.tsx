@@ -19,23 +19,11 @@ interface MapSectionProps {
     vehicleInfo: VehicleLocation
     vehicleDetail: VehicleDetail
     isSearchedVehicleVisible: boolean
-    isSearchDetailVisible: boolean
-    onVehicleClose: () => void
-    onDetailCardOpen: () => void
-    onDetailCardClose: () => void
+    onSearchedVehicleClose: () => void
 }
 
 const MapSection = memo(
-    ({
-        mapRef,
-        vehicleInfo,
-        vehicleDetail,
-        isSearchedVehicleVisible,
-        isSearchDetailVisible,
-        onVehicleClose,
-        onDetailCardOpen,
-        onDetailCardClose,
-    }: MapSectionProps) => {
+    ({ mapRef, vehicleInfo, vehicleDetail, isSearchedVehicleVisible, onSearchedVehicleClose }: MapSectionProps) => {
         const [isMapLoaded, setIsMapLoaded] = useState(false)
 
         const { mapState, updateMapStatus, controlMapStatus } = useMapStatus(mapRef?.current)
@@ -79,11 +67,6 @@ const MapSection = memo(
         //     })
         // }
 
-        const clearVehicleAndCard = () => {
-            onVehicleClose()
-            onDetailCardClose()
-        }
-
         const isViewportVehicleListVisible = mapState.level <= MAP_CONFIG.CLUSTER.VISIBLE_LEVEL
 
         return (
@@ -96,15 +79,10 @@ const MapSection = memo(
             >
                 {/* 차량 번호로 검색 */}
                 {isSearchedVehicleVisible && (
-                    <VehicleMarker
-                        vehicleInfo={vehicleInfo}
-                        useHoverEffect={false}
-                        onClick={onDetailCardOpen}
-                        onClose={clearVehicleAndCard}
-                    />
-                )}
-                {isSearchDetailVisible && (
-                    <VehicleDetailCard vehicleDetails={vehicleDetail} onClose={onDetailCardClose} />
+                    <>
+                        <VehicleMarker vehicleInfo={vehicleInfo} useHoverEffect={false} />
+                        <VehicleDetailCard vehicleDetails={vehicleDetail} onClose={onSearchedVehicleClose} />
+                    </>
                 )}
 
                 {/* 클러스터링 관련 */}

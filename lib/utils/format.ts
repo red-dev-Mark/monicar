@@ -6,5 +6,5 @@ export const formatMinuteToHour = (minute: number) => {
     const hour = minute / 60
     const formattedMinute = Number(minute) % 60
 
-    return formattedMinute === 0 ? `${hour}시간` : `${hour}시간 ${formattedMinute}분`
+    return formattedMinute === 0 ? `${hour} 시간` : `${hour} 시간 ${formattedMinute} 분`
 }
