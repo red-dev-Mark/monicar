@@ -36,3 +36,7 @@ globalStyle('input, button, textarea, select', {
 globalStyle('li', {
     listStyle: 'none',
 })
+
+globalStyle('button, nav, a', {
+    userSelect: 'none',
+})

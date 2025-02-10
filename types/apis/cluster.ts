@@ -4,3 +4,11 @@ export interface ClusterInfo {
     lng: number
     count: number
 }
+
+export interface ClusterDetail {
+    vehicleNumber: string
+    vehicleId: number
+    lat: number
+    lng: number
+    status: string
+}

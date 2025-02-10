@@ -13,7 +13,7 @@ interface MapSectionProps {
 
 const MapSection = ({ mapState, vehiclePaths }: MapSectionProps) => {
     return (
-        <Map center={mapState.center} zoom={mapState.level}>
+        <Map level={mapState.level} center={mapState.center}>
             <Polyline
                 path={[vehiclePaths]}
                 strokeWeight={5}

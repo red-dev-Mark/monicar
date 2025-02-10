@@ -2,13 +2,13 @@ import { useCallback, useState } from 'react'
 
 export const useDisclosure = (
     initialState = false,
-    callback: {
-        onOpen: () => void
-        onClose: () => void
+    callback?: {
+        onOpen?: () => void
+        onClose?: () => void
     },
 ) => {
     const [isOpen, setIsOpen] = useState(initialState)
-    const { onOpen, onClose } = callback
+    const { onOpen, onClose } = callback || {}
 
     const open = useCallback(() => {
         setIsOpen((isOpen) => {
