@@ -1,10 +1,9 @@
 import * as XLSX from 'xlsx'
 
 import { API_ENDPOINTS } from '@/constants/api'
+import { LOG_EXCEL_FILE_NAME, LOG_EXCEL_SHEET_NAME } from '@/constants/excel'
 import { httpClient } from '@/lib/apis'
 import { LogListItemModel } from '@/types/log'
-
-import { EXCEL_FILE_NAME, EXCEL_SHEET_NAME } from '../constants'
 
 interface ExcelData {
     차량번호: string
@@ -25,8 +24,8 @@ const getExcelData = (data: LogListItemModel[]) => {
 const saveExcel = (excelData: ExcelData[]) => {
     const wb = XLSX.utils.book_new()
     const ws = XLSX.utils.json_to_sheet(excelData)
-    XLSX.utils.book_append_sheet(wb, ws, EXCEL_SHEET_NAME)
-    XLSX.writeFile(wb, EXCEL_FILE_NAME)
+    XLSX.utils.book_append_sheet(wb, ws, LOG_EXCEL_SHEET_NAME)
+    XLSX.writeFile(wb, LOG_EXCEL_FILE_NAME)
 }
 
 export const downloadExcel = async (keyword: string) => {

@@ -12,23 +12,36 @@ import ListHeader from '@/components/domain/vehicle/ListHeader'
 import { API_ENDPOINTS } from '@/constants/api'
 import { DAILY_TITLES, HOURLY_TITLES } from '@/constants/listHeader'
 import { useKakaoLoader } from '@/hooks/useKakaoLoader'
+import { useModal } from '@/hooks/useModal'
 
 import { breadcrumbsWrapper } from '../styles.css'
 
 import { default as ControlBox } from './components'
 import DailyListItem from './components/DailyListItem'
 import HourlyListItem from './components/HourlyListItem'
+import { selectPeriod } from './constants'
 import { useDailyData } from './hooks/useDailyData'
 import { useHourlyData } from './hooks/useHourlyData'
 import * as styles from './styles.css'
+import { downloadExcel } from './utils/dailyExcel'
 
 const DailyPage = () => {
     const {} = useKakaoLoader()
     const { id } = useParams()
     const [period, setPeriod] = useState<string>('WEEK')
     const [selectedDate, setSelectedDate] = useState<string>('')
+    const { openModalWithMessage } = useModal()
     const { dailyData, isLoading, error } = useDailyData({ url: `${API_ENDPOINTS.DAILY}/${id}`, period })
     const { hourlyData } = useHourlyData({ url: `${API_ENDPOINTS.HOURLY}/${id}`, date: selectedDate })
+
+    const handleExcelButtonClick = async () => {
+        try {
+            await downloadExcel(id as string, period)
+        } catch (error) {
+            console.error('엑셀 다운로드 에러', error)
+            openModalWithMessage('엑셀 다운로드에 실패했습니다')
+        }
+    }
 
     if (isLoading) {
         return <PageLoader />
@@ -57,9 +70,16 @@ const DailyPage = () => {
                         control={
                             <Select
                                 value={period}
-                                onChange={(value) => setPeriod(value || 'WEEK')}
                                 placeholder='1주일'
-                                data={['1주일', '1개월', '3개월']}
+                                data={
+                                    selectPeriod?.map((item) => ({
+                                        value: item.period,
+                                        label: item.title,
+                                    })) || []
+                                }
+                                onChange={(value) => {
+                                    setPeriod(value || 'WEEK')
+                                }}
                                 size='md'
                                 radius='xl'
                                 styles={{
@@ -70,7 +90,7 @@ const DailyPage = () => {
                                 }}
                             />
                         }
-                        button={<ExcelButton />}
+                        button={<ExcelButton onClick={handleExcelButtonClick} />}
                         // TODO: vehicleNumber API 나온 후 실제로 변경
                         vehicleNumber={'33가 1234'}
                     >
