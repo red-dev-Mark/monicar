@@ -1,5 +1,6 @@
 'use client'
 
+import { Tooltip } from '@mantine/core'
 import Image from 'next/image'
 
 import { getFormattedVehicleDetail } from '@/app/(main)/location/utils/format'
@@ -7,6 +8,7 @@ import Badge from '@/components/common/Badge'
 import SquareButton from '@/components/common/Button/SquareButton'
 import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
 import { useVehicleVisibleStore } from '@/stores/useVehicleVisibleStore'
+import { vars } from '@/styles/theme.css'
 import { VehicleDetail } from '@/types/vehicle'
 
 import * as styles from './styles.css'
@@ -106,7 +108,21 @@ const VehicleDetailCard = ({ vehicleDetail, onClose }: VehicleDetailCardProps) =
                 </table>
             </div>
 
-            <SquareButton>현재 경로보기</SquareButton>
+            {!isDriving ? (
+                <Tooltip
+                    color={vars.colors.gray[800]}
+                    arrowSize={6}
+                    label='현재 미운행 중인 차량입니다'
+                    withArrow
+                    position='top'
+                >
+                    <div>
+                        <SquareButton disabled>실시간 경로보기</SquareButton>
+                    </div>
+                </Tooltip>
+            ) : (
+                <SquareButton>실시간 경로보기</SquareButton>
+            )}
         </article>
     )
 }
