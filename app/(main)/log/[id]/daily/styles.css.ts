@@ -13,9 +13,17 @@ export const container = style({
 
 export const contents = style({
     display: 'flex',
-    alignItems: 'center',
+    width: '100%',
+    alignItems: 'flex-start',
     gap: '30px',
     marginTop: '30px',
+})
+
+export const listContents = style({
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    gap: '30px',
 })
 
 export const leftSection = style({

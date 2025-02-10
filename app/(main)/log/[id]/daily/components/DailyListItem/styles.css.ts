@@ -6,6 +6,7 @@ export const container = style({
     display: 'flex',
     alignItems: 'center',
     textAlign: 'center',
+    width: '100%',
     padding: '24px 0px',
     borderBottom: `1px solid ${vars.colors.gray[200]}`,
     color: vars.colors.black,

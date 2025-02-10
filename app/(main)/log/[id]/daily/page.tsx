@@ -21,6 +21,7 @@ const DailyPage = () => {
     const { id } = useParams()
     const [period, setPeriod] = useState<string>('WEEK')
     const { dailyData, isLoading, error } = useDailyData({ url: `${API_ENDPOINTS.DAILY}/${id}`, period })
+    // const [selectedDate, setSelectedDate] = useState<string>('')
 
     if (isLoading) {
         return <PageLoader />
@@ -57,10 +58,17 @@ const DailyPage = () => {
                         button={<ExcelButton />}
                         vehicleNumber={'33가 1234'}
                     >
-                        <div className={styles.contents}>
+                        <div className={styles.listContents}>
                             <ListHeader headerTitles={DAILY_TITLES} />
                             {dailyData?.map((log) => (
-                                <DailyListItem key={log.drivingDate} data={log} onClick={() => {}} />
+                                <DailyListItem
+                                    key={log.drivingDate}
+                                    data={log}
+                                    onClick={() => {
+                                        console.log(log.drivingDate)
+                                        // setSelectedDate(log.drivingDate)
+                                    }}
+                                />
                             ))}
                         </div>
                     </ControlBox>
@@ -69,6 +77,8 @@ const DailyPage = () => {
                 <div className={styles.rightSection}>
                     <ControlBox title={'시간별 운행기록'} button={<ExcelButton />}>
                         <ListHeader headerTitles={HOURLY_TITLES} />
+
+                        {/* {selectedDate && ( )} */}
                     </ControlBox>
                 </div>
             </div>
