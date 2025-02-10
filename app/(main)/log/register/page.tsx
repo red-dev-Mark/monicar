@@ -5,7 +5,6 @@ import { DatePickerInput } from '@mantine/dates'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import Breadcrumb from '@/components/common/Breadcrumb'
 import SquareButton from '@/components/common/Button/SquareButton'
 import ErrorMessage from '@/components/common/ErrorMessage'
 import BaseInput from '@/components/common/Input/BaseInput'
@@ -15,12 +14,9 @@ import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import PageLoader from '@/components/common/PageLoader'
 import { useModal } from '@/hooks/useModal'
-import { vehicleService } from '@/lib/apis/vehicle'
-import {
-    handleDrivingDistanceKeyPress,
-    isValidVehicleNumberFormat,
-    validateDrivingDistance,
-} from '@/lib/utils/validation'
+import { vehicleService } from '@/lib/apis'
+import { removeSpaces } from '@/lib/utils/string'
+import { isValidVehicleNumberFormat, validateDrivingDistance } from '@/lib/utils/validation'
 import { CalendarIcon } from '@/public/icons'
 
 import '@mantine/dates/styles.css'
@@ -34,13 +30,13 @@ const RegisterPage = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<Error | null>(null)
     const [value, setValue] = useState<Date | null>(null)
-    const [vehicleNumber, setVehicleNumber] = useState<string>('')
+    const [vehicleNumber, setVehicleNumber] = useState('')
     const [vehicleTypeId, setVehicleTypeId] = useState<number>()
     const [deliveryDate, setDeliveryDate] = useState<string | null>(null)
-    const [drivingDistance, setDrivingDistance] = useState<number>()
+    const [drivingDistance, setDrivingDistance] = useState('')
     const { isModalOpen, message, openModalWithMessage, closeModal } = useModal()
     const [showSuccessMessage, setShowSuccessMessage] = useState(false)
-    const [showErrorMessage, setShowErrorMessage] = useState(false)
+    const [showErrorMessage, setShowErrorMessage] = useState<string>('')
 
     const router = useRouter()
 
@@ -48,7 +44,7 @@ const RegisterPage = () => {
         const getVehicleType = async () => {
             try {
                 setIsLoading(true)
-                const vehicleType = await vehicleService.getVehicleType()
+                const vehicleType = await vehicleService.getAvailableVehicleTypes()
                 setVehicleType(vehicleType)
             } catch (error) {
                 console.error(error)
@@ -59,6 +55,18 @@ const RegisterPage = () => {
         }
         getVehicleType()
     }, [])
+
+    const checkVehicleNumber = async () => {
+        try {
+            await vehicleService.getAvailableVehicleNumber(vehicleNumber)
+            setShowSuccessMessage(true)
+            setShowErrorMessage('')
+        } catch (error) {
+            console.error(error)
+            setShowErrorMessage(error as string)
+            setShowSuccessMessage(false)
+        }
+    }
 
     const handleCancelButtonClick = () => {
         router.back()
@@ -75,7 +83,7 @@ const RegisterPage = () => {
             return
         }
 
-        if (!drivingDistance) {
+        if (!validateDrivingDistance(drivingDistance)) {
             openModalWithMessage('운행거리를 입력해주세요.')
             return
         }
@@ -85,19 +93,24 @@ const RegisterPage = () => {
             return
         }
 
-        try {
-            await vehicleService.postVehicleInfo({
-                vehicleNumber,
-                vehicleTypeId,
-                deliveryDate,
-                drivingDistance,
-            })
-            openModalWithMessage('차량이 성공적으로 등록되었습니다.')
-            router.push('/log')
-        } catch (error) {
-            console.error(error)
-            openModalWithMessage('차량 등록에 실패했습니다.')
+        setIsLoading(true)
+
+        const response = await vehicleService.registerVehicle({
+            vehicleNumber,
+            vehicleTypeId,
+            deliveryDate,
+            drivingDistance: drivingDistance as string,
+        })
+
+        setIsLoading(false)
+
+        if (!response.isSuccess) {
+            openModalWithMessage(response.errorMessage)
+            return
         }
+
+        openModalWithMessage('차량이 성공적으로 등록되었습니다.')
+        router.push('/log')
     }
 
     if (isLoading) {
@@ -116,19 +129,22 @@ const RegisterPage = () => {
                 <>
                     <SearchInput
                         icon='/icons/search-icon.svg'
-                        onChange={(event) => setVehicleNumber(event.target.value)}
+                        onChange={(event) => {
+                            setVehicleNumber(event.target.value)
+                            setShowSuccessMessage(false)
+                            setShowErrorMessage('')
+                        }}
                         onSubmit={() => {
-                            if (isValidVehicleNumberFormat(vehicleNumber)) {
-                                setShowSuccessMessage(true)
-                                setShowErrorMessage(false)
+                            if (isValidVehicleNumberFormat(removeSpaces(vehicleNumber))) {
+                                checkVehicleNumber()
                             } else {
-                                setShowErrorMessage(true)
+                                setShowErrorMessage('차량번호 형식이 맞지 않습니다.')
                                 setShowSuccessMessage(false)
                             }
                         }}
                     />
                     {showSuccessMessage && <Message message={'등록 가능한 차량번호입니다.'} isError={false} />}
-                    {showErrorMessage && <Message message={'올바르지 않은 차량번호입니다.'} isError={true} />}
+                    {showErrorMessage && <Message message={showErrorMessage} isError={true} />}
                 </>
             ),
             isError: false,
@@ -138,7 +154,7 @@ const RegisterPage = () => {
             label: '차량 종류',
             component: (
                 <Select
-                    placeholder='차량 종류'
+                    placeholder='차량 종류를 선택하세요.'
                     data={
                         vehicleType?.map((item) => ({
                             value: item.id.toString(),
@@ -159,17 +175,19 @@ const RegisterPage = () => {
             id: 'mileage',
             label: '운행 거리',
             component: (
-                <BaseInput
-                    type='number'
-                    placeholder={'0km'}
-                    onChange={(event) => {
-                        const value = event.target.value
-                        if (validateDrivingDistance(value)) {
-                            setDrivingDistance(Number(value))
-                        }
-                    }}
-                    onKeyPress={handleDrivingDistanceKeyPress}
-                />
+                <div className={styles.inputWrapper}>
+                    <BaseInput
+                        placeholder={'운행 거리를 입력하세요.'}
+                        value={drivingDistance}
+                        onChange={(event) => {
+                            const value = event.target.value
+                            if (validateDrivingDistance(value)) {
+                                setDrivingDistance(value)
+                            }
+                        }}
+                    />
+                    <div className={styles.km}>km</div>
+                </div>
             ),
             isError: false,
         },
@@ -184,10 +202,12 @@ const RegisterPage = () => {
                             <CalendarIcon size={16} stroke={1} />
                         </div>
                     }
+                    maxDate={new Date()}
+                    valueFormat='YYYY년 MM월 DD일'
                     rightSectionPointerEvents='none'
                     size='lg'
                     radius='xl'
-                    placeholder='0000-00-00'
+                    placeholder='출고일을 선택하세요.'
                     styles={{
                         input: {
                             color: '#222222',
@@ -206,21 +226,18 @@ const RegisterPage = () => {
 
     return (
         <div className={styles.container}>
-            <Breadcrumb type={'차량등록'} />
             <div className={styles.title}>차량등록📝</div>
             <div className={styles.formWrapper}>
                 <VehicleRegisterForm fields={formFields} />
             </div>
-
             <div className={styles.buttonsWrapper}>
                 <SquareButton color={'white'} onClick={handleCancelButtonClick}>
                     취소
                 </SquareButton>
-                <SquareButton color={'dark'} onClick={postVehicleInfo}>
-                    등록
+                <SquareButton color={'dark'} onClick={postVehicleInfo} disabled={isLoading}>
+                    {isLoading ? <PageLoader /> : '등록'}
                 </SquareButton>
             </div>
-
             <Modal
                 isOpen={isModalOpen}
                 message={message as ModalMessageType}

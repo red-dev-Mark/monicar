@@ -1,6 +1,6 @@
-import { ListItemModel } from '@/types/log'
+import { LogListItemModel } from '@/types/log'
 export interface LogListResponse {
-    content: ListItemModel[]
+    content: LogListItemModel[]
     page: number
     size: number
     totalElements: number

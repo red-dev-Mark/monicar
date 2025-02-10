@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import Breadcrumb from '@/components/common/Breadcrumb'
+import Breadcrumbs from '@/components/common/Breadcrumbs'
 import ExcelButton from '@/components/common/Button/ExcelButton'
 import LinkButton from '@/components/common/Button/LinkButton'
 import ControlLayout from '@/components/common/ControlLayout'
@@ -18,7 +18,7 @@ import { LOG_TITLES } from '@/constants/listHeader'
 import { useModal } from '@/hooks/useModal'
 import { validateSearchTerm } from '@/lib/utils/validation'
 
-import ListItem from './components/ListItem/index'
+import LogListItem from './components/LogListItem/index'
 import { useLogData } from './hooks/useLogData'
 import * as styles from './styles.css'
 import { downloadExcel } from './utils/excel'
@@ -30,6 +30,7 @@ const LogPage = () => {
     const [searchTerm, setSearchTerm] = useState('')
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
     const { logData, isLoading, error } = useLogData(activePage, searchVehicleNumber)
+    // const [showNotification, setShowNotification] = useState(false)
 
     const handleExcelButtonClick = async () => {
         try {
@@ -65,6 +66,15 @@ const LogPage = () => {
         setActivePage(1)
     }
 
+    // useEffect(() => {
+    //     if (showNotification) {
+    //         const timer = setTimeout(() => {
+    //             setShowNotification(false)
+    //         }, 3000)
+    //         return () => clearTimeout(timer)
+    //     }
+    // }, [showNotification])
+
     if (isLoading) {
         return <PageLoader />
     }
@@ -75,8 +85,8 @@ const LogPage = () => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <div className={styles.breadcrumbWrapper}>
-                    <Breadcrumb type={'운행기록'} />
+                <div className={styles.breadcrumbsWrapper}>
+                    <Breadcrumbs breadcrumbsData={[{ title: '운행기록', isActive: true }]} />
                 </div>
 
                 <ControlLayout
@@ -104,20 +114,30 @@ const LogPage = () => {
                         </LinkButton>
                     }
                 />
-                <Modal
-                    isOpen={isModalOpen}
-                    message={message as ModalMessageType}
-                    variant={{ variant: 'alert', confirmButton: '확인' }}
-                    onClose={closeModal}
-                />
             </div>
+
+            <Modal
+                isOpen={isModalOpen}
+                message={message as ModalMessageType}
+                variant={{ variant: 'alert', confirmButton: '확인' }}
+                onClose={closeModal}
+            />
 
             <div className={styles.contents}>
                 <ListHeader headerTitles={LOG_TITLES} />
                 {logData?.content.map((log) => (
-                    <ListItem key={log.id} data={log} onClick={() => handleItemClick(log.id)} />
+                    <LogListItem key={log.id} data={log} onClick={() => handleItemClick(log.id)} />
                 ))}
             </div>
+
+            {/* TODO: 전역 상태 관리 */}
+            {/* <>
+                {showNotification && (
+                    <Notification withCloseButton={false} color='pink' title='차량 등록 성공'>
+                        차량이 성공적으로 등록되었습니다.
+                    </Notification>
+                )}
+            </> */}
 
             <div className={styles.pagination}>
                 <Pagination.Root

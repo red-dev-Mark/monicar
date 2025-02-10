@@ -1,17 +1,12 @@
 import { useState } from 'react'
 
-import { INITIAL_MAP_STATE } from '@/constants/map'
-import { LatLng } from '@/types/location'
-import { MapState } from '@/types/map'
+import { MAP_CONFIG } from '@/constants/map'
+import { LatLng, MapState } from '@/types/map'
 
 export const useMapControl = () => {
-    const [mapState, setMapState] = useState<MapState>(INITIAL_MAP_STATE)
+    const [mapState, setMapState] = useState<MapState>(MAP_CONFIG.INIT)
 
-    const updateMapLocation = (
-        location: LatLng = INITIAL_MAP_STATE.center,
-        level: number = INITIAL_MAP_STATE.level,
-        // level: ZoomLevelValueType = INITIAL_MAP_STATE.level,
-    ) => {
+    const updateMapLocation = (location: LatLng = MAP_CONFIG.INIT.center, level: number = MAP_CONFIG.INIT.level) => {
         setMapState({
             center: location,
             level,

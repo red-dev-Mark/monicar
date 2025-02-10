@@ -1,12 +1,14 @@
 import { httpClient } from '@/lib/apis/client'
-import { denormalizeCoordinate, normalizeClusterResponse } from '@/lib/utils/normalize'
+import { denormalizeCoordinate, normalizeCoordinate } from '@/lib/utils/normalize'
+import { ClusterDetail, ClusterInfo } from '@/types/apis/cluster'
+import { TransformedClusterInfo } from '@/types/cluster'
 import { MapState } from '@/types/map'
-// import { VehicleInfoModel } from '@/types/vehicle'
+import { VehicleLocation } from '@/types/vehicle'
 
 export const clusterService = {
-    // 뷰포트 영역 내 클러스터링 정보 조회
-    getClusterInfo: async ({ level, swCoord, neCoord }: MapState) => {
-        if (!level || !swCoord || !neCoord) return []
+    // 지도 뷰포트 내 차량 클러스터 정보 조회
+    getClusterInfo: async ({ level, swCoord, neCoord }: MapState): Promise<TransformedClusterInfo[] | null> => {
+        if (!level || !swCoord || !neCoord) return null
 
         const params = {
             zoomLevel: level,
@@ -20,38 +22,51 @@ export const clusterService = {
             params,
         })
 
-        // console.log(response.data.result)
+        const { result } = response.data
 
-        const normalizedClusterInfo = normalizeClusterResponse(response.data.result)
+        if (!result) return null
 
-        return normalizedClusterInfo
+        return result.map((clusterInfo: ClusterInfo) => {
+            return {
+                ...clusterInfo,
+                coordinate: {
+                    lat: normalizeCoordinate(clusterInfo.lat),
+                    lng: normalizeCoordinate(clusterInfo.lng),
+                },
+            }
+        })
     },
 
-    // 뷰포트 영역 내 클러스터링 정보(count)가 10 미만일 경우 전체 차량 정보 조회
-    // getClusterDetailInfo: async ({ level, swCoord, neCoord }: MapState): Promise<VehicleInfoModel | null> => {
-    //     if (!level || level > 9 || !swCoord || !neCoord) return null
+    // 상세 줌레벨(4 이하)에서 뷰포트 내 개별 차량 정보 조회
+    getVehicleDetail: async ({ level, swCoord, neCoord }: MapState): Promise<VehicleLocation | null> => {
+        if (!level || !swCoord || !neCoord) return null
 
-    //     const params = {
-    //         level: getNormalizedZoomLevel(level),
-    //         swLat: denormalizeCoordinate(swCoord.lat),
-    //         swLng: denormalizeCoordinate(swCoord.lng),
-    //         neLat: denormalizeCoordinate(neCoord.lat),
-    //         neLng: denormalizeCoordinate(neCoord.lng),
-    //     }
+        const params = {
+            zoomLevel: level,
+            swLat: denormalizeCoordinate(swCoord.lat),
+            swLng: denormalizeCoordinate(swCoord.lng),
+            neLat: denormalizeCoordinate(neCoord.lat),
+            neLng: denormalizeCoordinate(neCoord.lng),
+        }
 
-    //     const response = await httpClient.get(`api/v1/vehicle/cluster/details`, {
-    //         params,
-    //     })
+        const response = await httpClient.get(`api/v1/vehicle/clusters/detail`, {
+            params,
+        })
 
-    //     const normalizedClusterDetailInfo: VehicleInfoModel = {
-    //         vehicleId: response.data.result.vehicleId ?? null,
-    //         vehicleNumber: response.data.result.vehicleNumber ?? null,
-    //         coordinate: {
-    //             lat: response.data.result.lat ?? null,
-    //             lng: response.data.result.lng ?? null,
-    //         },
-    //     }
+        const { result } = response.data
 
-    //     return normalizedClusterDetailInfo
-    // },
+        if (!result) return null
+
+        return result.map((clusterInfo: ClusterDetail) => {
+            return {
+                vehicleId: clusterInfo.vehicleId,
+                vehicleNumber: clusterInfo.vehicleNumber,
+                status: clusterInfo.status,
+                coordinate: {
+                    lat: normalizeCoordinate(clusterInfo.lat),
+                    lng: normalizeCoordinate(clusterInfo.lng),
+                },
+            }
+        })
+    },
 }

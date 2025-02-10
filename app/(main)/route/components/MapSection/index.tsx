@@ -4,8 +4,7 @@ import { Polyline } from 'react-kakao-maps-sdk'
 
 import Map from '@/components/domain/map/Map'
 import { vars } from '@/styles/theme.css'
-import { LatLng } from '@/types/location'
-import { MapState } from '@/types/map'
+import { MapState, LatLng } from '@/types/map'
 
 interface MapSectionProps {
     mapState: MapState
@@ -14,7 +13,7 @@ interface MapSectionProps {
 
 const MapSection = ({ mapState, vehiclePaths }: MapSectionProps) => {
     return (
-        <Map center={mapState.center} zoom={mapState.level}>
+        <Map level={mapState.level} center={mapState.center}>
             <Polyline
                 path={[vehiclePaths]}
                 strokeWeight={5}

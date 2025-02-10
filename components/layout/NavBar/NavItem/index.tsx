@@ -19,7 +19,13 @@ const NavItem = ({ label, path, iconSrc }: NavItemProps) => {
     return (
         <li>
             <Link href={`${path}`} className={`${styles.navItem} ${isCurrentPage && styles.currentItem}`}>
-                <Image src={iconSrc} alt={`${label} 아이콘`} width={20} height={20} />
+                <Image
+                    src={iconSrc}
+                    alt={`${label} 아이콘`}
+                    width={20}
+                    height={20}
+                    style={{ width: '20px', height: '20px' }}
+                />
                 <span>{label}</span>
             </Link>
         </li>
