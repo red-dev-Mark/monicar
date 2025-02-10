@@ -6,7 +6,7 @@ import { validateVehicleNumber } from '@/lib/utils/validation'
 import { VehicleLocation } from '@/types/vehicle'
 
 export const useVehicleLocationSearch = (vehicleNumber: string) => {
-    const [vehicleInfo, setVehicleInfo] = useState<VehicleLocation>()
+    const [vehicleInfo, setVehicleInfo] = useState<VehicleLocation | undefined>()
 
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
 

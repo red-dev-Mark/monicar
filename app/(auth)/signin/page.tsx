@@ -85,7 +85,7 @@ const SignInPage = () => {
                         실시간 지도 기반의 <br />
                         차량 관제 서비스를 경험해 보세요
                     </p>
-                    <Image src={'/images/sign-in-map.png'} width={550} height={550} alt='지도' />
+                    <Image src={'/images/sign-in-map.png'} width={550} height={550} alt='지도' priority />
                 </section>
 
                 <section className={styles.signInSection}>
