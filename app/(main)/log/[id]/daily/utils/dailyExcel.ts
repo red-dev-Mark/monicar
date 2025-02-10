@@ -27,7 +27,7 @@ const saveExcel = (excelData: DailyExcelData[]) => {
     XLSX.writeFile(wb, DAILY_EXCEL_FILE_NAME)
 }
 
-export const downloadExcel = async (id: string, period: string) => {
+export const downloadDailyExcel = async (id: string, period: string) => {
     try {
         const response = await httpClient.get(`${API_ENDPOINTS.DAILY}/${id}`, {
             params: {

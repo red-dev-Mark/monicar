@@ -23,7 +23,8 @@ import { selectPeriod } from './constants'
 import { useDailyData } from './hooks/useDailyData'
 import { useHourlyData } from './hooks/useHourlyData'
 import * as styles from './styles.css'
-import { downloadExcel } from './utils/dailyExcel'
+import { downloadDailyExcel } from './utils/dailyExcel'
+import { downloadHourlyExcel } from './utils/hourlyExcel'
 
 const DailyPage = () => {
     const {} = useKakaoLoader()
@@ -34,9 +35,18 @@ const DailyPage = () => {
     const { dailyData, isLoading, error } = useDailyData({ url: `${API_ENDPOINTS.DAILY}/${id}`, period })
     const { hourlyData } = useHourlyData({ url: `${API_ENDPOINTS.HOURLY}/${id}`, date: selectedDate })
 
-    const handleExcelButtonClick = async () => {
+    const handleDailyExcelButtonClick = async () => {
         try {
-            await downloadExcel(id as string, period)
+            await downloadDailyExcel(id as string, period)
+        } catch (error) {
+            console.error('엑셀 다운로드 에러', error)
+            openModalWithMessage('엑셀 다운로드에 실패했습니다')
+        }
+    }
+
+    const handleHourlyExcelButtonClick = async () => {
+        try {
+            await downloadHourlyExcel(id as string, selectedDate)
         } catch (error) {
             console.error('엑셀 다운로드 에러', error)
             openModalWithMessage('엑셀 다운로드에 실패했습니다')
@@ -90,7 +100,7 @@ const DailyPage = () => {
                                 }}
                             />
                         }
-                        button={<ExcelButton onClick={handleExcelButtonClick} />}
+                        button={<ExcelButton onClick={handleDailyExcelButtonClick} />}
                         // TODO: vehicleNumber API 나온 후 실제로 변경
                         vehicleNumber={'33가 1234'}
                     >
@@ -110,7 +120,10 @@ const DailyPage = () => {
                 </div>
 
                 <div className={styles.rightSection}>
-                    <ControlBox title={'시간별 운행기록'} button={<ExcelButton />}>
+                    <ControlBox
+                        title={'시간별 운행기록'}
+                        button={<ExcelButton onClick={handleHourlyExcelButtonClick} />}
+                    >
                         <div className={styles.contentWrapper}>
                             <ListHeader headerTitles={HOURLY_TITLES} />
                             {hourlyData?.map((log) => (
