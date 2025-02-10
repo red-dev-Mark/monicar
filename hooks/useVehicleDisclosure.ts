@@ -42,11 +42,6 @@ export const useVehicleDisclosure = () => {
 
         const vehicleDetail = await vehicleService.getVehicleDetail(vehicleId)
 
-        // TODO: 지금 API 응답 위치가 다름
-        // const {
-        //     recentCycleInfo: { lat, lng },
-        // } = vehicleDetail
-
         hideSearchedVehicle()
 
         const params = new URLSearchParams(searchParams)

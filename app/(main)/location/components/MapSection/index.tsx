@@ -12,6 +12,7 @@ import { MAP_CONFIG } from '@/constants/map'
 import { useCluster } from '@/hooks/useCluster'
 import { useMapStatus } from '@/hooks/useMapStatus'
 import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
+import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { MapRefType } from '@/types/map'
 import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
@@ -39,23 +40,16 @@ const MapSection = memo(({ mapRef, vehicleInfo, searchedDetail }: MapSectionProp
     const handleVehicleClick = async (vehicleId: string, vehicleNumber: string) => {
         const selectedVehicleDetail = await selectVehicle(vehicleId, vehicleNumber)
 
+        const {
+            recentCycleInfo: { lat, lng },
+        } = selectedVehicleDetail
+
         setSelectedVehicleDetail(selectedVehicleDetail)
         showSelectedVehicle()
 
-        // TODO: 지금 API 응답 위치가 다름
-        // controlMapStatus({
-        //     lat: normalizeCoordinate(lat),
-        //     lng: normalizeCoordinate(lng),
-        // })
-
-        // TODO: 지금 API 응답 위치가 다름
-        const filteredCoord = clusterDetail.filter((cluster) => {
-            return cluster.vehicleId === vehicleId
-        })
-        // TODO: 지금 API 응답 위치가 다름
         controlMapStatus({
-            lat: filteredCoord[0].coordinate.lat,
-            lng: filteredCoord[0].coordinate.lng,
+            lat: normalizeCoordinate(lat),
+            lng: normalizeCoordinate(lng),
         })
     }
 
