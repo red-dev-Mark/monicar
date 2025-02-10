@@ -9,26 +9,27 @@ import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import { MAP_CONFIG } from '@/constants/map'
-import { useDisclosure } from '@/hooks/useDisclosure'
 import { useMapStatus } from '@/hooks/useMapStatus'
+import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
 import { useVehicleLocationSearch } from '@/hooks/useVehicleLocationSearch'
 import { vehicleService } from '@/lib/apis'
 import { removeSpaces, trimValue } from '@/lib/utils/string'
 import { cleanUrlParams } from '@/lib/utils/url'
+import { useVehicleVisibleStore } from '@/stores/useVehicleVisibleStore'
 import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
 const LocationPage = () => {
-    const [inputValue, setInputValue] = useState('')
     const [vehicleDetail, setVehicleDetail] = useState<VehicleDetail>()
 
     const mapRef = useRef<kakao.maps.Map>(null)
 
     const { controlMapStatus } = useMapStatus(mapRef.current)
+    const { showSearchedVehicle, hideSelectedVehicle } = useVehicleDisclosure()
+    const { inputValue, setInputValue } = useVehicleVisibleStore()
     const { vehicleInfo, isModalOpen, message, closeModal, searchVehicleWithNumber } =
         useVehicleLocationSearch(inputValue)
-    const [isSearchedVehicleVisible, { open: showSearchedVehicle, close: hideSearchedVehicle }] = useDisclosure()
 
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -44,6 +45,8 @@ const LocationPage = () => {
 
         const { vehicleId } = vehicleInfo as VehicleLocation
         const vehicleDetail = await vehicleService.getVehicleDetail(vehicleId)
+
+        hideSelectedVehicle()
 
         const params = new URLSearchParams(searchParams)
         params.set('vehicleNumber', removeSpaces(trimValue(inputValue)))
@@ -65,20 +68,12 @@ const LocationPage = () => {
         setInputValue(event.target.value)
     }
 
-    const resetVehicleSearch = () => {
-        cleanUrlParams()
-        hideSearchedVehicle()
-        setInputValue('')
-    }
-
     return (
         <div className={styles.container}>
             <MapSection
                 mapRef={mapRef}
                 vehicleInfo={vehicleInfo as VehicleLocation}
-                vehicleDetail={vehicleDetail as VehicleDetail}
-                isSearchedVehicleVisible={isSearchedVehicleVisible}
-                onSearchedVehicleClose={resetVehicleSearch}
+                searchedDetail={vehicleDetail as VehicleDetail}
             />
             <div className={styles.searchInputWrapper}>
                 <SearchInput

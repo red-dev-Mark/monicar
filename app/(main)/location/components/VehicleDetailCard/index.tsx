@@ -5,16 +5,26 @@ import Image from 'next/image'
 import { getFormattedVehicleDetail } from '@/app/(main)/location/utils/format'
 import Badge from '@/components/common/Badge'
 import SquareButton from '@/components/common/Button/SquareButton'
+import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
+import { useVehicleVisibleStore } from '@/stores/useVehicleVisibleStore'
 import { VehicleDetail } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
 interface VehicleDetailCardProps {
-    vehicleDetails: VehicleDetail
-    onClose: () => void
+    vehicleDetail: VehicleDetail
+    onClose?: () => void
 }
 
-const VehicleDetailCard = ({ vehicleDetails, onClose }: VehicleDetailCardProps) => {
+const VehicleDetailCard = ({ vehicleDetail, onClose }: VehicleDetailCardProps) => {
+    const { hideSearchedVehicle } = useVehicleDisclosure()
+    const setInputValue = useVehicleVisibleStore((state) => state.setInputValue)
+
+    const resetSearchedVehicle = () => {
+        hideSearchedVehicle()
+        setInputValue('')
+    }
+
     const {
         isDriving,
         vehicleNumber,
@@ -25,14 +35,18 @@ const VehicleDetailCard = ({ vehicleDetails, onClose }: VehicleDetailCardProps) 
         todayDrivingDistance,
         lastUpdated,
         lastAddress,
-    } = getFormattedVehicleDetail(vehicleDetails)
+    } = getFormattedVehicleDetail(vehicleDetail)
 
     return (
         <article className={styles.container}>
             <header className={styles.header}>
                 <Badge shape='circle' variant={isDriving ? '운행중' : '미운행'} />
                 <h2 className={styles.vehicleNumber}>{vehicleNumber}</h2>
-                <button className={styles.closeButton} onClick={onClose} aria-label='차량 상세 정보 닫기'>
+                <button
+                    className={styles.closeButton}
+                    onClick={onClose || resetSearchedVehicle}
+                    aria-label='차량 상세 정보 닫기'
+                >
                     <Image
                         src={'/icons/clear-icon.svg'}
                         width={36}

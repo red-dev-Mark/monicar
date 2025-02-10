@@ -11,7 +11,7 @@ export const MAP_CONFIG = {
         ZOOM_INCREMENT: 4,
     },
     CLUSTER: {
-        VISIBLE_LEVEL: 4,
+        VISIBLE_LEVEL: 5,
         ZOOM_INCREMENT: 2,
     },
     ROUTE: {

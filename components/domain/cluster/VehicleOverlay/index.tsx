@@ -7,7 +7,7 @@ interface VehicleOverlayProps {
     mapState: MapState
     clusterDetail: VehicleLocation[]
     selectedVehicleId?: string
-    onVehicleClick?: () => void
+    onVehicleClick?: (vehicleId: string, vehicleNumber: string) => void
 }
 
 const VehicleOverlay = ({ mapState, clusterDetail, selectedVehicleId, onVehicleClick }: VehicleOverlayProps) => {

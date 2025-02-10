@@ -1,32 +1,23 @@
 import Image from 'next/image'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import VehicleDetailCard from '@/app/(main)/location/components/VehicleDetailCard'
 import Badge from '@/components/common/Badge'
-import { useDisclosure } from '@/hooks/useDisclosure'
-import { useMapStatus } from '@/hooks/useMapStatus'
-import { vehicleService } from '@/lib/apis'
-import { addSpaceVehicleNumber, removeSpaces, trimValue } from '@/lib/utils/string'
+import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
+import { addSpaceVehicleNumber } from '@/lib/utils/string'
 import { cleanUrlParams } from '@/lib/utils/url'
-import { MapRefType } from '@/types/map'
 import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
 interface ViewportVehicleListProps {
-    mapRef: MapRefType
     clusterDetail: VehicleLocation[]
+    selectedVehicleDetail: VehicleDetail | undefined
+    onItemClick: (vehicleId: string, vehicleNumber: string) => void
 }
 
-const ViewportVehicleList = ({ mapRef, clusterDetail }: ViewportVehicleListProps) => {
-    const [vehicleDetail, setVehicleDetail] = useState<VehicleDetail | undefined>()
-    const [isVehicleDetailCardVisible, { open: showVehicleDetailCard, close: hideVehicleDetailCard }] = useDisclosure()
-
-    const { controlMapStatus } = useMapStatus(mapRef.current)
-
-    const router = useRouter()
-    const searchParams = useSearchParams()
+const ViewportVehicleList = ({ clusterDetail, selectedVehicleDetail, onItemClick }: ViewportVehicleListProps) => {
+    const { isSelectedVehicleVisible, hideSelectedVehicle, unselectVehicle } = useVehicleDisclosure()
 
     const hasVehicles = clusterDetail.length > 0
 
@@ -34,41 +25,9 @@ const ViewportVehicleList = ({ mapRef, clusterDetail }: ViewportVehicleListProps
         return () => cleanUrlParams()
     }, [])
 
-    const handleVehicleItemClick = async (vehicleId: string, vehicleNumber: string) => {
-        const vehicleDetail = await vehicleService.getVehicleDetail(vehicleId)
-
-        // TODO: 지금 API 응답 위치가 다름
-        // const {
-        //     recentCycleInfo: { lat, lng },
-        // } = vehicleDetail
-
-        const params = new URLSearchParams(searchParams)
-        params.set('vehicleNumber', removeSpaces(trimValue(vehicleNumber)))
-        router.replace(`/location?${params.toString()}`)
-
-        setVehicleDetail(vehicleDetail)
-        showVehicleDetailCard()
-
-        // TODO: 지금 API 응답 위치가 다름
-        // controlMapStatus({
-        //     lat: normalizeCoordinate(lat),
-        //     lng: normalizeCoordinate(lng),
-        // })
-
-        // TODO: 지금 API 응답 위치가 다름
-        const filteredCoord = clusterDetail.filter((cluster) => {
-            return cluster.vehicleId === vehicleId
-        })
-        // TODO: 지금 API 응답 위치가 다름
-        controlMapStatus({
-            lat: filteredCoord[0].coordinate.lat,
-            lng: filteredCoord[0].coordinate.lng,
-        })
-    }
-
-    const cleanVehicleDetailCard = () => {
-        cleanUrlParams()
-        hideVehicleDetailCard()
+    const clearSelectedVehicle = () => {
+        unselectVehicle()
+        hideSelectedVehicle()
     }
 
     return (
@@ -99,7 +58,7 @@ const ViewportVehicleList = ({ mapRef, clusterDetail }: ViewportVehicleListProps
                             <div
                                 key={cluster.vehicleId}
                                 className={styles.vehicleItem}
-                                onClick={() => handleVehicleItemClick(cluster.vehicleId, cluster.vehicleNumber)}
+                                onClick={() => onItemClick(cluster.vehicleId, cluster.vehicleNumber)}
                                 role='presentation'
                             >
                                 <Badge shape='circle' variant='운행중' />
@@ -116,8 +75,11 @@ const ViewportVehicleList = ({ mapRef, clusterDetail }: ViewportVehicleListProps
                 </div>
             )}
 
-            {isVehicleDetailCardVisible && (
-                <VehicleDetailCard vehicleDetails={vehicleDetail as VehicleDetail} onClose={cleanVehicleDetailCard} />
+            {isSelectedVehicleVisible && (
+                <VehicleDetailCard
+                    vehicleDetail={selectedVehicleDetail as VehicleDetail}
+                    onClose={clearSelectedVehicle}
+                />
             )}
         </article>
     )
