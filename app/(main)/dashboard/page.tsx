@@ -145,9 +145,7 @@ const DashboardPage = () => {
                     />
                 </div>
 
-                <div className={styles.noticeWrapper}>
-                    <NoticeListBoard />
-                </div>
+                <NoticeListBoard />
             </section>
 
             {/* <Modal

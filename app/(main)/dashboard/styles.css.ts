@@ -14,15 +14,8 @@ export const container = style({
             backgroundColor: vars.colors.white,
             flexDirection: 'column',
             height: 'auto',
-            padding: '0px 60px ',
             gap: '10px',
-        },
-        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
-            backgroundColor: vars.colors.white,
-            flexDirection: 'column',
-            height: 'auto',
-            gap: '0px',
-            padding: '0px 20x ',
+            padding: '50px 20px',
         },
     },
 })
@@ -33,8 +26,8 @@ export const logoWrapper = style({
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'flex',
-            marginTop: '60px',
-            marginBottom: '20px',
+            marginTop: '10px',
+            marginBottom: '30px',
             justifyContent: 'center',
         },
     },
@@ -80,15 +73,6 @@ export const calendarWrapper = style({
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
-        },
-    },
-})
-
-export const noticeWrapper = style({
-    '@media': {
-        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
-            width: '100%',
-            padding: '0px',
         },
     },
 })

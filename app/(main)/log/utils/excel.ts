@@ -2,7 +2,7 @@ import * as XLSX from 'xlsx'
 
 import { API_ENDPOINTS } from '@/constants/api'
 import { httpClient } from '@/lib/apis'
-import { ListItemModel } from '@/types/log'
+import { LogListItemModel } from '@/types/log'
 
 import { EXCEL_FILE_NAME, EXCEL_SHEET_NAME } from '../constants'
 
@@ -13,7 +13,7 @@ interface ExcelData {
     총운행거리: string
 }
 
-const getExcelData = (data: ListItemModel[]) => {
+const getExcelData = (data: LogListItemModel[]) => {
     return data.map((item) => ({
         차량번호: item.vehicleNumber,
         차종: item.vehicleModel,

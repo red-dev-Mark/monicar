@@ -2,16 +2,16 @@ import Badge from '@/components/common/Badge'
 import { OPERATION_STATUS } from '@/components/common/Badge/constants'
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
 import { RightIcon } from '@/public/icons'
-import { ListItemModel } from '@/types/log'
+import { LogListItemModel } from '@/types/log'
 
 import * as styles from './styles.css'
 
-interface ListItemProps {
-    data: ListItemModel
+interface LogListItemProps {
+    data: LogListItemModel
     onClick?: () => void
 }
 
-const ListItem = ({ data, onClick }: ListItemProps) => {
+const LogListItem = ({ data, onClick }: LogListItemProps) => {
     const { vehicleNumber, vehicleModel, drivingDays, totalDistance, status } = data
     const formattedVehicleNumber = addSpaceVehicleNumber(vehicleNumber)
 
@@ -34,4 +34,4 @@ const ListItem = ({ data, onClick }: ListItemProps) => {
     )
 }
 
-export default ListItem
+export default LogListItem
