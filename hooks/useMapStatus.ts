@@ -19,6 +19,7 @@ export const useMapStatus = (map: kakao.maps.Map | null | undefined) => {
     }
 
     const controlMapStatus = (location: LatLng, level?: number) => {
+        console.log(level)
         if (!map) {
             console.warn('카카오맵 인스턴스 생성에 실패하였습니다.')
             return

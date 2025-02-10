@@ -3,24 +3,31 @@ import { style } from '@vanilla-extract/css'
 import { vars } from '@/styles/theme.css'
 
 export const accordion = style({
+    width: '390px',
     position: 'absolute',
-    top: '1.5rem',
-    right: '1.5rem',
+    top: '12px',
+    left: '12px',
     zIndex: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-    borderRadius: '16px',
+    backgroundColor: vars.colors.white,
+    borderRadius: '12px',
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+    overflow: 'hidden',
 })
 
 export const accordionControl = style({
-    padding: '18px 24px',
-    display: 'flex',
-    justifyContent: 'flex-end',
     width: '100%',
+    padding: '16px',
+    display: 'flex',
+    gap: '18px',
+    alignItems: 'center',
+    color: vars.colors.white,
+    backgroundColor: vars.colors.primary,
+    fontSize: vars.fontSizes.small,
+    fontWeight: vars.fontWeights.bold,
 })
 
 export const container = style({
-    padding: '0 24px 24px 24px',
+    padding: '16px',
     display: 'flex',
     flexDirection: 'column',
     gap: '24px',

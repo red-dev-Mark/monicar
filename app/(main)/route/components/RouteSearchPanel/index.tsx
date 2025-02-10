@@ -9,6 +9,8 @@ import SquareButton from '@/components/common/Button/SquareButton'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
+import { MAP_CONFIG } from '@/constants/map'
+import { useMapStatus } from '@/hooks/useMapStatus'
 import { useModal } from '@/hooks/useModal'
 import { useSearchVehicle } from '@/hooks/useSearchVehicle'
 import { routeService } from '@/lib/apis'
@@ -16,23 +18,26 @@ import { formatISODateToKorean } from '@/lib/utils/date'
 import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { validateDateSelection } from '@/lib/utils/validation'
 import { vars } from '@/styles/theme.css'
-import { LatLng } from '@/types/map'
+import { LatLng, MapRefType } from '@/types/map'
 import { Route } from '@/types/route'
 
 import * as styles from './styles.css'
 
 interface RouteSearchPanelProps {
-    onPathsChange: (paths: LatLng[]) => void
+    mapRef: MapRefType
+    onRouteChange: (paths: LatLng[]) => void
     // onMapLocationChange: (location: LatLng, level: (typeof ZOOM_LEVEL)[keyof typeof ZOOM_LEVEL]) => void
 }
 
-const RouteSearchPanel = ({ onPathsChange }: RouteSearchPanelProps) => {
+const RouteSearchPanel = ({ mapRef, onRouteChange }: RouteSearchPanelProps) => {
     const [inputValue, setInputValue] = useState('')
     const [startDate, setStartDate] = useState<DateTime>({ year: '', month: '', date: '', hour: '', minute: '' })
     const [endDate, setEndDate] = useState<DateTime>({ year: '', month: '', date: '', hour: '', minute: '' })
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
 
     const { searchedVehicle, searchableDates, searchVehicle, setSearchableDates } = useSearchVehicle(inputValue)
+
+    const { controlMapStatus } = useMapStatus(mapRef.current)
 
     const handleVehicleSearch = async () => {
         const result = await searchVehicle()
@@ -81,9 +86,8 @@ const RouteSearchPanel = ({ onPathsChange }: RouteSearchPanelProps) => {
             lng: normalizeCoordinate(route.lng),
         }))
 
-        onPathsChange(paths)
-        // onMapLocationChange({ lat: 37.417117, lng: 126.98816 }, 8)
-        // onMapLocationChange(INITIAL_MAP_STATE.center, 12)
+        onRouteChange(paths)
+        controlMapStatus({ lat: 37.417117, lng: 126.98816 }, MAP_CONFIG.ROUTE.ZOOM_INCREMENT)
     }
 
     const isSelectable = !!searchableDates.firstDateAt && !!searchableDates.lastDateAt
@@ -91,7 +95,7 @@ const RouteSearchPanel = ({ onPathsChange }: RouteSearchPanelProps) => {
     return (
         <Accordion defaultValue='경로조회' className={styles.accordion} unstyled>
             <Accordion.Item value='경로조회'>
-                <Accordion.Control className={styles.accordionControl}></Accordion.Control>
+                <Accordion.Control className={styles.accordionControl}>경로 조회하기</Accordion.Control>
                 <Accordion.Panel>
                     <aside className={styles.container} aria-label='경로 조회 판넬'>
                         <div className={styles.searchSection}>
@@ -132,7 +136,7 @@ const RouteSearchPanel = ({ onPathsChange }: RouteSearchPanelProps) => {
                         </div>
 
                         <SquareButton disabled={!isAllSelected()} onClick={handleSubmit}>
-                            조회하기
+                            경로 보기
                         </SquareButton>
 
                         <Modal
