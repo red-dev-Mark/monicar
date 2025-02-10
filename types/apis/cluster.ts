@@ -10,4 +10,5 @@ export interface ClusterDetail {
     vehicleId: number
     lat: number
     lng: number
+    status: string
 }

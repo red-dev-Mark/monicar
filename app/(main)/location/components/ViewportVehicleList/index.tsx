@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 
 import VehicleDetailCard from '@/app/(main)/location/components/VehicleDetailCard'
 import Badge from '@/components/common/Badge'
+import { OPERATION_STATUS } from '@/components/common/Badge/constants'
 import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
 import { cleanUrlParams } from '@/lib/utils/url'
@@ -28,6 +29,10 @@ const ViewportVehicleList = ({ clusterDetail, selectedVehicleDetail, onItemClick
     const clearSelectedVehicle = () => {
         unselectVehicle()
         hideSelectedVehicle()
+    }
+
+    const getVehicleStatus = (status: keyof typeof OPERATION_STATUS) => {
+        return OPERATION_STATUS[status] ?? '운행중'
     }
 
     return (
@@ -61,7 +66,7 @@ const ViewportVehicleList = ({ clusterDetail, selectedVehicleDetail, onItemClick
                                 onClick={() => onItemClick(cluster.vehicleId, cluster.vehicleNumber)}
                                 role='presentation'
                             >
-                                <Badge shape='circle' variant='운행중' />
+                                <Badge shape='circle' variant={getVehicleStatus(cluster.status!)} />
                                 <p className={styles.vehicleNumber}>{vehicleNumber}</p>
                                 <Image src={'/icons/right-icon.svg'} width={24} height={24} alt='자세히보기 버튼' />
                             </div>

@@ -57,6 +57,7 @@ export const table = style({
 })
 
 export const tableHeader = style({
+    width: '35%',
     padding: '8px',
     textAlign: 'left',
     fontWeight: vars.fontWeights.bold,
