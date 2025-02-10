@@ -19,11 +19,10 @@ export const contents = style({
     marginTop: '30px',
 })
 
-export const listContents = style({
+export const contentWrapper = style({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    gap: '30px',
 })
 
 export const leftSection = style({

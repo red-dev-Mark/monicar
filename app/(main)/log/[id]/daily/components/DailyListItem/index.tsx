@@ -1,3 +1,4 @@
+import { formatDrivingTime } from '@/lib/utils/map'
 import { RightIcon } from '@/public/icons'
 import { DailyListItemModel } from '@/types/log'
 
@@ -16,7 +17,7 @@ const DailyListItem = ({ data, onClick }: DailyListItemProps) => {
                 <ul className={styles.list}>
                     <li className={styles.itemWrapper}>{drivingDate}</li>
                     <li className={styles.itemWrapper}>{totalDistance.toLocaleString('ko-KR')}km</li>
-                    <li className={styles.itemWrapper}>{totalDrivingSeconds.toLocaleString('ko-KR')}km</li>
+                    <li className={styles.itemWrapper}>{formatDrivingTime(totalDrivingSeconds)}</li>
                 </ul>
                 <div className={styles.icon}>
                     <RightIcon />

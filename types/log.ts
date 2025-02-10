@@ -22,3 +22,17 @@ export interface DailyListItemModel {
 }
 
 export type DailyLogPeriodType = 'WEEK' | 'MONTH' | 'THREE_MONTHS'
+
+export interface HourlyResponse {
+    isSuccess: boolean
+    message: string
+    result: HourlyListItemModel[]
+}
+
+export interface HourlyListItemModel {
+    startTime: string
+    endTime: number
+    drivingDistance: number
+    lat: number
+    lng: number
+}

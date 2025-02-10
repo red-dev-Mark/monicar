@@ -35,6 +35,12 @@ export const formatToISODate = ({
     return `${year}-${month}-${date}T${hour}:${minute}:00`
 }
 
+export const formatTimeToHHMM = (date: Date): string => {
+    const hours = String(date.getHours()).padStart(2, '0')
+    const minutes = String(date.getMinutes()).padStart(2, '0')
+    return `${hours}:${minutes}`
+}
+
 // 2024-01-15T09:30:00 -> 2024.01.15 09:30:00
 export const formatISODateToDot = (isoDate: string) => {
     const [ymd, time] = isoDate.split('T')
