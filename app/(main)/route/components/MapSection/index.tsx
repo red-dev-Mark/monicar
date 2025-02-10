@@ -3,7 +3,7 @@
 import { Polyline } from 'react-kakao-maps-sdk'
 
 import Map from '@/components/domain/map/Map'
-import { vars } from '@/styles/theme.css'
+import { POLYLINE_CONFIG } from '@/constants/map'
 import { MapState, LatLng } from '@/types/map'
 
 interface MapSectionProps {
@@ -16,10 +16,10 @@ const MapSection = ({ mapState, vehiclePaths }: MapSectionProps) => {
         <Map level={mapState.level} center={mapState.center}>
             <Polyline
                 path={[vehiclePaths]}
-                strokeWeight={5}
-                strokeColor={vars.colors.primary}
-                strokeOpacity={1}
-                strokeStyle={'solid'}
+                strokeWeight={POLYLINE_CONFIG.STROKE_WEIGHT}
+                strokeColor={POLYLINE_CONFIG.STROKE_COLOR}
+                strokeOpacity={POLYLINE_CONFIG.STROKE_OPACITY}
+                strokeStyle={POLYLINE_CONFIG.STROKE_STYLE}
             />
         </Map>
     )
