@@ -9,7 +9,7 @@ import SquareButton from '@/components/common/Button/SquareButton'
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
-// import { ZOOM_LEVEL } from '@/constants/map'
+import { useModal } from '@/hooks/useModal'
 import { useSearchVehicle } from '@/hooks/useSearchVehicle'
 import { routeService } from '@/lib/apis'
 import { formatISODateToKorean } from '@/lib/utils/date'
@@ -30,9 +30,17 @@ const RouteSearchPanel = ({ onPathsChange }: RouteSearchPanelProps) => {
     const [inputValue, setInputValue] = useState('')
     const [startDate, setStartDate] = useState<DateTime>({ year: '', month: '', date: '', hour: '', minute: '' })
     const [endDate, setEndDate] = useState<DateTime>({ year: '', month: '', date: '', hour: '', minute: '' })
+    const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
 
-    const { searchedVehicle, searchableDates, isModalOpen, message, searchVehicle, setSearchableDates, closeModal } =
-        useSearchVehicle(inputValue)
+    const { searchedVehicle, searchableDates, searchVehicle, setSearchableDates } = useSearchVehicle(inputValue)
+
+    const handleVehicleSearch = async () => {
+        const result = await searchVehicle()
+
+        if (!result.isSuccess && result.error) {
+            openModalWithMessage(result.error)
+        }
+    }
 
     useEffect(() => {
         if (!searchedVehicle) {
@@ -91,7 +99,7 @@ const RouteSearchPanel = ({ onPathsChange }: RouteSearchPanelProps) => {
                             <SearchInput
                                 value={inputValue}
                                 onChange={(event: ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value)}
-                                onSubmit={searchVehicle}
+                                onSubmit={handleVehicleSearch}
                                 placeholder='차량번호 검색'
                                 icon='/icons/pink-search-icon.svg'
                                 className={styles.searchInputStyle}
