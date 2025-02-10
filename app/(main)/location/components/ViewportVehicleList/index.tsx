@@ -76,7 +76,13 @@ const ViewportVehicleList = ({ mapRef, clusterDetail }: ViewportVehicleListProps
             <header className={styles.header}>
                 <h2 className={styles.title}>차량 목록</h2>
                 <button className={styles.closeButton} aria-label='차량 상세 정보 닫기'>
-                    <Image src={'/icons/clear-icon.svg'} width={36} height={36} alt='닫기 버튼' />
+                    <Image
+                        src={'/icons/clear-icon.svg'}
+                        width={36}
+                        height={36}
+                        alt='닫기 버튼'
+                        style={{ width: '36px', height: '36px' }}
+                    />
                 </button>
             </header>
 

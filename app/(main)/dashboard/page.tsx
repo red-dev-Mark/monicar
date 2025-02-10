@@ -50,7 +50,13 @@ const DashboardPage = () => {
     return (
         <div className={styles.container}>
             <div className={styles.logoWrapper}>
-                <Image src={'/text-logo.png'} width={152} height={30} alt='로고' />
+                <Image
+                    src={'/text-logo.png'}
+                    width={152}
+                    height={30}
+                    alt='로고'
+                    style={{ width: '152px', height: '30px' }}
+                />
             </div>
 
             <section className={styles.leftSection}>
