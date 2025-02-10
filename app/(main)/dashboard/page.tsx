@@ -8,7 +8,7 @@ import Calendar from '@/app/(main)/dashboard/components/Calendar'
 // import SearchInput from '@/components/common/Input/SearchInput'
 // import Modal from '@/components/common/Modal'
 // import { ModalMessageType } from '@/components/common/Modal/types'
-// import Map from '@/components/domain/map/Map'
+import Map from '@/components/domain/map/Map'
 // import { useSearchSingleVehicle } from '@/hooks/useVehicleLocationSearch'
 import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from '@/public/icons'
 
@@ -111,9 +111,7 @@ const DashboardPage = () => {
                             onSubmit={handleVehicleSearch}
                         />
                     </div> */}
-                    {/* <Map center={mapState.center} zoom={mapState.level}>
-                        {isVehicleMarkerVisible && <VehicleMarker vehicleInfo={vehicleInfo} />}
-                    </Map> */}
+                    <Map />
                 </div>
             </section>
 
