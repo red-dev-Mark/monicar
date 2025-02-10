@@ -13,6 +13,8 @@ import { API_ENDPOINTS } from '@/constants/api'
 import { DAILY_TITLES, HOURLY_TITLES } from '@/constants/listHeader'
 import { useKakaoLoader } from '@/hooks/useKakaoLoader'
 
+import { breadcrumbsWrapper } from '../styles.css'
+
 import { default as ControlBox } from './components'
 import DailyListItem from './components/DailyListItem'
 import HourlyListItem from './components/HourlyListItem'
@@ -37,13 +39,15 @@ const DailyPage = () => {
 
     return (
         <div className={styles.container}>
-            <Breadcrumbs
-                breadcrumbsData={[
-                    { title: '운행기록', isActive: false },
-                    { title: '운행일지', isActive: false },
-                    { title: '일별 및 시간별 운행기록', isActive: true },
-                ]}
-            />
+            <div className={breadcrumbsWrapper}>
+                <Breadcrumbs
+                    breadcrumbsData={[
+                        { title: '운행기록', isActive: false },
+                        { title: '운행일지', isActive: false },
+                        { title: '일별 및 시간별 운행기록', isActive: true },
+                    ]}
+                />
+            </div>
 
             <div className={styles.contents}>
                 <div className={styles.leftSection}>

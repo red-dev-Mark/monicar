@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { vars } from '@/styles/theme.css'
+import { breakPoints, vars } from '@/styles/theme.css'
 
 export const vehicleNumber = style({
     padding: '4px 0px',
@@ -44,4 +44,10 @@ export const contents = style({
     borderRadius: '12px',
     padding: '40px',
     textAlign: 'center',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            padding: '20px',
+        },
+    },
 })

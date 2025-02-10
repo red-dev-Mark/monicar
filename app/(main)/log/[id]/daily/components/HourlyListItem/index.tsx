@@ -2,7 +2,7 @@ import { useCoordToAddress } from '@/hooks/useCoordToAddress'
 import { formatTimeToHHMM } from '@/lib/utils/date'
 import { HourlyListItemModel } from '@/types/log'
 
-import * as styles from './styles.css'
+import * as styles from '../styles/common.css'
 
 interface HourlyListItemProps {
     data: HourlyListItemModel

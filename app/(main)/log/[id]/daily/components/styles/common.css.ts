@@ -32,9 +32,12 @@ export const container = style({
 export const list = style({
     display: 'flex',
     width: '100%',
+    transition: 'transform 0.3s ease',
+    ':hover': {
+        transform: 'scale(1.02)',
+    },
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
-            flexDirection: 'column',
             gap: '8px',
         },
     },
@@ -46,6 +49,17 @@ export const itemWrapper = style({
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             textAlign: 'left',
+        },
+    },
+})
+
+export const icon = style({
+    width: '24px',
+    height: '24px',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
         },
     },
 })
