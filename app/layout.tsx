@@ -19,7 +19,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             </head>
             <body>
                 <MantineProvider>
-                    <Notifications position='bottom-right' zIndex={10} />
+                    <Notifications />
                     {children}
                     <div id='modal-root'></div>
                 </MantineProvider>

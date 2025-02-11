@@ -34,8 +34,8 @@ export const getMarkerColor = (count: number) => {
         }
     }
     return {
-        outer: '#f41d4e60',
-        inner: '#f41d4ea0',
+        outer: '#f41d4e50',
+        inner: '#f41d4e90',
     }
 }
 

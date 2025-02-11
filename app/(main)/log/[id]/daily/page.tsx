@@ -105,15 +105,19 @@ const DailyPage = () => {
                     >
                         <div className={styles.contentWrapper}>
                             <ListHeader headerTitles={DAILY_TITLES} />
-                            {dailyData?.map((log) => (
-                                <DailyListItem
-                                    key={log.drivingDate}
-                                    data={log}
-                                    onClick={() => {
-                                        setSelectedDate(log.drivingDate)
-                                    }}
-                                />
-                            ))}
+                            {dailyData?.length === 0 ? (
+                                <div className={styles.empty}>내역이 없습니다.</div>
+                            ) : (
+                                dailyData?.map((log) => (
+                                    <DailyListItem
+                                        key={log.drivingDate}
+                                        data={log}
+                                        onClick={() => {
+                                            setSelectedDate(log.drivingDate)
+                                        }}
+                                    />
+                                ))
+                            )}
                         </div>
                     </ControlBox>
                 </div>
@@ -125,9 +129,13 @@ const DailyPage = () => {
                     >
                         <div className={styles.contentWrapper}>
                             <ListHeader headerTitles={HOURLY_TITLES} />
-                            {hourlyData?.map((log) => (
-                                <HourlyListItem key={`${log.startTime}-${log.endTime}`} data={log} />
-                            ))}
+                            {hourlyData?.length === 0 ? (
+                                <div className={styles.empty}>내역이 없습니다.</div>
+                            ) : (
+                                hourlyData?.map((log) => (
+                                    <HourlyListItem key={`${log.startTime}-${log.endTime}`} data={log} />
+                                ))
+                            )}
                         </div>
                     </ControlBox>
                 </div>

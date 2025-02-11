@@ -5,6 +5,7 @@ import { DatePickerInput } from '@mantine/dates'
 import { notifications } from '@mantine/notifications'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { ColorRing } from 'react-loader-spinner'
 
 import SquareButton from '@/components/common/Button/SquareButton'
 import ErrorMessage from '@/components/common/ErrorMessage'
@@ -29,6 +30,7 @@ import { VehicleTypeModel } from './types'
 const RegisterPage = () => {
     const [vehicleType, setVehicleType] = useState<VehicleTypeModel[] | null>(null)
     const [isLoading, setIsLoading] = useState(true)
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState<Error | null>(null)
     const [value, setValue] = useState<Date | null>(null)
     const [vehicleNumber, setVehicleNumber] = useState('')
@@ -94,7 +96,7 @@ const RegisterPage = () => {
             return
         }
 
-        setIsLoading(true)
+        setIsSubmitting(true)
 
         const response = await vehicleService.registerVehicle({
             vehicleNumber,
@@ -113,7 +115,7 @@ const RegisterPage = () => {
         router.push('/log')
         notifications.show({
             message: '차량이 성공적으로 등록되었습니다.',
-            autoClose: 800,
+            autoClose: 1200,
             withCloseButton: false,
             radius: 'sm',
             icon: <CheckIcon size={18} />,
@@ -248,7 +250,19 @@ const RegisterPage = () => {
                     취소
                 </SquareButton>
                 <SquareButton color={'dark'} onClick={postVehicleInfo} disabled={isLoading}>
-                    {isLoading ? <PageLoader /> : '등록'}
+                    {isSubmitting ? (
+                        <ColorRing
+                            visible={true}
+                            height='40'
+                            width='40'
+                            ariaLabel='color-ring-loading'
+                            wrapperStyle={{}}
+                            wrapperClass='color-ring-wrapper'
+                            colors={['#ff385c', '#cf6b81', '#fdced4', '#00b087', '#ed9684']}
+                        />
+                    ) : (
+                        '등록'
+                    )}
                 </SquareButton>
             </div>
 

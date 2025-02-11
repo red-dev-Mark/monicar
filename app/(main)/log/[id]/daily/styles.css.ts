@@ -44,6 +44,7 @@ export const contentWrapper = style({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
+    height: '100%',
 })
 
 export const leftSection = style({
@@ -64,4 +65,13 @@ export const rightSection = style({
             width: '100%',
         },
     },
+})
+
+export const empty = style({
+    color: vars.colors.black,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+    textAlign: 'center',
+    display: 'flex',
 })
