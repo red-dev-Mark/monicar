@@ -1,7 +1,8 @@
 'use client'
 
-import { Select } from '@mantine/core'
+import { CheckIcon, Select } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
+import { notifications } from '@mantine/notifications'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -109,8 +110,20 @@ const RegisterPage = () => {
             return
         }
 
-        openModalWithMessage('차량이 성공적으로 등록되었습니다.')
         router.push('/log')
+        notifications.show({
+            message: '차량이 성공적으로 등록되었습니다.',
+            autoClose: 800,
+            withCloseButton: false,
+            radius: 'sm',
+            icon: <CheckIcon size={18} />,
+            style: {
+                width: '400px',
+                height: '70px',
+                border: 'solid 1px #f7f7f7',
+                fontWeight: 'bold',
+            },
+        })
     }
 
     if (isLoading) {
@@ -238,6 +251,7 @@ const RegisterPage = () => {
                     {isLoading ? <PageLoader /> : '등록'}
                 </SquareButton>
             </div>
+
             <Modal
                 isOpen={isModalOpen}
                 message={message as ModalMessageType}

@@ -7,7 +7,6 @@ import { httpClient } from '.'
 
 export const documentService = {
     // 운행일지 엑셀 다운로드
-
     downloadDetailExcel: async (keyword: string) => {
         try {
             const response = await httpClient.get(API_ENDPOINTS.LOG, {

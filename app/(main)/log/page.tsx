@@ -17,6 +17,7 @@ import ListHeader from '@/components/domain/vehicle/ListHeader'
 import { LOG_TITLES } from '@/constants/listHeader'
 import { useModal } from '@/hooks/useModal'
 import { validateSearchTerm } from '@/lib/utils/validation'
+import '@mantine/notifications/styles.css'
 
 import LogListItem from './components/LogListItem/index'
 import { useLogData } from './hooks/useLogData'
@@ -105,7 +106,6 @@ const LogPage = () => {
                     }
                 />
             </div>
-
             <Modal
                 isOpen={isModalOpen}
                 message={message as ModalMessageType}
