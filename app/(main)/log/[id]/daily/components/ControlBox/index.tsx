@@ -11,7 +11,7 @@ interface ControlBoxProps {
 
 const ControlBox = ({ vehicleNumber, control, button, title, children, hasVehicleNumber = false }: ControlBoxProps) => {
     return (
-        <>
+        <div className={styles.container}>
             <div className={styles.controlGroup}>
                 {hasVehicleNumber && <div className={styles.vehicleNumber}>{vehicleNumber}</div>}
                 {control}
@@ -22,7 +22,7 @@ const ControlBox = ({ vehicleNumber, control, button, title, children, hasVehicl
                 <h3 className={styles.title}>{title}</h3>
                 {children}
             </div>
-        </>
+        </div>
     )
 }
 

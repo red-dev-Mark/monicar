@@ -5,10 +5,11 @@ import { breakPoints, vars } from '@/styles/theme.css'
 export const container = style({
     width: '100%',
     height: '100vh',
+    display: 'flex',
+    gap: '30px',
+    flexDirection: 'column',
     backgroundColor: vars.colors.dashboard,
-    gap: '34px',
     padding: '30px',
-    overflowY: 'auto',
 
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {

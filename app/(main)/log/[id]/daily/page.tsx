@@ -16,7 +16,7 @@ import { useModal } from '@/hooks/useModal'
 
 import { breadcrumbsWrapper } from '../styles.css'
 
-import { default as ControlBox } from './components'
+import { default as ControlBox } from './components/ControlBox'
 import DailyListItem from './components/DailyListItem'
 import HourlyListItem from './components/HourlyListItem'
 import { selectPeriod } from './constants'
