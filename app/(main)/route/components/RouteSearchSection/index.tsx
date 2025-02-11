@@ -87,18 +87,20 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
                 }))
 
                 onRoutesChange(normalizedRoutes)
-                // TODO: 이동 좌표 계산
 
-                controlMapStatus(
-                    normalizedRoutes.length ? normalizedRoutes[0] : { lat: 37.417117, lng: 126.98816 },
-                    MAP_CONFIG.ROUTE.ZOOM_INCREMENT,
-                )
+                if (!normalizedRoutes?.length) throw new Error('해당 기간의 경로 정보가 없습니다')
+
+                controlMapStatus(normalizedRoutes[normalizedRoutes.length - 1], MAP_CONFIG.ROUTE.ZOOM_INCREMENT)
 
                 addQueries({
                     vehicleId,
                     vehicleNumber,
                     startDate: formatISODateToISOString(dateRange[0]).split('T')[0],
                     endDate: formatISODateToISOString(dateRange[0]).split('T')[0],
+                    startLat: normalizedRoutes[0].lat,
+                    startLng: normalizedRoutes[0].lng,
+                    endLat: normalizedRoutes[normalizedRoutes.length - 1].lat,
+                    endLng: normalizedRoutes[normalizedRoutes.length - 1].lng,
                 })
             }
         } catch (error) {
