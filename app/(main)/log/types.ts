@@ -1,4 +1,5 @@
 import { LogListItemModel } from '@/types/log'
+
 export interface LogListResponse {
     content: LogListItemModel[]
     page: number

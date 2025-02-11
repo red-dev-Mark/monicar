@@ -3,11 +3,11 @@ import { style } from '@vanilla-extract/css'
 import { vars } from '@/styles/theme.css'
 
 export const accordion = style({
-    width: '390px',
-    position: 'absolute',
-    top: '12px',
-    left: '12px',
-    zIndex: 10,
+    // width: '480px',
+    // position: 'absolute',
+    // top: '12px',
+    // right: '12px',
+    // zIndex: 10,
     backgroundColor: vars.colors.white,
     borderRadius: '12px',
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
@@ -24,6 +24,7 @@ export const accordionControl = style({
     backgroundColor: vars.colors.primary,
     fontSize: vars.fontSizes.small,
     fontWeight: vars.fontWeights.bold,
+    cursor: 'pointer',
 })
 
 export const container = style({

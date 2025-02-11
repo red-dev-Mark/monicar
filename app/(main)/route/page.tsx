@@ -28,8 +28,10 @@ const RoutePage = () => {
 
     return (
         <div className={styles.container}>
-            <RouteSearchPanel mapRef={mapRef} onRouteChange={setRoutes} />
-            <VehicleRouteTimeline />
+            <div className={styles.panel}>
+                <RouteSearchPanel mapRef={mapRef} onRouteChange={setRoutes} />
+                <VehicleRouteTimeline />
+            </div>
             <MapSection mapRef={mapRef} mapState={mapState} routes={routes} onLoad={() => setIsMapLoaded(true)} />
         </div>
     )
