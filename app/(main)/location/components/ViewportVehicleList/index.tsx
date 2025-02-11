@@ -4,9 +4,9 @@ import { useEffect } from 'react'
 import VehicleDetailCard from '@/app/(main)/location/components/VehicleDetailCard'
 import Badge from '@/components/common/Badge'
 import { OPERATION_STATUS } from '@/components/common/Badge/constants'
+import { useQueryParams } from '@/hooks/useQueryParams'
 import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
-import { cleanUrlParams } from '@/lib/utils/url'
 import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
 import * as styles from './styles.css'
@@ -19,11 +19,12 @@ interface ViewportVehicleListProps {
 
 const ViewportVehicleList = ({ clusterDetail, selectedVehicleDetail, onItemClick }: ViewportVehicleListProps) => {
     const { isSelectedVehicleVisible, hideSelectedVehicle, unselectVehicle } = useVehicleDisclosure()
+    const { removeQuery } = useQueryParams()
 
     const hasVehicles = clusterDetail.length > 0
 
     useEffect(() => {
-        return () => cleanUrlParams()
+        return () => removeQuery('vehicleName')
     }, [])
 
     const clearSelectedVehicle = () => {

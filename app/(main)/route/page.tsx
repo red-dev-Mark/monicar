@@ -27,7 +27,7 @@ const RoutePage = () => {
 
     return (
         <div className={styles.container}>
-            <RouteAnalysisPanel mapRef={mapRef} onRouteChange={setRoutes} />
+            <RouteAnalysisPanel mapRef={mapRef} onRoutesChange={setRoutes} />
             <MapSection mapRef={mapRef} mapState={mapState} routes={routes} onLoad={() => setIsMapLoaded(true)} />
         </div>
     )

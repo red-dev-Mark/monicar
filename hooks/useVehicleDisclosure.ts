@@ -1,13 +1,15 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 
+import { useQueryParams } from '@/hooks/useQueryParams'
 import { vehicleService } from '@/lib/apis'
 import { removeSpaces, trimValue } from '@/lib/utils/string'
-import { cleanUrlParams } from '@/lib/utils/url'
 import { useVehicleVisibleStore } from '@/stores/useVehicleVisibleStore'
 
 export const useVehicleDisclosure = () => {
     const router = useRouter()
     const searchParams = useSearchParams()
+
+    const { removeQuery } = useQueryParams()
 
     const {
         isSelectedVehicleVisible,
@@ -27,7 +29,7 @@ export const useVehicleDisclosure = () => {
     }
 
     const hideSearchedVehicle = () => {
-        cleanUrlParams()
+        removeQuery('vehicleName')
         setSearchedVehicleVisible(false)
     }
 
@@ -36,7 +38,7 @@ export const useVehicleDisclosure = () => {
     }
 
     const hideSelectedVehicle = () => {
-        cleanUrlParams()
+        removeQuery('vehicleName')
         setInputValue('')
         setSelectVehicleId(null)
         setSelectedVehicleVisible(false)

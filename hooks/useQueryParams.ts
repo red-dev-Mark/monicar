@@ -19,7 +19,7 @@ export const useQueryParams = () => {
     const addQueries = (queries: Record<string, string>) => {
         const params = new URLSearchParams(searchParams)
         Object.entries(queries).forEach(([key, value]) => {
-            params.set(key, removeSpaces(value))
+            params.set(key, removeSpaces(String(value)))
         })
         router.replace(`?${params.toString()}`)
     }
@@ -30,10 +30,15 @@ export const useQueryParams = () => {
         router.replace(`?${params.toString()}`)
     }
 
+    const clearAllQueries = () => {
+        router.replace(window.location.pathname)
+    }
+
     return {
         getQuery,
         addQuery,
         addQueries,
         removeQuery,
+        clearAllQueries,
     }
 }

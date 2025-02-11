@@ -6,13 +6,13 @@ import * as styles from './styles.css'
 
 interface RouteAnalysisPanelProps {
     mapRef: MapRefType
-    onRouteChange: (paths: LatLng[]) => void
+    onRoutesChange: (paths: LatLng[]) => void
 }
 
-const RouteAnalysisPanel = ({ mapRef, onRouteChange }: RouteAnalysisPanelProps) => {
+const RouteAnalysisPanel = ({ mapRef, onRoutesChange }: RouteAnalysisPanelProps) => {
     return (
         <div className={styles.panel}>
-            <RouteSearchSection mapRef={mapRef} onRouteChange={onRouteChange} />
+            <RouteSearchSection mapRef={mapRef} onRoutesChange={onRoutesChange} />
             {/* <RouteTimelineSection /> */}
         </div>
     )

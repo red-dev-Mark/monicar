@@ -1,5 +1,5 @@
 import { httpClient } from '@/lib/apis'
-import { formatISODateToISOString } from '@/lib/utils/date'
+import { addOneDay, formatISODateToISOString } from '@/lib/utils/date'
 import { Result } from '@/types/apis/common'
 import { LiveRouteParams, RouteDetailParams, RouteParams } from '@/types/apis/route'
 import { Route } from '@/types/route'
@@ -10,7 +10,7 @@ export const routeService = {
         vehicleId: string,
         dateRange: (Date | null)[],
         interval = 60,
-    ): Promise<Result<Route[]>> => {
+    ): Promise<Result<{ vehicleNumber: string; routes: Route[] }>> => {
         const [startDate, endDate] = dateRange
 
         if (!startDate || !endDate)
@@ -19,9 +19,14 @@ export const routeService = {
                 error: '선택되지 않는 날짜가 포함되어 있습니다',
             }
 
+        const isOneDay = startDate.getTime() === endDate.getTime()
+        const startTime = formatISODateToISOString(startDate)
+        const endTime = isOneDay ? formatISODateToISOString(addOneDay(endDate)) : formatISODateToISOString(endDate)
+
+        // console.log(startTime, endTime)
         const params: RouteParams = {
-            startTime: formatISODateToISOString(startDate),
-            endTime: formatISODateToISOString(endDate),
+            startTime,
+            endTime,
             interval,
         }
 

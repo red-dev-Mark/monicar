@@ -1,5 +1,6 @@
 'use client'
 
+import { Loader } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
 import { ChangeEvent, useState } from 'react'
 
@@ -13,8 +14,10 @@ import { useDisclosure } from '@/hooks/useDisclosure'
 import { useLoading } from '@/hooks/useLoading'
 import { useMapStatus } from '@/hooks/useMapStatus'
 import { useModal } from '@/hooks/useModal'
+import { useQueryParams } from '@/hooks/useQueryParams'
 import { useSearchVehicle } from '@/hooks/useSearchVehicle'
 import { routeService } from '@/lib/apis'
+import { formatISODateToISOString } from '@/lib/utils/date'
 import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { hasValidDateRange } from '@/lib/utils/validation'
 import { CalendarIcon } from '@/public/icons'
@@ -29,23 +32,25 @@ import * as styles from './styles.css'
 
 interface RouteSearchSectionProps {
     mapRef: MapRefType
-    onRouteChange: (paths: LatLng[]) => void
+    onRoutesChange: (paths: LatLng[]) => void
 }
 
-const RouteSearchSection = ({ mapRef, onRouteChange }: RouteSearchSectionProps) => {
+const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps) => {
     const [inputValue, setInputValue] = useState('')
     const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null])
 
     const [isVehicleSearched, { open: showRouteSearchSection, close: hideRouteSearchSection }] = useDisclosure()
-    const { isLoading, startLoading, finishLoading } = useLoading()
+    const [isSearchingVehicle, startSearchingVehicle, finishSearchingVehicle] = useLoading()
+    const [isSearchingRoute, startSearchingRoute, finishSearchingRoute] = useLoading()
 
+    const { addQueries } = useQueryParams()
     const { controlMapStatus } = useMapStatus(mapRef.current)
     const { searchedVehicle, searchableDates, searchVehicle } = useSearchVehicle(inputValue)
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
 
     const handleVehicleSearch = async () => {
         try {
-            startLoading()
+            startSearchingVehicle()
             const result = await searchVehicle()
             if (!result.isSuccess && result.error) throw new Error(result.error)
             setDateRange([null, null])
@@ -56,7 +61,7 @@ const RouteSearchSection = ({ mapRef, onRouteChange }: RouteSearchSectionProps) 
                 hideRouteSearchSection()
             }
         } finally {
-            finishLoading()
+            finishSearchingVehicle()
         }
     }
 
@@ -66,26 +71,42 @@ const RouteSearchSection = ({ mapRef, onRouteChange }: RouteSearchSectionProps) 
         const { vehicleId } = searchedVehicle
 
         try {
-            startLoading()
-            const response = await routeService.getVehicleRoutesData(vehicleId, dateRange)
-            if (!response.isSuccess) throw new Error(response.error || '경로 조회에 실패했습니다')
+            startSearchingRoute()
+            const result = await routeService.getVehicleRoutesData(vehicleId, dateRange)
 
-            const { data: routes } = response
+            if (!result?.data || !result.isSuccess) throw new Error(result.error || '경로 조회에 실패했습니다')
+
+            const {
+                data: { vehicleNumber, routes },
+            } = result
+
             if (routes) {
                 const normalizedRoutes = routes.map((route: Route) => ({
                     lat: normalizeCoordinate(route.lat),
                     lng: normalizeCoordinate(route.lng),
                 }))
 
-                onRouteChange(normalizedRoutes)
-                controlMapStatus({ lat: 37.417117, lng: 126.98816 }, MAP_CONFIG.ROUTE.ZOOM_INCREMENT)
+                onRoutesChange(normalizedRoutes)
+                // TODO: 이동 좌표 계산
+
+                controlMapStatus(
+                    normalizedRoutes.length ? normalizedRoutes[0] : { lat: 37.417117, lng: 126.98816 },
+                    MAP_CONFIG.ROUTE.ZOOM_INCREMENT,
+                )
+
+                addQueries({
+                    vehicleId,
+                    vehicleNumber,
+                    startDate: formatISODateToISOString(dateRange[0]).split('T')[0],
+                    endDate: formatISODateToISOString(dateRange[0]).split('T')[0],
+                })
             }
         } catch (error) {
             if (error instanceof Error) {
                 openModalWithMessage(error.message)
             }
         } finally {
-            finishLoading()
+            finishSearchingRoute()
         }
     }
 
@@ -103,8 +124,8 @@ const RouteSearchSection = ({ mapRef, onRouteChange }: RouteSearchSectionProps) 
                         placeholder='차량번호 검색'
                         icon='/icons/pink-search-icon.svg'
                         className={styles.searchInputStyle}
-                        isLoading={isLoading}
-                        disabled={isLoading}
+                        isLoading={isSearchingVehicle}
+                        disabled={isSearchingVehicle}
                     />
                 </div>
 
@@ -115,11 +136,13 @@ const RouteSearchSection = ({ mapRef, onRouteChange }: RouteSearchSectionProps) 
                             locale='ko'
                             placeholder='경로 기간 선택'
                             value={dateRange}
+                            allowSingleDateInRange
                             onChange={setDateRange}
                             valueFormat='YYYY년 MM월 DD일'
                             minDate={new Date(searchableDates.firstDateAt)}
                             maxDate={new Date(searchableDates.lastDateAt)}
                             size='md'
+                            color='red'
                             type='range'
                             radius='md'
                             styles={{
@@ -139,8 +162,8 @@ const RouteSearchSection = ({ mapRef, onRouteChange }: RouteSearchSectionProps) 
                             rightSectionPointerEvents='none'
                         />
                         <div className={styles.buttonWrapper}>
-                            <SquareButton disabled={isButtonDisabled} onClick={handleRouteSearch}>
-                                경로 보기
+                            <SquareButton disabled={isButtonDisabled || isSearchingRoute} onClick={handleRouteSearch}>
+                                {isSearchingRoute ? <Loader color={vars.colors.white} size='sm' /> : '경로 보기'}
                             </SquareButton>
                         </div>
                     </div>
