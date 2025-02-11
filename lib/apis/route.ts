@@ -1,14 +1,27 @@
-import { DateTime } from '@/app/(main)/route/types/date'
 import { httpClient } from '@/lib/apis'
-import { formatToISODate } from '@/lib/utils/date'
+import { formatISODateToISOString } from '@/lib/utils/date'
+import { Result } from '@/types/apis/common'
 import { LiveRouteParams, RouteDetailParams, RouteParams } from '@/types/apis/route'
+import { Route } from '@/types/route'
 
 export const routeService = {
     // 차량 이동 경로 이력 조회
-    getVehicleRoutesData: async (vehicleId: string, startDate: DateTime, endDate: DateTime, interval = 60) => {
+    getVehicleRoutesData: async (
+        vehicleId: string,
+        dateRange: (Date | null)[],
+        interval = 60,
+    ): Promise<Result<Route[]>> => {
+        const [startDate, endDate] = dateRange
+
+        if (!startDate || !endDate)
+            return {
+                isSuccess: false,
+                error: '선택되지 않는 날짜가 포함되어 있습니다',
+            }
+
         const params: RouteParams = {
-            startTime: formatToISODate(startDate),
-            endTime: formatToISODate(endDate),
+            startTime: formatISODateToISOString(startDate),
+            endTime: formatISODateToISOString(endDate),
             interval,
         }
 
@@ -18,7 +31,10 @@ export const routeService = {
 
         const { result } = response.data
 
-        return result
+        return {
+            isSuccess: true,
+            data: result,
+        }
     },
     // 지정된 시간 간격으로 경로 상세 정보 조회
     getVehicleRoutesDetail: async (

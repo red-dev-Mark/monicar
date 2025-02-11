@@ -60,7 +60,16 @@ export const vehicleService = {
             return { isValid: false, value: '등록되지 않은 차량입니다.' }
         }
 
-        return { isValid: true, value: result }
+        const vehicleOperationHistory = {
+            vehicleId: result.vehicleId,
+            vehicleNumber: result.vehicleNumber,
+            operationPeriod: {
+                firstDateAt: result.firstDateAt,
+                lastDateAt: result.lastDateAt,
+            },
+        }
+
+        return { isValid: true, value: vehicleOperationHistory }
     },
 
     // 등록 가능한 차량 번호 조회

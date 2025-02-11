@@ -2,16 +2,11 @@ import { useState } from 'react'
 
 import { vehicleService } from '@/lib/apis'
 import { validateVehicleNumber } from '@/lib/utils/validation'
-import { VehicleOperationHistory } from '@/types/vehicle'
-
-interface Result<T> {
-    isSuccess: boolean
-    data?: T
-    error?: string
-}
+import { Result } from '@/types/apis/common'
+import { Vehicle } from '@/types/vehicle'
 
 export const useSearchVehicle = (vehicleNumber: string = '') => {
-    const [searchedVehicle, setSearchedVehicle] = useState<VehicleOperationHistory | null>()
+    const [searchedVehicle, setSearchedVehicle] = useState<Vehicle | null>()
     const [searchableDates, setSearchableDates] = useState({ firstDateAt: '', lastDateAt: '' })
 
     const searchVehicle = async (): Promise<Result<void>> => {
@@ -27,17 +22,14 @@ export const useSearchVehicle = (vehicleNumber: string = '') => {
                 return { isSuccess: false, error: '등록되지 않은 차량번호입니다.' }
             }
 
-            const vehicleOperationHistory = {
-                vehicleId: response.value.vehicleId,
-                vehicleNumber: response.value.vehicleNumber,
-                operationPeriod: {
-                    firstDateAt: response.value.firstDateAt,
-                    lastDateAt: response.value.lastDateAt,
-                },
+            if (typeof response.value !== 'string') {
+                const vehicleInfo = {
+                    vehicleId: response.value.vehicleId as string,
+                    vehicleNumber: response.value.vehicleNumber as string,
+                }
+                setSearchedVehicle(vehicleInfo)
+                setSearchableDates(response.value.operationPeriod)
             }
-
-            setSearchedVehicle(vehicleOperationHistory)
-            setSearchableDates(vehicleOperationHistory.operationPeriod)
 
             return { isSuccess: true }
         } catch (error) {
@@ -50,6 +42,5 @@ export const useSearchVehicle = (vehicleNumber: string = '') => {
         searchedVehicle,
         searchableDates,
         searchVehicle,
-        setSearchableDates,
     }
 }

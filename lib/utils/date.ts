@@ -18,23 +18,6 @@ export const formatToKSTDate = (date: Date): string => {
     return `${year}-${month}-${day}`
 }
 
-// { year, month, date, hour, minute } -> 2024-01-15T09:30:00
-export const formatToISODate = ({
-    year,
-    month,
-    date,
-    hour,
-    minute,
-}: {
-    year: string
-    month: string
-    date: string
-    hour: string
-    minute: string
-}) => {
-    return `${year}-${month}-${date}T${hour}:${minute}:00`
-}
-
 export const formatTimeToHHMM = (date: Date): string => {
     const hours = String(date.getHours()).padStart(2, '0')
     const minutes = String(date.getMinutes()).padStart(2, '0')
@@ -49,3 +32,6 @@ export const formatISODateToDot = (isoDate: string) => {
 
     return `${year}.${month}.${date} ${hour}:${minute}:${second}`
 }
+
+// 2024-01-15T09:30:00.000Z -> '2024.01.15 09:30:00'
+export const formatISODateToISOString = (isoDate: Date) => isoDate.toISOString().split('.')[0]

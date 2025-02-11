@@ -3,8 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 import MapSection from '@/app/(main)/route/components/MapSection'
-import RouteSearchPanel from '@/app/(main)/route/components/RouteSearchPanel'
-import VehicleRouteTimeline from '@/app/(main)/route/components/VehicleRouteTimeline'
+import RouteAnalysisPanel from '@/app/(main)/route/components/RouteAnalysisPanel'
 import { useMapStatus } from '@/hooks/useMapStatus'
 import { LatLng } from '@/types/map'
 
@@ -28,10 +27,7 @@ const RoutePage = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.panel}>
-                <RouteSearchPanel mapRef={mapRef} onRouteChange={setRoutes} />
-                <VehicleRouteTimeline />
-            </div>
+            <RouteAnalysisPanel mapRef={mapRef} onRouteChange={setRoutes} />
             <MapSection mapRef={mapRef} mapState={mapState} routes={routes} onLoad={() => setIsMapLoaded(true)} />
         </div>
     )
