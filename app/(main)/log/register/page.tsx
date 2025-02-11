@@ -4,7 +4,7 @@ import { CheckIcon, Select } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
 import { notifications } from '@mantine/notifications'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { ColorRing } from 'react-loader-spinner'
 
 import SquareButton from '@/components/common/Button/SquareButton'
@@ -14,7 +14,6 @@ import SearchInput from '@/components/common/Input/SearchInput'
 import Message from '@/components/common/Message'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
-import PageLoader from '@/components/common/PageLoader'
 import { useModal } from '@/hooks/useModal'
 import { vehicleService } from '@/lib/apis'
 import { removeSpaces } from '@/lib/utils/string'
@@ -23,6 +22,7 @@ import { CalendarIcon } from '@/public/icons'
 
 import '@mantine/dates/styles.css'
 import 'dayjs/locale/ko'
+import RegisterSkeleton from './components/RegisterSkeleton'
 import VehicleRegisterForm from './components/VehicleRegisterForm'
 import * as styles from './styles.css'
 import { VehicleTypeModel } from './types'
@@ -128,14 +128,6 @@ const RegisterPage = () => {
         })
     }
 
-    if (isLoading) {
-        return <PageLoader />
-    }
-
-    if (error) {
-        return <ErrorMessage />
-    }
-
     const formFields = [
         {
             id: 'vehicleNumber',
@@ -239,12 +231,39 @@ const RegisterPage = () => {
         },
     ]
 
+    if (error) {
+        return <ErrorMessage />
+    }
+
+    if (isLoading) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.title}>차량등록📝</div>
+                <div className={styles.formWrapper}>
+                    <RegisterSkeleton />
+                </div>
+                <div className={styles.buttonsWrapper}>
+                    <SquareButton color={'white'} onClick={handleCancelButtonClick}>
+                        취소
+                    </SquareButton>
+                    <SquareButton color={'dark'} onClick={postVehicleInfo} disabled={isLoading}>
+                        등록
+                    </SquareButton>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.title}>차량등록📝</div>
+
             <div className={styles.formWrapper}>
-                <VehicleRegisterForm fields={formFields} />
+                <Suspense fallback={<RegisterSkeleton />}>
+                    {error ? <ErrorMessage /> : <VehicleRegisterForm fields={formFields} />}
+                </Suspense>
             </div>
+
             <div className={styles.buttonsWrapper}>
                 <SquareButton color={'white'} onClick={handleCancelButtonClick}>
                     취소
