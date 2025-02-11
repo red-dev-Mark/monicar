@@ -152,7 +152,7 @@ const RegisterPage = () => {
             id: 'vehicleNumber',
             label: '차량 번호',
             component: (
-                <>
+                <div className={styles.searchInputWrapper}>
                     <SearchInput
                         icon='/icons/search-icon.svg'
                         onChange={(event) => {
@@ -169,11 +169,18 @@ const RegisterPage = () => {
                             }
                         }}
                     />
-                    {showSuccessMessage && <Message message={'등록 가능한 차량번호입니다.'} isError={false} />}
-                    {showErrorMessage && <Message message={showErrorMessage} isError={true} />}
-                </>
+                    {showSuccessMessage && (
+                        <div className={styles.messageWrapper}>
+                            <Message message={'등록 가능한 차량번호입니다.'} isError={false} />
+                        </div>
+                    )}
+                    {showErrorMessage && (
+                        <div className={styles.messageWrapper}>
+                            <Message message={showErrorMessage} isError={true} />
+                        </div>
+                    )}
+                </div>
             ),
-            isError: false,
         },
         {
             id: 'vehicleType',
@@ -195,7 +202,6 @@ const RegisterPage = () => {
                     checkIconPosition='right'
                 />
             ),
-            isError: false,
         },
         {
             id: 'mileage',
@@ -215,7 +221,6 @@ const RegisterPage = () => {
                     <div className={styles.km}>km</div>
                 </div>
             ),
-            isError: false,
         },
         {
             id: 'releaseDate',
@@ -246,7 +251,6 @@ const RegisterPage = () => {
                     }}
                 />
             ),
-            isError: false,
         },
     ]
 
