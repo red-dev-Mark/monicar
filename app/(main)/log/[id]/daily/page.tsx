@@ -13,6 +13,7 @@ import { API_ENDPOINTS } from '@/constants/api'
 import { DAILY_TITLES, HOURLY_TITLES } from '@/constants/listHeader'
 import { useKakaoLoader } from '@/hooks/useKakaoLoader'
 import { useModal } from '@/hooks/useModal'
+import { documentService } from '@/lib/apis/document'
 
 import { breadcrumbsWrapper } from '../styles.css'
 
@@ -23,8 +24,6 @@ import { selectPeriod } from './constants'
 import { useDailyData } from './hooks/useDailyData'
 import { useHourlyData } from './hooks/useHourlyData'
 import * as styles from './styles.css'
-import { downloadDailyExcel } from './utils/dailyExcel'
-import { downloadHourlyExcel } from './utils/hourlyExcel'
 
 const DailyPage = () => {
     const {} = useKakaoLoader()
@@ -37,7 +36,7 @@ const DailyPage = () => {
 
     const handleDailyExcelButtonClick = async () => {
         try {
-            await downloadDailyExcel(id as string, period)
+            await documentService.downloadDailyExcel(id as string, period)
         } catch (error) {
             console.error('엑셀 다운로드 에러', error)
             openModalWithMessage('엑셀 다운로드에 실패했습니다')
@@ -46,7 +45,7 @@ const DailyPage = () => {
 
     const handleHourlyExcelButtonClick = async () => {
         try {
-            await downloadHourlyExcel(id as string, selectedDate)
+            await documentService.downloadHourlyExcel(id as string, selectedDate)
         } catch (error) {
             console.error('엑셀 다운로드 에러', error)
             openModalWithMessage('엑셀 다운로드에 실패했습니다')

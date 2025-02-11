@@ -12,7 +12,7 @@ interface ExcelData {
     총운행거리: string
 }
 
-const getExcelData = (data: LogListItemModel[]) => {
+export const downloadDetailExcel = (data: LogListItemModel[]) => {
     return data.map((item) => ({
         차량번호: item.vehicleNumber,
         차종: item.vehicleModel,
@@ -21,7 +21,7 @@ const getExcelData = (data: LogListItemModel[]) => {
     }))
 }
 
-const saveExcel = (excelData: ExcelData[]) => {
+export const saveDetailExcel = (excelData: ExcelData[]) => {
     const wb = XLSX.utils.book_new()
     const ws = XLSX.utils.json_to_sheet(excelData)
     XLSX.utils.book_append_sheet(wb, ws, LOG_EXCEL_SHEET_NAME)
@@ -39,8 +39,8 @@ export const downloadExcel = async (keyword: string) => {
             },
         })
         const allData = response.data.result.content
-        const excelData = getExcelData(allData)
-        saveExcel(excelData)
+        const excelData = downloadDetailExcel(allData)
+        saveDetailExcel(excelData)
     } catch (error) {
         console.error('Excel 다운로드 실패', error)
         throw error
