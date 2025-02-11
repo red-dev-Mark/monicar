@@ -76,23 +76,41 @@ const RegisterPage = () => {
     }
 
     const postVehicleInfo = async () => {
+        setIsSubmitting(true)
+
         if (!vehicleNumber) {
             openModalWithMessage('차량번호를 입력해주세요.')
+            setIsSubmitting(false)
+            return
+        }
+
+        if (!showSuccessMessage) {
+            openModalWithMessage('차량번호 중복확인은 필수입니다.')
+            setIsSubmitting(false)
+            return
+        }
+
+        if (showErrorMessage) {
+            openModalWithMessage('올바른 차량번호를 입력해주세요.')
+            setIsSubmitting(false)
             return
         }
 
         if (!vehicleTypeId) {
             openModalWithMessage('차량 종류를 선택해주세요.')
+            setIsSubmitting(false)
             return
         }
 
         if (!validateDrivingDistance(drivingDistance)) {
             openModalWithMessage('운행거리를 입력해주세요.')
+            setIsSubmitting(false)
             return
         }
 
         if (!deliveryDate) {
             openModalWithMessage('출고일을 선택해주세요.')
+            setIsSubmitting(false)
             return
         }
 
@@ -109,6 +127,7 @@ const RegisterPage = () => {
 
         if (!response.isSuccess) {
             openModalWithMessage(response.errorMessage)
+            setIsSubmitting(false)
             return
         }
 
