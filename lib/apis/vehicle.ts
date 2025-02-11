@@ -57,7 +57,8 @@ export const vehicleService = {
         const { result } = response.data
 
         if (!result) {
-            return { isValid: false, value: '등록되지 않은 차량입니다.' }
+            // TODO 문구 수정
+            return { isValid: false, value: '차량 정보를 불러오는데 실패했습니다' }
         }
 
         const vehicleOperationHistory = {

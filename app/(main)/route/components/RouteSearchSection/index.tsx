@@ -10,6 +10,7 @@ import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import { MAP_CONFIG } from '@/constants/map'
 import { useDisclosure } from '@/hooks/useDisclosure'
+import { useLoading } from '@/hooks/useLoading'
 import { useMapStatus } from '@/hooks/useMapStatus'
 import { useModal } from '@/hooks/useModal'
 import { useSearchVehicle } from '@/hooks/useSearchVehicle'
@@ -34,9 +35,9 @@ interface RouteSearchSectionProps {
 const RouteSearchSection = ({ mapRef, onRouteChange }: RouteSearchSectionProps) => {
     const [inputValue, setInputValue] = useState('')
     const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null])
-    const [isLoading, setIsLoading] = useState(false)
 
     const [isVehicleSearched, { open: showRouteSearchSection, close: hideRouteSearchSection }] = useDisclosure()
+    const { isLoading, startLoading, finishLoading } = useLoading()
 
     const { controlMapStatus } = useMapStatus(mapRef.current)
     const { searchedVehicle, searchableDates, searchVehicle } = useSearchVehicle(inputValue)
@@ -44,7 +45,7 @@ const RouteSearchSection = ({ mapRef, onRouteChange }: RouteSearchSectionProps) 
 
     const handleVehicleSearch = async () => {
         try {
-            setIsLoading(true)
+            startLoading()
             const result = await searchVehicle()
             if (!result.isSuccess && result.error) throw new Error(result.error)
             setDateRange([null, null])
@@ -55,7 +56,7 @@ const RouteSearchSection = ({ mapRef, onRouteChange }: RouteSearchSectionProps) 
                 hideRouteSearchSection()
             }
         } finally {
-            setIsLoading(false)
+            finishLoading()
         }
     }
 
@@ -65,7 +66,7 @@ const RouteSearchSection = ({ mapRef, onRouteChange }: RouteSearchSectionProps) 
         const { vehicleId } = searchedVehicle
 
         try {
-            setIsLoading(true)
+            startLoading()
             const response = await routeService.getVehicleRoutesData(vehicleId, dateRange)
             if (!response.isSuccess) throw new Error(response.error || '경로 조회에 실패했습니다')
 
@@ -84,7 +85,7 @@ const RouteSearchSection = ({ mapRef, onRouteChange }: RouteSearchSectionProps) 
                 openModalWithMessage(error.message)
             }
         } finally {
-            setIsLoading(false)
+            finishLoading()
         }
     }
 

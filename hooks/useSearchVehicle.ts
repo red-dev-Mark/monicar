@@ -19,7 +19,8 @@ export const useSearchVehicle = (vehicleNumber: string = '') => {
             const response = await vehicleService.getVehicleOperationHistory(vehicleNumber)
             if (!response.isValid) {
                 setSearchedVehicle(null)
-                return { isSuccess: false, error: '등록되지 않은 차량번호입니다.' }
+                // TODO 문구 수정
+                return { isSuccess: false, error: '차량 정보를 불러오는데 실패했습니다' }
             }
 
             if (typeof response.value !== 'string') {
