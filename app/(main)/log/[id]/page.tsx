@@ -243,34 +243,43 @@ const DetailPage = () => {
                                 비고
                             </th>
                         </tr>
-                        {detailData?.records.map((data: DrivingRecord) => {
-                            const isCommutePurpose = data.drivingInfo.businessDrivingDetails.usePurpose === 'COMMUTE'
-                            const drivingDistance = data.drivingInfo.businessDrivingDetails.drivingDistance
+                        {detailData?.records.length === 0 ? (
+                            <tr>
+                                <td colSpan={9}>
+                                    <div className={styles.empty}>운행내역이 없습니다.</div>
+                                </td>
+                            </tr>
+                        ) : (
+                            detailData?.records.map((data: DrivingRecord) => {
+                                const isCommutePurpose =
+                                    data.drivingInfo.businessDrivingDetails.usePurpose === 'COMMUTE'
+                                const drivingDistance = data.drivingInfo.businessDrivingDetails.drivingDistance
 
-                            return (
-                                <tr key={data.id}>
-                                    <td className={styles.tableCell}>{data.usageDate}</td>
-                                    <td className={styles.tableCell}>{data.user.departmentName}</td>
-                                    <td className={styles.tableCell}>{data.user.name}</td>
-                                    <td className={styles.tableCell}>
-                                        {data.drivingInfo.drivingBefore.toLocaleString('ko-KR')}km
-                                    </td>
-                                    <td className={styles.tableCell}>
-                                        {data.drivingInfo.drivingAfter.toLocaleString('ko-KR')}km
-                                    </td>
-                                    <td className={styles.tableCell}>
-                                        {data.drivingInfo.totalDriving.toLocaleString('ko-KR')}km
-                                    </td>
-                                    <td className={styles.tableCell}>
-                                        {isCommutePurpose ? drivingDistance.toLocaleString('ko-KR') + 'km' : '0km'}
-                                    </td>
-                                    <td className={styles.tableCell}>
-                                        {!isCommutePurpose ? drivingDistance.toLocaleString('ko-KR') + 'km' : '0km'}
-                                    </td>
-                                    <td className={styles.tableCell}>{data.drivingInfo.notes}</td>
-                                </tr>
-                            )
-                        })}
+                                return (
+                                    <tr key={data.id}>
+                                        <td className={styles.tableCell}>{data.usageDate}</td>
+                                        <td className={styles.tableCell}>{data.user.departmentName}</td>
+                                        <td className={styles.tableCell}>{data.user.name}</td>
+                                        <td className={styles.tableCell}>
+                                            {data.drivingInfo.drivingBefore.toLocaleString('ko-KR')}km
+                                        </td>
+                                        <td className={styles.tableCell}>
+                                            {data.drivingInfo.drivingAfter.toLocaleString('ko-KR')}km
+                                        </td>
+                                        <td className={styles.tableCell}>
+                                            {data.drivingInfo.totalDriving.toLocaleString('ko-KR')}km
+                                        </td>
+                                        <td className={styles.tableCell}>
+                                            {isCommutePurpose ? drivingDistance.toLocaleString('ko-KR') + 'km' : '0km'}
+                                        </td>
+                                        <td className={styles.tableCell}>
+                                            {!isCommutePurpose ? drivingDistance.toLocaleString('ko-KR') + 'km' : '0km'}
+                                        </td>
+                                        <td className={styles.tableCell}>{data.drivingInfo.notes}</td>
+                                    </tr>
+                                )
+                            })
+                        )}
                     </tbody>
                 </table>
 

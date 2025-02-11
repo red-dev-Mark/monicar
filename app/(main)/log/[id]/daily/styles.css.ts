@@ -68,10 +68,9 @@ export const rightSection = style({
 })
 
 export const empty = style({
-    color: vars.colors.black,
+    margin: '50px',
     justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%',
-    textAlign: 'center',
     display: 'flex',
+    fontWeight: vars.fontWeights.bold,
+    color: vars.colors.gray[700],
 })

@@ -106,7 +106,7 @@ const DailyPage = () => {
                         <div className={styles.contentWrapper}>
                             <ListHeader headerTitles={DAILY_TITLES} />
                             {dailyData?.length === 0 ? (
-                                <div className={styles.empty}>내역이 없습니다.</div>
+                                <div className={styles.empty}>운행내역이 없습니다.</div>
                             ) : (
                                 dailyData?.map((log) => (
                                     <DailyListItem
@@ -130,7 +130,7 @@ const DailyPage = () => {
                         <div className={styles.contentWrapper}>
                             <ListHeader headerTitles={HOURLY_TITLES} />
                             {hourlyData?.length === 0 ? (
-                                <div className={styles.empty}>내역이 없습니다.</div>
+                                <div className={styles.empty}>운행내역이 없습니다.</div>
                             ) : (
                                 hourlyData?.map((log) => (
                                     <HourlyListItem key={`${log.startTime}-${log.endTime}`} data={log} />

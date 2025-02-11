@@ -20,7 +20,7 @@ const VehicleRegisterForm = ({ fields }: VehicleRegisterFormProps) => {
     return (
         <div className={styles.container}>
             {fields.map((field) => (
-                <div key={field.id} className={styles.contentsWrapper}>
+                <div key={field.id}>
                     <div className={styles.fieldWrapper}>
                         <div className={styles.textWrapper}>{field.label}</div>
                         <div className={styles.inputWrapper}>{field.component}</div>
