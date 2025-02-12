@@ -1,6 +1,12 @@
 import { OPERATION_STATUS } from '@/components/common/Badge/constants'
 import { LatLng } from '@/types/map'
 
+// 차량 정보
+export interface Vehicle {
+    vehicleId: string
+    vehicleNumber: string
+}
+
 // 차량의 현재 위치 정보
 export interface VehicleLocation {
     vehicleId: string

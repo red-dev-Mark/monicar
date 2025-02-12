@@ -57,10 +57,20 @@ export const vehicleService = {
         const { result } = response.data
 
         if (!result) {
-            return { isValid: false, value: '등록되지 않은 차량입니다.' }
+            // TODO 문구 수정
+            return { isValid: false, value: '차량 정보를 불러오는데 실패했습니다' }
         }
 
-        return { isValid: true, value: result }
+        const vehicleOperationHistory = {
+            vehicleId: result.vehicleId,
+            vehicleNumber: result.vehicleNumber,
+            operationPeriod: {
+                firstDateAt: result.firstDateAt,
+                lastDateAt: result.lastDateAt,
+            },
+        }
+
+        return { isValid: true, value: vehicleOperationHistory }
     },
 
     // 등록 가능한 차량 번호 조회
@@ -104,16 +114,4 @@ export const vehicleService = {
         }
         return response.data
     },
-    // 일별 운행기록
-    // getVehicleDailyLog: async (vehicleId: string) => {
-    //     const response = await httpClient.get(`api/v1/log/daily/${vehicleId}`)
-
-    //     if (!response.data.isSuccess) {
-    //         return {
-    //             errorMessage: response.data.errorMessage,
-    //         }
-    //     }
-
-    //     return response.data.result
-    // },
 }
