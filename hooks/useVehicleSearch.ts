@@ -5,11 +5,11 @@ import { validateVehicleNumber } from '@/lib/utils/validation'
 import { Result } from '@/types/apis/common'
 import { Vehicle } from '@/types/vehicle'
 
-export const useSearchVehicle = (vehicleNumber: string = '') => {
+export const useVehicleSearch = () => {
     const [searchedVehicle, setSearchedVehicle] = useState<Vehicle | null>()
     const [searchableDates, setSearchableDates] = useState({ firstDateAt: '', lastDateAt: '' })
 
-    const searchVehicle = async (): Promise<Result<void>> => {
+    const searchVehicle = async (vehicleNumber: string): Promise<Result<Vehicle>> => {
         const validation = validateVehicleNumber(vehicleNumber)
         if (!validation.isValid) {
             return { isSuccess: false, error: validation.message! }
@@ -28,8 +28,10 @@ export const useSearchVehicle = (vehicleNumber: string = '') => {
                     vehicleId: response.value.vehicleId as string,
                     vehicleNumber: response.value.vehicleNumber as string,
                 }
+
                 setSearchedVehicle(vehicleInfo)
                 setSearchableDates(response.value.operationPeriod)
+                return { isSuccess: true, data: vehicleInfo }
             }
 
             return { isSuccess: true }
