@@ -29,6 +29,8 @@ const RouteTimelineSection = () => {
                 const startDate = searchParams.get('startDate') || ''
                 const endDate = searchParams.get('endDate') || ''
 
+                if (!vehicleId || !startDate || !endDate) return
+
                 const response = await routeService.getVehicleRoutesDetail({
                     vehicleId,
                     startTime: startDate,
