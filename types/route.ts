@@ -2,6 +2,7 @@
 export interface Route {
     lat: number
     lng: number
-    ang: number
+    ang?: number
+    spd?: number
     timestamp: string
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { ComponentPropsWithoutRef, forwardRef, KeyboardEvent } from 'react'
+import { ComponentPropsWithoutRef, forwardRef, KeyboardEvent, useState } from 'react'
 
 import * as styles from './styles.css'
 
@@ -13,8 +13,12 @@ interface BaseInputProps extends ComponentPropsWithoutRef<'input'> {
 
 const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
     ({ type = 'text', isError = false, placeholder, className = '', onSubmit, ...props }, ref) => {
+        const [isComposing, setIsComposing] = useState(false)
+
         const handleEnterDown = (event: KeyboardEvent<HTMLInputElement>) => {
             if (event.key === 'Enter' && onSubmit) {
+                if (isComposing) return
+
                 onSubmit()
             }
         }
@@ -24,10 +28,12 @@ const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
                 ref={ref}
                 type={type}
                 placeholder={placeholder || '차량번호를 검색하세요.'}
+                onCompositionStart={() => setIsComposing(true)}
+                onCompositionEnd={() => setIsComposing(false)}
                 onKeyDown={handleEnterDown}
                 className={`${styles.baseInput} 
-                ${isError && styles.errorInput}
-               ${className}`}
+    ${isError && styles.errorInput}
+    ${className}`}
                 {...props}
             />
         )

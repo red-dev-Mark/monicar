@@ -48,6 +48,8 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
     const { searchedVehicle, searchableDates, searchVehicle } = useSearchVehicle(inputValue)
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
 
+    console.log(inputValue)
+
     const handleVehicleSearch = async () => {
         try {
             startSearchingVehicle()
@@ -72,7 +74,7 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
 
         try {
             startSearchingRoute()
-            const result = await routeService.getVehicleRoutesData(vehicleId, dateRange)
+            const result = await routeService.getVehicleRoutesData({ vehicleId, dateRange })
 
             if (!result?.data || !result.isSuccess) throw new Error(result.error || '경로 조회에 실패했습니다')
 
@@ -95,8 +97,8 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
                 addQueries({
                     vehicleId,
                     vehicleNumber,
-                    startDate: formatISODateToISOString(dateRange[0]).split('T')[0],
-                    endDate: formatISODateToISOString(dateRange[0]).split('T')[0],
+                    startDate: formatISODateToISOString(dateRange[0]),
+                    endDate: formatISODateToISOString(dateRange[1]),
                     startLat: normalizedRoutes[0].lat,
                     startLng: normalizedRoutes[0].lng,
                     endLat: normalizedRoutes[normalizedRoutes.length - 1].lat,

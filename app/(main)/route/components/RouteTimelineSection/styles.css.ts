@@ -9,11 +9,7 @@ export const container = style({
 
 export const tableHeader = style({
     paddingBottom: '16px',
-
     display: 'flex',
-    gap: '24px',
-    alignItems: 'center',
-
     fontWeight: vars.fontWeights.bold,
     borderBottom: `1px solid ${vars.colors.gray[200]}`,
 })
@@ -24,23 +20,16 @@ export const tableList = style({
     flexDirection: 'column',
 })
 
-export const tableItem = style({
-    padding: '18px 0px',
-    display: 'flex',
-    gap: '24px',
-    color: vars.colors.black,
-})
-
 export const pagination = style({
-    margin: '8px 0',
+    margin: '12px 0 8px',
 })
 
 export const speed = style({
-    width: '10%',
+    width: '20%',
 })
 
 export const timestamp = style({
-    width: '40%',
+    width: '30%',
 })
 
 export const location = style({

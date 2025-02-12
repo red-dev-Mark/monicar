@@ -3,7 +3,8 @@ import { style } from '@vanilla-extract/css'
 import { vars } from '@/styles/theme.css'
 
 export const panel = style({
-    width: '480px',
+    // width: '480px',
+    width: '960px',
     position: 'absolute',
     top: '12px',
     right: '12px',

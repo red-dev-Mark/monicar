@@ -1,16 +1,16 @@
 import { httpClient } from '@/lib/apis'
 import { addOneDay, formatISODateToISOString } from '@/lib/utils/date'
 import { Result } from '@/types/apis/common'
-import { LiveRouteParams, RouteDetailParams, RouteParams } from '@/types/apis/route'
+import { LiveRouteParams, RouteDetailParams, RouteDetailRequest, RouteParams, RouteRequest } from '@/types/apis/route'
 import { Route } from '@/types/route'
 
 export const routeService = {
-    // 차량 이동 경로 이력 조회
-    getVehicleRoutesData: async (
-        vehicleId: string,
-        dateRange: (Date | null)[],
+    // 차량 운행 경로 조회
+    getVehicleRoutesData: async ({
+        vehicleId,
+        dateRange,
         interval = 60,
-    ): Promise<Result<{ vehicleNumber: string; routes: Route[] }>> => {
+    }: RouteRequest): Promise<Result<{ vehicleNumber: string; routes: Route[] }>> => {
         const [startDate, endDate] = dateRange
 
         if (!startDate || !endDate)
@@ -23,7 +23,6 @@ export const routeService = {
         const startTime = formatISODateToISOString(startDate)
         const endTime = isOneDay ? formatISODateToISOString(addOneDay(endDate)) : formatISODateToISOString(endDate)
 
-        // console.log(startTime, endTime)
         const params: RouteParams = {
             startTime,
             endTime,
@@ -42,36 +41,39 @@ export const routeService = {
         }
     },
     // 지정된 시간 간격으로 경로 상세 정보 조회
-    getVehicleRoutesDetail: async (
-        vehicleId: string,
-        startDate: string,
-        endDate: string,
-        page: number,
-        interval = 60,
-    ) => {
+    getVehicleRoutesDetail: async ({ vehicleId, startTime, endTime, page, interval = 60 }: RouteDetailRequest) => {
+        if (!vehicleId) throw new Error('차량 ID는 필수값입니다')
+
+        if (!startTime || !endTime || !page) {
+            return {
+                isSuccess: false,
+                error: '요청 데이터가 유효하지 않습니다',
+            }
+        }
+
+        const isOneDay = new Date(startTime).getTime() === new Date(endTime).getTime()
+        const newStartTime = formatISODateToISOString(new Date(startTime))
+        const newEndTime = isOneDay
+            ? formatISODateToISOString(addOneDay(new Date(endTime)))
+            : formatISODateToISOString(new Date(endTime))
+
         const params: RouteDetailParams = {
-            // startTime: formatToISODate(startDate),
-            // endTime: formatToISODate(endDate),
-            startTime: startDate,
-            endTime: endDate,
+            startTime: newStartTime,
+            endTime: newEndTime,
             page,
             interval,
         }
-
-        // params: {
-        //     startTime: '2025-01-27T22:00:00',
-        //     endTime: '2025-01-28T00:00:00',
-        //     interval: 60,
-        //     page: 27,
-        // },
 
         const response = await httpClient.get(`api/v1/vehicle/${vehicleId}/routes/detail`, {
             params,
         })
 
-        console.log(response.data.result)
+        const { result } = response.data
 
-        return response.data.result
+        return {
+            isSuccess: true,
+            data: result,
+        }
     },
     // 차량 실시간 이동 경로 조회
     getVehicleLiveRoutes: async (vehicleId: string) => {
