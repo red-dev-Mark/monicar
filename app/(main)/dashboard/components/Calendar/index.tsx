@@ -2,6 +2,7 @@ import * as styles from './styles.css'
 
 interface CalendarModel {
     id: number
+    ranking: string
     message: string
     isActive?: boolean
 }
@@ -42,11 +43,10 @@ const Calendar = ({ calendarData }: CalendarProps) => {
 
             <p className={styles.title}>주행거리 높은 순</p>
             <div className={styles.messageContainer}>
-                <div className={styles.verticalLine} />
                 <div className={styles.messageList}>
                     {calendarData.map((data) => (
                         <div key={data.id} className={styles.messageWrapper}>
-                            <div className={`${styles.dot} ${data.isActive ? styles.activeDot : ''}`} />
+                            <div>{data.ranking}</div>
                             <div className={`${styles.message} ${data.isActive ? styles.activeMessageWrapper : ''}`}>
                                 {data.message}
                             </div>

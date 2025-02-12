@@ -83,14 +83,6 @@ export const messageContainer = style({
     position: 'relative',
 })
 
-export const verticalLine = style({
-    position: 'absolute',
-    left: '6px',
-    width: '2px',
-    height: '100%',
-    backgroundColor: vars.colors.gray[300],
-})
-
 export const messageList = style({
     display: 'flex',
     flexDirection: 'column',
@@ -103,28 +95,15 @@ export const messageWrapper = style({
     display: 'flex',
     alignItems: 'center',
     position: 'relative',
+    justifyContent: 'center',
     fontWeight: vars.fontWeights.extraBold,
-    color: vars.colors.gray[500],
+    color: vars.colors.gray[600],
 })
 
 export const message = style({
-    marginLeft: '40px',
-})
-
-export const dot = style({
-    width: '12px',
-    height: '12px',
-    borderRadius: '50%',
-    backgroundColor: vars.colors.gray[300],
-    position: 'absolute',
-    left: '-24px',
-    zIndex: vars.zIndex.default,
+    marginLeft: '30px',
 })
 
 export const activeMessageWrapper = style({
     color: vars.colors.primary,
-})
-
-export const activeDot = style({
-    backgroundColor: vars.colors.primary,
 })
