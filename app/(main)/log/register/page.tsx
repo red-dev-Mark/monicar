@@ -138,6 +138,7 @@ const RegisterPage = () => {
             withCloseButton: false,
             radius: 'sm',
             icon: <CheckIcon size={18} />,
+            color: 'pink',
             style: {
                 width: '400px',
                 height: '70px',
