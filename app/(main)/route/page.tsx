@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 
 import MapSection from '@/app/(main)/route/components/MapSection'
 import RouteSearchSection from '@/app/(main)/route/components/RouteSearchSection'
@@ -28,9 +28,11 @@ const RoutePage = () => {
 
     return (
         <div className={styles.container}>
-            <RouteSearchSection mapRef={mapRef} onRoutesChange={setRoutes} />
-            <RouteTimelineSection />
-            <MapSection mapRef={mapRef} mapState={mapState} routes={routes} onLoad={() => setIsMapLoaded(true)} />
+            <Suspense fallback={<div>서스펜스 불러오는 중!</div>}>
+                <RouteSearchSection mapRef={mapRef} onRoutesChange={setRoutes} />
+                <RouteTimelineSection />
+                <MapSection mapRef={mapRef} mapState={mapState} routes={routes} onLoad={() => setIsMapLoaded(true)} />
+            </Suspense>
         </div>
     )
 }
