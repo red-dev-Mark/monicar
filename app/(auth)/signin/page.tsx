@@ -71,7 +71,6 @@ const SignInPage = () => {
             return
         }
 
-        // login(formData.email)
         router.push('/dashboard')
     }
 

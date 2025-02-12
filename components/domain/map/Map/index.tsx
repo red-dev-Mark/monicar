@@ -14,6 +14,7 @@ interface MapProps {
     center?: LatLng
     children?: React.ReactNode
     onLoad?: (isMapLoaded: boolean) => void
+    onClick?: () => void
     onMapStatusChanged?: () => void
 }
 
@@ -23,6 +24,7 @@ const Map = ({
     center = MAP_CONFIG.INIT.center,
     children,
     onLoad,
+    onClick,
     onMapStatusChanged,
 }: MapProps) => {
     const { loading, error } = useKakaoLoader()
@@ -42,6 +44,7 @@ const Map = ({
         <KakaoMap
             ref={ref}
             center={center}
+            onClick={onClick}
             level={level}
             maxLevel={MAP_CONFIG.ZOOM.MAX}
             minLevel={MAP_CONFIG.ZOOM.MIN}

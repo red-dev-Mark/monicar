@@ -4,9 +4,9 @@ import { useEffect } from 'react'
 import VehicleDetailCard from '@/app/(main)/location/components/VehicleDetailCard'
 import Badge from '@/components/common/Badge'
 import { OPERATION_STATUS } from '@/components/common/Badge/constants'
+import { useQueryParams } from '@/hooks/useQueryParams'
 import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
-import { cleanUrlParams } from '@/lib/utils/url'
 import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
 import * as styles from './styles.css'
@@ -19,11 +19,12 @@ interface ViewportVehicleListProps {
 
 const ViewportVehicleList = ({ clusterDetail, selectedVehicleDetail, onItemClick }: ViewportVehicleListProps) => {
     const { isSelectedVehicleVisible, hideSelectedVehicle, unselectVehicle } = useVehicleDisclosure()
+    const { removeQuery } = useQueryParams()
 
     const hasVehicles = clusterDetail.length > 0
 
     useEffect(() => {
-        return () => cleanUrlParams()
+        return () => removeQuery('vehicleName')
     }, [])
 
     const clearSelectedVehicle = () => {
@@ -39,15 +40,6 @@ const ViewportVehicleList = ({ clusterDetail, selectedVehicleDetail, onItemClick
         <article className={styles.container}>
             <header className={styles.header}>
                 <h2 className={styles.title}>차량 목록</h2>
-                <button className={styles.closeButton} aria-label='차량 상세 정보 닫기'>
-                    <Image
-                        src={'/icons/clear-icon.svg'}
-                        width={36}
-                        height={36}
-                        alt='닫기 버튼'
-                        style={{ width: '36px', height: '36px' }}
-                    />
-                </button>
             </header>
 
             {hasVehicles ? (
@@ -74,9 +66,9 @@ const ViewportVehicleList = ({ clusterDetail, selectedVehicleDetail, onItemClick
                     })}
                 </main>
             ) : (
-                <div className={styles.emptyState}>
+                <div className={styles.emptyText}>
                     <p>현재 영역에서 찾은 차량이 없습니다</p>
-                    <small>지도를 이동하여 차량을 찾아보세요</small>
+                    <small className={styles.description}>지도를 이동하여 차량을 찾아보세요</small>
                 </div>
             )}
 
