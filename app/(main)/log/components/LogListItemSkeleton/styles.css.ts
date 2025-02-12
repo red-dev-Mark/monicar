@@ -3,6 +3,7 @@ import { style } from '@vanilla-extract/css'
 import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
+    width: '100%',
     display: 'flex',
     alignItems: 'center',
     textAlign: 'center',
@@ -42,6 +43,8 @@ export const list = style({
 
 export const itemWrapper = style({
     flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
 
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {

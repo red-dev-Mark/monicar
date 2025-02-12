@@ -71,6 +71,12 @@ export const divider = style({
     margin: '20px 0',
 })
 
+export const title = style({
+    fontWeight: vars.fontWeights.bold,
+    color: vars.colors.gray[800],
+    margin: '10px',
+})
+
 export const messageContainer = style({
     display: 'flex',
     gap: '12px',

@@ -121,22 +121,17 @@ const DashboardPage = () => {
                         calendarData={[
                             {
                                 id: 1,
-                                message: '주행거리 높은 순',
-                                isActive: false,
+                                message: '🥇 74나 3957 (49km)',
+                                isActive: true,
                             },
                             {
                                 id: 2,
-                                message: '45가 3838 (49km)',
+                                message: '🥈 45가 5858 (49km)',
                                 isActive: false,
                             },
                             {
                                 id: 3,
-                                message: '38모 1537 (38Km)',
-                                isActive: true,
-                            },
-                            {
-                                id: 4,
-                                message: '37하 4537 (21Km)',
+                                message: '🥉 38모 1537 (38Km)',
                                 isActive: false,
                             },
                         ]}

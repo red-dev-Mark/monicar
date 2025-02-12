@@ -1,9 +1,11 @@
 'use client'
 
-import { Select } from '@mantine/core'
+import { CheckIcon, Select } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
+import { notifications } from '@mantine/notifications'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { ColorRing } from 'react-loader-spinner'
 
 import SquareButton from '@/components/common/Button/SquareButton'
 import ErrorMessage from '@/components/common/ErrorMessage'
@@ -12,7 +14,6 @@ import SearchInput from '@/components/common/Input/SearchInput'
 import Message from '@/components/common/Message'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
-import PageLoader from '@/components/common/PageLoader'
 import { useModal } from '@/hooks/useModal'
 import { vehicleService } from '@/lib/apis'
 import { removeSpaces } from '@/lib/utils/string'
@@ -21,6 +22,7 @@ import { CalendarIcon } from '@/public/icons'
 
 import '@mantine/dates/styles.css'
 import 'dayjs/locale/ko'
+
 import VehicleRegisterForm from './components/VehicleRegisterForm'
 import * as styles from './styles.css'
 import { VehicleTypeModel } from './types'
@@ -28,6 +30,7 @@ import { VehicleTypeModel } from './types'
 const RegisterPage = () => {
     const [vehicleType, setVehicleType] = useState<VehicleTypeModel[] | null>(null)
     const [isLoading, setIsLoading] = useState(true)
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState<Error | null>(null)
     const [value, setValue] = useState<Date | null>(null)
     const [vehicleNumber, setVehicleNumber] = useState('')
@@ -73,27 +76,45 @@ const RegisterPage = () => {
     }
 
     const postVehicleInfo = async () => {
+        setIsSubmitting(true)
+
         if (!vehicleNumber) {
             openModalWithMessage('차량번호를 입력해주세요.')
+            setIsSubmitting(false)
+            return
+        }
+
+        if (!showSuccessMessage) {
+            openModalWithMessage('차량번호 중복확인은 필수입니다.')
+            setIsSubmitting(false)
+            return
+        }
+
+        if (showErrorMessage) {
+            openModalWithMessage('올바른 차량번호를 입력해주세요.')
+            setIsSubmitting(false)
             return
         }
 
         if (!vehicleTypeId) {
             openModalWithMessage('차량 종류를 선택해주세요.')
+            setIsSubmitting(false)
             return
         }
 
         if (!validateDrivingDistance(drivingDistance)) {
             openModalWithMessage('운행거리를 입력해주세요.')
+            setIsSubmitting(false)
             return
         }
 
         if (!deliveryDate) {
             openModalWithMessage('출고일을 선택해주세요.')
+            setIsSubmitting(false)
             return
         }
 
-        setIsLoading(true)
+        setIsSubmitting(true)
 
         const response = await vehicleService.registerVehicle({
             vehicleNumber,
@@ -106,19 +127,24 @@ const RegisterPage = () => {
 
         if (!response.isSuccess) {
             openModalWithMessage(response.errorMessage)
+            setIsSubmitting(false)
             return
         }
 
-        openModalWithMessage('차량이 성공적으로 등록되었습니다.')
         router.push('/log')
-    }
-
-    if (isLoading) {
-        return <PageLoader />
-    }
-
-    if (error) {
-        return <ErrorMessage />
+        notifications.show({
+            message: '차량이 성공적으로 등록되었습니다.',
+            autoClose: 1200,
+            withCloseButton: false,
+            radius: 'sm',
+            icon: <CheckIcon size={18} />,
+            style: {
+                width: '400px',
+                height: '70px',
+                border: 'solid 1px #f7f7f7',
+                fontWeight: 'bold',
+            },
+        })
     }
 
     const formFields = [
@@ -126,7 +152,7 @@ const RegisterPage = () => {
             id: 'vehicleNumber',
             label: '차량 번호',
             component: (
-                <>
+                <div className={styles.searchInputWrapper}>
                     <SearchInput
                         icon='/icons/search-icon.svg'
                         onChange={(event) => {
@@ -143,11 +169,18 @@ const RegisterPage = () => {
                             }
                         }}
                     />
-                    {showSuccessMessage && <Message message={'등록 가능한 차량번호입니다.'} isError={false} />}
-                    {showErrorMessage && <Message message={showErrorMessage} isError={true} />}
-                </>
+                    {showSuccessMessage && (
+                        <div className={styles.messageWrapper}>
+                            <Message message={'등록 가능한 차량번호입니다.'} isError={false} />
+                        </div>
+                    )}
+                    {showErrorMessage && (
+                        <div className={styles.messageWrapper}>
+                            <Message message={showErrorMessage} isError={true} />
+                        </div>
+                    )}
+                </div>
             ),
-            isError: false,
         },
         {
             id: 'vehicleType',
@@ -169,7 +202,6 @@ const RegisterPage = () => {
                     checkIconPosition='right'
                 />
             ),
-            isError: false,
         },
         {
             id: 'mileage',
@@ -189,7 +221,6 @@ const RegisterPage = () => {
                     <div className={styles.km}>km</div>
                 </div>
             ),
-            isError: false,
         },
         {
             id: 'releaseDate',
@@ -220,24 +251,42 @@ const RegisterPage = () => {
                     }}
                 />
             ),
-            isError: false,
         },
     ]
+
+    if (error) {
+        return <ErrorMessage />
+    }
 
     return (
         <div className={styles.container}>
             <div className={styles.title}>차량등록📝</div>
+
             <div className={styles.formWrapper}>
-                <VehicleRegisterForm fields={formFields} />
+                {error ? <ErrorMessage /> : <VehicleRegisterForm fields={formFields} />}
             </div>
+
             <div className={styles.buttonsWrapper}>
                 <SquareButton color={'white'} onClick={handleCancelButtonClick}>
                     취소
                 </SquareButton>
                 <SquareButton color={'dark'} onClick={postVehicleInfo} disabled={isLoading}>
-                    {isLoading ? <PageLoader /> : '등록'}
+                    {isSubmitting ? (
+                        <ColorRing
+                            visible={true}
+                            height='40'
+                            width='40'
+                            ariaLabel='color-ring-loading'
+                            wrapperStyle={{}}
+                            wrapperClass='color-ring-wrapper'
+                            colors={['#ff385c', '#cf6b81', '#fdced4', '#00b087', '#ed9684']}
+                        />
+                    ) : (
+                        '등록'
+                    )}
                 </SquareButton>
             </div>
+
             <Modal
                 isOpen={isModalOpen}
                 message={message as ModalMessageType}

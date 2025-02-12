@@ -1,5 +1,3 @@
-import React from 'react'
-
 import * as styles from './styles.css'
 
 interface CalendarModel {
@@ -42,6 +40,7 @@ const Calendar = ({ calendarData }: CalendarProps) => {
 
             <div className={styles.divider} />
 
+            <p className={styles.title}>주행거리 높은 순</p>
             <div className={styles.messageContainer}>
                 <div className={styles.verticalLine} />
                 <div className={styles.messageList}>
