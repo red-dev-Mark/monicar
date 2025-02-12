@@ -4,7 +4,6 @@ import { vars } from '@/styles/theme.css'
 
 export const accordion = style({
     backgroundColor: vars.colors.white,
-    borderRadius: '12px',
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
     overflow: 'hidden',
     zIndex: vars.zIndex.dropdown,

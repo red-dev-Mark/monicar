@@ -8,18 +8,14 @@ export const tableItem = style({
     color: vars.colors.black,
 })
 
-export const pagination = style({
-    margin: '12px 0 8px',
+export const timestamp = style({
+    width: '40%',
 })
 
 export const speed = style({
     width: '20%',
 })
 
-export const timestamp = style({
-    width: '30%',
-})
-
 export const location = style({
-    width: '50%',
+    width: '40%',
 })

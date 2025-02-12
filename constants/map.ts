@@ -17,7 +17,7 @@ export const MAP_CONFIG = {
         ZOOM_INCREMENT: 2,
     },
     ROUTE: {
-        ZOOM_INCREMENT: 10,
+        ZOOM_INCREMENT: 9,
     },
 } as const
 

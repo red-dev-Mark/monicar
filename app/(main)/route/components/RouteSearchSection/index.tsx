@@ -1,6 +1,6 @@
 'use client'
 
-import { Loader } from '@mantine/core'
+import { Loader, Tooltip } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
 import { ChangeEvent, useState } from 'react'
 
@@ -39,16 +39,19 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
     const [inputValue, setInputValue] = useState('')
     const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null])
 
+    const { controlMapStatus } = useMapStatus(mapRef.current)
+    const { addQueries, clearAllQueries } = useQueryParams()
+    const { searchedVehicle, searchableDates, searchVehicle } = useSearchVehicle(inputValue)
+
     const [isVehicleSearched, { open: showRouteSearchSection, close: hideRouteSearchSection }] = useDisclosure()
     const [isSearchingVehicle, startSearchingVehicle, finishSearchingVehicle] = useLoading()
     const [isSearchingRoute, startSearchingRoute, finishSearchingRoute] = useLoading()
-
-    const { addQueries } = useQueryParams()
-    const { controlMapStatus } = useMapStatus(mapRef.current)
-    const { searchedVehicle, searchableDates, searchVehicle } = useSearchVehicle(inputValue)
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
 
-    console.log(inputValue)
+    const clearUrlAndRoute = () => {
+        clearAllQueries()
+        onRoutesChange([])
+    }
 
     const handleVehicleSearch = async () => {
         try {
@@ -61,6 +64,7 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
             if (error instanceof Error) {
                 openModalWithMessage(error.message)
                 hideRouteSearchSection()
+                clearUrlAndRoute()
             }
         } finally {
             finishSearchingVehicle()
@@ -108,19 +112,21 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
         } catch (error) {
             if (error instanceof Error) {
                 openModalWithMessage(error.message)
+                clearUrlAndRoute()
             }
         } finally {
             finishSearchingRoute()
         }
     }
 
-    const isButtonDisabled = !(isVehicleSearched && hasValidDateRange(dateRange))
+    const isVehicleNumberDirty = searchedVehicle?.vehicleNumber !== inputValue
+    const isRouteSearchable = isVehicleSearched && hasValidDateRange(dateRange)
+    const isButtonDisabled = isVehicleNumberDirty || !isRouteSearchable
 
     return (
-        <Accordion title='차량 및 기간 검색'>
-            <aside className={styles.container} aria-label='경로 조회 판넬'>
-                <div className={styles.searchSection}>
-                    <h3 className={styles.sectionTitle}>차량 검색</h3>
+        <div className={styles.accordion}>
+            <Accordion title='차량 및 기간 검색'>
+                <aside className={styles.container} aria-label='경로 조회 판넬'>
                     <SearchInput
                         value={inputValue}
                         onChange={(event: ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value)}
@@ -131,56 +137,86 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
                         isLoading={isSearchingVehicle}
                         disabled={isSearchingVehicle}
                     />
-                </div>
 
-                {isVehicleSearched && (
-                    <div className={styles.searchSection}>
-                        <h3 className={styles.sectionTitle}>기간 검색</h3>
-                        <DatePickerInput
-                            locale='ko'
-                            placeholder='경로 기간 선택'
-                            value={dateRange}
-                            allowSingleDateInRange
-                            onChange={setDateRange}
-                            valueFormat='YYYY년 MM월 DD일'
-                            minDate={new Date(searchableDates.firstDateAt)}
-                            maxDate={new Date(searchableDates.lastDateAt)}
-                            size='md'
-                            color='red'
-                            type='range'
-                            radius='md'
-                            styles={{
-                                input: {
-                                    height: '48px',
-                                    paddingLeft: '16px',
-                                    fontFamily: FONT_FAMILY.airbnbCereal,
-                                    color: vars.colors.gray[800],
-                                    border: `1px solid ${vars.colors.gray[200]}`,
-                                },
-                            }}
-                            rightSection={
-                                <div style={{ width: '24px', height: '24px' }}>
-                                    <CalendarIcon size={16} stroke={1} />
+                    {isVehicleSearched && (
+                        <div className={styles.bottomSection}>
+                            <DatePickerInput
+                                locale='ko'
+                                placeholder='경로 기간 선택'
+                                value={dateRange}
+                                allowSingleDateInRange
+                                onChange={setDateRange}
+                                valueFormat='YYYY년 MM월 DD일'
+                                minDate={new Date(searchableDates.firstDateAt)}
+                                maxDate={new Date(searchableDates.lastDateAt)}
+                                size='md'
+                                color='red'
+                                type='range'
+                                radius='md'
+                                styles={{
+                                    input: {
+                                        height: '48px',
+                                        paddingLeft: '16px',
+                                        fontFamily: FONT_FAMILY.airbnbCereal,
+                                        color: vars.colors.gray[800],
+                                        border: `1px solid ${vars.colors.gray[200]}`,
+                                    },
+                                }}
+                                rightSection={
+                                    <div style={{ width: '24px', height: '24px' }}>
+                                        <CalendarIcon size={16} stroke={1} />
+                                    </div>
+                                }
+                                rightSectionPointerEvents='none'
+                            />
+
+                            {isVehicleNumberDirty ? (
+                                <Tooltip
+                                    color={vars.colors.gray[800]}
+                                    arrowSize={6}
+                                    label='차량번호를 먼저 검색해주세요'
+                                    withArrow
+                                    position='top'
+                                >
+                                    <div>
+                                        <SquareButton
+                                            disabled={isButtonDisabled || isSearchingRoute}
+                                            onClick={handleRouteSearch}
+                                        >
+                                            {isSearchingRoute ? (
+                                                <Loader color={vars.colors.white} size='sm' />
+                                            ) : (
+                                                '경로 보기'
+                                            )}
+                                        </SquareButton>
+                                    </div>
+                                </Tooltip>
+                            ) : (
+                                <div>
+                                    <SquareButton
+                                        disabled={isButtonDisabled || isSearchingRoute}
+                                        onClick={handleRouteSearch}
+                                    >
+                                        {isSearchingRoute ? (
+                                            <Loader color={vars.colors.white} size='sm' />
+                                        ) : (
+                                            '경로 보기'
+                                        )}
+                                    </SquareButton>
                                 </div>
-                            }
-                            rightSectionPointerEvents='none'
-                        />
-                        <div className={styles.buttonWrapper}>
-                            <SquareButton disabled={isButtonDisabled || isSearchingRoute} onClick={handleRouteSearch}>
-                                {isSearchingRoute ? <Loader color={vars.colors.white} size='sm' /> : '경로 보기'}
-                            </SquareButton>
+                            )}
                         </div>
-                    </div>
-                )}
-            </aside>
+                    )}
+                </aside>
 
-            <Modal
-                isOpen={isModalOpen}
-                message={message as ModalMessageType}
-                variant={{ variant: 'alert', confirmButton: '확인' }}
-                onClose={closeModal}
-            />
-        </Accordion>
+                <Modal
+                    isOpen={isModalOpen}
+                    message={message as ModalMessageType}
+                    variant={{ variant: 'alert', confirmButton: '확인' }}
+                    onClose={closeModal}
+                />
+            </Accordion>
+        </div>
     )
 }
 

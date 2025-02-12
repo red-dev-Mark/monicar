@@ -39,6 +39,8 @@ const MapSection = memo(({ mapRef, mapState, routes, onLoad }: MapSectionProps) 
         setDestination(vehicleInfo)
     }, [searchParams])
 
+    const isVisible = routes.length > 0 && destination
+
     return (
         <Map ref={mapRef} level={mapState.level} center={mapState.center} onLoad={onLoad}>
             <Polyline
@@ -48,7 +50,7 @@ const MapSection = memo(({ mapRef, mapState, routes, onLoad }: MapSectionProps) 
                 strokeOpacity={POLYLINE_CONFIG.STROKE_OPACITY}
                 strokeStyle={POLYLINE_CONFIG.STROKE_STYLE}
             />
-            {destination && <VehicleMarker vehicleInfo={destination} useHoverEffect={false} />}
+            {isVisible && <VehicleMarker vehicleInfo={destination} useHoverEffect={false} />}
         </Map>
     )
 })
