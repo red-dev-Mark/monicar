@@ -2,6 +2,7 @@
 
 import { Loader, Tooltip } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
+// import { useSearchParams } from 'next/navigation'
 import { ChangeEvent, useState } from 'react'
 
 import Accordion from '@/components/common/Accordion'
@@ -47,6 +48,15 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
     const [isSearchingVehicle, startSearchingVehicle, finishSearchingVehicle] = useLoading()
     const [isSearchingRoute, startSearchingRoute, finishSearchingRoute] = useLoading()
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
+
+    // const searchParams = useSearchParams()
+
+    // useEffect(() => {
+    //     const vehicleId = searchParams.get('vehicleId')
+    //     const vehicleNumber = searchParams.get('vehicleNumber')
+    //     const startDate = searchParams.get('startDate')
+    //     const endDate = searchParams.get('endDate')
+    // }, [searchParams])
 
     const clearUrlAndRoute = () => {
         clearAllQueries()
