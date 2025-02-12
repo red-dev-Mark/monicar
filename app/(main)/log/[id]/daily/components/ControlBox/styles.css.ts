@@ -2,6 +2,10 @@ import { style } from '@vanilla-extract/css'
 
 import { breakPoints, vars } from '@/styles/theme.css'
 
+export const container = style({
+    flex: 1,
+})
+
 export const vehicleNumber = style({
     padding: '4px 0px',
     border: `1.5px solid ${vars.colors.green[400]}`,
@@ -44,10 +48,13 @@ export const contents = style({
     borderRadius: '12px',
     padding: '40px',
     textAlign: 'center',
+    overflowY: 'auto',
+    minHeight: 'calc(80vh - 100px)',
 
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             padding: '20px',
+            minHeight: 'calc(70vh - 50px)',
         },
     },
 })

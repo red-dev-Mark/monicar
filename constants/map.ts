@@ -1,3 +1,5 @@
+import { vars } from '@/styles/theme.css'
+
 export const MAP_CONFIG = {
     ZOOM: {
         MAX: 1,
@@ -15,7 +17,7 @@ export const MAP_CONFIG = {
         ZOOM_INCREMENT: 2,
     },
     ROUTE: {
-        ZOOM_INCREMENT: 8,
+        ZOOM_INCREMENT: 9,
     },
 } as const
 
@@ -38,4 +40,11 @@ export const MARKER_IMAGE = {
             y: 48,
         },
     },
+} as const
+
+export const POLYLINE_CONFIG = {
+    STROKE_WEIGHT: 5,
+    STROKE_COLOR: vars.colors.primary,
+    STROKE_OPACITY: 1,
+    STROKE_STYLE: 'solid',
 } as const

@@ -12,7 +12,13 @@ const ExcelButton = ({ onClick }: ExcelButtonProps) => {
     return (
         <RoundButton color='secondary' size={'small'} onClick={onClick}>
             <div className={styles.button}>
-                <Image src='/icons/green-excel-icon.svg' alt='excel' width={16} height={16} />
+                <Image
+                    src='/icons/green-excel-icon.svg'
+                    alt='excel'
+                    width={16}
+                    height={16}
+                    style={{ width: '16px', height: '16px' }}
+                />
                 엑셀
             </div>
         </RoundButton>

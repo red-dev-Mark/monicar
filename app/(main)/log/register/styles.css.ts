@@ -33,6 +33,16 @@ export const inputWrapper = style({
     position: 'relative',
 })
 
+export const searchInputWrapper = style({
+    position: 'relative',
+})
+
+export const messageWrapper = style({
+    position: 'absolute',
+    bottom: '-48px',
+    left: '4px',
+})
+
 export const km = style({
     position: 'absolute',
     right: '20px',

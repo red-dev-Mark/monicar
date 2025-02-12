@@ -1,9 +1,10 @@
 import * as XLSX from 'xlsx'
 
-import { EXCEL_FILE_NAME, EXCEL_SHEET_NAME } from '../../constants'
+import { LOG_EXCEL_FILE_NAME, LOG_EXCEL_SHEET_NAME } from '@/constants/excel'
+
 import { DetailResponse } from '../types'
 
-interface ExcelData {
+interface LogExcelData {
     사용일자: string
     부서: string
     성명: string
@@ -15,7 +16,7 @@ interface ExcelData {
     비고: string
 }
 
-const getExcelData = (data: DetailResponse | undefined) => {
+const logExcel = (data: DetailResponse | undefined) => {
     if (!data || !data.records) return []
 
     return data.records.map((record) => ({
@@ -37,14 +38,14 @@ const getExcelData = (data: DetailResponse | undefined) => {
     }))
 }
 
-const saveExcel = (excelData: ExcelData[]) => {
+const saveExcel = (excelData: LogExcelData[]) => {
     const wb = XLSX.utils.book_new()
     const ws = XLSX.utils.json_to_sheet(excelData)
-    XLSX.utils.book_append_sheet(wb, ws, EXCEL_SHEET_NAME)
-    XLSX.writeFile(wb, EXCEL_FILE_NAME)
+    XLSX.utils.book_append_sheet(wb, ws, LOG_EXCEL_SHEET_NAME)
+    XLSX.writeFile(wb, LOG_EXCEL_FILE_NAME)
 }
 
 export const downloadExcel = (data: DetailResponse | undefined) => {
-    const excelData = getExcelData(data)
+    const excelData = logExcel(data)
     saveExcel(excelData)
 }

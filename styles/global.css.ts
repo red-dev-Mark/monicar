@@ -1,6 +1,7 @@
 import { globalStyle } from '@vanilla-extract/css'
 
 import { FONT_WEIGHT } from '@/styles/font.css'
+import { vars } from '@/styles/theme.css'
 
 globalStyle('body', {
     fontFamily: 'airbnbCereal, nanumSquareNeo, sans-serif !important',
@@ -24,4 +25,13 @@ globalStyle('h1, h2, h3, h4, h5, h6', {
     padding: 0,
     font: 'inherit',
     verticalAlign: 'baseline',
+})
+
+globalStyle('button, nav, a', {
+    userSelect: 'none',
+})
+
+globalStyle('::placeholder', {
+    color: vars.colors.gray[600],
+    userSelect: 'none',
 })

@@ -2,7 +2,7 @@ import { formatDrivingTime } from '@/lib/utils/map'
 import { RightIcon } from '@/public/icons'
 import { DailyListItemModel } from '@/types/log'
 
-import * as styles from '../styles/common.css'
+import * as styles from '../../styles/common.css'
 
 interface DailyListItemProps {
     data: DailyListItemModel

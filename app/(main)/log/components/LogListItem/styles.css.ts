@@ -11,10 +11,11 @@ export const container = style({
     color: vars.colors.black,
     fontWeight: vars.fontWeights.bold,
     fontSize: vars.fontSizes.mediumPlus,
-    transition: 'transform 0.3s ease',
     border: 'none',
+    transition: 'transform 0.3s ease',
     ':hover': {
         backgroundColor: vars.colors.gray[50],
+        transform: 'scale(1.02)',
     },
 
     '@media': {
@@ -31,10 +32,7 @@ export const container = style({
 export const list = style({
     display: 'flex',
     width: '100%',
-    transition: 'transform 0.3s ease',
-    ':hover': {
-        transform: 'scale(1.02)',
-    },
+
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             gap: '8px',

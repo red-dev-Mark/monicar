@@ -9,10 +9,10 @@ import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import { MAP_CONFIG } from '@/constants/map'
 import { useMapStatus } from '@/hooks/useMapStatus'
+import { useQueryParams } from '@/hooks/useQueryParams'
 import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
 import { useVehicleLocationSearch } from '@/hooks/useVehicleLocationSearch'
 import { vehicleService } from '@/lib/apis'
-import { cleanUrlParams } from '@/lib/utils/url'
 import { useVehicleVisibleStore } from '@/stores/useVehicleVisibleStore'
 import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
@@ -28,9 +28,10 @@ const Location = () => {
     const { inputValue, setInputValue } = useVehicleVisibleStore()
     const { vehicleInfo, isModalOpen, message, closeModal, searchVehicleWithNumber } =
         useVehicleLocationSearch(inputValue)
+    const { clearAllQueries } = useQueryParams()
 
     useEffect(() => {
-        return () => cleanUrlParams()
+        return () => clearAllQueries()
     }, [])
 
     const handleInputSubmit = async () => {

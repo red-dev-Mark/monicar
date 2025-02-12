@@ -9,11 +9,6 @@ export const container = style({
     width: '100%',
     maxWidth: '700px',
     padding: '100px 0px ',
-})
-
-export const contentsWrapper = style({
-    display: 'flex',
-    flexDirection: 'column',
     textAlign: 'center',
 })
 
