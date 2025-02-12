@@ -9,6 +9,7 @@ import VehicleSearchSection from '@/app/(main)/route/components/VehicleSearchSec
 import Accordion from '@/components/common/Accordion'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
+import { useDisclosure } from '@/hooks/useDisclosure'
 import { useModal } from '@/hooks/useModal'
 import { useVehicleSearch } from '@/hooks/useVehicleSearch'
 import { hasValidDateRange } from '@/lib/utils/validation'
@@ -24,7 +25,7 @@ interface RouteSearchSectionProps {
 const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps) => {
     const [inputValue, setInputValue] = useState('')
     const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null])
-    const [vehicleId, setVehicleId] = useState<string | undefined>()
+    const [isRouteSearchVisible, { open: openRouteSearch, close: closeRouteSearch }] = useDisclosure()
 
     const { searchableDates, searchVehicle } = useVehicleSearch()
 
@@ -33,20 +34,37 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
     const searchParams = useSearchParams()
 
     useEffect(() => {
-        const vehicleId = searchParams.get('vehicleId')
-        const vehicleNumber = searchParams.get('vehicleNumber')
-        const startDate = searchParams.get('startDate')
-        const endDate = searchParams.get('endDate')
+        const initFromUrl = async () => {
+            const vehicleNumber = searchParams.get('vehicleNumber')
+            const startDate = searchParams.get('startDate')
+            const endDate = searchParams.get('endDate')
 
-        if (vehicleId && vehicleNumber) {
-            setInputValue(vehicleNumber)
-            setVehicleId(vehicleId)
-        } else return
+            if (!vehicleNumber) {
+                closeRouteSearch()
+                setDateRange([null, null])
+                return
+            }
 
-        if (startDate && endDate) setDateRange([new Date(startDate), new Date(endDate)])
+            try {
+                setInputValue(vehicleNumber)
+                const result = await searchVehicle(vehicleNumber)
+                if (!result.isSuccess) throw new Error(result.error || '차량 검색에 실패했습니다')
+
+                if (startDate && endDate) {
+                    setDateRange([new Date(startDate), new Date(endDate)])
+                    openRouteSearch()
+                }
+            } catch (error) {
+                if (error instanceof Error) {
+                    openModalWithMessage(error.message)
+                }
+            }
+        }
+
+        initFromUrl()
     }, [searchParams])
 
-    const showBottomSection = searchParams.get('vehicleNumber')
+    const vehicleId = searchParams.get('vehicleId')
     const isVehicleNumberDirty = searchParams.get('vehicleNumber') !== inputValue
     const isRouteSearchable = !!searchParams.get('vehicleNumber') && hasValidDateRange(dateRange)
     const isButtonDisabled = isVehicleNumberDirty || !isRouteSearchable
@@ -59,11 +77,12 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
                         value={inputValue}
                         onChange={(event: ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value)}
                         searchVehicle={searchVehicle}
+                        openRouteSearch={openRouteSearch}
                         onError={openModalWithMessage}
                         onDatesClean={() => setDateRange([null, null])}
                     />
 
-                    {showBottomSection && (
+                    {isRouteSearchVisible && (
                         <div className={styles.bottomSection}>
                             <DateRangeSection
                                 searchableDates={searchableDates}
@@ -73,7 +92,7 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
 
                             <RouteSearchButton
                                 mapRef={mapRef}
-                                vehicleId={vehicleId}
+                                vehicleId={vehicleId || ''}
                                 dateRange={dateRange}
                                 disabled={isButtonDisabled}
                                 onRoutesChange={onRoutesChange}

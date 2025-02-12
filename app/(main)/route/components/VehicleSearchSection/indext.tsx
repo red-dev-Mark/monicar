@@ -10,11 +10,19 @@ interface VehicleSearchSectionProps {
     value: string
     onChange: (event: ChangeEvent<HTMLInputElement>) => void
     searchVehicle: (vehicleNumber: string) => Promise<Result<Vehicle>>
+    openRouteSearch: () => void
     onError?: (message: string) => void
     onDatesClean: () => void
 }
 
-const VehicleSearchSection = ({ value, onChange, searchVehicle, onError, onDatesClean }: VehicleSearchSectionProps) => {
+const VehicleSearchSection = ({
+    value,
+    onChange,
+    searchVehicle,
+    openRouteSearch,
+    onError,
+    onDatesClean,
+}: VehicleSearchSectionProps) => {
     const [isSearchingVehicle, startSearchingVehicle, finishSearchingVehicle] = useLoading()
 
     const { updateQueries, clearAllQueries } = useQueryParams()
@@ -22,15 +30,16 @@ const VehicleSearchSection = ({ value, onChange, searchVehicle, onError, onDates
     const handleVehicleSearch = async () => {
         try {
             startSearchingVehicle()
-
             const result = await searchVehicle(value)
-            if (!result.isSuccess && result.error) throw new Error(result.error)
+
+            if (!result.isSuccess) throw new Error(result.error || '차량 검색에 실패했습니다')
 
             onDatesClean()
 
             if (!result.data) throw new Error()
-            const { vehicleId, vehicleNumber } = result.data
+            const { vehicleId, vehicleNumber } = result?.data
 
+            openRouteSearch()
             updateQueries({ vehicleId, vehicleNumber }, [
                 'startDate',
                 'endDate',

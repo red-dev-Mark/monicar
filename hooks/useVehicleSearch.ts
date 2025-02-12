@@ -6,7 +6,6 @@ import { Result } from '@/types/apis/common'
 import { Vehicle } from '@/types/vehicle'
 
 export const useVehicleSearch = () => {
-    const [searchedVehicle, setSearchedVehicle] = useState<Vehicle | null>()
     const [searchableDates, setSearchableDates] = useState({ firstDateAt: '', lastDateAt: '' })
 
     const searchVehicle = async (vehicleNumber: string): Promise<Result<Vehicle>> => {
@@ -17,8 +16,8 @@ export const useVehicleSearch = () => {
 
         try {
             const response = await vehicleService.getVehicleOperationHistory(vehicleNumber)
+            console.log(response)
             if (!response.isValid) {
-                setSearchedVehicle(null)
                 // TODO 문구 수정
                 return { isSuccess: false, error: '차량 정보를 불러오는데 실패했습니다' }
             }
@@ -29,7 +28,6 @@ export const useVehicleSearch = () => {
                     vehicleNumber: response.value.vehicleNumber as string,
                 }
 
-                setSearchedVehicle(vehicleInfo)
                 setSearchableDates(response.value.operationPeriod)
                 return { isSuccess: true, data: vehicleInfo }
             }
@@ -42,7 +40,6 @@ export const useVehicleSearch = () => {
     }
 
     return {
-        searchedVehicle,
         searchableDates,
         searchVehicle,
     }

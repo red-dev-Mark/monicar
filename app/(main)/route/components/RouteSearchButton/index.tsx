@@ -35,19 +35,19 @@ const RouteSearchButton = ({
     const { addQueries, clearAllQueries } = useQueryParams()
 
     useEffect(() => {
-        if (vehicleId && mapRef.current) {
+        if (vehicleId && dateRange[0] && dateRange[1]) {
             handleRouteSearch()
         }
-    }, [vehicleId, mapRef.current])
+    }, [vehicleId, dateRange])
 
     const handleRouteSearch = async () => {
         const [startDate, endDate] = dateRange
+
         if (!vehicleId || !startDate || !endDate) return
 
         try {
             startSearchingRoute()
             const result = await routeService.getVehicleRoutesData({ vehicleId, dateRange })
-
             if (!result?.data || !result.isSuccess) throw new Error(result.error || '경로 조회에 실패했습니다')
 
             const {
