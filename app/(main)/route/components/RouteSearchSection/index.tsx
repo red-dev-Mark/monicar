@@ -34,7 +34,7 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
     const searchParams = useSearchParams()
 
     useEffect(() => {
-        const initFromUrl = async () => {
+        const getDataFromUrl = async () => {
             const vehicleNumber = searchParams.get('vehicleNumber')
             const startDate = searchParams.get('startDate')
             const endDate = searchParams.get('endDate')
@@ -61,7 +61,7 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
             }
         }
 
-        initFromUrl()
+        getDataFromUrl()
     }, [searchParams])
 
     const vehicleId = searchParams.get('vehicleId')

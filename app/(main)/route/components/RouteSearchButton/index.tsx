@@ -1,4 +1,5 @@
 import { Loader, Tooltip } from '@mantine/core'
+import { useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 
 import SquareButton from '@/components/common/Button/SquareButton'
@@ -34,11 +35,17 @@ const RouteSearchButton = ({
     const { controlMapStatus } = useMapStatus(mapRef.current)
     const { addQueries, clearAllQueries } = useQueryParams()
 
+    const searchParams = useSearchParams()
+
     useEffect(() => {
-        if (vehicleId && dateRange[0] && dateRange[1]) {
+        const vehicleId = searchParams.get('vehicleId') || ''
+        const startDate = searchParams.get('startDate') || ''
+        const endDate = searchParams.get('endDate') || ''
+
+        if (vehicleId && startDate && endDate) {
             handleRouteSearch()
         }
-    }, [vehicleId, dateRange])
+    }, [vehicleId])
 
     const handleRouteSearch = async () => {
         const [startDate, endDate] = dateRange

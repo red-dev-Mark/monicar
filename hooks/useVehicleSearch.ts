@@ -16,7 +16,6 @@ export const useVehicleSearch = () => {
 
         try {
             const response = await vehicleService.getVehicleOperationHistory(vehicleNumber)
-            console.log(response)
             if (!response.isValid) {
                 // TODO 문구 수정
                 return { isSuccess: false, error: '차량 정보를 불러오는데 실패했습니다' }

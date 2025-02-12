@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import RouteTimelineItem from '@/app/(main)/route/components/RouteTimelineItem'
 import Accordion from '@/components/common/Accordion'
 import { useDisclosure } from '@/hooks/useDisclosure'
-import { routeService } from '@/lib/apis'
+import { routeService, vehicleService } from '@/lib/apis'
 import { vars } from '@/styles/theme.css'
 import { PaginationInfo } from '@/types/common'
 import { Route } from '@/types/route'
@@ -25,9 +25,53 @@ const RouteTimelineSection = () => {
     useEffect(() => {
         const getVehicleDatail = async () => {
             try {
+                const vehicleNumber = searchParams.get('vehicleNumber') || ''
                 const vehicleId = searchParams.get('vehicleId') || ''
                 const startDate = searchParams.get('startDate') || ''
                 const endDate = searchParams.get('endDate') || ''
+
+                const isValidVehicle = (await vehicleService.getVehicleOperationHistory(vehicleNumber)).isValid
+                if (!isValidVehicle) {
+                    closeComponent()
+                    return
+                }
+
+                const response = await routeService.getVehicleRoutesDetail({
+                    vehicleId,
+                    startTime: startDate,
+                    endTime: endDate,
+                    page: activePage,
+                    interval: Number(interval) * 60 || 60,
+                })
+
+                if (!response.isSuccess) return
+
+                const { first, last, page, size, totalElements, totalPages } = response.data
+                const { routes } = response.data.content[0]
+
+                setRouteDetail(routes)
+                setPaginationInfo({ first, last, page, size, totalElements, totalPages })
+                openComponent()
+            } catch (error) {
+                if (error instanceof Error) {
+                    console.error(error)
+                    closeComponent()
+                }
+            }
+        }
+        getVehicleDatail()
+    }, [searchParams])
+
+    useEffect(() => {
+        const getVehicleDatail = async () => {
+            try {
+                const vehicleNumber = searchParams.get('vehicleNumber') || ''
+                const vehicleId = searchParams.get('vehicleId') || ''
+                const startDate = searchParams.get('startDate') || ''
+                const endDate = searchParams.get('endDate') || ''
+
+                const isValidVehicle = (await vehicleService.getVehicleOperationHistory(vehicleNumber)).isValid
+                if (!isValidVehicle) return
 
                 const response = await routeService.getVehicleRoutesDetail({
                     vehicleId,
