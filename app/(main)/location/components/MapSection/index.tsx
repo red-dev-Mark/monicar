@@ -29,7 +29,8 @@ const MapSection = memo(({ mapRef, vehicleInfo, searchedDetail }: MapSectionProp
 
     const { mapState, updateMapStatus, controlMapStatus } = useMapStatus(mapRef?.current)
     const { clusterInfo, clusterDetail } = useCluster(mapState, isMapLoaded)
-    const { isSearchedVehicleVisible, showSelectedVehicle, selectVehicle } = useVehicleDisclosure()
+    const { isSearchedVehicleVisible, showSelectedVehicle, hideSearchedVehicle, hideSelectedVehicle, selectVehicle } =
+        useVehicleDisclosure()
 
     useEffect(() => {
         if (!isMapLoaded) return
@@ -53,6 +54,11 @@ const MapSection = memo(({ mapRef, vehicleInfo, searchedDetail }: MapSectionProp
         })
     }
 
+    const handleMapClick = () => {
+        hideSearchedVehicle()
+        hideSelectedVehicle()
+    }
+
     const isViewportVehicleListVisible = mapState.level <= MAP_CONFIG.CLUSTER.VISIBLE_LEVEL
 
     return (
@@ -61,6 +67,7 @@ const MapSection = memo(({ mapRef, vehicleInfo, searchedDetail }: MapSectionProp
             level={mapState?.level}
             center={mapState?.center}
             onLoad={() => setIsMapLoaded(true)}
+            onClick={handleMapClick}
             onMapStatusChanged={updateMapStatus}
         >
             {/* 차량 번호로 검색 */}

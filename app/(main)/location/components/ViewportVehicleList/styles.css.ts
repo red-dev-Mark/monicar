@@ -87,19 +87,7 @@ export const vehicleNumber = style({
     fontSize: vars.fontSizes.large,
 })
 
-export const closeButton = style({
-    position: 'absolute',
-    right: '16px',
-
-    opacity: 0.7,
-    transition: 'opacity 0.2s ease',
-
-    ':hover': {
-        opacity: 1,
-    },
-})
-
-export const emptyState = style({
+export const emptyText = style({
     height: '100%',
     paddingBottom: '24px',
     display: 'flex',
@@ -108,7 +96,11 @@ export const emptyState = style({
     alignItems: 'center',
     flexDirection: 'column',
 
-    color: vars.colors.gray[700],
+    color: vars.colors.gray[800],
     fontSize: vars.fontSizes.medium,
     fontWeight: vars.fontWeights.bold,
+})
+
+export const description = style({
+    color: vars.colors.gray[600],
 })
