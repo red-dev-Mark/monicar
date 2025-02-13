@@ -138,7 +138,7 @@ const DashboardPage = () => {
                             {
                                 id: 2,
                                 ranking: '🥈',
-                                message: '45가 5858 (49km)',
+                                message: '45가 5858 (42km)',
                                 isActive: active === 1,
                             },
                             {

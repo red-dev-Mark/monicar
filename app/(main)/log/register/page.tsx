@@ -201,6 +201,7 @@ const RegisterPage = () => {
                     size='lg'
                     radius='xl'
                     checkIconPosition='right'
+                    disabled={!showSuccessMessage}
                 />
             ),
         },
@@ -210,6 +211,7 @@ const RegisterPage = () => {
             component: (
                 <div className={styles.inputWrapper}>
                     <BaseInput
+                        disabled={!showSuccessMessage}
                         placeholder={'운행 거리를 입력하세요.'}
                         value={drivingDistance}
                         onChange={(event) => {
@@ -228,6 +230,7 @@ const RegisterPage = () => {
             label: '차량 출고',
             component: (
                 <DatePickerInput
+                    disabled={!showSuccessMessage}
                     locale='ko'
                     rightSection={
                         <div style={{ width: '24px', height: '24px' }}>
@@ -271,7 +274,7 @@ const RegisterPage = () => {
                 <SquareButton color={'white'} onClick={handleCancelButtonClick}>
                     취소
                 </SquareButton>
-                <SquareButton color={'dark'} onClick={postVehicleInfo} disabled={isLoading}>
+                <SquareButton color={'dark'} onClick={postVehicleInfo} disabled={isLoading || !showSuccessMessage}>
                     {isSubmitting ? (
                         <ColorRing
                             visible={true}
