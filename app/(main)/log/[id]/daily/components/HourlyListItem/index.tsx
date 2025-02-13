@@ -20,7 +20,9 @@ const HourlyListItem = ({ data, onClick }: HourlyListItemProps) => {
                     <li className={styles.itemWrapper}>
                         {formatTimeToHHMM(new Date(startTime))} - {formatTimeToHHMM(new Date(endTime))}
                     </li>
-                    <li className={styles.itemWrapper}>{drivingDistance.toLocaleString('ko-KR')}km</li>
+                    <li className={styles.itemWrapper}>
+                        {Math.floor(drivingDistance / 1000).toLocaleString('ko-KR')}km
+                    </li>
                     <li className={styles.itemWrapper}>{address}</li>
                 </ul>
             </button>
