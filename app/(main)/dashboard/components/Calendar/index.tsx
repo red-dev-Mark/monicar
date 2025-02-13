@@ -62,7 +62,9 @@ const Calendar = ({ calendarData }: CalendarProps) => {
                     {calendarData.map((data) => (
                         <div key={data.id} className={styles.messageWrapper}>
                             <div>{data.ranking}</div>
-                            <div className={`${styles.message} ${data.isActive ? styles.activeMessageWrapper : ''}`}>
+                            <div
+                                className={`${styles.message} ${data.isActive ? styles.activeMessageWrapper : styles.deactiveMessageWrapper}`}
+                            >
                                 {data.message}
                             </div>
                         </div>

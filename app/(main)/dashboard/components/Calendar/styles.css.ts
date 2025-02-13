@@ -107,6 +107,10 @@ export const message = style({
 export const activeMessageWrapper = style({
     color: vars.colors.primary,
     fontSize: vars.fontSizes.mediumPlus,
-    transition: 'transform 0.3s ease-in-out',
-    transform: 'scale(1.05)',
+    transition: 'transform 0.7s ease',
+    transform: 'scale(1.1)',
+})
+export const deactiveMessageWrapper = style({
+    transition: 'transform 0.7s ease-in-out',
+    transform: 'scale(1)',
 })
