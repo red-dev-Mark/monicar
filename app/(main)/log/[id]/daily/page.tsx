@@ -101,14 +101,14 @@ const DailyPage = () => {
                         }
                         button={<ExcelButton onClick={handleDailyExcelButtonClick} />}
                         // TODO: vehicleNumber API 나온 후 실제로 변경
-                        vehicleNumber={'33가 1234'}
+                        vehicleNumber={dailyData?.vehicleNumber}
                     >
                         <div className={styles.contentWrapper}>
                             <ListHeader headerTitles={DAILY_TITLES} />
-                            {dailyData?.length === 0 ? (
+                            {dailyData?.content.length === 0 ? (
                                 <div className={styles.empty}>운행내역이 없습니다.</div>
                             ) : (
-                                dailyData?.map((log) => (
+                                dailyData?.content.map((log) => (
                                     <DailyListItem
                                         key={log.drivingDate}
                                         data={log}

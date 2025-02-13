@@ -12,9 +12,13 @@ export type OperationStatusType = 'NOT_REGISTERED' | 'NOT_DRIVEN' | 'IN_OPERATIO
 export interface DailyResponse {
     isSuccess: boolean
     message: string
-    result: DailyListItemModel[]
+    result: DailyInformation
 }
 
+export interface DailyInformation {
+    vehicleNumber: string
+    content: DailyListItemModel[]
+}
 export interface DailyListItemModel {
     drivingDate: string
     totalDistance: number

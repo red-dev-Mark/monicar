@@ -110,6 +110,7 @@ export const activeMessageWrapper = style({
     transition: 'transform 0.7s ease',
     transform: 'scale(1.1)',
 })
+
 export const deactiveMessageWrapper = style({
     transition: 'transform 0.7s ease-in-out',
     transform: 'scale(1)',
