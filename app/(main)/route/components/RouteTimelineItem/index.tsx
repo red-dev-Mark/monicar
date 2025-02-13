@@ -11,12 +11,12 @@ const RouteTimelineItem = ({ route }: RouteTimelineItemProps) => {
     const lat = normalizeCoordinate(route.lat)
     const lng = normalizeCoordinate(route.lng)
     const address = useCoordToAddress(lat, lng)
-    const timestamp = route.timestamp.replace('T', ' ')
+    const timestamp = route.timestamp.replace('T', ' ').slice(0, 16)
 
     return (
         <div className={styles.tableItem}>
             <p className={styles.timestamp}>{timestamp}</p>
-            <p className={styles.speed}>{route.spd} km</p>
+            <p className={styles.speed}>{route.spd}</p>
             <p className={styles.location}>{address}</p>
         </div>
     )

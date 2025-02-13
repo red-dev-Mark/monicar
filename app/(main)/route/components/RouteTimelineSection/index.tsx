@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react'
 import RouteTimelineItem from '@/app/(main)/route/components/RouteTimelineItem'
 import Accordion from '@/components/common/Accordion'
 import { useDisclosure } from '@/hooks/useDisclosure'
-import { routeService } from '@/lib/apis'
+import { routeService, vehicleService } from '@/lib/apis'
+import { addSpaceVehicleNumber } from '@/lib/utils/string'
 import { vars } from '@/styles/theme.css'
 import { PaginationInfo } from '@/types/common'
 import { Route } from '@/types/route'
@@ -13,6 +14,7 @@ import { Route } from '@/types/route'
 import * as styles from './styles.css'
 
 const RouteTimelineSection = () => {
+    const [vehicleNumber, setVehicleNumber] = useState('')
     const [activePage, setActivePage] = useState(1)
     const [routeDetail, setRouteDetail] = useState<Route[]>()
     const [paginationInfo, setPaginationInfo] = useState<PaginationInfo>()
@@ -25,11 +27,54 @@ const RouteTimelineSection = () => {
     useEffect(() => {
         const getVehicleDatail = async () => {
             try {
+                const vehicleNumber = searchParams.get('vehicleNumber') || ''
                 const vehicleId = searchParams.get('vehicleId') || ''
                 const startDate = searchParams.get('startDate') || ''
                 const endDate = searchParams.get('endDate') || ''
 
-                if (!vehicleId || !startDate || !endDate) return
+                const isValidVehicle = (await vehicleService.getVehicleOperationHistory(vehicleNumber)).isValid
+                if (!isValidVehicle) {
+                    closeComponent()
+                    return
+                }
+
+                const response = await routeService.getVehicleRoutesDetail({
+                    vehicleId,
+                    startTime: startDate,
+                    endTime: endDate,
+                    page: activePage,
+                    interval: Number(interval) * 60 || 60,
+                })
+
+                if (!response.isSuccess) return
+
+                const { first, last, page, size, totalElements, totalPages } = response.data
+                const { routes } = response.data.content[0]
+
+                setVehicleNumber(vehicleNumber)
+                setRouteDetail(routes)
+                setPaginationInfo({ first, last, page, size, totalElements, totalPages })
+                openComponent()
+            } catch (error) {
+                if (error instanceof Error) {
+                    console.error(error)
+                    closeComponent()
+                }
+            }
+        }
+        getVehicleDatail()
+    }, [searchParams])
+
+    useEffect(() => {
+        const getVehicleDatail = async () => {
+            try {
+                const vehicleNumber = searchParams.get('vehicleNumber') || ''
+                const vehicleId = searchParams.get('vehicleId') || ''
+                const startDate = searchParams.get('startDate') || ''
+                const endDate = searchParams.get('endDate') || ''
+
+                const isValidVehicle = (await vehicleService.getVehicleOperationHistory(vehicleNumber)).isValid
+                if (!isValidVehicle) return
 
                 const response = await routeService.getVehicleRoutesDetail({
                     vehicleId,
@@ -63,7 +108,8 @@ const RouteTimelineSection = () => {
         <div className={styles.accordion}>
             <Accordion variant='secondary' title='경로 상세목록'>
                 <div className={styles.container}>
-                    <div className={styles.selectWrapper}>
+                    <div className={styles.header}>
+                        <h1 className={styles.vehicleNumber}>검색 차량 : {addSpaceVehicleNumber(vehicleNumber)}</h1>
                         <Select
                             value={interval}
                             onChange={(value) => {
@@ -77,8 +123,8 @@ const RouteTimelineSection = () => {
                                 { value: '60', label: '1시간' },
                             ]}
                             placeholder='검색 주기'
-                            size='md'
-                            radius='xl'
+                            size='sm'
+                            radius='md'
                             checkIconPosition='right'
                             allowDeselect={false}
                             styles={{
