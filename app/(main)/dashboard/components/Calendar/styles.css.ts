@@ -56,7 +56,7 @@ export const today = style({
     margin: '0 auto',
 })
 
-export const weekendDay = style({
+export const weekend = style({
     color: vars.colors.gray[500],
 })
 
@@ -106,4 +106,7 @@ export const message = style({
 
 export const activeMessageWrapper = style({
     color: vars.colors.primary,
+    fontSize: vars.fontSizes.mediumPlus,
+    transition: 'transform 0.3s ease-in-out',
+    transform: 'scale(1.05)',
 })
