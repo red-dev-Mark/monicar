@@ -14,6 +14,7 @@ import SearchInput from '@/components/common/Input/SearchInput'
 import Message from '@/components/common/Message'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
+import PageLoader from '@/components/common/PageLoader'
 import { useModal } from '@/hooks/useModal'
 import { vehicleService } from '@/lib/apis'
 import { removeSpaces } from '@/lib/utils/string'
@@ -258,6 +259,9 @@ const RegisterPage = () => {
         },
     ]
 
+    if (isLoading) {
+        return <PageLoader />
+    }
     if (error) {
         return <ErrorMessage />
     }
@@ -274,7 +278,7 @@ const RegisterPage = () => {
                 <SquareButton color={'white'} onClick={handleCancelButtonClick}>
                     취소
                 </SquareButton>
-                <SquareButton color={'dark'} onClick={postVehicleInfo} disabled={isLoading || !showSuccessMessage}>
+                <SquareButton color={'dark'} onClick={postVehicleInfo} disabled={isSubmitting || !showSuccessMessage}>
                     {isSubmitting ? (
                         <ColorRing
                             visible={true}
