@@ -3,20 +3,22 @@ import { DatePickerInput, DatesRangeValue } from '@mantine/dates'
 import { CalendarIcon } from '@/public/icons'
 import { FONT_FAMILY } from '@/styles/font.css'
 import { vars } from '@/styles/theme.css'
+import { VehicleOperationPeriod } from '@/types/vehicle'
 
 import 'dayjs/locale/ko'
 import '@mantine/dates/styles.css'
 
 interface DateRangeSectionProps {
-    searchableDates: {
-        firstDateAt: string
-        lastDateAt: string
-    }
+    searchableDateRange: VehicleOperationPeriod
     value: DatesRangeValue
     onChange: (value: DatesRangeValue) => void
 }
 
-const DateRangeSection = ({ searchableDates, value, onChange }: DateRangeSectionProps) => {
+const DateRangeSection = ({ searchableDateRange, value, onChange }: DateRangeSectionProps) => {
+    const { firstOperationDate, lastOperationDate } = searchableDateRange
+    const minDate = firstOperationDate ? new Date(firstOperationDate) : undefined
+    const maxDate = lastOperationDate ? new Date(lastOperationDate) : undefined
+
     return (
         <DatePickerInput
             locale='ko'
@@ -25,8 +27,8 @@ const DateRangeSection = ({ searchableDates, value, onChange }: DateRangeSection
             allowSingleDateInRange
             onChange={onChange}
             valueFormat='YYYY년 MM월 DD일'
-            minDate={new Date(searchableDates.firstDateAt)}
-            maxDate={new Date(searchableDates.lastDateAt)}
+            minDate={minDate}
+            maxDate={maxDate}
             size='md'
             color='red'
             type='range'
