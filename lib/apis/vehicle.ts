@@ -13,8 +13,11 @@ export const vehicleService = {
         })
 
         if (!response.data.isSuccess) {
-            if (response.data.errorCode === 1003) {
-                return { isValid: false, value: '등록되지 않은 차량입니다.' }
+            const { errorCode } = response.data
+            if (errorCode === 1003) {
+                return { isValid: false, value: '등록되지 않은 차량입니다' }
+            } else if (errorCode === 2000) {
+                return { isValid: false, value: '해당 차량의 위치를 찾을 수 없습니다' }
             }
         }
 
