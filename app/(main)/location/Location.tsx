@@ -7,6 +7,7 @@ import VehicleStatusPanel from '@/app/(main)/location/components/VehicleStatusPa
 import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
+import AutoComplete from '@/components/domain/vehicle/AutoComplete'
 import { MAP_CONFIG } from '@/constants/map'
 import { useMapStatus } from '@/hooks/useMapStatus'
 import { useQueryParams } from '@/hooks/useQueryParams'
@@ -14,12 +15,13 @@ import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
 import { useVehicleLocationSearch } from '@/hooks/useVehicleLocationSearch'
 import { vehicleService } from '@/lib/apis'
 import { useVehicleVisibleStore } from '@/stores/useVehicleVisibleStore'
-import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
+import { AutoVehicle, VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
 const Location = () => {
     const [vehicleDetail, setVehicleDetail] = useState<VehicleDetail>()
+    const [autoCompleteList, setAutoCompleteList] = useState<AutoVehicle[]>([])
 
     const mapRef = useRef<kakao.maps.Map>(null)
 
@@ -56,9 +58,20 @@ const Location = () => {
         )
     }
 
-    const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-        setInputValue(event.target.value)
+    const handleInputChange: ChangeEventHandler<HTMLInputElement> = async (event) => {
+        const inputValue = event.target.value
+        setInputValue(inputValue)
+
+        const response = await vehicleService.getVehicleAutocomplete(inputValue)
+
+        if (response.value.length === 0) {
+            setAutoCompleteList([])
+        } else {
+            setAutoCompleteList(response.value)
+        }
     }
+
+    const isAutoCompleteVisible = autoCompleteList.length > 0
 
     return (
         <div className={styles.container}>
@@ -74,6 +87,7 @@ const Location = () => {
                     onChange={handleInputChange}
                     onSubmit={handleInputSubmit}
                 />
+                {isAutoCompleteVisible && <AutoComplete list={autoCompleteList} onClick={handleInputSubmit} />}
             </div>
             <VehicleStatusPanel />
 

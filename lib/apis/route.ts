@@ -25,9 +25,8 @@ export const routeService = {
                 error: '선택되지 않는 날짜가 포함되어 있습니다',
             }
 
-        const isOneDay = startDate.getTime() === endDate.getTime()
         const startTime = formatISODateToISOString(startDate)
-        const endTime = isOneDay ? formatISODateToISOString(addOneDay(endDate)) : formatISODateToISOString(endDate)
+        const endTime = formatISODateToISOString(new Date(endDate.setDate(endDate.getDate() + 1)))
 
         const params: RouteParams = {
             startTime,

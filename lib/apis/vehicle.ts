@@ -35,6 +35,28 @@ export const vehicleService = {
         return { isValid: true, value: normalizeResult }
     },
 
+    // 차량 번호 자동완성 검색
+    getVehicleAutocomplete: async (vehicleNumber: string) => {
+        if (!removeSpaces(vehicleNumber)) {
+            return { isValid: true, value: [] }
+        }
+
+        const response = await httpClient.get('/api/v1/vehicle/find', {
+            params: {
+                keyword: vehicleNumber,
+            },
+        })
+
+        if (!response.data.isSuccess) {
+            const { errorCode } = response.data
+            return { isValid: false, value: errorCode }
+        }
+
+        const { result } = response.data
+
+        return { isValid: true, value: result }
+    },
+
     // 차량 상세정보 조회
     getVehicleDetail: async (vehicleId: string) => {
         const response = await httpClient.get(`api/v1/vehicle/${vehicleId}`)

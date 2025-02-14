@@ -1,5 +1,7 @@
 import { style } from '@vanilla-extract/css'
 
+import { vars } from '@/styles/theme.css'
+
 export const container = style({
     position: 'relative',
     width: '100%',
@@ -11,5 +13,8 @@ export const searchInputWrapper = style({
     position: 'absolute',
     top: '2rem',
     right: '2rem',
-    zIndex: 10,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    zIndex: vars.zIndex.dropdown,
 })
