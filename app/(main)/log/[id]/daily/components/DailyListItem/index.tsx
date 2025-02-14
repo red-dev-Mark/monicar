@@ -16,7 +16,7 @@ const DailyListItem = ({ data, onClick }: DailyListItemProps) => {
             <button className={styles.container} onClick={onClick} type='button'>
                 <ul className={styles.list}>
                     <li className={styles.itemWrapper}>{drivingDate}</li>
-                    <li className={styles.itemWrapper}>{totalDistance.toLocaleString('ko-KR')}km</li>
+                    <li className={styles.itemWrapper}>{Math.floor(totalDistance / 1000).toLocaleString('ko-KR')}km</li>
                     <li className={styles.itemWrapper}>{formatDrivingTime(totalDrivingSeconds)}</li>
                 </ul>
                 <div className={styles.icon}>

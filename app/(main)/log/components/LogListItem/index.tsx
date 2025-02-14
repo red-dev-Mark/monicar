@@ -22,7 +22,7 @@ const LogListItem = ({ data, onClick }: LogListItemProps) => {
                 <li className={styles.itemWrapper}>{vehicleModel}</li>
                 <li className={styles.itemWrapper}>{drivingDays.toLocaleString('ko-KR')}일</li>
 
-                <li className={styles.itemWrapper}>{totalDistance.toLocaleString('ko-KR')}km</li>
+                <li className={styles.itemWrapper}>{Math.floor(totalDistance / 1000).toLocaleString('ko-KR')}km</li>
                 <li className={styles.badge}>
                     <Badge shape={'rectangle'} variant={OPERATION_STATUS[status]} />
                 </li>

@@ -5,7 +5,7 @@ import * as styles from './styles.css'
 type StatusType = 'required' | 'scheduled' | 'inProgress' | 'completed'
 type IconType = 'bell' | 'alert' | 'button' | 'check'
 
-export interface InspectionStatusModalModel {
+export interface InspectionStatusAlertModel {
     status: StatusType
     iconType: IconType
     icon: React.ReactNode
@@ -14,13 +14,13 @@ export interface InspectionStatusModalModel {
     message: string
 }
 
-interface InspectionStatusModalProps {
-    inspectionStatusData: InspectionStatusModalModel[]
+interface InspectionStatusAlertProps {
+    inspectionStatusData: InspectionStatusAlertModel[]
     isOpen?: boolean
     onClose?: () => void
 }
 
-const InspectionStatusModal = ({ inspectionStatusData, isOpen, onClose }: InspectionStatusModalProps) => {
+const InspectionStatusAlert = ({ inspectionStatusData, isOpen, onClose }: InspectionStatusAlertProps) => {
     if (!isOpen) return null
 
     return (
@@ -62,4 +62,4 @@ const InspectionStatusModal = ({ inspectionStatusData, isOpen, onClose }: Inspec
         </>
     )
 }
-export default InspectionStatusModal
+export default InspectionStatusAlert

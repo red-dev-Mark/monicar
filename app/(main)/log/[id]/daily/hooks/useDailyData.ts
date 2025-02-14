@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 import { useData } from '@/hooks/useData'
-import { DailyListItemModel } from '@/types/log'
+import { DailyInformation } from '@/types/log'
 
 interface DailyData {
     url: string
@@ -15,7 +15,7 @@ export const useDailyData = ({ url, period }: DailyData) => {
         }),
         [period],
     )
-    const { data, isLoading, error } = useData<DailyListItemModel[]>({
+    const { data, isLoading, error } = useData<DailyInformation>({
         url,
         params,
     })

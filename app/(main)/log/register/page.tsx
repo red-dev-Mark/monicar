@@ -14,6 +14,7 @@ import SearchInput from '@/components/common/Input/SearchInput'
 import Message from '@/components/common/Message'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
+import PageLoader from '@/components/common/PageLoader'
 import { useModal } from '@/hooks/useModal'
 import { vehicleService } from '@/lib/apis'
 import { removeSpaces } from '@/lib/utils/string'
@@ -138,6 +139,7 @@ const RegisterPage = () => {
             withCloseButton: false,
             radius: 'sm',
             icon: <CheckIcon size={18} />,
+            color: 'pink',
             style: {
                 width: '400px',
                 height: '70px',
@@ -200,6 +202,7 @@ const RegisterPage = () => {
                     size='lg'
                     radius='xl'
                     checkIconPosition='right'
+                    disabled={!showSuccessMessage}
                 />
             ),
         },
@@ -209,6 +212,7 @@ const RegisterPage = () => {
             component: (
                 <div className={styles.inputWrapper}>
                     <BaseInput
+                        disabled={!showSuccessMessage}
                         placeholder={'운행 거리를 입력하세요.'}
                         value={drivingDistance}
                         onChange={(event) => {
@@ -227,6 +231,7 @@ const RegisterPage = () => {
             label: '차량 출고',
             component: (
                 <DatePickerInput
+                    disabled={!showSuccessMessage}
                     locale='ko'
                     rightSection={
                         <div style={{ width: '24px', height: '24px' }}>
@@ -254,6 +259,9 @@ const RegisterPage = () => {
         },
     ]
 
+    if (isLoading) {
+        return <PageLoader />
+    }
     if (error) {
         return <ErrorMessage />
     }
@@ -270,7 +278,7 @@ const RegisterPage = () => {
                 <SquareButton color={'white'} onClick={handleCancelButtonClick}>
                     취소
                 </SquareButton>
-                <SquareButton color={'dark'} onClick={postVehicleInfo} disabled={isLoading}>
+                <SquareButton color={'dark'} onClick={postVehicleInfo} disabled={isSubmitting || !showSuccessMessage}>
                     {isSubmitting ? (
                         <ColorRing
                             visible={true}
