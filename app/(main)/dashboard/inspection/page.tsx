@@ -6,11 +6,19 @@ import Breadcrumbs from '@/components/common/Breadcrumbs'
 
 import VehicleStatusPanel from '../components/VehicleStatusPanel'
 
+import InspectionItem from './components/InspectionItem'
 import TabMenu from './components/Tabs'
+import * as styles from './styles.css'
 
 const InspectionPage = () => {
+    const inspectionData = {
+        vehicleNumber: '123가4567',
+        drivingDistance: 15000,
+        name: '차량점검',
+        status: 'REQUIRED' as const,
+    }
     return (
-        <div>
+        <div className={styles.container}>
             <Breadcrumbs
                 breadcrumbsData={[
                     { title: '대시보드', isActive: false },
@@ -21,6 +29,13 @@ const InspectionPage = () => {
             <VehicleStatusPanel />
 
             <TabMenu></TabMenu>
+
+            <InspectionItem
+                vehicleNumber={inspectionData.vehicleNumber}
+                drivingDistance={inspectionData.drivingDistance}
+                name={inspectionData.name}
+                status={inspectionData.status}
+            />
 
             <div>
                 <Pagination.Root total={1} color='#ff385c' boundaries={0}>
