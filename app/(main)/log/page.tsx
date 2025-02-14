@@ -1,10 +1,10 @@
 'use client'
-import { Group, Loader, Pagination } from '@mantine/core'
+import { Group, Pagination } from '@mantine/core'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 
-import Breadcrumb from '@/components/common/Breadcrumb'
+import Breadcrumbs from '@/components/common/Breadcrumbs'
 import ExcelButton from '@/components/common/Button/ExcelButton'
 import LinkButton from '@/components/common/Button/LinkButton'
 import ControlLayout from '@/components/common/ControlLayout'
@@ -16,8 +16,10 @@ import ListHeader from '@/components/domain/vehicle/ListHeader'
 import { LOG_TITLES } from '@/constants/listHeader'
 import { useModal } from '@/hooks/useModal'
 import { validateSearchTerm } from '@/lib/utils/validation'
+import '@mantine/notifications/styles.css'
 
-import ListItem from './components/ListItem/index'
+import LogListItem from './components/LogListItem/index'
+import LogSkeleton from './components/LogSkeleton'
 import { useLogData } from './hooks/useLogData'
 import * as styles from './styles.css'
 import { downloadExcel } from './utils/excel'
@@ -27,15 +29,15 @@ const LogPage = () => {
     const [activePage, setActivePage] = useState(1)
     const [searchVehicleNumber, setSearchVehicleNumber] = useState<string>()
     const [searchTerm, setSearchTerm] = useState('')
-    const { isOpen, modalMessage, closeModal, showMessage } = useModal()
+    const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
     const { logData, isLoading, error } = useLogData(activePage, searchVehicleNumber)
 
     const handleExcelButtonClick = async () => {
         try {
-            await downloadExcel()
+            await downloadExcel(searchTerm)
         } catch (error) {
             console.error('엑셀 다운로드 에러', error)
-            showMessage('엑셀 다운로드에 실패했습니다')
+            openModalWithMessage('엑셀 다운로드에 실패했습니다')
         }
     }
 
@@ -56,7 +58,7 @@ const LogPage = () => {
         const validation = validateSearchTerm(searchTerm)
 
         if (!validation.isValid) {
-            showMessage(validation.message!)
+            openModalWithMessage(validation.message!)
             return
         }
 
@@ -66,50 +68,115 @@ const LogPage = () => {
 
     if (isLoading) {
         return (
-            <div className={styles.loader}>
-                <Loader color='pink' />
+            <div className={styles.container}>
+                <div className={styles.header}>
+                    <div className={styles.breadcrumbsWrapper}>
+                        <Breadcrumbs breadcrumbsData={[{ title: '운행기록', isActive: true }]} />
+                    </div>
+                    <ControlLayout
+                        control={
+                            <div className={styles.searchInputWrapper}>
+                                <SearchInput
+                                    icon='/icons/search-icon.svg'
+                                    value={searchTerm}
+                                    onChange={handleSearchChange}
+                                    onSubmit={handleSearchVehicleNumber}
+                                />
+                            </div>
+                        }
+                        primaryButton={
+                            <div className={styles.excelButtonWrapper}>
+                                <ExcelButton onClick={handleExcelButtonClick} />
+                            </div>
+                        }
+                        secondaryButton={
+                            <LinkButton href={'/log/register'}>
+                                <div className={styles.linkButton}>
+                                    <Image src='/icons/white-add-icon.svg' alt='add' width={18} height={18} />
+                                    차량등록
+                                </div>
+                            </LinkButton>
+                        }
+                    />
+                </div>
+
+                <div className={styles.contents}>
+                    <ListHeader headerTitles={LOG_TITLES} />
+                    <LogSkeleton />
+                </div>
+
+                <div className={styles.pagination}>
+                    <Pagination.Root
+                        total={logData?.totalPages || 1}
+                        value={activePage}
+                        onChange={setActivePage}
+                        color='#ff385c'
+                        boundaries={0}
+                    >
+                        <Group gap={5} justify='center'>
+                            <Pagination.First />
+                            <Pagination.Previous />
+                            <Pagination.Items />
+                            <Pagination.Next />
+                            <Pagination.Last />
+                        </Group>
+                    </Pagination.Root>
+                </div>
             </div>
         )
-    }
-    if (error) {
-        return <ErrorMessage />
     }
 
     return (
         <div className={styles.container}>
-            <Breadcrumb type={'운행기록'} />
+            <div className={styles.header}>
+                <div className={styles.breadcrumbsWrapper}>
+                    <Breadcrumbs breadcrumbsData={[{ title: '운행기록', isActive: true }]} />
+                </div>
 
-            <div className={styles.contents}>
                 <ControlLayout
                     control={
-                        <SearchInput
-                            icon='/icons/search-icon.svg'
-                            value={searchTerm}
-                            onChange={handleSearchChange}
-                            onSubmit={handleSearchVehicleNumber}
-                        />
+                        <div className={styles.searchInputWrapper}>
+                            <SearchInput
+                                icon='/icons/search-icon.svg'
+                                value={searchTerm}
+                                onChange={handleSearchChange}
+                                onSubmit={handleSearchVehicleNumber}
+                            />
+                        </div>
                     }
-                    primaryButton={<ExcelButton onClick={handleExcelButtonClick} />}
+                    primaryButton={
+                        <div className={styles.excelButtonWrapper}>
+                            <ExcelButton onClick={handleExcelButtonClick} />
+                        </div>
+                    }
                     secondaryButton={
                         <LinkButton href={'/log/register'}>
                             <div className={styles.linkButton}>
                                 <Image src='/icons/white-add-icon.svg' alt='add' width={18} height={18} />
-                                등록
+                                차량등록
                             </div>
                         </LinkButton>
                     }
                 />
-                <Modal
-                    isOpen={isOpen}
-                    message={modalMessage as ModalMessageType}
-                    variant={{ variant: 'alert', confirmButton: '확인' }}
-                    onClose={closeModal}
-                />
+            </div>
+            <Modal
+                isOpen={isModalOpen}
+                message={message as ModalMessageType}
+                variant={{ variant: 'alert', confirmButton: '확인' }}
+                onClose={closeModal}
+            />
 
+            <div className={styles.contents}>
                 <ListHeader headerTitles={LOG_TITLES} />
-                {logData?.content.map((log) => (
-                    <ListItem key={log.id} data={log} onClick={() => handleItemClick(log.id)} />
-                ))}
+                <Suspense fallback={<LogSkeleton />}>
+                    {error ? (
+                        <ErrorMessage />
+                    ) : (
+                        logData?.content.map((log) => (
+                            <LogListItem key={log.id} data={log} onClick={() => handleItemClick(log.id)} />
+                        ))
+                    )}
+                </Suspense>
             </div>
 
             <div className={styles.pagination}>
@@ -118,6 +185,7 @@ const LogPage = () => {
                     value={activePage}
                     onChange={setActivePage}
                     color='#ff385c'
+                    boundaries={0}
                 >
                     <Group gap={5} justify='center'>
                         <Pagination.First />

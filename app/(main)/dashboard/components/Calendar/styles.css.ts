@@ -56,7 +56,7 @@ export const today = style({
     margin: '0 auto',
 })
 
-export const weekendDay = style({
+export const weekend = style({
     color: vars.colors.gray[500],
 })
 
@@ -71,18 +71,16 @@ export const divider = style({
     margin: '20px 0',
 })
 
+export const title = style({
+    fontWeight: vars.fontWeights.bold,
+    color: vars.colors.gray[800],
+    margin: '10px',
+})
+
 export const messageContainer = style({
     display: 'flex',
     gap: '12px',
     position: 'relative',
-})
-
-export const verticalLine = style({
-    position: 'absolute',
-    left: '6px',
-    width: '2px',
-    height: '100%',
-    backgroundColor: vars.colors.gray[300],
 })
 
 export const messageList = style({
@@ -97,28 +95,23 @@ export const messageWrapper = style({
     display: 'flex',
     alignItems: 'center',
     position: 'relative',
+    justifyContent: 'center',
     fontWeight: vars.fontWeights.extraBold,
-    color: vars.colors.gray[500],
+    color: vars.colors.gray[600],
 })
 
 export const message = style({
-    marginLeft: '40px',
-})
-
-export const dot = style({
-    width: '12px',
-    height: '12px',
-    borderRadius: '50%',
-    backgroundColor: vars.colors.gray[300],
-    position: 'absolute',
-    left: '-24px',
-    zIndex: vars.zIndex.default,
+    marginLeft: '30px',
 })
 
 export const activeMessageWrapper = style({
     color: vars.colors.primary,
+    fontSize: vars.fontSizes.mediumPlus,
+    transition: 'transform 0.7s ease',
+    transform: 'scale(1.1)',
 })
 
-export const activeDot = style({
-    backgroundColor: vars.colors.primary,
+export const deactiveMessageWrapper = style({
+    transition: 'transform 0.7s ease-in-out',
+    transform: 'scale(1)',
 })

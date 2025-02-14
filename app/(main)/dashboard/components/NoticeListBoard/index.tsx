@@ -2,13 +2,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
-import { noticeService } from '@/lib/apis/notice'
-import { NoticeModel } from '@/types/notice'
+import PageLoader from '@/components/common/PageLoader'
+import { noticeService } from '@/lib/apis'
+import { Notice } from '@/types/notice'
 
 import * as styles from './styles.css'
 
 const NoticeListBoard = () => {
-    const [noticeList, setNoticeList] = useState<NoticeModel[]>([])
+    const [noticeList, setNoticeList] = useState<Notice[]>([])
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
@@ -34,7 +35,7 @@ const NoticeListBoard = () => {
             <h2 className={styles.heading}>공지사항</h2>
 
             {isLoading ? (
-                <div>공지사항 로딩중...</div>
+                <PageLoader />
             ) : (
                 <div className={styles.noticeList}>
                     {noticeList.map((notice) => (

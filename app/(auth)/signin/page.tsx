@@ -26,10 +26,9 @@ const SignInPage = () => {
         email: '',
         password: '',
     })
-    // const [isLoading, setIsLoading] = useState(false)
 
     const { login } = useAuth()
-    const { isOpen, modalMessage, closeModal, showMessage } = useModal()
+    const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
     const { isAuthLoading, authError } = useAuthStore()
 
     const router = useRouter()
@@ -39,12 +38,12 @@ const SignInPage = () => {
         const passwordValidation = validatePassword(formData.password)
 
         if (!emailValidation.isValid) {
-            showMessage(emailValidation.message!)
+            openModalWithMessage(emailValidation.message!)
             return { isValid: false }
         }
 
         if (!passwordValidation.isValid) {
-            showMessage(passwordValidation.message!)
+            openModalWithMessage(passwordValidation.message!)
             return { isValid: false }
         }
 
@@ -60,91 +59,94 @@ const SignInPage = () => {
         if (authError) {
             switch (authError) {
                 case 'INVALID_CREDENTIALS':
-                    showMessage('이메일 또는 비밀번호가 일치하지 않습니다')
+                    openModalWithMessage('아이디 또는 비밀번호가 일치하지 않습니다')
                     break
                 case 'SERVICE_ERROR':
-                    showMessage('일시적인 오류가 발생했습니다\n잠시 후에 다시 시도해주세요')
+                    openModalWithMessage('일시적인 오류가 발생했습니다\n잠시 후에 다시 시도해주세요')
                     break
                 default:
-                    showMessage('서비스 이용에 불편을 드려 죄송합니다\n잠시 후에 다시 시도해주세요')
+                    openModalWithMessage('서비스 이용에 불편을 드려 죄송합니다\n잠시 후에 다시 시도해주세요')
                     break
             }
             return
         }
 
-        // login(formData.email)
         router.push('/dashboard')
     }
 
     return (
         <div className={styles.container}>
-            <section className={styles.introSection}>
-                <p className={styles.introduceMessage}>
-                    실시간 지도 기반의 <br />
-                    차량 관제 서비스를 경험해 보세요
-                </p>
-                <Image src={'/images/sign-in-map.png'} width={550} height={550} alt='지도' />
-            </section>
+            <Image src={'/images/sign-in-background-desktop.jpg'} fill alt='지도' className='object-cover' />
 
-            <section className={styles.signInSection}>
-                <div className={styles.signInHeader}>
-                    <Image src={'/logo.png'} width={180} height={120} alt='박스로고' />
-                    <Image src={'/white-text-logo.png'} width={180} height={40} alt='텍스트로고' />
-                </div>
+            <div className={styles.content}>
+                <section className={styles.introSection}>
+                    <p className={styles.introduceMessage}>
+                        실시간 지도 기반의 <br />
+                        차량 관제 서비스를 경험해 보세요
+                    </p>
+                    <Image src={'/images/sign-in-map.png'} width={550} height={550} alt='지도' priority />
+                </section>
 
-                <div className={styles.signInForm}>
-                    <SignInInput
-                        icon='/icons/sign-in-user-icon.svg'
-                        placeholder='아이디를 입력해주세요'
-                        value={formData.email}
-                        onChange={(event) => setFormData({ ...formData, email: event.target.value })}
-                        onSubmit={handleSubmit}
-                    />
-                    <SignInInput
-                        icon='/icons/sign-in-lock-icon.svg'
-                        type='password'
-                        placeholder='비밀번호를 입력해주세요'
-                        value={formData.password}
-                        onChange={(event) => setFormData({ ...formData, password: event.target.value })}
-                        onSubmit={handleSubmit}
-                    />
-
-                    <div className={styles.buttonWrapper}>
-                        <RoundButton
-                            size='large'
-                            color='secondary'
-                            className={styles.resetButton}
-                            onClick={handleSubmit}
-                            disabled={isAuthLoading}
-                        >
-                            {isAuthLoading ? (
-                                <ColorRing
-                                    visible={true}
-                                    height='40'
-                                    width='40'
-                                    ariaLabel='color-ring-loading'
-                                    wrapperStyle={{}}
-                                    wrapperClass='color-ring-wrapper'
-                                    colors={['#ff385c', '#cf6b81', '#fdced4', '#00b087', '#ed9684']}
-                                />
-                            ) : (
-                                '로그인'
-                            )}
-                        </RoundButton>
+                <section className={styles.signInSection}>
+                    <div className={styles.signInHeader}>
+                        <Image src={'/logo.png'} width={180} height={120} alt='박스로고' />
+                        <Image src={'/white-text-logo.png'} width={180} height={40} alt='텍스트로고' />
                     </div>
 
-                    <p className={styles.helpText}>
-                        비밀번호를 잊으셨나요?<strong className={styles.emphasis}>관리자에게 문의해주세요</strong>
-                    </p>
-                </div>
-            </section>
+                    <div className={styles.signInForm}>
+                        <SignInInput
+                            icon='/icons/sign-in-user-icon.svg'
+                            placeholder='아이디를 입력해주세요'
+                            value={formData.email}
+                            onChange={(event) => setFormData({ ...formData, email: event.target.value })}
+                            onSubmit={handleSubmit}
+                        />
+                        <SignInInput
+                            icon='/icons/sign-in-lock-icon.svg'
+                            type='password'
+                            placeholder='비밀번호를 입력해주세요'
+                            value={formData.password}
+                            onChange={(event) => setFormData({ ...formData, password: event.target.value })}
+                            onSubmit={handleSubmit}
+                        />
 
-            <Modal
-                isOpen={isOpen}
-                message={modalMessage as ModalMessageType}
-                variant={{ variant: 'alert', confirmButton: '확인' }}
-                onClose={closeModal}
-            />
+                        <div className={styles.buttonWrapper}>
+                            <RoundButton
+                                size='large'
+                                color='secondary'
+                                className={styles.resetButton}
+                                onClick={handleSubmit}
+                                disabled={isAuthLoading}
+                            >
+                                {isAuthLoading ? (
+                                    <ColorRing
+                                        visible={true}
+                                        height='40'
+                                        width='40'
+                                        ariaLabel='color-ring-loading'
+                                        wrapperStyle={{}}
+                                        wrapperClass='color-ring-wrapper'
+                                        colors={['#ff385c', '#cf6b81', '#fdced4', '#00b087', '#ed9684']}
+                                    />
+                                ) : (
+                                    '로그인'
+                                )}
+                            </RoundButton>
+                        </div>
+
+                        <p className={styles.helpText}>
+                            비밀번호를 잊으셨나요?<strong className={styles.emphasis}>관리자에게 문의해주세요</strong>
+                        </p>
+                    </div>
+                </section>
+
+                <Modal
+                    isOpen={isModalOpen}
+                    message={message as ModalMessageType}
+                    variant={{ variant: 'alert', confirmButton: '확인' }}
+                    onClose={closeModal}
+                />
+            </div>
         </div>
     )
 }

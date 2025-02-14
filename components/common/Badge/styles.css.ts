@@ -7,6 +7,7 @@ import { BADGE_SHAPE, OPERATION_STATUS, VEHICLE_ROLE } from './constants'
 export const base = style({
     padding: '4px 0',
     border: '1.5px solid',
+    userSelect: 'none',
 })
 
 export const shape = styleVariants({
@@ -34,7 +35,7 @@ const pinkStyle = {
 }
 
 const greenStyle = {
-    color: vars.colors.green[400],
+    color: vars.colors.green[500],
     backgroundColor: vars.colors.green[200],
 }
 

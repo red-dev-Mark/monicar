@@ -29,9 +29,25 @@ export const buttonsWrapper = style({
     margin: '0 auto',
 })
 
-export const loader = style({
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh',
+export const inputWrapper = style({
+    position: 'relative',
+})
+
+export const searchInputWrapper = style({
+    position: 'relative',
+})
+
+export const messageWrapper = style({
+    position: 'absolute',
+    bottom: '-48px',
+    left: '4px',
+})
+
+export const km = style({
+    position: 'absolute',
+    right: '20px',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    pointerEvents: 'none',
+    color: vars.colors.gray[700],
 })

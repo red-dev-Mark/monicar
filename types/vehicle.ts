@@ -1,36 +1,28 @@
-import { LatLng } from '@/types/location'
+import { OPERATION_STATUS } from '@/components/common/Badge/constants'
+import { LatLng } from '@/types/map'
 
-export interface VehicleInfoResponse {
+// 차량 정보
+export interface Vehicle extends Partial<VehicleOperationPeriod> {
     vehicleId: string
     vehicleNumber: string
-    recentCycleInfo: RecentCycleInfo
-    status: string
 }
 
-// 상세 클러스터링 데이터 (차량 10대 미만)
-export interface VehicleInfoModel {
+// 차량의 현재 위치 정보
+export interface VehicleLocation {
     vehicleId: string
     vehicleNumber: string
+    status?: keyof typeof OPERATION_STATUS
     coordinate: LatLng
 }
 
-interface RecentCycleInfo {
-    speed: number
-    lat: number
-    lng: number
-    lastUpdated: string
+// 차량 운행 기간
+export interface VehicleOperationPeriod {
+    firstOperationDate: string | null
+    lastOperationDate: string | null
 }
 
-export interface VehicleOperationPeriodModel {
-    vehicleId: string
-    vehicleNumber: string
-    searchableDates: {
-        firstDateAt: string
-        lastDateAt: string
-    }
-}
-
-export interface VehicleDetailsModel {
+// 차량 상세 정보
+export interface VehicleDetail {
     recentVehicleInfo: {
         vehicleId: number
         vehicleNumber: string
@@ -53,7 +45,8 @@ export interface VehicleDetailsModel {
     }
 }
 
-export interface VehicleStatusModel {
+// 차량 운행 상태별 현황 요약 정보
+export interface VehicleStatusSummary {
     allVehicles: number
     engineOnVehicles: number
     engineOffVehicles: number

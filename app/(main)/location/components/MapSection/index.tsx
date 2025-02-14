@@ -1,32 +1,36 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { CustomOverlayMap } from 'react-kakao-maps-sdk'
+import { memo, useEffect, useState } from 'react'
 
-import CustomMarker from '@/app/(main)/location/components/CustomMarker'
-import VehicleMarker from '@/app/(main)/location/components/VehicleMarker'
+import VehicleDetailCard from '@/app/(main)/location/components/VehicleDetailCard'
+import ViewportVehicleList from '@/app/(main)/location/components/ViewportVehicleList'
+import ClusterOverlay from '@/components/domain/cluster/ClusterOverlay'
+import VehicleOverlay from '@/components/domain/cluster/VehicleOverlay'
 import Map from '@/components/domain/map/Map'
-import { useMapStatus } from '@/hooks/useCurrentMapStatus'
-import { clusterService } from '@/lib/apis/cluster'
-import { LatLng } from '@/types/location'
-import { ClusterPoint, MapState } from '@/types/map'
-import { VehicleInfoModel } from '@/types/vehicle'
+import VehicleMarker from '@/components/domain/vehicle/VehicleMarker'
+import { MAP_CONFIG } from '@/constants/map'
+import { useCluster } from '@/hooks/useCluster'
+import { useMapStatus } from '@/hooks/useMapStatus'
+import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
+import { normalizeCoordinate } from '@/lib/utils/normalize'
+import { MapRefType } from '@/types/map'
+import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
 interface MapSectionProps {
-    mapState: MapState
-    vehicleInfo: VehicleInfoModel
-    isVehicleMarkerVisible: boolean
-    onVehicleClick: () => void
-    onClick: (location: LatLng, level: number) => void
+    mapRef: MapRefType
+    vehicleInfo: VehicleLocation
+    searchedDetail: VehicleDetail
 }
 
-const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleClick, onClick }: MapSectionProps) => {
-    const [clusterInfo, setClusterInfo] = useState<ClusterPoint[]>([])
-    const [clusterDetailInfo, setClusterDetailInfo] = useState<VehicleInfoModel | null>(null)
-    const [isMapLoaded, setIsMapLoaded] = useState(false)
-    const mapRef = useRef<kakao.maps.Map>(null)
+const MapSection = memo(({ mapRef, vehicleInfo, searchedDetail }: MapSectionProps) => {
+    const [selectedVehicleDetail, setSelectedVehicleDetail] = useState<VehicleDetail | undefined>()
 
-    const { currentMapState, updateMapStatus } = useMapStatus(mapRef.current)
+    const [isMapLoaded, setIsMapLoaded] = useState(false)
+
+    const { mapState, updateMapStatus, controlMapStatus } = useMapStatus(mapRef?.current)
+    const { clusterInfo, clusterDetail } = useCluster(mapState, isMapLoaded)
+    const { isSearchedVehicleVisible, showSelectedVehicle, hideSearchedVehicle, hideSelectedVehicle, selectVehicle } =
+        useVehicleDisclosure()
 
     useEffect(() => {
         if (!isMapLoaded) return
@@ -34,54 +38,66 @@ const MapSection = ({ mapState, vehicleInfo, isVehicleMarkerVisible, onVehicleCl
         updateMapStatus()
     }, [isMapLoaded])
 
-    useEffect(() => {
-        if (!isMapLoaded || !currentMapState) return
-        const getClusterInfo = async () => {
-            const clusterInfo: ClusterPoint[] = await clusterService.getClusterInfo(currentMapState)
-            const clusterDetailInfo = await clusterService.getClusterDetailInfo(currentMapState)
+    const handleVehicleClick = async (vehicleId: string, vehicleNumber: string) => {
+        const selectedVehicleDetail = await selectVehicle(vehicleId, vehicleNumber)
 
-            setClusterInfo(clusterInfo)
-            setClusterDetailInfo(clusterDetailInfo)
+        const {
+            recentCycleInfo: { lat, lng },
+        } = selectedVehicleDetail
 
-            // console.log(clusterInfo)
-            console.log(clusterDetailInfo)
-        }
+        setSelectedVehicleDetail(selectedVehicleDetail)
+        showSelectedVehicle()
 
-        getClusterInfo()
-    }, [isMapLoaded, currentMapState])
+        controlMapStatus({
+            lat: normalizeCoordinate(lat),
+            lng: normalizeCoordinate(lng),
+        })
+    }
+
+    const handleMapClick = () => {
+        hideSearchedVehicle()
+        hideSelectedVehicle()
+    }
+
+    const isViewportVehicleListVisible = mapState.level <= MAP_CONFIG.CLUSTER.VISIBLE_LEVEL
 
     return (
         <Map
             ref={mapRef}
-            center={mapState.center}
-            zoom={mapState.level}
+            level={mapState?.level}
+            center={mapState?.center}
             onLoad={() => setIsMapLoaded(true)}
+            onClick={handleMapClick}
             onMapStatusChanged={updateMapStatus}
         >
-            {/* {ClusteringData.result.map((loc, index) => {
-                return (
-                    <CustomOverlayMap key={index} position={loc.coordinate}>
-                        <CustomMarker count={loc.count} onClick={() => onClick(loc.coordinate, mapState.level - 1)} />
-                    </CustomOverlayMap>
-                )
-            })} */}
-            {clusterInfo.map((point) => {
-                return (
-                    <CustomOverlayMap
-                        key={`${point.coordinate.lat}-${point.coordinate.lat}`}
-                        position={point.coordinate}
-                    >
-                        <CustomMarker
-                            count={point.count}
-                            onClick={() => onClick(point.coordinate, mapState.level - 1)}
-                        />
-                    </CustomOverlayMap>
-                )
-            })}
-            {clusterDetailInfo && <VehicleMarker vehicleInfo={clusterDetailInfo} />}
-            {isVehicleMarkerVisible && <VehicleMarker vehicleInfo={vehicleInfo} onVehicleClick={onVehicleClick} />}
+            {/* 차량 번호로 검색 */}
+            {isSearchedVehicleVisible && (
+                <>
+                    <VehicleMarker vehicleInfo={vehicleInfo} useHoverEffect={false} />
+                    <VehicleDetailCard vehicleDetail={searchedDetail} />
+                </>
+            )}
+
+            {/* 클러스터링 관련 */}
+            <ClusterOverlay mapState={mapState} clusterInfo={clusterInfo} onClusterClick={controlMapStatus} />
+            <VehicleOverlay
+                mapState={mapState}
+                clusterDetail={clusterDetail}
+                selectedVehicleId={''}
+                onVehicleClick={handleVehicleClick}
+            />
+
+            {isViewportVehicleListVisible && (
+                <ViewportVehicleList
+                    clusterDetail={clusterDetail}
+                    selectedVehicleDetail={selectedVehicleDetail}
+                    onItemClick={handleVehicleClick}
+                />
+            )}
         </Map>
     )
-}
+})
+
+MapSection.displayName = 'MapSection'
 
 export default MapSection

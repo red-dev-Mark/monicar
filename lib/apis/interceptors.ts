@@ -1,7 +1,7 @@
 import { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
 import { API_URL } from '@/constants/api'
-import { httpClient } from '@/lib/apis/client'
+import { httpClient, authService } from '@/lib/apis'
 import { useAuthStore } from '@/stores/useAuthStore'
 
 interface CustomRequestConfig extends InternalAxiosRequestConfig {
@@ -39,6 +39,7 @@ export const setupResponseInterceptor = (instance: AxiosInstance) => {
                 !originalRequest.isRequestAlready
             ) {
                 const logout = useAuthStore.getState().logout
+                // const { logout } = useAuth()
                 originalRequest.isRequestAlready = true
 
                 try {
@@ -60,6 +61,7 @@ export const setupResponseInterceptor = (instance: AxiosInstance) => {
                     }
                 } catch (retryError) {
                     console.log(retryError)
+                    await authService.signOut()
                     logout()
                     window.location.href = '/signin'
                 }

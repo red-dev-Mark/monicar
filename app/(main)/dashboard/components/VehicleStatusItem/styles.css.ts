@@ -12,7 +12,7 @@ export const title = style({
 })
 
 export const progressWrapper = style({
-    width: '400px',
+    width: '60%',
 })
 
 export const circle = style({
@@ -24,6 +24,10 @@ export const circle = style({
 
 export const count = style({
     marginLeft: '8px',
-    fontSize: vars.fontSizes.mediumPlus,
     fontWeight: vars.fontWeights.bold,
+    background: vars.colors.yellow[100],
+    color: vars.colors.yellow[200],
+    border: `solid 1px ${vars.colors.yellow[200]}`,
+    borderRadius: '6px',
+    padding: '0px 4px',
 })

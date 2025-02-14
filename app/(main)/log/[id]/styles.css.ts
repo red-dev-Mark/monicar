@@ -1,10 +1,9 @@
 import { style } from '@vanilla-extract/css'
 
-import { vars } from '@/styles/theme.css'
+import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
-    width: '80%',
-    position: 'absolute',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
@@ -12,13 +11,33 @@ export const container = style({
     gap: '30px',
     backgroundColor: vars.colors.white,
     borderRadius: '30px 30px 0 0',
+    position: 'relative',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            width: '100%',
+            padding: '40px 20px',
+        },
+    },
 })
 
-export const button = style({
+export const header = style({
     display: 'flex',
-    width: '200px',
-    justifyContent: 'center',
-    gap: '6px',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+})
+
+export const breadcrumbsWrapper = style({
+    minWidth: '220px',
+
+    '@media': {
+        [`screen and (max-width: 1166px)`]: {
+            display: 'none',
+        },
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+        },
+    },
 })
 
 export const tableWrapper = style({
@@ -26,7 +45,7 @@ export const tableWrapper = style({
     display: 'flex',
     flexDirection: 'column',
     gap: '30px',
-    overflowY: 'auto',
+    paddingBottom: '100px',
 })
 
 export const tableHeader = style({
@@ -47,9 +66,46 @@ export const tableCell = style({
     color: vars.colors.black,
 })
 
+export const datePickerInputWrapper = style({
+    width: '100%',
+    minWidth: '390px',
+    height: '48px',
+    color: vars.colors.black,
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            width: '100%',
+            minWidth: '360px',
+        },
+    },
+})
+
+export const excelButtonWrapper = style({
+    display: 'flex',
+    width: '90px',
+    justifyContent: 'center',
+    gap: '6px',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+        },
+    },
+})
+
+export const deleteButtonWrapper = style({
+    width: '110px',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+        },
+    },
+})
+
 export const deleteButton = style({
-    backgroundColor: vars.colors.primary,
-    color: vars.colors.white,
+    display: 'flex',
+    gap: '6px',
 })
 
 export const linkButton = style({
@@ -59,15 +115,28 @@ export const linkButton = style({
     padding: '16px 24px',
     textAlign: 'center',
     borderRadius: '8px',
+    position: 'sticky',
+    zIndex: vars.zIndex.default,
+    bottom: '30px',
+    width: '100%',
     marginTop: 'auto',
     ':hover': {
         backgroundColor: vars.colors.gray[800],
     },
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            textAlign: 'center',
+            justifyContent: 'center',
+            bottom: '80px',
+        },
+    },
 })
 
-export const loader = style({
-    display: 'flex',
+export const empty = style({
+    margin: '50px',
     justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh',
+    display: 'flex',
+    fontWeight: vars.fontWeights.bold,
+    color: vars.colors.gray[700],
 })

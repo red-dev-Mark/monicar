@@ -1,27 +1,45 @@
 'use client'
 
-import dynamic from 'next/dynamic'
-import { useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 
-import RouteSearchPanel from '@/app/(main)/route/components/RouteSearchPanel'
-import { useMapControl } from '@/hooks/useMapControl'
-import { LatLng } from '@/types/location'
+import MapSection from '@/app/(main)/route/components/MapSection'
+import RouteSearchSection from '@/app/(main)/route/components/RouteSearchSection'
+import RouteTimelineSection from '@/app/(main)/route/components/RouteTimelineSection'
+import { useMapStatus } from '@/hooks/useMapStatus'
+import { LatLng } from '@/types/map'
 
 import * as styles from './styles.css'
 
-const MapSection = dynamic(() => import('./components/MapSection'), {
-    ssr: false,
-})
-
 const RoutePage = () => {
-    const [vehiclePaths, setVehiclePaths] = useState<LatLng[]>([])
+    const [routes, setRoutes] = useState<LatLng[]>([])
+    const [isMapLoaded, setIsMapLoaded] = useState(false)
 
-    const { mapState, updateMapLocation } = useMapControl()
+    const mapRef = useRef<kakao.maps.Map>(null)
+
+    const { updateMapStatus } = useMapStatus(mapRef?.current)
+
+    useEffect(() => {
+        if (!isMapLoaded) return
+
+        updateMapStatus()
+    }, [isMapLoaded])
+
+    const { mapState } = useMapStatus(mapRef.current)
 
     return (
         <div className={styles.container}>
-            <MapSection mapState={mapState} vehiclePaths={vehiclePaths} />
-            <RouteSearchPanel onPathsChange={setVehiclePaths} onMapLocationChange={updateMapLocation} />
+            <Suspense fallback={<div>서스펜스 불러오는 중!</div>}>
+                <RouteSearchSection mapRef={mapRef} onRoutesChange={setRoutes} />
+                <RouteTimelineSection />
+                <MapSection
+                    mapRef={mapRef}
+                    mapState={mapState}
+                    routes={routes}
+                    isMapLoaded={isMapLoaded}
+                    onRoutesChange={setRoutes}
+                    onLoad={() => setIsMapLoaded(true)}
+                />
+            </Suspense>
         </div>
     )
 }

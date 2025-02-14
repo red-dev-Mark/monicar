@@ -8,9 +8,19 @@ import * as styles from './not-found.styles.css'
 const NotFoundPage = () => {
     return (
         <div className={styles.container}>
+            <Image src={'/images/page-not-found-desktop.jpg'} fill alt='박스로고' priority className='object-cover' />
+            <div className={styles.overlay} />
+
             <div className={styles.content}>
                 <section>
-                    <Image src={'/white-logo.png'} width={120} height={80} alt='박스로고' priority />
+                    <Image
+                        src={'/white-logo.png'}
+                        width={120}
+                        height={80}
+                        alt='박스로고'
+                        priority
+                        style={{ width: 'auto', height: 'auto' }}
+                    />
                     <h1 className={styles.heading}>Page Not Found</h1>
                 </section>
 

@@ -1,22 +1,20 @@
 import { useState } from 'react'
 
+import { useDisclosure } from '@/hooks/useDisclosure'
+
 export const useModal = () => {
-    const [isOpen, setIsOpen] = useState(false)
-    const [modalMessage, setModalMessage] = useState('')
+    const [message, setMessage] = useState('')
+    const [isModalOpen, { open: openModal, close: closeModal }] = useDisclosure()
 
-    const openModal = () => setIsOpen(true)
-    const closeModal = () => setIsOpen(false)
-
-    const showMessage = (message: string) => {
-        setModalMessage(message)
+    const openModalWithMessage = (message: string) => {
+        setMessage(message)
         openModal()
     }
 
     return {
-        isOpen,
-        modalMessage,
-        openModal,
+        isModalOpen,
+        message,
         closeModal,
-        showMessage,
+        openModalWithMessage,
     }
 }

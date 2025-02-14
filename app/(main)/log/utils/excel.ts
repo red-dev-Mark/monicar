@@ -1,10 +1,9 @@
 import * as XLSX from 'xlsx'
 
 import { API_ENDPOINTS } from '@/constants/api'
-import { httpClient } from '@/lib/apis/client'
-import { ListItemModel } from '@/types/log'
-
-import { EXCEL_FILE_NAME, EXCEL_SHEET_NAME } from '../constants'
+import { LOG_EXCEL_FILE_NAME, LOG_EXCEL_SHEET_NAME } from '@/constants/excel'
+import { httpClient } from '@/lib/apis'
+import { LogListItemModel } from '@/types/log'
 
 interface ExcelData {
     차량번호: string
@@ -13,7 +12,7 @@ interface ExcelData {
     총운행거리: string
 }
 
-const getExcelData = (data: ListItemModel[]) => {
+export const downloadDetailExcel = (data: LogListItemModel[]) => {
     return data.map((item) => ({
         차량번호: item.vehicleNumber,
         차종: item.vehicleModel,
@@ -22,25 +21,26 @@ const getExcelData = (data: ListItemModel[]) => {
     }))
 }
 
-const saveExcel = (excelData: ExcelData[]) => {
+export const saveDetailExcel = (excelData: ExcelData[]) => {
     const wb = XLSX.utils.book_new()
     const ws = XLSX.utils.json_to_sheet(excelData)
-    XLSX.utils.book_append_sheet(wb, ws, EXCEL_SHEET_NAME)
-    XLSX.writeFile(wb, EXCEL_FILE_NAME)
+    XLSX.utils.book_append_sheet(wb, ws, LOG_EXCEL_SHEET_NAME)
+    XLSX.writeFile(wb, LOG_EXCEL_FILE_NAME)
 }
 
-export const downloadExcel = async () => {
+export const downloadExcel = async (keyword: string) => {
     try {
         const response = await httpClient.get(API_ENDPOINTS.LOG, {
             params: {
                 page: 0,
-                size: 100,
+                size: 1000,
                 sort: 'CREATED_AT_DESC',
+                keyword,
             },
         })
         const allData = response.data.result.content
-        const excelData = getExcelData(allData)
-        saveExcel(excelData)
+        const excelData = downloadDetailExcel(allData)
+        saveDetailExcel(excelData)
     } catch (error) {
         console.error('Excel 다운로드 실패', error)
         throw error

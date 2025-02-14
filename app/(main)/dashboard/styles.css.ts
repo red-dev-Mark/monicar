@@ -1,13 +1,36 @@
 import { style } from '@vanilla-extract/css'
 
-import { vars } from '@/styles/theme.css'
+import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
-    height: '100vh',
+    height: 'auto',
     backgroundColor: vars.colors.dashboard,
     display: 'flex',
     gap: '34px',
     padding: '24px',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            backgroundColor: vars.colors.white,
+            flexDirection: 'column',
+            height: 'auto',
+            gap: '10px',
+            padding: '50px 20px',
+        },
+    },
+})
+
+export const logoWrapper = style({
+    display: 'none',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'flex',
+            marginTop: '10px',
+            marginBottom: '30px',
+            justifyContent: 'center',
+        },
+    },
 })
 
 export const leftSection = style({
@@ -15,6 +38,13 @@ export const leftSection = style({
     display: 'flex',
     flexDirection: 'column',
     gap: '24px',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            width: '100%',
+            gap: '20px',
+        },
+    },
 })
 
 export const rightSection = style({
@@ -22,12 +52,42 @@ export const rightSection = style({
     display: 'flex',
     flexDirection: 'column',
     gap: '24px',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            width: '100%',
+            height: '40vh',
+        },
+    },
+})
+
+export const vehicleStatusPanelWrapper = style({
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            order: 3,
+        },
+    },
+})
+
+export const calendarWrapper = style({
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+        },
+    },
 })
 
 export const header = style({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+            overflowY: 'auto',
+        },
+    },
 })
 
 export const introduce = style({
@@ -36,18 +96,48 @@ export const introduce = style({
     display: 'flex',
     flexDirection: 'column',
     marginLeft: '24px',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+            overflowY: 'auto',
+        },
+    },
 })
 
 export const userName = style({
     fontSize: vars.fontSizes.xlarge,
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+        },
+    },
 })
 
 export const searchInputWrapper = style({
+    position: 'absolute',
+    right: 14,
+    top: 18,
     width: '358px',
+    zIndex: vars.zIndex.four,
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+        },
+    },
 })
 
 export const mapWrapper = style({
+    position: 'relative',
     height: '100%',
     borderRadius: '14px',
     overflow: 'hidden',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+        },
+    },
 })

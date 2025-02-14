@@ -1,27 +1,41 @@
 'use client'
 
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 import Switch from '@/components/common/Switch'
 import NavItem from '@/components/layout/NavBar/NavItem'
 import { navigationItems } from '@/constants/navigation'
 import { useAuth } from '@/hooks/useAuth'
-import { useAuthStore } from '@/stores/useAuthStore'
 
 import * as styles from './styles.css'
 
 const NavBar = () => {
     const { logout } = useAuth()
-    const user = useAuthStore((state) => state.user)
+
+    const [useEmail, setUserEmail] = useState<string>('')
+
+    useEffect(() => {
+        const useEmail = localStorage.getItem('email') || 'b6f2@monicar.com'
+
+        setUserEmail(useEmail)
+    }, [])
 
     return (
         <aside className={styles.navbar}>
             <nav className={styles.navContainer}>
                 <div className={styles.logoWrapper}>
-                    <Image src='/box-logo.png' alt='박스 로고 이미지' width={48} height={48} />
+                    <Image src='/box-logo.png' alt='박스 로고 이미지' width={48} height={48} priority />
                     <div className={styles.logoInfo}>
-                        <Image src='/text-logo.png' alt='텍스트 로고 이미지' width={104} height={22} />
-                        <p className={styles.userEmail}>{user?.email}</p>
+                        <Image
+                            src='/text-logo.png'
+                            alt='텍스트 로고 이미지'
+                            width={104}
+                            height={22}
+                            priority
+                            style={{ width: '104px', height: '22px' }}
+                        />
+                        <p className={styles.userEmail}>{useEmail}</p>
                     </div>
                 </div>
 
