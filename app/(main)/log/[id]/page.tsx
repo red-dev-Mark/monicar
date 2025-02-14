@@ -257,10 +257,6 @@ const DetailPage = () => {
                         </tbody>
                     </table>
                 </div>
-
-                <LinkButton href={`/log/${id}/daily`} className={styles.linkButton}>
-                    일별 및 시간별 조회
-                </LinkButton>
             </div>
         )
     }
@@ -433,22 +429,31 @@ const DetailPage = () => {
                                             <td className={styles.tableCell}>{data.user.departmentName}</td>
                                             <td className={styles.tableCell}>{data.user.name}</td>
                                             <td className={styles.tableCell}>
-                                                {data.drivingInfo.drivingBefore.toLocaleString('ko-KR')}km
+                                                {Math.floor(data.drivingInfo.drivingBefore / 1000).toLocaleString(
+                                                    'ko-KR',
+                                                )}
+                                                km
                                             </td>
                                             <td className={styles.tableCell}>
-                                                {data.drivingInfo.drivingAfter.toLocaleString('ko-KR')}km
+                                                {Math.floor(data.drivingInfo.drivingAfter / 1000).toLocaleString(
+                                                    'ko-KR',
+                                                )}
+                                                km
                                             </td>
                                             <td className={styles.tableCell}>
-                                                {data.drivingInfo.totalDriving.toLocaleString('ko-KR')}km
+                                                {Math.floor(data.drivingInfo.totalDriving / 1000).toLocaleString(
+                                                    'ko-KR',
+                                                )}
+                                                km
                                             </td>
                                             <td className={styles.tableCell}>
                                                 {isCommutePurpose
-                                                    ? drivingDistance.toLocaleString('ko-KR') + 'km'
+                                                    ? Math.floor(drivingDistance / 1000).toLocaleString('ko-KR') + 'km'
                                                     : '0km'}
                                             </td>
                                             <td className={styles.tableCell}>
                                                 {!isCommutePurpose
-                                                    ? drivingDistance.toLocaleString('ko-KR') + 'km'
+                                                    ? Math.floor(drivingDistance / 1000).toLocaleString('ko-KR') + 'km'
                                                     : '0km'}
                                             </td>
                                             <td className={styles.tableCell}>{data.drivingInfo.notes}</td>
@@ -467,13 +472,16 @@ const DetailPage = () => {
                                 과세기간 총 주행 거리
                             </th>
                             <td className={styles.tableCell}>
-                                {detailData?.taxPeriodDistance.toLocaleString('ko-KR')}km
+                                {Math.floor((detailData?.taxPeriodDistance ?? 0) / 1000).toLocaleString('ko-KR')}km
                             </td>
                             <th scope='row' className={styles.tableHeader}>
                                 과세기간 업무용 사용 거리
                             </th>
                             <td className={styles.tableCell}>
-                                {detailData?.taxPeriodBusinessDistance.toLocaleString('ko-KR')}km
+                                {Math.floor((detailData?.taxPeriodBusinessDistance ?? 0) / 1000).toLocaleString(
+                                    'ko-KR',
+                                )}
+                                km
                             </td>
                             <th scope='row' className={styles.tableHeader}>
                                 업무사용비율
@@ -484,9 +492,11 @@ const DetailPage = () => {
                 </table>
             </div>
 
-            <LinkButton href={`/log/${id}/daily`} className={styles.linkButton}>
-                일별 및 시간별 조회
-            </LinkButton>
+            {(detailData?.records.length ?? 0) > 0 && (
+                <LinkButton href={`/log/${id}/daily`} className={styles.linkButton}>
+                    일별 및 시간별 조회
+                </LinkButton>
+            )}
         </div>
     )
 }

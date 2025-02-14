@@ -11,8 +11,14 @@ export const routeService = {
         dateRange,
         interval = 60,
     }: RouteRequest): Promise<Result<{ vehicleNumber: string; routes: Route[] }>> => {
-        const [startDate, endDate] = dateRange
+        if (!vehicleId) {
+            return {
+                isSuccess: false,
+                error: '차량 ID가 필요합니다',
+            }
+        }
 
+        const [startDate, endDate] = dateRange
         if (!startDate || !endDate)
             return {
                 isSuccess: false,
@@ -42,12 +48,17 @@ export const routeService = {
     },
     // 지정된 시간 간격으로 경로 상세 정보 조회
     getVehicleRoutesDetail: async ({ vehicleId, startTime, endTime, page, interval = 60 }: RouteDetailRequest) => {
-        if (!vehicleId) throw new Error('차량 ID는 필수값입니다')
+        if (!vehicleId) {
+            return {
+                isSuccess: false,
+                error: '차량 ID가 필요합니다',
+            }
+        }
 
         if (!startTime || !endTime || !page) {
             return {
                 isSuccess: false,
-                error: '요청 데이터가 유효하지 않습니다',
+                error: '선택되지 않는 날짜가 포함되어 있습니다',
             }
         }
 

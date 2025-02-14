@@ -1,45 +1,52 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { memo, useEffect, useState } from 'react'
+import { memo, useEffect } from 'react'
 import { Polyline } from 'react-kakao-maps-sdk'
 
 import Map from '@/components/domain/map/Map'
 import VehicleMarker from '@/components/domain/vehicle/VehicleMarker'
-import { POLYLINE_CONFIG } from '@/constants/map'
+import { MAP_CONFIG, POLYLINE_CONFIG } from '@/constants/map'
+import { useMapStatus } from '@/hooks/useMapStatus'
 import { MapState, LatLng, MapRefType } from '@/types/map'
-import { VehicleLocation } from '@/types/vehicle'
 
 interface MapSectionProps {
     mapRef: MapRefType
     mapState: MapState
     routes: LatLng[]
+    isMapLoaded: boolean
+    onRoutesChange: (paths: LatLng[]) => void
     onLoad?: () => void
 }
 
-const MapSection = memo(({ mapRef, mapState, routes, onLoad }: MapSectionProps) => {
-    const [destination, setDestination] = useState<VehicleLocation>()
+const MapSection = memo(({ mapRef, mapState, routes, isMapLoaded, onRoutesChange, onLoad }: MapSectionProps) => {
+    const { controlMapStatus } = useMapStatus(mapRef.current)
 
     const searchParams = useSearchParams()
 
+    const vehicleId = searchParams.get('vehicleId') || ''
+    const vehicleNumber = searchParams.get('vehicleNumber') || ''
+    const lat = Number(searchParams.get('endLat'))
+    const lng = Number(searchParams.get('endLng'))
+
     useEffect(() => {
-        const vehicleId = searchParams.get('vehicleId') || ''
-        const vehicleNumber = searchParams.get('vehicleNumber') || ''
-        const lat = Number(searchParams.get('endLat'))
-        const lng = Number(searchParams.get('endLng'))
-
-        if (!lat || !lng) return
-
-        const vehicleInfo = {
-            vehicleId,
-            vehicleNumber,
-            coordinate: { lat, lng },
+        if (!vehicleId || !vehicleNumber || !lat || !lng) {
+            onRoutesChange([])
+            return
         }
 
-        setDestination(vehicleInfo)
-    }, [searchParams])
+        if (isMapLoaded) {
+            controlMapStatus({ lat, lng }, MAP_CONFIG.ROUTE.ZOOM_INCREMENT)
+        }
+    }, [searchParams, isMapLoaded])
 
-    const isVisible = routes.length > 0 && destination
+    const vehicleOnDestination = {
+        vehicleId,
+        vehicleNumber,
+        coordinate: { lat, lng },
+    }
+
+    const isVisible = routes.length > 0
 
     return (
         <Map ref={mapRef} level={mapState.level} center={mapState.center} onLoad={onLoad}>
@@ -50,7 +57,7 @@ const MapSection = memo(({ mapRef, mapState, routes, onLoad }: MapSectionProps) 
                 strokeOpacity={POLYLINE_CONFIG.STROKE_OPACITY}
                 strokeStyle={POLYLINE_CONFIG.STROKE_STYLE}
             />
-            {isVisible && <VehicleMarker vehicleInfo={destination} useHoverEffect={false} />}
+            {isVisible && <VehicleMarker vehicleInfo={vehicleOnDestination} useHoverEffect={false} />}
         </Map>
     )
 })

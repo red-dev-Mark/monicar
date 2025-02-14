@@ -47,7 +47,7 @@ export const vehicleService = {
     },
 
     // 차량번호로 운행 이력 기간 조회
-    getVehicleOperationHistory: async (vehicleNumber: string) => {
+    getVehicleOperationPeriod: async (vehicleNumber: string) => {
         const response = await httpClient.get(`api/v1/vehicle`, {
             params: {
                 vehicleNumber: removeSpaces(vehicleNumber),
@@ -57,8 +57,8 @@ export const vehicleService = {
         const { result } = response.data
 
         if (!result) {
-            // TODO 문구 수정
-            return { isValid: false, value: '차량 정보를 불러오는데 실패했습니다' }
+            const { errorMessage } = response.data
+            return { isValid: false, value: errorMessage[0] }
         }
 
         const vehicleOperationHistory = {

@@ -1,12 +1,12 @@
 import Image from 'next/image'
 
-import InspectionStatusModal, { InspectionStatusModalModel } from './index'
+import { default as InspectionStatusAlert, InspectionStatusAlertModel } from './index'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-const meta: Meta<typeof InspectionStatusModal> = {
+const meta: Meta<typeof InspectionStatusAlert> = {
     title: 'Components/Modal/InspectionStatusModal',
-    component: InspectionStatusModal,
+    component: InspectionStatusAlert,
     parameters: {
         layout: 'centered',
     },
@@ -14,9 +14,9 @@ const meta: Meta<typeof InspectionStatusModal> = {
 
 export default meta
 
-type StoryType = StoryObj<typeof InspectionStatusModal>
+type StoryType = StoryObj<typeof InspectionStatusAlert>
 
-const mockInspectionData: InspectionStatusModalModel[] = [
+const mockInspectionData: InspectionStatusAlertModel[] = [
     {
         status: 'required' as const,
         iconType: 'bell' as const,

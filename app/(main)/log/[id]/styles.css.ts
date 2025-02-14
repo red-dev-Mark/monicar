@@ -45,6 +45,7 @@ export const tableWrapper = style({
     display: 'flex',
     flexDirection: 'column',
     gap: '30px',
+    paddingBottom: '100px',
 })
 
 export const tableHeader = style({
@@ -114,11 +115,11 @@ export const linkButton = style({
     padding: '16px 24px',
     textAlign: 'center',
     borderRadius: '8px',
-    marginTop: 'auto',
     position: 'sticky',
     zIndex: vars.zIndex.default,
-    bottom: '80px',
+    bottom: '30px',
     width: '100%',
+    marginTop: 'auto',
     ':hover': {
         backgroundColor: vars.colors.gray[800],
     },
@@ -127,6 +128,7 @@ export const linkButton = style({
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             textAlign: 'center',
             justifyContent: 'center',
+            bottom: '80px',
         },
     },
 })

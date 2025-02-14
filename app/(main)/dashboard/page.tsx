@@ -35,6 +35,16 @@ const DashboardPage = () => {
         nickname: '',
     })
 
+    const [active, setActive] = useState(0)
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setActive((current) => (current + 1) % 3)
+        }, 3000)
+
+        return () => clearInterval(timer)
+    }, [])
+
     useEffect(() => {
         const companyName = localStorage.getItem('company_name') || ''
         const nickname = localStorage.getItem('nickname') || ''
@@ -121,18 +131,21 @@ const DashboardPage = () => {
                         calendarData={[
                             {
                                 id: 1,
-                                message: '🥇 74나 3957 (49km)',
-                                isActive: true,
+                                ranking: '🥇',
+                                message: '74나 3957 (49km)',
+                                isActive: active === 0,
                             },
                             {
                                 id: 2,
-                                message: '🥈 45가 5858 (49km)',
-                                isActive: false,
+                                ranking: '🥈',
+                                message: '45가 5858 (42km)',
+                                isActive: active === 1,
                             },
                             {
                                 id: 3,
-                                message: '🥉 38모 1537 (38Km)',
-                                isActive: false,
+                                ranking: '🥉',
+                                message: '38모 1537 (38Km)',
+                                isActive: active === 2,
                             },
                         ]}
                     />

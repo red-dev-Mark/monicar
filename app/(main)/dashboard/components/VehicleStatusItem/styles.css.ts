@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { breakPoints, vars } from '@/styles/theme.css'
+import { vars } from '@/styles/theme.css'
 
 export const container = style({
     display: 'flex',
@@ -30,10 +30,4 @@ export const count = style({
     border: `solid 1px ${vars.colors.yellow[200]}`,
     borderRadius: '6px',
     padding: '0px 4px',
-
-    '@media': {
-        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
-            display: 'none',
-        },
-    },
 })
