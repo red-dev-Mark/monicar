@@ -18,7 +18,7 @@ type StoryType = StoryObj<typeof InspectionStatusAlert>
 
 const mockInspectionData: InspectionStatusAlertModel[] = [
     {
-        status: 'required' as const,
+        status: 'REQUIRED' as const,
         iconType: 'bell' as const,
         icon: <Image src='/icons/white-bell-icon.svg' alt='bell' width={24} height={24} />,
         title: '차량 점검 안내',
@@ -26,7 +26,7 @@ const mockInspectionData: InspectionStatusAlertModel[] = [
         message: '차량에 대한 점검이 필요합니다.',
     },
     {
-        status: 'scheduled' as const,
+        status: 'SCHEDULED' as const,
         iconType: 'alert' as const,
         icon: <Image src='/icons/white-alert-icon.svg' alt='alert' width={24} height={24} />,
         title: '차량 점검 예정',
@@ -34,7 +34,7 @@ const mockInspectionData: InspectionStatusAlertModel[] = [
         message: '차량이 점검 예정입니다.',
     },
     {
-        status: 'inProgress' as const,
+        status: 'INPROGRESS' as const,
         iconType: 'button' as const,
         icon: <Image src='/icons/white-on-button-icon.svg' alt='button' width={24} height={24} />,
         title: '차량 점검 진행',
@@ -42,7 +42,7 @@ const mockInspectionData: InspectionStatusAlertModel[] = [
         message: '차량에 대한 점검이 진행 중입니다.',
     },
     {
-        status: 'completed' as const,
+        status: 'COMPLETED' as const,
         iconType: 'check' as const,
         icon: <Image src='/icons/white-check-icon.svg' alt='check' width={24} height={24} />,
         title: '차량 점검 완료',

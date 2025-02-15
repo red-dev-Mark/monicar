@@ -1,6 +1,6 @@
 import * as styles from './styles.css'
 
-type StatusType = 'required' | 'scheduled' | 'inProgress' | 'completed'
+type StatusType = 'REQUIRED' | 'SCHEDULED' | 'INPROGRESS' | 'COMPLETED'
 type IconType = 'bell' | 'alert' | 'button' | 'check'
 
 export interface InspectionStatusAlertModel {
