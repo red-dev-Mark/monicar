@@ -65,6 +65,11 @@ export const colors = {
         500: '#00000050',
         800: '#00000080',
     },
+    progress: {
+        100: '#FFE7F0',
+        200: '#FFC6DB',
+        300: '#FF4086',
+    },
 }
 
 export const fontSizes = {
