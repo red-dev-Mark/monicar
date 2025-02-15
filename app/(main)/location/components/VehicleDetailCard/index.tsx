@@ -5,7 +5,12 @@ import Image from 'next/image'
 
 import Badge from '@/components/common/Badge'
 import SquareButton from '@/components/common/Button/SquareButton'
+import Modal from '@/components/common/Modal'
+import { ModalMessageType } from '@/components/common/Modal/types'
+import { useCoordToAddress } from '@/hooks/useCoordToAddress'
+import { useModal } from '@/hooks/useModal'
 import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
+import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { getFormattedVehicleDetail } from '@/lib/utils/vehicle'
 import { useVehicleVisibleStore } from '@/stores/useVehicleVisibleStore'
 import { vars } from '@/styles/theme.css'
@@ -22,10 +27,16 @@ const VehicleDetailCard = ({ vehicleDetail, onClose }: VehicleDetailCardProps) =
     const { hideSearchedVehicle } = useVehicleDisclosure()
     const setInputValue = useVehicleVisibleStore((state) => state.setInputValue)
 
+    const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
+
     const resetSearchedVehicle = () => {
         hideSearchedVehicle()
         setInputValue('')
     }
+
+    const {
+        recentCycleInfo: { lat, lng },
+    } = vehicleDetail
 
     const {
         isDriving,
@@ -36,8 +47,15 @@ const VehicleDetailCard = ({ vehicleDetail, onClose }: VehicleDetailCardProps) =
         todayDrivingTime,
         todayDrivingDistance,
         lastUpdated,
-        lastAddress,
     } = getFormattedVehicleDetail(vehicleDetail)
+
+    const normalizedCoordinate = {
+        lat: normalizeCoordinate(lat),
+        lng: normalizeCoordinate(lng),
+    }
+
+    const lastAddress =
+        useCoordToAddress(normalizedCoordinate.lat, normalizedCoordinate.lng, openModalWithMessage) || '-'
 
     return (
         <article className={styles.container}>
@@ -123,6 +141,13 @@ const VehicleDetailCard = ({ vehicleDetail, onClose }: VehicleDetailCardProps) =
             ) : (
                 <SquareButton>실시간 경로보기</SquareButton>
             )}
+
+            <Modal
+                isOpen={isModalOpen}
+                message={message as ModalMessageType}
+                variant={{ variant: 'alert', confirmButton: '확인' }}
+                onClose={closeModal}
+            />
         </article>
     )
 }

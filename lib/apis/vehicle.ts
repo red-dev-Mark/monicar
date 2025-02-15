@@ -3,27 +3,32 @@ import { httpClient } from '@/lib/apis'
 import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { removeSpaces } from '@/lib/utils/string'
 import { Result } from '@/types/apis/common'
-import { VehicleStatusSummary } from '@/types/vehicle'
+import { VehicleDetail, VehicleLocation, VehicleStatusSummary } from '@/types/vehicle'
 
 export const vehicleService = {
     // 차량 정보 조회
-    getVehicleInfo: async (vehicleNumber: string) => {
+    getVehicleInfo: async (vehicleNumber: string): Promise<Result<VehicleLocation>> => {
         const response = await httpClient.get(`api/v1/vehicle/search`, {
             params: {
                 'vehicle-number': removeSpaces(vehicleNumber),
             },
         })
-
         if (!response.data.isSuccess) {
             const { errorCode } = response.data
             if (errorCode === 1003) {
-                return { isValid: false, value: '등록되지 않은 차량입니다' }
+                return { isSuccess: false, error: '등록되지 않은 차량입니다' }
             } else if (errorCode === 2000) {
-                return { isValid: false, value: '해당 차량의 위치를 찾을 수 없습니다' }
+                return { isSuccess: false, error: '해당 차량의 위치를 찾을 수 없습니다' }
+            } else {
+                return { isSuccess: false, error: response.data.errorMessage }
             }
         }
 
         const { result } = response.data
+
+        if (!result) {
+            return { isSuccess: false, error: '차량 정보 조회에 실패했습니다' }
+        }
 
         const normalizeResult = {
             vehicleId: result.vehicleId,
@@ -34,7 +39,7 @@ export const vehicleService = {
             },
         }
 
-        return { isValid: true, value: normalizeResult }
+        return { isSuccess: true, data: normalizeResult }
     },
 
     // 차량 번호 자동완성 검색
@@ -60,16 +65,19 @@ export const vehicleService = {
     },
 
     // 차량 상세정보 조회
-    getVehicleDetail: async (vehicleId: string) => {
+    getVehicleDetail: async (vehicleId: string): Promise<Result<VehicleDetail>> => {
         const response = await httpClient.get(`api/v1/vehicle/${vehicleId}`)
         if (!response.data.isSuccess) {
-            return { isValid: false, value: response.data.errorMessage as string }
+            return { isSuccess: false, error: response.data.errorMessage }
         }
 
-        const vehicleDetail = response.data.result
-        console.log(vehicleDetail)
+        const { result } = response.data
 
-        return { isValid: true, value: vehicleDetail }
+        if (!result) {
+            return { isSuccess: false, error: '차량 상세정보 조회에 실패했습니다' }
+        }
+
+        return { isSuccess: true, data: result }
     },
 
     // 차량 운행 상태별 현황 조회 (전체/운행중/미운행)

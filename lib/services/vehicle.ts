@@ -8,6 +8,7 @@ export const getVehicleOperationInfo = async (vehicleNumber: string): Promise<Re
     if (!validation.isValid) {
         return { isSuccess: false, error: validation.message! }
     }
+
     try {
         const response = await vehicleService.getVehicleOperationPeriod(vehicleNumber)
         if (!response.isValid) {
@@ -35,18 +36,16 @@ export const getVehicleOperationInfo = async (vehicleNumber: string): Promise<Re
 
 export const getVehicleInfo = async (vehicleNumber: string): Promise<Result<VehicleLocation>> => {
     const validation = validateVehicleNumber(vehicleNumber)
-
     if (!validation.isValid) {
         return { isSuccess: false, error: validation.message! }
     }
 
     const result = await vehicleService.getVehicleInfo(vehicleNumber)
-
-    if (!result.isValid || typeof result.value === 'string') {
-        return { isSuccess: false, error: result.value as string }
+    if (!result.isSuccess || typeof result.isSuccess === 'string') {
+        return { isSuccess: false, error: result.error as string }
     }
 
-    const vehicleInfo = result.value
+    const vehicleInfo = result.data
 
     return {
         isSuccess: true,

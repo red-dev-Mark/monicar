@@ -29,12 +29,11 @@ const Location = () => {
 
     const { inputValue, setInputValue } = useVehicleVisibleStore()
 
-    const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
     const { controlMapStatus } = useMapStatus(mapRef.current)
-    const { showSearchedVehicle, hideSelectedVehicle } = useVehicleDisclosure()
     const { autoCompleteList } = useAutoComplete(inputValue)
-
     const { clearAllQueries } = useQueryParams()
+    const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
+    const { showSearchedVehicle, hideSelectedVehicle } = useVehicleDisclosure()
 
     useEffect(() => {
         return () => clearAllQueries()
@@ -43,23 +42,19 @@ const Location = () => {
     const handleInputSubmit = async () => {
         try {
             const vehicleInfoResult = await getVehicleInfo(inputValue)
-
-            if (!vehicleInfoResult.data) return
+            if (!vehicleInfoResult.isSuccess) throw new Error(vehicleInfoResult.error)
 
             const vehicleLoctaion = vehicleInfoResult.data as VehicleLocation
             setVehicleLocation(vehicleLoctaion)
 
             const { vehicleId } = vehicleLoctaion
+
             const vehicleDetailResult = await vehicleService.getVehicleDetail(vehicleId)
+            if (!vehicleDetailResult.isSuccess) throw new Error(vehicleDetailResult.error)
+            setVehicleDetail(vehicleDetailResult.data)
 
-            console.log(vehicleDetailResult)
-
-            if (!vehicleDetailResult.isValid) throw new Error(vehicleDetailResult.value)
-
-            hideSelectedVehicle()
-
-            setVehicleDetail(vehicleDetailResult.value)
             showSearchedVehicle(inputValue)
+            hideSelectedVehicle()
 
             controlMapStatus(
                 {
@@ -80,8 +75,8 @@ const Location = () => {
         setInputValue(inputValue)
     }
 
-    const isAutoCompleteVisible = autoCompleteList.length > 0
-    console.log(vehicleDetail)
+    const isAutoCompleteVisible = autoCompleteList.length > 0 || inputValue
+
     return (
         <div className={styles.container}>
             <MapSection
@@ -89,6 +84,7 @@ const Location = () => {
                 vehicleInfo={vehicleLocation as VehicleLocation}
                 searchedDetail={vehicleDetail as VehicleDetail}
             />
+
             <div className={styles.searchInputWrapper}>
                 <SearchInput
                     icon='/icons/search-icon.svg'
@@ -98,6 +94,7 @@ const Location = () => {
                 />
                 {isAutoCompleteVisible && <AutoComplete list={autoCompleteList} onClick={handleInputSubmit} />}
             </div>
+
             <VehicleStatusPanel />
 
             <Modal
