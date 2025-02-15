@@ -31,7 +31,14 @@ const RoutePage = () => {
             <Suspense fallback={<div>서스펜스 불러오는 중!</div>}>
                 <RouteSearchSection mapRef={mapRef} onRoutesChange={setRoutes} />
                 <RouteTimelineSection />
-                <MapSection mapRef={mapRef} mapState={mapState} routes={routes} onLoad={() => setIsMapLoaded(true)} />
+                <MapSection
+                    mapRef={mapRef}
+                    mapState={mapState}
+                    routes={routes}
+                    isMapLoaded={isMapLoaded}
+                    onRoutesChange={setRoutes}
+                    onLoad={() => setIsMapLoaded(true)}
+                />
             </Suspense>
         </div>
     )

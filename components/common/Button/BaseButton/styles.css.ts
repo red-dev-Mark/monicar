@@ -11,7 +11,7 @@ export const base = style({
     justifyContent: 'center',
     fontWeight: vars.fontWeights.bold,
     borderRadius: '8px',
-    color: vars.colors.black,
+    color: vars.colors.white,
     ':disabled': {
         cursor: 'not-allowed',
         opacity: vars.opacity[50],

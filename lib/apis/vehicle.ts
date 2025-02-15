@@ -13,8 +13,11 @@ export const vehicleService = {
         })
 
         if (!response.data.isSuccess) {
-            if (response.data.errorCode === 1003) {
-                return { isValid: false, value: '등록되지 않은 차량입니다.' }
+            const { errorCode } = response.data
+            if (errorCode === 1003) {
+                return { isValid: false, value: '등록되지 않은 차량입니다' }
+            } else if (errorCode === 2000) {
+                return { isValid: false, value: '해당 차량의 위치를 찾을 수 없습니다' }
             }
         }
 
@@ -32,6 +35,28 @@ export const vehicleService = {
         return { isValid: true, value: normalizeResult }
     },
 
+    // 차량 번호 자동완성 검색
+    getVehicleAutocomplete: async (vehicleNumber: string) => {
+        if (!removeSpaces(vehicleNumber)) {
+            return { isValid: true, value: [] }
+        }
+
+        const response = await httpClient.get('/api/v1/vehicle/find', {
+            params: {
+                keyword: vehicleNumber,
+            },
+        })
+
+        if (!response.data.isSuccess) {
+            const { errorCode } = response.data
+            return { isValid: false, value: errorCode }
+        }
+
+        const { result } = response.data
+
+        return { isValid: true, value: result }
+    },
+
     // 차량 상세정보 조회
     getVehicleDetail: async (vehicleId: string) => {
         const response = await httpClient.get(`api/v1/vehicle/${vehicleId}`)
@@ -47,7 +72,7 @@ export const vehicleService = {
     },
 
     // 차량번호로 운행 이력 기간 조회
-    getVehicleOperationHistory: async (vehicleNumber: string) => {
+    getVehicleOperationPeriod: async (vehicleNumber: string) => {
         const response = await httpClient.get(`api/v1/vehicle`, {
             params: {
                 vehicleNumber: removeSpaces(vehicleNumber),
@@ -57,8 +82,8 @@ export const vehicleService = {
         const { result } = response.data
 
         if (!result) {
-            // TODO 문구 수정
-            return { isValid: false, value: '차량 정보를 불러오는데 실패했습니다' }
+            const { errorMessage } = response.data
+            return { isValid: false, value: errorMessage[0] }
         }
 
         const vehicleOperationHistory = {

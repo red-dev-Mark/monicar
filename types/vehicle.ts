@@ -2,8 +2,14 @@ import { OPERATION_STATUS } from '@/components/common/Badge/constants'
 import { LatLng } from '@/types/map'
 
 // 차량 정보
-export interface Vehicle {
+export interface Vehicle extends Partial<VehicleOperationPeriod> {
     vehicleId: string
+    vehicleNumber: string
+}
+
+//TODO: 위와 수정
+export interface AutoVehicle extends Partial<VehicleOperationPeriod> {
+    id: string
     vehicleNumber: string
 }
 
@@ -15,14 +21,10 @@ export interface VehicleLocation {
     coordinate: LatLng
 }
 
-// 차량의 운행 이력 정보
-export interface VehicleOperationHistory {
-    vehicleId: string
-    vehicleNumber: string
-    operationPeriod: {
-        firstDateAt: string
-        lastDateAt: string
-    }
+// 차량 운행 기간
+export interface VehicleOperationPeriod {
+    firstOperationDate: string | null
+    lastOperationDate: string | null
 }
 
 // 차량 상세 정보

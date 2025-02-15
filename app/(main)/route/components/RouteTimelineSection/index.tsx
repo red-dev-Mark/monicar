@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 
 import RouteTimelineItem from '@/app/(main)/route/components/RouteTimelineItem'
 import Accordion from '@/components/common/Accordion'
-import { useDisclosure } from '@/hooks/useDisclosure'
-import { routeService, vehicleService } from '@/lib/apis'
+import { useQueryParams } from '@/hooks/useQueryParams'
+import { routeService } from '@/lib/apis'
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
 import { vars } from '@/styles/theme.css'
 import { PaginationInfo } from '@/types/common'
@@ -14,74 +14,35 @@ import { Route } from '@/types/route'
 import * as styles from './styles.css'
 
 const RouteTimelineSection = () => {
-    const [vehicleNumber, setVehicleNumber] = useState('')
-    const [activePage, setActivePage] = useState(1)
+    // const [activePage, setActivePage] = useState(1)
     const [routeDetail, setRouteDetail] = useState<Route[]>()
     const [paginationInfo, setPaginationInfo] = useState<PaginationInfo>()
-    const [interval, setInterval] = useState<string | null>('10')
+    // const [interval, setInterval] = useState<string | null>('10')
 
-    const [isComponentVisible, { open: openComponent, close: closeComponent }] = useDisclosure()
+    // const [isComponentVisible, { open: openComponent, close: closeComponent }] = useDisclosure()
+    const { addQueries, addQuery } = useQueryParams()
 
     const searchParams = useSearchParams()
 
+    const vehicleId = searchParams.get('vehicleId') || ''
+    const vehicleNumber = searchParams.get('vehicleNumber') || ''
+    const startDate = searchParams.get('startDate') || ''
+    const endDate = searchParams.get('endDate') || ''
+    const activePage = searchParams.get('page') || ''
+    const interval = searchParams.get('interval') || ''
+    const isComponentVisible = vehicleId && vehicleNumber && startDate && endDate && activePage && interval
+
     useEffect(() => {
         const getVehicleDatail = async () => {
             try {
-                const vehicleNumber = searchParams.get('vehicleNumber') || ''
-                const vehicleId = searchParams.get('vehicleId') || ''
-                const startDate = searchParams.get('startDate') || ''
-                const endDate = searchParams.get('endDate') || ''
-
-                const isValidVehicle = (await vehicleService.getVehicleOperationHistory(vehicleNumber)).isValid
-                if (!isValidVehicle) {
-                    closeComponent()
-                    return
-                }
+                if (!isComponentVisible) return
 
                 const response = await routeService.getVehicleRoutesDetail({
                     vehicleId,
                     startTime: startDate,
                     endTime: endDate,
-                    page: activePage,
-                    interval: Number(interval) * 60 || 60,
-                })
-
-                if (!response.isSuccess) return
-
-                const { first, last, page, size, totalElements, totalPages } = response.data
-                const { routes } = response.data.content[0]
-
-                setVehicleNumber(vehicleNumber)
-                setRouteDetail(routes)
-                setPaginationInfo({ first, last, page, size, totalElements, totalPages })
-                openComponent()
-            } catch (error) {
-                if (error instanceof Error) {
-                    console.error(error)
-                    closeComponent()
-                }
-            }
-        }
-        getVehicleDatail()
-    }, [searchParams])
-
-    useEffect(() => {
-        const getVehicleDatail = async () => {
-            try {
-                const vehicleNumber = searchParams.get('vehicleNumber') || ''
-                const vehicleId = searchParams.get('vehicleId') || ''
-                const startDate = searchParams.get('startDate') || ''
-                const endDate = searchParams.get('endDate') || ''
-
-                const isValidVehicle = (await vehicleService.getVehicleOperationHistory(vehicleNumber)).isValid
-                if (!isValidVehicle) return
-
-                const response = await routeService.getVehicleRoutesDetail({
-                    vehicleId,
-                    startTime: startDate,
-                    endTime: endDate,
-                    page: activePage,
-                    interval: Number(interval) * 60 || 60,
+                    page: Number(activePage),
+                    interval: Number(interval),
                 })
 
                 if (!response.isSuccess) return
@@ -91,16 +52,15 @@ const RouteTimelineSection = () => {
 
                 setRouteDetail(routes)
                 setPaginationInfo({ first, last, page, size, totalElements, totalPages })
-                openComponent()
+                addQuery('page', String(activePage))
             } catch (error) {
                 if (error instanceof Error) {
                     console.error(error)
-                    closeComponent()
                 }
             }
         }
         getVehicleDatail()
-    }, [searchParams, activePage, interval, openComponent, closeComponent])
+    }, [searchParams, activePage, interval])
 
     if (!isComponentVisible || !routeDetail || !paginationInfo) return
 
@@ -111,10 +71,10 @@ const RouteTimelineSection = () => {
                     <div className={styles.header}>
                         <h1 className={styles.vehicleNumber}>검색 차량 : {addSpaceVehicleNumber(vehicleNumber)}</h1>
                         <Select
-                            value={interval}
+                            value={String(Number(interval) / 60)}
                             onChange={(value) => {
-                                setInterval(value)
-                                setActivePage(1)
+                                if (!value) return
+                                addQueries({ page: '1', interval: Number(value) * 60 })
                             }}
                             data={[
                                 { value: '5', label: '5분' },
@@ -152,8 +112,10 @@ const RouteTimelineSection = () => {
                     <div className={styles.pagination}>
                         <Pagination.Root
                             total={paginationInfo?.totalPages}
-                            value={activePage}
-                            onChange={setActivePage}
+                            value={Number(activePage)}
+                            onChange={(page) => {
+                                addQuery('page', String(page))
+                            }}
                             color={vars.colors.primary}
                             boundaries={0}
                         >
