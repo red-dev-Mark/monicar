@@ -32,7 +32,9 @@ export const messageWrapper = style({
 })
 
 export const message = style({
-    marginLeft: '30px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
 })
 
 export const activeMessageWrapper = style({
@@ -45,4 +47,14 @@ export const activeMessageWrapper = style({
 export const deactiveMessageWrapper = style({
     transition: 'transform 0.7s ease-in-out',
     transform: 'scale(1)',
+})
+
+export const distance = style({
+    marginLeft: '8px',
+    fontSize: vars.fontSizes.small,
+    background: vars.colors.yellow[100],
+    color: vars.colors.yellow[200],
+    border: `solid 1px ${vars.colors.yellow[200]}`,
+    borderRadius: '6px',
+    padding: '0px 4px',
 })
