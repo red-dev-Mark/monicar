@@ -41,7 +41,7 @@ export const getVehicleInfo = async (vehicleNumber: string): Promise<Result<Vehi
     }
 
     const result = await vehicleService.getVehicleInfo(vehicleNumber)
-    if (!result.isSuccess || typeof result.isSuccess === 'string') {
+    if (!result.isSuccess) {
         return { isSuccess: false, error: result.error as string }
     }
 

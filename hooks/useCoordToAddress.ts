@@ -8,6 +8,8 @@ export const useCoordToAddress = (lat: number, lng: number, onError?: (message: 
     const [address, setAddress] = useState('')
 
     useEffect(() => {
+        if (!lat || !lng) return
+
         const cacheKey = `${lat}-${lng}`
 
         if (addressCache.has(cacheKey)) {

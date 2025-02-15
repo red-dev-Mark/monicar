@@ -1,108 +1,15 @@
 'use client'
 
-import { ChangeEventHandler, useEffect, useRef, useState } from 'react'
-
 import MapSection from '@/app/(main)/location/components/MapSection'
 import VehicleStatusPanel from '@/app/(main)/location/components/VehicleStatusPanel'
-import SearchInput from '@/components/common/Input/SearchInput'
-import Modal from '@/components/common/Modal'
-import { ModalMessageType } from '@/components/common/Modal/types'
-import AutoComplete from '@/components/domain/vehicle/AutoComplete'
-import { MAP_CONFIG } from '@/constants/map'
-import { useAutoComplete } from '@/hooks/useAutoComplete'
-import { useMapStatus } from '@/hooks/useMapStatus'
-import { useModal } from '@/hooks/useModal'
-import { useQueryParams } from '@/hooks/useQueryParams'
-import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
-import { vehicleService } from '@/lib/apis'
-import { getVehicleInfo } from '@/lib/services/vehicle'
-import { useVehicleVisibleStore } from '@/stores/useVehicleVisibleStore'
-import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
 const Location = () => {
-    const [vehicleLocation, setVehicleLocation] = useState<VehicleLocation>()
-    const [vehicleDetail, setVehicleDetail] = useState<VehicleDetail>()
-
-    const mapRef = useRef<kakao.maps.Map>(null)
-
-    const { inputValue, setInputValue } = useVehicleVisibleStore()
-
-    const { controlMapStatus } = useMapStatus(mapRef.current)
-    const { autoCompleteList } = useAutoComplete(inputValue)
-    const { clearAllQueries } = useQueryParams()
-    const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
-    const { showSearchedVehicle, hideSelectedVehicle } = useVehicleDisclosure()
-
-    useEffect(() => {
-        return () => clearAllQueries()
-    }, [])
-
-    const handleInputSubmit = async () => {
-        try {
-            const vehicleInfoResult = await getVehicleInfo(inputValue)
-            if (!vehicleInfoResult.isSuccess) throw new Error(vehicleInfoResult.error)
-
-            const vehicleLoctaion = vehicleInfoResult.data as VehicleLocation
-            setVehicleLocation(vehicleLoctaion)
-
-            const { vehicleId } = vehicleLoctaion
-
-            const vehicleDetailResult = await vehicleService.getVehicleDetail(vehicleId)
-            if (!vehicleDetailResult.isSuccess) throw new Error(vehicleDetailResult.error)
-            setVehicleDetail(vehicleDetailResult.data)
-
-            showSearchedVehicle(inputValue)
-            hideSelectedVehicle()
-
-            controlMapStatus(
-                {
-                    lat: vehicleLoctaion.coordinate.lat,
-                    lng: vehicleLoctaion.coordinate.lng,
-                },
-                MAP_CONFIG.SEARCH_VEHICLE.ZOOM_INCREMENT,
-            )
-        } catch (error) {
-            if (error instanceof Error) {
-                openModalWithMessage?.(error.message)
-            }
-        }
-    }
-
-    const handleInputChange: ChangeEventHandler<HTMLInputElement> = async (event) => {
-        const inputValue = event.target.value
-        setInputValue(inputValue)
-    }
-
-    const isAutoCompleteVisible = autoCompleteList.length > 0 || inputValue
-
     return (
         <div className={styles.container}>
-            <MapSection
-                mapRef={mapRef}
-                vehicleInfo={vehicleLocation as VehicleLocation}
-                searchedDetail={vehicleDetail as VehicleDetail}
-            />
-
-            <div className={styles.searchInputWrapper}>
-                <SearchInput
-                    icon='/icons/search-icon.svg'
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    onSubmit={handleInputSubmit}
-                />
-                {isAutoCompleteVisible && <AutoComplete list={autoCompleteList} onClick={handleInputSubmit} />}
-            </div>
-
+            <MapSection />
             <VehicleStatusPanel />
-
-            <Modal
-                isOpen={isModalOpen}
-                message={message as ModalMessageType}
-                variant={{ variant: 'alert', confirmButton: '확인' }}
-                onClose={closeModal}
-            />
         </div>
     )
 }

@@ -43,7 +43,7 @@ export const vehicleService = {
     },
 
     // 차량 번호 자동완성 검색
-    getVehicleAutocomplete: async (vehicleNumber: string) => {
+    getVehicleAutocomplete: async (vehicleNumber: string, signal?: AbortSignal) => {
         if (!removeSpaces(vehicleNumber)) {
             return { isValid: true, value: [] }
         }
@@ -52,6 +52,7 @@ export const vehicleService = {
             params: {
                 keyword: vehicleNumber,
             },
+            signal,
         })
 
         if (!response.data.isSuccess) {
@@ -66,6 +67,8 @@ export const vehicleService = {
 
     // 차량 상세정보 조회
     getVehicleDetail: async (vehicleId: string): Promise<Result<VehicleDetail>> => {
+        if (!vehicleId) return { isSuccess: false, error: '차량 ID가 필요합니다' }
+
         const response = await httpClient.get(`api/v1/vehicle/${vehicleId}`)
         if (!response.data.isSuccess) {
             return { isSuccess: false, error: response.data.errorMessage }

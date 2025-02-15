@@ -16,7 +16,7 @@ export const useQueryParams = () => {
         router.replace(`?${params.toString()}`)
     }
 
-    const addQueries = (queries: Record<string, string | number>) => {
+    const addQueries = async (queries: Record<string, string | number>) => {
         const params = new URLSearchParams(searchParams)
         Object.entries(queries).forEach(([key, value]) => {
             params.set(key, removeSpaces(String(value)))
