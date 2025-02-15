@@ -36,15 +36,6 @@ const DashboardPage = () => {
         nickname: '',
     })
     const [isLoading] = useState()
-    const [active, setActive] = useState(0)
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setActive((current) => (current + 1) % 3)
-        }, 3000)
-
-        return () => clearInterval(timer)
-    }, [])
 
     useEffect(() => {
         const companyName = localStorage.getItem('company_name') || ''
@@ -128,28 +119,7 @@ const DashboardPage = () => {
 
                     <section className={styles.rightSection}>
                         <div className={styles.calendarWrapper}>
-                            <Calendar
-                                calendarData={[
-                                    {
-                                        id: 1,
-                                        ranking: '🥇',
-                                        message: '74나 3957 (49km)',
-                                        isActive: active === 0,
-                                    },
-                                    {
-                                        id: 2,
-                                        ranking: '🥈',
-                                        message: '45가 5858 (42km)',
-                                        isActive: active === 1,
-                                    },
-                                    {
-                                        id: 3,
-                                        ranking: '🥉',
-                                        message: '38모 1537 (38Km)',
-                                        isActive: active === 2,
-                                    },
-                                ]}
-                            />
+                            <Calendar />
                         </div>
 
                         <NoticeListBoard />
@@ -231,29 +201,7 @@ const DashboardPage = () => {
 
             <section className={styles.rightSection}>
                 <div className={styles.calendarWrapper}>
-                    <Calendar
-                        calendarData={[
-                            {
-                                id: 1,
-                                ranking: '🥇',
-                                message: '74나 3957 (49km)',
-                                isActive: active === 0,
-                            },
-                            {
-                                id: 2,
-                                ranking: '🥈',
-                                message: '45가 5858 (42km)',
-                                isActive: active === 1,
-                            },
-                            {
-                                id: 3,
-                                ranking: '🥉',
-                                message: '38모 1537 (38Km)',
-                                isActive: active === 2,
-                            },
-                        ]}
-                        isLoading={isLoading}
-                    />
+                    <Calendar />
                 </div>
 
                 <NoticeListBoard />

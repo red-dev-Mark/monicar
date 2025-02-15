@@ -1,20 +1,10 @@
-import { Skeleton } from '@mantine/core'
+import { useEffect, useState } from 'react'
+
+import Ranking from '../Ranking'
 
 import * as styles from './styles.css'
 
-interface CalendarModel {
-    id: number
-    ranking: string
-    message: string
-    isActive?: boolean
-}
-
-interface CalendarProps {
-    calendarData: CalendarModel[]
-    isLoading?: boolean
-}
-
-const Calendar = ({ calendarData, isLoading }: CalendarProps) => {
+const Calendar = () => {
     const today = new Date()
     const week = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일']
     const day = week[today.getDay()]
@@ -29,6 +19,16 @@ const Calendar = ({ calendarData, isLoading }: CalendarProps) => {
         currentDate + 2,
         currentDate + 3,
     ]
+    const [isLoading] = useState()
+    const [active, setActive] = useState(0)
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setActive((current) => (current + 1) % 3)
+        }, 3000)
+
+        return () => clearInterval(timer)
+    }, [])
 
     return (
         <div className={styles.container}>
@@ -59,25 +59,29 @@ const Calendar = ({ calendarData, isLoading }: CalendarProps) => {
 
             <div className={styles.divider} />
 
-            <p className={styles.title}>주행거리 높은 순</p>
-            <div className={styles.messageContainer}>
-                <div className={styles.messageList}>
-                    {calendarData.map((data) => (
-                        <div key={data.id} className={styles.messageWrapper}>
-                            <div>{data.ranking}</div>
-                            {isLoading ? (
-                                <Skeleton height={16} width='100%' />
-                            ) : (
-                                <div
-                                    className={`${styles.message} ${data.isActive ? styles.activeMessageWrapper : styles.deactiveMessageWrapper}`}
-                                >
-                                    {data.message}
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </div>
-            </div>
+            <Ranking
+                rankingData={[
+                    {
+                        id: 1,
+                        ranking: '🥇',
+                        message: '74나 3957 (49km)',
+                        isActive: active === 0,
+                    },
+                    {
+                        id: 2,
+                        ranking: '🥈',
+                        message: '45가 5858 (42km)',
+                        isActive: active === 1,
+                    },
+                    {
+                        id: 3,
+                        ranking: '🥉',
+                        message: '38모 1537 (38Km)',
+                        isActive: active === 2,
+                    },
+                ]}
+                isLoading={isLoading}
+            />
         </div>
     )
 }
