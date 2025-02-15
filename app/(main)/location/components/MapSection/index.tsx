@@ -39,7 +39,11 @@ const MapSection = memo(({ mapRef, vehicleInfo, searchedDetail }: MapSectionProp
     }, [isMapLoaded])
 
     const handleVehicleClick = async (vehicleId: string, vehicleNumber: string) => {
-        const selectedVehicleDetail = await selectVehicle(vehicleId, vehicleNumber)
+        const result = await selectVehicle(vehicleId, vehicleNumber)
+
+        if (!result?.isValid) return
+
+        const selectedVehicleDetail = result.value
 
         const {
             recentCycleInfo: { lat, lng },

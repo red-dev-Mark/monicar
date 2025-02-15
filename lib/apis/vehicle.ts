@@ -61,7 +61,13 @@ export const vehicleService = {
     getVehicleDetail: async (vehicleId: string) => {
         const response = await httpClient.get(`api/v1/vehicle/${vehicleId}`)
 
-        return response.data.result
+        if (!response.data.isSuccess) {
+            return { isValid: false, value: response.data.errorMessage as string }
+        }
+
+        const vehicleDetail = response.data.result
+
+        return { isValid: true, value: vehicleDetail }
     },
 
     // 차량 운행 상태별 현황 조회 (전체/운행중/미운행)

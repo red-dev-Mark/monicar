@@ -10,26 +10,29 @@ import { ModalMessageType } from '@/components/common/Modal/types'
 import AutoComplete from '@/components/domain/vehicle/AutoComplete'
 import { MAP_CONFIG } from '@/constants/map'
 import { useMapStatus } from '@/hooks/useMapStatus'
+import { useModal } from '@/hooks/useModal'
 import { useQueryParams } from '@/hooks/useQueryParams'
 import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
-import { useVehicleLocationSearch } from '@/hooks/useVehicleLocationSearch'
 import { vehicleService } from '@/lib/apis'
+import { getVehicleInfo } from '@/lib/services/vehicle'
 import { useVehicleVisibleStore } from '@/stores/useVehicleVisibleStore'
 import { AutoVehicle, VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
 const Location = () => {
+    const [vehicleLocation, setVehicleLocation] = useState<VehicleLocation>()
     const [vehicleDetail, setVehicleDetail] = useState<VehicleDetail>()
     const [autoCompleteList, setAutoCompleteList] = useState<AutoVehicle[]>([])
+
+    const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
 
     const mapRef = useRef<kakao.maps.Map>(null)
 
     const { controlMapStatus } = useMapStatus(mapRef.current)
     const { showSearchedVehicle, hideSelectedVehicle } = useVehicleDisclosure()
     const { inputValue, setInputValue } = useVehicleVisibleStore()
-    const { vehicleInfo, isModalOpen, message, closeModal, searchVehicleWithNumber } =
-        useVehicleLocationSearch(inputValue)
+
     const { clearAllQueries } = useQueryParams()
 
     useEffect(() => {
@@ -37,25 +40,36 @@ const Location = () => {
     }, [])
 
     const handleInputSubmit = async () => {
-        const vehicleInfo = await searchVehicleWithNumber()
+        try {
+            const vehicleInfoResult = await getVehicleInfo(inputValue)
 
-        if (!vehicleInfo) return
+            if (!vehicleInfoResult.data) return
 
-        const { vehicleId } = vehicleInfo as VehicleLocation
-        const vehicleDetail = await vehicleService.getVehicleDetail(vehicleId)
+            const vehicleLoctaion = vehicleInfoResult.data as VehicleLocation
+            setVehicleLocation(vehicleLoctaion)
 
-        hideSelectedVehicle()
+            const { vehicleId } = vehicleLoctaion
+            const vehicleDetailResult = await vehicleService.getVehicleDetail(vehicleId)
 
-        setVehicleDetail(vehicleDetail)
-        showSearchedVehicle(inputValue)
+            if (!vehicleDetailResult.isValid) throw new Error(vehicleDetailResult.value)
 
-        controlMapStatus(
-            {
-                lat: vehicleInfo.coordinate.lat,
-                lng: vehicleInfo.coordinate.lng,
-            },
-            MAP_CONFIG.SEARCH_VEHICLE.ZOOM_INCREMENT,
-        )
+            hideSelectedVehicle()
+
+            setVehicleDetail(vehicleDetail)
+            showSearchedVehicle(inputValue)
+
+            controlMapStatus(
+                {
+                    lat: vehicleLoctaion.coordinate.lat,
+                    lng: vehicleLoctaion.coordinate.lng,
+                },
+                MAP_CONFIG.SEARCH_VEHICLE.ZOOM_INCREMENT,
+            )
+        } catch (error) {
+            if (error instanceof Error) {
+                openModalWithMessage?.(error.message)
+            }
+        }
     }
 
     const handleInputChange: ChangeEventHandler<HTMLInputElement> = async (event) => {
@@ -77,7 +91,7 @@ const Location = () => {
         <div className={styles.container}>
             <MapSection
                 mapRef={mapRef}
-                vehicleInfo={vehicleInfo as VehicleLocation}
+                vehicleInfo={vehicleLocation as VehicleLocation}
                 searchedDetail={vehicleDetail as VehicleDetail}
             />
             <div className={styles.searchInputWrapper}>
