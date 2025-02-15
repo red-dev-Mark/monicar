@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react'
-
 import Ranking from '../Ranking'
 
 import * as styles from './styles.css'
@@ -19,16 +17,6 @@ const Calendar = () => {
         currentDate + 2,
         currentDate + 3,
     ]
-    const [isLoading] = useState()
-    const [active, setActive] = useState(0)
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setActive((current) => (current + 1) % 3)
-        }, 3000)
-
-        return () => clearInterval(timer)
-    }, [])
 
     return (
         <div className={styles.container}>
@@ -59,29 +47,7 @@ const Calendar = () => {
 
             <div className={styles.divider} />
 
-            <Ranking
-                rankingData={[
-                    {
-                        id: 1,
-                        ranking: '🥇',
-                        message: '74나 3957 (49km)',
-                        isActive: active === 0,
-                    },
-                    {
-                        id: 2,
-                        ranking: '🥈',
-                        message: '45가 5858 (42km)',
-                        isActive: active === 1,
-                    },
-                    {
-                        id: 3,
-                        ranking: '🥉',
-                        message: '38모 1537 (38Km)',
-                        isActive: active === 2,
-                    },
-                ]}
-                isLoading={isLoading}
-            />
+            <Ranking />
         </div>
     )
 }
