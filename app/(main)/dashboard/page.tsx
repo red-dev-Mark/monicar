@@ -8,11 +8,11 @@ import Calendar from '@/app/(main)/dashboard/components/Calendar'
 // import SearchInput from '@/components/common/Input/SearchInput'
 // import Modal from '@/components/common/Modal'
 // import { ModalMessageType } from '@/components/common/Modal/types'
+import HeaderSkeleton from '@/components/common/Skeleton/HeaderSkeleton'
 import Map from '@/components/domain/map/Map'
 // import { useSearchSingleVehicle } from '@/hooks/useVehicleLocationSearch'
 import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from '@/public/icons'
 
-import HeaderSkeleton from './components/HeaderSkeleton'
 import InspectionStatus from './components/InspectionStatus'
 import NoticeListBoard from './components/NoticeListBoard'
 import VehicleStatusPanel from './components/VehicleStatusPanel'
@@ -223,7 +223,7 @@ const DashboardPage = () => {
                             value={searchTerm}
                             onChange={handleSearchChange}
                             onSubmit={handleVehicleSearch}
-                        />
+                        />xw
                     </div> */}
                     <Map />
                 </div>

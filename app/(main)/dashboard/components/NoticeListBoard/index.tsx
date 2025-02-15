@@ -2,10 +2,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
+import NoticeSkeleton from '@/components/common/Skeleton/NoticeSkeleton'
 import { noticeService } from '@/lib/apis'
 import { Notice } from '@/types/notice'
-
-import NoticeSkeleton from '../NoticeSkeleton'
 
 import * as styles from './styles.css'
 

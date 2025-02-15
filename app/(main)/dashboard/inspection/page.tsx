@@ -4,9 +4,9 @@ import Image from 'next/image'
 import { Suspense, useState } from 'react'
 
 import Breadcrumbs from '@/components/common/Breadcrumbs'
+import InspectionSkeleton from '@/components/common/Skeleton/InspectionSkeleton'
 
 import InspectionCard from './components/InspectionCard'
-import InspectionSkeleton from './components/InspectionSkeleton'
 import InspectionStatusPanel from './components/InspectionStatusPanel'
 import * as styles from './styles.css'
 
