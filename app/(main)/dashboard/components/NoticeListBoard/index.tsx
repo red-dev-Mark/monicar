@@ -36,7 +36,13 @@ const NoticeListBoard = () => {
             <h2 className={styles.heading}>공지사항</h2>
 
             {isLoading ? (
-                <NoticeSkeleton />
+                <>
+                    <NoticeSkeleton />
+                    <NoticeSkeleton />
+                    <NoticeSkeleton />
+                    <NoticeSkeleton />
+                    <NoticeSkeleton />
+                </>
             ) : (
                 <div className={styles.noticeList}>
                     {noticeList.map((notice) => (
