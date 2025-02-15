@@ -45,7 +45,9 @@ export const useQueryParams = () => {
     }
 
     const clearAllQueries = () => {
-        router.replace(window.location.pathname)
+        setTimeout(() => {
+            router.replace(window.location.pathname)
+        }, 100)
     }
 
     return {

@@ -3,7 +3,7 @@ import { style } from '@vanilla-extract/css'
 import { vars } from '@/styles/theme.css'
 
 export const accordion = style({
-    width: '600px',
+    width: '760px',
     position: 'absolute',
     bottom: '12px',
     right: '12px',
