@@ -3,10 +3,10 @@
 import { Tooltip } from '@mantine/core'
 import Image from 'next/image'
 
-import { getFormattedVehicleDetail } from '@/app/(main)/location/utils/format'
 import Badge from '@/components/common/Badge'
 import SquareButton from '@/components/common/Button/SquareButton'
 import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
+import { getFormattedVehicleDetail } from '@/lib/utils/vehicle'
 import { useVehicleVisibleStore } from '@/stores/useVehicleVisibleStore'
 import { vars } from '@/styles/theme.css'
 import { VehicleDetail } from '@/types/vehicle'

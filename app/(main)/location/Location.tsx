@@ -9,6 +9,7 @@ import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import AutoComplete from '@/components/domain/vehicle/AutoComplete'
 import { MAP_CONFIG } from '@/constants/map'
+import { useAutoComplete } from '@/hooks/useAutoComplete'
 import { useMapStatus } from '@/hooks/useMapStatus'
 import { useModal } from '@/hooks/useModal'
 import { useQueryParams } from '@/hooks/useQueryParams'
@@ -16,22 +17,22 @@ import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
 import { vehicleService } from '@/lib/apis'
 import { getVehicleInfo } from '@/lib/services/vehicle'
 import { useVehicleVisibleStore } from '@/stores/useVehicleVisibleStore'
-import { AutoVehicle, VehicleDetail, VehicleLocation } from '@/types/vehicle'
+import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
 const Location = () => {
     const [vehicleLocation, setVehicleLocation] = useState<VehicleLocation>()
     const [vehicleDetail, setVehicleDetail] = useState<VehicleDetail>()
-    const [autoCompleteList, setAutoCompleteList] = useState<AutoVehicle[]>([])
-
-    const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
 
     const mapRef = useRef<kakao.maps.Map>(null)
 
+    const { inputValue, setInputValue } = useVehicleVisibleStore()
+
+    const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
     const { controlMapStatus } = useMapStatus(mapRef.current)
     const { showSearchedVehicle, hideSelectedVehicle } = useVehicleDisclosure()
-    const { inputValue, setInputValue } = useVehicleVisibleStore()
+    const { autoCompleteList } = useAutoComplete(inputValue)
 
     const { clearAllQueries } = useQueryParams()
 
@@ -51,11 +52,13 @@ const Location = () => {
             const { vehicleId } = vehicleLoctaion
             const vehicleDetailResult = await vehicleService.getVehicleDetail(vehicleId)
 
+            console.log(vehicleDetailResult)
+
             if (!vehicleDetailResult.isValid) throw new Error(vehicleDetailResult.value)
 
             hideSelectedVehicle()
 
-            setVehicleDetail(vehicleDetail)
+            setVehicleDetail(vehicleDetailResult.value)
             showSearchedVehicle(inputValue)
 
             controlMapStatus(
@@ -75,18 +78,10 @@ const Location = () => {
     const handleInputChange: ChangeEventHandler<HTMLInputElement> = async (event) => {
         const inputValue = event.target.value
         setInputValue(inputValue)
-
-        const response = await vehicleService.getVehicleAutocomplete(inputValue)
-
-        if (response.value.length === 0) {
-            setAutoCompleteList([])
-        } else {
-            setAutoCompleteList(response.value)
-        }
     }
 
     const isAutoCompleteVisible = autoCompleteList.length > 0
-
+    console.log(vehicleDetail)
     return (
         <div className={styles.container}>
             <MapSection

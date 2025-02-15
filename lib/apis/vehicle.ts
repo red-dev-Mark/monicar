@@ -2,6 +2,8 @@ import { RegisterVehicleModel, VehicleTypeModel } from '@/app/(main)/log/registe
 import { httpClient } from '@/lib/apis'
 import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { removeSpaces } from '@/lib/utils/string'
+import { Result } from '@/types/apis/common'
+import { VehicleStatusSummary } from '@/types/vehicle'
 
 export const vehicleService = {
     // 차량 정보 조회
@@ -60,21 +62,29 @@ export const vehicleService = {
     // 차량 상세정보 조회
     getVehicleDetail: async (vehicleId: string) => {
         const response = await httpClient.get(`api/v1/vehicle/${vehicleId}`)
-
         if (!response.data.isSuccess) {
             return { isValid: false, value: response.data.errorMessage as string }
         }
 
         const vehicleDetail = response.data.result
+        console.log(vehicleDetail)
 
         return { isValid: true, value: vehicleDetail }
     },
 
     // 차량 운행 상태별 현황 조회 (전체/운행중/미운행)
-    getVehicleStatus: async () => {
+    getVehicleStatus: async (): Promise<Result<VehicleStatusSummary>> => {
         const response = await httpClient.get(`api/v1/vehicle/status`)
 
-        return response.data.result
+        if (!response.data.isSuccess) {
+            return { isSuccess: false, error: response.data.errorMessage as string }
+        }
+
+        if (!response.data.result) {
+            return { isSuccess: false, error: '차량현황 조회에 실패하였습니다' }
+        }
+
+        return { isSuccess: true, data: response.data.result }
     },
 
     // 차량번호로 운행 이력 기간 조회
