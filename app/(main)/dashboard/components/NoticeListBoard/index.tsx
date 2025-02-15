@@ -2,9 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
-import PageLoader from '@/components/common/PageLoader'
 import { noticeService } from '@/lib/apis'
 import { Notice } from '@/types/notice'
+
+import NoticeSkeleton from '../NoticeSkeleton'
 
 import * as styles from './styles.css'
 
@@ -35,7 +36,7 @@ const NoticeListBoard = () => {
             <h2 className={styles.heading}>공지사항</h2>
 
             {isLoading ? (
-                <PageLoader />
+                <NoticeSkeleton />
             ) : (
                 <div className={styles.noticeList}>
                     {noticeList.map((notice) => (

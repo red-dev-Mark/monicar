@@ -3,10 +3,11 @@
 import { Map as KakaoMap } from 'react-kakao-maps-sdk'
 
 import ErrorMessage from '@/components/common/ErrorMessage'
-import PageLoader from '@/components/common/PageLoader'
 import { MAP_CONFIG } from '@/constants/map'
 import { useKakaoLoader } from '@/hooks/useKakaoLoader'
 import { LatLng, MapRefType } from '@/types/map'
+
+import MapSkeleton from '../MapSkeleton'
 
 interface MapProps {
     ref?: MapRefType
@@ -37,7 +38,7 @@ const Map = ({
         onMapStatusChanged?.()
     }
 
-    if (loading) return <PageLoader />
+    if (loading) return <MapSkeleton />
     if (error) return <ErrorMessage />
 
     return (
