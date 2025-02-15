@@ -1,5 +1,3 @@
-import { BaseButton } from '../Button/BaseButton'
-
 import * as styles from './styles.css'
 
 type StatusType = 'required' | 'scheduled' | 'inProgress' | 'completed'
@@ -10,23 +8,21 @@ export interface InspectionStatusAlertModel {
     iconType: IconType
     icon: React.ReactNode
     title: string
-    children: string
+    vehicleNumber: string
     message: string
 }
 
 interface InspectionStatusAlertProps {
     inspectionStatusData: InspectionStatusAlertModel[]
     isOpen?: boolean
-    onClose?: () => void
 }
 
-const InspectionStatusAlert = ({ inspectionStatusData, isOpen, onClose }: InspectionStatusAlertProps) => {
+const InspectionStatusAlert = ({ inspectionStatusData, isOpen }: InspectionStatusAlertProps) => {
     if (!isOpen) return null
 
     return (
         <>
-            <div className={styles.overlay} role='presentation' />
-            <div className={styles.container}>
+            <div className={styles.container} role='alert'>
                 {inspectionStatusData.map((data) => {
                     return (
                         <div
@@ -43,17 +39,8 @@ const InspectionStatusAlert = ({ inspectionStatusData, isOpen, onClose }: Inspec
 
                             <div>
                                 <div className={styles.title}>{data.title}</div>
-                                <div className={styles.vehicleNumber}>{data.children}</div>
+                                <div className={styles.vehicleNumber}>{data.vehicleNumber}</div>
                                 <div className={styles.message}>{data.message}</div>
-
-                                <div className={styles.buttonGroup}>
-                                    <BaseButton className={styles.button} onClick={onClose}>
-                                        취소
-                                    </BaseButton>
-                                    <BaseButton className={styles.button} onClick={() => {}}>
-                                        승인
-                                    </BaseButton>
-                                </div>
                             </div>
                         </div>
                     )

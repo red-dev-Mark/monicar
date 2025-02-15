@@ -22,7 +22,7 @@ const mockInspectionData: InspectionStatusAlertModel[] = [
         iconType: 'bell' as const,
         icon: <Image src='/icons/white-bell-icon.svg' alt='bell' width={24} height={24} />,
         title: '차량 점검 안내',
-        children: '123가 4567',
+        vehicleNumber: '123가 4567',
         message: '차량에 대한 점검이 필요합니다.',
     },
     {
@@ -30,7 +30,7 @@ const mockInspectionData: InspectionStatusAlertModel[] = [
         iconType: 'alert' as const,
         icon: <Image src='/icons/white-alert-icon.svg' alt='alert' width={24} height={24} />,
         title: '차량 점검 예정',
-        children: '456나 7890',
+        vehicleNumber: '456나 7890',
         message: '차량이 점검 예정입니다.',
     },
     {
@@ -38,7 +38,7 @@ const mockInspectionData: InspectionStatusAlertModel[] = [
         iconType: 'button' as const,
         icon: <Image src='/icons/white-on-button-icon.svg' alt='button' width={24} height={24} />,
         title: '차량 점검 진행',
-        children: '789다 1234',
+        vehicleNumber: '789다 1234',
         message: '차량에 대한 점검이 진행 중입니다.',
     },
     {
@@ -46,7 +46,7 @@ const mockInspectionData: InspectionStatusAlertModel[] = [
         iconType: 'check' as const,
         icon: <Image src='/icons/white-check-icon.svg' alt='check' width={24} height={24} />,
         title: '차량 점검 완료',
-        children: '321라 6547',
+        vehicleNumber: '321라 6547',
         message: '차량에 대한 점검이 완료되었습니다.',
     },
 ]

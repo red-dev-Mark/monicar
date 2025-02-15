@@ -3,18 +3,6 @@ import { recipe } from '@vanilla-extract/recipes'
 
 import { vars } from '@/styles/theme.css'
 
-export const overlay = style({
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    inset: 0,
-    width: '100%',
-    height: '100dvh',
-    opacity: 0.2,
-    backgroundColor: vars.colors.black,
-    zIndex: vars.zIndex.overlay,
-})
-
 export const statusCard = recipe({
     base: {
         width: '100%',
@@ -38,10 +26,9 @@ export const statusCard = recipe({
 })
 
 export const container = style({
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: 'fixed',
+    bottom: '20px',
+    right: '20px',
     width: '100%',
     maxWidth: '450px',
     justifyContent: 'center',
