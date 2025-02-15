@@ -12,6 +12,7 @@ export const container = style({
     backgroundColor: vars.colors.white,
     borderRadius: '12px',
     fontWeight: vars.fontWeights.bold,
+    cursor: 'pointer',
 
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {

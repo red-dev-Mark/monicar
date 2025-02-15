@@ -57,3 +57,10 @@ export interface VehicleStatusSummary {
     engineOnVehicles: number
     engineOffVehicles: number
 }
+
+// 주행거리 높은 순 랭킹
+export interface RankingResponse {
+    id: number
+    vehicleNumber: string
+    distance: number
+}
