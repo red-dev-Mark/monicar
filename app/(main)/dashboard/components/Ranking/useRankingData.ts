@@ -1,7 +1,6 @@
 import { API_ENDPOINTS } from '@/constants/api'
 import { useData } from '@/hooks/useData'
-
-import { RankingResponse } from './types'
+import { RankingResponse } from '@/types/vehicle'
 
 export const useRankingData = () => {
     const { data, isLoading, error } = useData<RankingResponse[]>({
