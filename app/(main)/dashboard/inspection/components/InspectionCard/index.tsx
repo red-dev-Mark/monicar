@@ -1,28 +1,55 @@
+import { BaseButton } from '@/components/common/Button/BaseButton'
+import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from '@/public/icons'
+
 import * as styles from './styles.css'
 
 type StatusType = 'REQUIRED' | 'SCHEDULED' | 'INPROGRESS' | 'COMPLETED'
 
 interface InspectionCardProps {
-    icon: React.ReactNode
-    title: string
-    description?: string | number
-    actionButton: React.ReactNode
+    vehicleNumber: string
+    managerName?: string
+    drivingDistance?: number
+    hasButton?: boolean
     status: StatusType
 }
 
-const InspectionCard = ({ icon, title, description, actionButton, status }: InspectionCardProps) => {
+const InspectionCard = ({
+    vehicleNumber,
+    drivingDistance,
+    managerName,
+    hasButton = true,
+    status,
+}: InspectionCardProps) => {
+    const iconStatus = (status: StatusType) => {
+        switch (status) {
+            case 'REQUIRED':
+                return <WhiteBellIcon />
+            case 'SCHEDULED':
+                return <WhiteAlertIcon />
+            case 'INPROGRESS':
+                return <WhiteOnButtonIcon />
+            case 'COMPLETED':
+                return <WhiteCheckIcon />
+        }
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.iconWrapper[status]}>
-                <div className={styles.icon}>{icon}</div>
+                <div className={styles.icon}>{iconStatus(status)}</div>
             </div>
 
-            <div>
-                <p className={styles.title}>{title}</p>
-                {!!description && <p className={styles.description}>{description}</p>}
+            <div className={styles.contents}>
+                <p className={styles.vehicleNumber}>{vehicleNumber}</p>
+                {drivingDistance && <p className={styles.description}>{drivingDistance}</p>}
+                {managerName && <p className={styles.description}>{managerName}</p>}
             </div>
 
-            <div className={styles.button}>{actionButton}</div>
+            {hasButton && (
+                <div className={styles.button}>
+                    <BaseButton onClick={() => {}}>승인</BaseButton>
+                </div>
+            )}
         </div>
     )
 }

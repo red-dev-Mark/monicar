@@ -5,7 +5,20 @@ const TabMenu = () => {
     const [activeTab, setActiveTab] = useState<string | null>('REQUIRED')
 
     return (
-        <Tabs color='#ff385c' variant='pills' radius='xl' value={activeTab} onChange={setActiveTab}>
+        <Tabs
+            color='#FF385C'
+            variant='pills'
+            radius='xl'
+            value={activeTab}
+            onChange={setActiveTab}
+            styles={{
+                tab: {
+                    fontSize: '16px',
+                    fontWeight: 600,
+                    color: '#5e5e5e',
+                },
+            }}
+        >
             <Tabs.List>
                 <Tabs.Tab value='REQUIRED'>점검 필요</Tabs.Tab>
                 <Tabs.Tab value='SCHEDULED'>점검 예정</Tabs.Tab>

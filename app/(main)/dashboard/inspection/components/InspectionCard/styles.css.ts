@@ -4,26 +4,38 @@ import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
     backgroundColor: vars.colors.gray[100],
-    padding: '10px',
+    padding: '20px',
     borderRadius: '10px',
-    width: '350px',
-    height: '80px',
+    width: '100%',
+    height: '120px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '16px',
 
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {},
     },
 })
 
-export const title = style({
+export const contents = style({
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+})
+
+export const vehicleNumber = style({
     fontSize: vars.fontSizes.mediumPlus,
     color: vars.colors.gray[800],
+    fontWeight: vars.fontWeights.bold,
 })
 
 export const description = style({
-    color: vars.colors.gray[700],
+    color: vars.colors.gray[600],
 })
 
-export const button = style({})
+export const button = style({
+    color: vars.colors.gray[600],
+})
 
 const iconWrapperBase = style({
     width: '40px',
