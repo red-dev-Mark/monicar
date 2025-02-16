@@ -25,7 +25,7 @@ const ViewportVehicleList = ({ clusterDetail, onVehicleClick }: ViewportVehicleL
     }, [])
 
     const getVehicleStatus = (status: keyof typeof OPERATION_STATUS) => {
-        return OPERATION_STATUS[status] ?? '운행중'
+        return OPERATION_STATUS[status] === '운행중' ? '운행중' : '미운행'
     }
 
     return (
@@ -36,30 +36,26 @@ const ViewportVehicleList = ({ clusterDetail, onVehicleClick }: ViewportVehicleL
                         <div className={styles.listHeader}>
                             총<span className={styles.vehicleCount}>{clusterDetail.length}</span>대의 차량
                         </div>
+                        {clusterDetail.map((cluster) => {
+                            const vehicleNumber = addSpaceVehicleNumber(cluster.vehicleNumber)
 
-                        <div className={styles.list}>
-                            {clusterDetail.map((cluster) => {
-                                const vehicleNumber = addSpaceVehicleNumber(cluster.vehicleNumber)
-
-                                return (
-                                    <div
-                                        key={cluster.vehicleId}
-                                        className={styles.listItem}
-                                        onClick={() => onVehicleClick(cluster.vehicleId, cluster.vehicleNumber)}
-                                        role='presentation'
-                                    >
-                                        <Badge shape='circle' variant={getVehicleStatus(cluster.status!)} />
-                                        <p className={styles.vehicleNumber}>{vehicleNumber}</p>
-                                        <Image
-                                            src={'/icons/right-icon.svg'}
-                                            width={24}
-                                            height={24}
-                                            alt='자세히보기 버튼'
-                                        />
-                                    </div>
-                                )
-                            })}
-                        </div>
+                            return (
+                                <div
+                                    key={cluster.vehicleId}
+                                    className={styles.listItem}
+                                    onClick={() => onVehicleClick(cluster.vehicleId, cluster.vehicleNumber)}
+                                    role='presentation'
+                                >
+                                    <Badge
+                                        shape='circle'
+                                        variant={getVehicleStatus(cluster.status!)}
+                                        className={styles.badge}
+                                    />
+                                    <p className={styles.vehicleNumber}>{vehicleNumber}</p>
+                                    <Image src={'/icons/right-icon.svg'} width={24} height={24} alt='자세히보기 버튼' />
+                                </div>
+                            )
+                        })}
                     </main>
                 ) : (
                     <div className={styles.emptyText}>

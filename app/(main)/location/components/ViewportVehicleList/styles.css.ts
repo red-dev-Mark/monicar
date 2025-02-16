@@ -24,13 +24,8 @@ export const container = style({
     },
 })
 
-export const vehicleList = style({
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: '12px',
-})
-
 export const listHeader = style({
+    margin: '8px 0',
     marginRight: '12px',
     display: 'flex',
     justifyContent: 'flex-end',
@@ -43,10 +38,12 @@ export const vehicleCount = style({
     fontWeight: vars.fontWeights.bold,
 })
 
-export const list = style({
-    marginTop: '12px',
+export const vehicleList = style({
     height: '340px',
     overflowY: 'auto',
+    display: 'flex',
+    gap: '4px',
+    flexDirection: 'column',
 
     '::-webkit-scrollbar': {
         width: '4px',
@@ -63,7 +60,7 @@ export const list = style({
 
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
-            maxHeight: '240px',
+            maxHeight: '220px',
         },
     },
 })
@@ -81,12 +78,6 @@ export const listItem = style({
     selectors: {
         '&:hover': {
             backgroundColor: vars.colors.gray[100],
-        },
-    },
-
-    '@media': {
-        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
-            // padding: '8px 6px',
         },
     },
 })
@@ -110,7 +101,6 @@ export const emptyText = style({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-
     color: vars.colors.gray[800],
     fontSize: vars.fontSizes.medium,
     fontWeight: vars.fontWeights.bold,
@@ -124,4 +114,14 @@ export const emptyText = style({
 
 export const description = style({
     color: vars.colors.gray[600],
+})
+
+export const badge = style({
+    fontSize: vars.fontSizes.small,
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            fontSize: vars.fontSizes.xsmall,
+        },
+    },
 })
