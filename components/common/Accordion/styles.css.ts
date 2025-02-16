@@ -9,7 +9,7 @@ export const accordion = style({
     zIndex: vars.zIndex.dropdown,
     selectors: {
         '.dark &': {
-            backgroundColor: vars.colors.dark,
+            backgroundColor: vars.colors.gray[200],
         },
     },
 })
