@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { vars } from '@/styles/theme.css'
+import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
     position: 'relative',
@@ -11,10 +11,19 @@ export const container = style({
 export const searchInputWrapper = style({
     width: '390px',
     position: 'absolute',
-    top: '2rem',
-    right: '2rem',
+    top: '32px',
+    right: '32px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     zIndex: vars.zIndex.dropdown,
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            width: '100%',
+            padding: '12px',
+            top: 0,
+            left: 0,
+        },
+    },
 })

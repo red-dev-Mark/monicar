@@ -73,6 +73,17 @@ const Location = () => {
 
     const isAutoCompleteVisible = autoCompleteList.length > 0
 
+    // const list = [
+    //     { id: 1, vehicleNumber: '123나 1234' },
+    //     { id: 1, vehicleNumber: '123나 1234' },
+    //     { id: 1, vehicleNumber: '123나 1234' },
+    //     { id: 1, vehicleNumber: '123나 1234' },
+    //     { id: 1, vehicleNumber: '123나 1234' },
+    //     { id: 1, vehicleNumber: '123나 1234' },
+    //     { id: 1, vehicleNumber: '123나 1234' },
+    //     { id: 1, vehicleNumber: '123나 1234' },
+    // ]
+
     return (
         <div className={styles.container}>
             <MapSection
@@ -86,8 +97,10 @@ const Location = () => {
                     value={inputValue}
                     onChange={handleInputChange}
                     onSubmit={handleInputSubmit}
+                    style={{ borderRadius: '8px' }}
                 />
                 {isAutoCompleteVisible && <AutoComplete list={autoCompleteList} onClick={handleInputSubmit} />}
+                {/* {<AutoComplete list={list} onClick={handleInputSubmit} />} */}
             </div>
             <VehicleStatusPanel />
 
