@@ -17,7 +17,6 @@ const NavBar = () => {
 
     useEffect(() => {
         const useEmail = localStorage.getItem('email') || 'b6f2@monicar.com'
-
         setUserEmail(useEmail)
     }, [])
 
@@ -29,8 +28,16 @@ const NavBar = () => {
         }
     }, [isDarkMode])
 
+    useEffect(() => {
+        const savedDarkMode = localStorage.getItem('darkMode') === 'true'
+        setIsDarkMode(savedDarkMode)
+    }, [])
+
     const handleDarkModeClick = () => {
-        setIsDarkMode(!isDarkMode)
+        setIsDarkMode((previous) => {
+            localStorage.setItem('darkMode', (!previous).toString())
+            return !previous
+        })
     }
 
     return (
