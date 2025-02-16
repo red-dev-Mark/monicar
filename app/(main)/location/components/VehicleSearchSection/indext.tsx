@@ -27,9 +27,7 @@ const VehicleSearchSection = ({ mapRef, isMapLoaded }: VehicleSearchSectionProps
 
     const { controlMapStatus } = useMapStatus(mapRef.current)
     const { addQueries } = useQueryParams()
-
     const { isAutoCompleteVisible, autoCompleteList, hideAutoComplete } = useAutoComplete(inputValue)
-
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
 
     const searchParams = useSearchParams()
@@ -44,8 +42,6 @@ const VehicleSearchSection = ({ mapRef, isMapLoaded }: VehicleSearchSectionProps
 
     const handleInputSubmit = async (inputValue: string) => {
         try {
-            hideAutoComplete()
-
             const result = await getVehicleInfo(inputValue)
             if (!result.isSuccess || !result.data) throw new Error(result.error || '')
 
@@ -65,7 +61,11 @@ const VehicleSearchSection = ({ mapRef, isMapLoaded }: VehicleSearchSectionProps
         } catch (error) {
             if (error instanceof Error) {
                 openModalWithMessage?.(error.message)
+            } else {
+                openModalWithMessage?.('알 수 없는 오류가 발생했습니다')
             }
+        } finally {
+            hideAutoComplete()
         }
     }
 

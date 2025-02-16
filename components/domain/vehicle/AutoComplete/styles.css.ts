@@ -6,6 +6,7 @@ export const container = style({
     width: '92%',
     maxHeight: '260px',
     marginTop: '4px',
+    position: 'absolute',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

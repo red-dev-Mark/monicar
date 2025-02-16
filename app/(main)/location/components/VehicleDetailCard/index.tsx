@@ -27,10 +27,13 @@ const VehicleDetailCard = () => {
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
 
     const searchParams = useSearchParams()
-    const vehicleId = searchParams.get('vehicleId')
 
     useEffect(() => {
-        if (!vehicleId) return
+        const vehicleId = searchParams.get('vehicleId')
+        if (!vehicleId) {
+            setVehicleDetail(undefined)
+            return
+        }
 
         const initializeVehicleDetail = async () => {
             const result = await vehicleService.getVehicleDetail(vehicleId)
@@ -40,7 +43,7 @@ const VehicleDetailCard = () => {
         }
 
         initializeVehicleDetail()
-    }, [searchParams, vehicleId])
+    }, [searchParams])
 
     const normalizedCoordinate = {
         lat: normalizeCoordinate(vehicleDetail?.recentCycleInfo?.lat || 0),
@@ -50,7 +53,7 @@ const VehicleDetailCard = () => {
     const lastAddress =
         useCoordToAddress(normalizedCoordinate.lat, normalizedCoordinate.lng, openModalWithMessage) || '-'
 
-    if (!vehicleDetail || !vehicleId) return
+    if (!vehicleDetail) return
 
     const {
         isDriving,

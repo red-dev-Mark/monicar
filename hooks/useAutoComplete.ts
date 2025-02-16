@@ -19,7 +19,6 @@ export const useAutoComplete = (inputValue: string) => {
 
             const response = await vehicleService.getVehicleAutocomplete(inputValue, abortController.signal)
 
-            console.log('aaaaaaaaaaaaaaaaaaaa')
             setIsAutoCompleteVisible(true)
             setAutoCompleteList(response.value.length === 0 ? [] : response.value)
         }
