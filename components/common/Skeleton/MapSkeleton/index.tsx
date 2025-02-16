@@ -1,11 +1,7 @@
 import { Skeleton } from '@mantine/core'
 
 const MapSkeleton = () => {
-    return (
-        <div>
-            <Skeleton height={660} radius={12} />
-        </div>
-    )
+    return <Skeleton height='100%' radius={12} />
 }
 
 export default MapSkeleton
