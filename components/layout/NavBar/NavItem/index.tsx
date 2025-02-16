@@ -10,10 +10,9 @@ interface NavItemProps {
     label: string
     path: string
     iconSrc: string
-    isDarkMode?: boolean
 }
 
-const NavItem = ({ label, path, iconSrc, isDarkMode }: NavItemProps) => {
+const NavItem = ({ label, path, iconSrc }: NavItemProps) => {
     const pathname = usePathname()
     const isCurrentPage = pathname.startsWith(path)
 
@@ -24,7 +23,6 @@ const NavItem = ({ label, path, iconSrc, isDarkMode }: NavItemProps) => {
                 className={`
           ${styles.navItem}
           ${isCurrentPage ? styles.currentItem : ''}
-          ${isDarkMode ? styles.darkNavItem : ''}
         `}
             >
                 <Image

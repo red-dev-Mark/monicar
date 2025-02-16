@@ -53,22 +53,13 @@ const NavBar = () => {
 
                 <ul className={styles.navList}>
                     {navigationItems.map((navItem, index) => (
-                        <NavItem
-                            key={index}
-                            label={navItem.label}
-                            path={navItem.path}
-                            iconSrc={navItem.iconSrc}
-                            isDarkMode={isDarkMode}
-                        />
+                        <NavItem key={index} label={navItem.label} path={navItem.path} iconSrc={navItem.iconSrc} />
                     ))}
                 </ul>
             </nav>
 
             <footer className={styles.sideFooter}>
-                <button
-                    className={`${styles.logoutButton} ${isDarkMode ? styles.darkLogoutButton : ''}`}
-                    onClick={logout}
-                >
+                <button className={styles.logoutButton} onClick={logout}>
                     <Image src='/icons/sign-out-icon.svg' alt={`로그아웃 아이콘`} width={20} height={20} />
                     <span>로그아웃</span>
                 </button>

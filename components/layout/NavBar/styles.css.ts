@@ -96,6 +96,9 @@ export const logoutButton = style({
         '.dark &': {
             color: vars.colors.white,
         },
+        '.dark &:hover': {
+            backgroundColor: vars.colors.gray[700],
+        },
     },
     '@media': {
         [mediaQuery.mobile]: {
@@ -107,14 +110,6 @@ export const logoutButton = style({
             padding: '4px 0',
             fontSize: vars.fontSizes.xsmall,
             width: '100%',
-        },
-    },
-})
-
-export const darkLogoutButton = style({
-    selectors: {
-        '&:hover': {
-            backgroundColor: vars.colors.gray[800],
         },
     },
 })
