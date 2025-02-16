@@ -64,3 +64,12 @@ export interface RankingResponse {
     vehicleNumber: string
     distance: number
 }
+
+// 점검현황
+export interface AlarmResponse {
+    id: number
+    vehicleNumber: string
+    managerName: string
+    drivingDistance: number
+    status: 'REQUIRED' | 'SCHEDULED' | 'INPROGRESS' | 'COMPLETED'
+}

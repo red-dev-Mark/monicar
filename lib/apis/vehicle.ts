@@ -139,4 +139,20 @@ export const vehicleService = {
         }
         return response.data
     },
+
+    // 상태별 알람 조회
+    getInspectionStatus: async (page: number = 0, size: number = 8) => {
+        const response = await httpClient.get('/api/v1/alarm', {
+            params: {
+                page,
+                size,
+            },
+        })
+
+        if (!response.data.isSuccess) {
+            return { isSuccess: false, error: response.data.errorMessage }
+        }
+
+        return { isSuccess: true, data: response.data.result.content }
+    },
 }

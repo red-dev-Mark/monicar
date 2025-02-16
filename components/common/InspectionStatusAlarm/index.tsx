@@ -3,7 +3,7 @@ import * as styles from './styles.css'
 type StatusType = 'REQUIRED' | 'SCHEDULED' | 'INPROGRESS' | 'COMPLETED'
 type IconType = 'bell' | 'alert' | 'button' | 'check'
 
-export interface InspectionStatusAlertModel {
+export interface InspectionStatusAlarmModel {
     status: StatusType
     iconType: IconType
     icon: React.ReactNode
@@ -12,18 +12,18 @@ export interface InspectionStatusAlertModel {
     message: string
 }
 
-interface InspectionStatusAlertProps {
-    inspectionStatusData: InspectionStatusAlertModel[]
+interface InspectionStatusAlarmProps {
+    inspectionStatusData: InspectionStatusAlarmModel[]
     isOpen?: boolean
 }
 
-const InspectionStatusAlert = ({ inspectionStatusData, isOpen }: InspectionStatusAlertProps) => {
+const InspectionStatusAlarm = ({ inspectionStatusData, isOpen = true }: InspectionStatusAlarmProps) => {
     if (!isOpen) return null
 
     return (
         <>
             <div className={styles.container} role='alert'>
-                {inspectionStatusData.map((data) => {
+                {inspectionStatusData?.map((data) => {
                     return (
                         <div
                             key={data.status}
@@ -49,4 +49,4 @@ const InspectionStatusAlert = ({ inspectionStatusData, isOpen }: InspectionStatu
         </>
     )
 }
-export default InspectionStatusAlert
+export default InspectionStatusAlarm
