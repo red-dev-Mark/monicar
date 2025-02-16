@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { vars } from '@/styles/theme.css'
+import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
     width: '100%',
@@ -8,6 +8,26 @@ export const container = style({
     position: 'relative',
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
+})
+
+export const backgroundImage = style({
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+        },
+    },
+})
+
+export const mobileBackgroundImage = style({
+    display: 'none',
+    objectFit: 'cover',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'block',
+        },
+    },
 })
 
 export const overlay = style({
@@ -22,6 +42,15 @@ export const content = style({
     display: 'flex',
     gap: '380px',
     flexDirection: 'column',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            width: '380px',
+            position: 'relative',
+            left: 0,
+            gap: '360px',
+        },
+    },
 })
 
 export const heading = style({
@@ -29,6 +58,12 @@ export const heading = style({
     color: vars.colors.white,
     fontSize: '48px',
     fontWeight: vars.fontWeights.bold,
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            fontSize: '36px',
+        },
+    },
 })
 
 export const bottomSection = style({

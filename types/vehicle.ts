@@ -8,7 +8,7 @@ export interface Vehicle extends Partial<VehicleOperationPeriod> {
 }
 
 //TODO: 위와 수정
-export interface AutoVehicle extends Partial<VehicleOperationPeriod> {
+export interface AutoVehicle {
     id: string
     vehicleNumber: string
 }

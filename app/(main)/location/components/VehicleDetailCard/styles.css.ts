@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { vars } from '@/styles/theme.css'
+import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
     width: '390px',
@@ -15,19 +15,32 @@ export const container = style({
     backgroundColor: vars.colors.white,
     borderRadius: '12px 12px 0 0',
     boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            width: '100%',
+            height: '340px',
+            marginBottom: '68px',
+            padding: '12px',
+        },
+    },
 })
 
 export const header = style({
     paddingBottom: '8px',
     display: 'flex',
+    justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
     borderBottom: `1px solid ${vars.colors.gray[200]}`,
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {},
+    },
 })
 
 export const closeButton = style({
-    position: 'absolute',
-    right: '16px',
+    position: 'relative',
 
     opacity: 0.7,
     transition: 'opacity 0.2s ease',
@@ -38,9 +51,15 @@ export const closeButton = style({
 })
 
 export const vehicleNumber = style({
-    marginLeft: '54px',
+    marginLeft: '-14px',
     fontSize: vars.fontSizes.large,
     fontWeight: vars.fontWeights.bold,
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            fontSize: vars.fontSizes.mediumPlus,
+        },
+    },
 })
 
 export const tableWrapper = style({
@@ -70,4 +89,12 @@ export const tableCell = style({
     padding: '8px',
     borderBottom: `1px solid ${vars.colors.gray[200]}`,
     borderRight: `1px solid ${vars.colors.gray[200]}`,
+})
+
+export const engineInfo = style({
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+        },
+    },
 })

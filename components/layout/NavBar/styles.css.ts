@@ -12,6 +12,7 @@ export const navbar = style({
     justifyContent: 'space-between',
     backgroundColor: vars.colors.white,
     borderRight: `1px solid ${vars.colors.gray[200]}`,
+    zIndex: vars.zIndex.dropdown,
 
     '@media': {
         [mediaQuery.mobile]: {
@@ -19,9 +20,7 @@ export const navbar = style({
             bottom: 0,
             height: 'auto',
             width: '100%',
-            zIndex: vars.zIndex.default,
-            padding: '12px 12px',
-            alignItems: 'center',
+            padding: '4px 0',
         },
     },
 })
@@ -60,9 +59,10 @@ export const navList = style({
     gap: '16px',
     '@media': {
         [mediaQuery.mobile]: {
+            width: '100vw',
             flexDirection: 'row',
-            width: '100%',
-            gap: '50px',
+            justifyContent: 'center',
+            gap: '8px',
         },
     },
 })

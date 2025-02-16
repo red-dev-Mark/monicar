@@ -5,7 +5,7 @@ import * as styles from './styles.css'
 
 interface AutoCompleteProps {
     list: AutoVehicle[]
-    onClick?: () => void
+    onClick: (vehicleNumber: string) => void
 }
 
 const AutoComplete = ({ list, onClick }: AutoCompleteProps) => {
@@ -13,7 +13,12 @@ const AutoComplete = ({ list, onClick }: AutoCompleteProps) => {
         <div className={styles.container}>
             {list.map((item: AutoVehicle) => {
                 return (
-                    <div key={item.id} className={styles.item} onClick={onClick} role='presentation'>
+                    <div
+                        key={item.id}
+                        className={styles.item}
+                        onClick={() => onClick(item.vehicleNumber)}
+                        role='presentation'
+                    >
                         <p className={styles.vehicleNumber}>{addSpaceVehicleNumber(item.vehicleNumber)}</p>
                     </div>
                 )

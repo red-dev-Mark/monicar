@@ -2,30 +2,58 @@
 
 import { Tooltip } from '@mantine/core'
 import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
-import { getFormattedVehicleDetail } from '@/app/(main)/location/utils/format'
 import Badge from '@/components/common/Badge'
 import SquareButton from '@/components/common/Button/SquareButton'
-import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
-import { useVehicleVisibleStore } from '@/stores/useVehicleVisibleStore'
+import Modal from '@/components/common/Modal'
+import { ModalMessageType } from '@/components/common/Modal/types'
+import { useCoordToAddress } from '@/hooks/useCoordToAddress'
+import { useModal } from '@/hooks/useModal'
+import { useQueryParams } from '@/hooks/useQueryParams'
+import { vehicleService } from '@/lib/apis'
+import { normalizeCoordinate } from '@/lib/utils/normalize'
+import { getFormattedVehicleDetail } from '@/lib/utils/vehicle'
 import { vars } from '@/styles/theme.css'
 import { VehicleDetail } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
-interface VehicleDetailCardProps {
-    vehicleDetail: VehicleDetail
-    onClose?: () => void
-}
+const VehicleDetailCard = () => {
+    const [vehicleDetail, setVehicleDetail] = useState<VehicleDetail>()
 
-const VehicleDetailCard = ({ vehicleDetail, onClose }: VehicleDetailCardProps) => {
-    const { hideSearchedVehicle } = useVehicleDisclosure()
-    const setInputValue = useVehicleVisibleStore((state) => state.setInputValue)
+    const { clearAllQueries } = useQueryParams()
+    const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
 
-    const resetSearchedVehicle = () => {
-        hideSearchedVehicle()
-        setInputValue('')
+    const searchParams = useSearchParams()
+
+    useEffect(() => {
+        const vehicleId = searchParams.get('vehicleId')
+        if (!vehicleId) {
+            setVehicleDetail(undefined)
+            return
+        }
+
+        const initializeVehicleDetail = async () => {
+            const result = await vehicleService.getVehicleDetail(vehicleId)
+            if (!result.isSuccess) throw new Error(result.error)
+
+            setVehicleDetail(result.data)
+        }
+
+        initializeVehicleDetail()
+    }, [searchParams])
+
+    const normalizedCoordinate = {
+        lat: normalizeCoordinate(vehicleDetail?.recentCycleInfo?.lat || 0),
+        lng: normalizeCoordinate(vehicleDetail?.recentCycleInfo?.lng || 0),
     }
+
+    const lastAddress =
+        useCoordToAddress(normalizedCoordinate.lat, normalizedCoordinate.lng, openModalWithMessage) || '-'
+
+    if (!vehicleDetail) return
 
     const {
         isDriving,
@@ -36,7 +64,6 @@ const VehicleDetailCard = ({ vehicleDetail, onClose }: VehicleDetailCardProps) =
         todayDrivingTime,
         todayDrivingDistance,
         lastUpdated,
-        lastAddress,
     } = getFormattedVehicleDetail(vehicleDetail)
 
     return (
@@ -46,7 +73,7 @@ const VehicleDetailCard = ({ vehicleDetail, onClose }: VehicleDetailCardProps) =
                 <h2 className={styles.vehicleNumber}>{vehicleNumber}</h2>
                 <button
                     className={styles.closeButton}
-                    onClick={onClose || resetSearchedVehicle}
+                    onClick={() => clearAllQueries()}
                     aria-label='차량 상세 정보 닫기'
                 >
                     <Image
@@ -68,13 +95,13 @@ const VehicleDetailCard = ({ vehicleDetail, onClose }: VehicleDetailCardProps) =
                             </th>
                             <td className={styles.tableCell}>{speed} km/h</td>
                         </tr>
-                        <tr>
+                        <tr className={styles.engineInfo}>
                             <th scope='row' className={styles.tableHeader}>
                                 최근시동 ON
                             </th>
                             <td className={styles.tableCell}>{lastEngineOn}</td>
                         </tr>
-                        <tr>
+                        <tr className={styles.engineInfo}>
                             <th scope='row' className={styles.tableHeader}>
                                 최근시동 OFF
                             </th>
@@ -123,6 +150,13 @@ const VehicleDetailCard = ({ vehicleDetail, onClose }: VehicleDetailCardProps) =
             ) : (
                 <SquareButton>실시간 경로보기</SquareButton>
             )}
+
+            <Modal
+                isOpen={isModalOpen}
+                message={message as ModalMessageType}
+                variant={{ variant: 'alert', confirmButton: '확인' }}
+                onClose={closeModal}
+            />
         </article>
     )
 }

@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { vars } from '@/styles/theme.css'
+import { breakPoints, vars } from '@/styles/theme.css'
 
 export const overlay = style({
     position: 'fixed',
@@ -35,6 +35,13 @@ export const modal = style({
     zIndex: vars.zIndex.modal,
     borderRadius: '12px',
     whiteSpace: 'pre-line',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            width: '360px',
+            padding: '36px 16px 24px',
+        },
+    },
 })
 
 export const xButton = style({
