@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { vars } from '@/styles/theme.css'
+import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
     width: '100%',
@@ -9,6 +9,15 @@ export const container = style({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+
+    // '@media': {
+    //     [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+    //         width: '380px',
+    //         position: 'relative',
+    //         left: 0,
+    //         gap: '360px',
+    //     },
+    // },
 })
 
 export const content = style({
@@ -24,6 +33,12 @@ export const introSection = style({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+        },
+    },
 })
 
 export const introduceMessage = style({
@@ -38,6 +53,12 @@ export const signInSection = style({
     display: 'flex',
     gap: '44px',
     flexDirection: 'column',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            gap: '144px',
+        },
+    },
 })
 
 export const signInHeader = style({
