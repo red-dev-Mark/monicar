@@ -43,7 +43,7 @@ export const currentItem = style({
     backgroundColor: vars.colors.gray[50],
     selectors: {
         '.dark &': {
-            color: vars.colors.primary,
+            color: vars.colors.white,
             backgroundColor: vars.colors.gray[800],
             fontWeight: vars.fontWeights.bold,
         },
