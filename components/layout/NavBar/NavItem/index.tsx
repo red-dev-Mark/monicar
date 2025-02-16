@@ -10,15 +10,23 @@ interface NavItemProps {
     label: string
     path: string
     iconSrc: string
+    isDarkMode?: boolean
 }
 
-const NavItem = ({ label, path, iconSrc }: NavItemProps) => {
+const NavItem = ({ label, path, iconSrc, isDarkMode }: NavItemProps) => {
     const pathname = usePathname()
     const isCurrentPage = pathname.startsWith(path)
 
     return (
         <li>
-            <Link href={`${path}`} className={`${styles.navItem} ${isCurrentPage && styles.currentItem}`}>
+            <Link
+                href={`${path}`}
+                className={`
+          ${styles.navItem}
+          ${isCurrentPage ? styles.currentItem : ''}
+          ${isDarkMode ? styles.darkNavItem : ''}
+        `}
+            >
                 <Image
                     src={iconSrc}
                     alt={`${label} 아이콘`}
