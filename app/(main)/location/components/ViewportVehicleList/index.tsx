@@ -42,7 +42,7 @@ const ViewportVehicleList = ({ clusterDetail, selectedVehicleDetail, onItemClick
                 <h2 className={styles.title}>차량 목록</h2>
             </header>
 
-            {hasVehicles ? (
+            {!hasVehicles ? (
                 <main className={styles.vehicleList}>
                     <div className={styles.listHeader}>
                         총<span className={styles.vehicleCount}>{clusterDetail.length}</span>대의 차량
@@ -59,6 +59,7 @@ const ViewportVehicleList = ({ clusterDetail, selectedVehicleDetail, onItemClick
                                 role='presentation'
                             >
                                 <Badge shape='circle' variant={getVehicleStatus(cluster.status!)} />
+                                <Badge shape='circle' variant={'운행중'} />
                                 <p className={styles.vehicleNumber}>{vehicleNumber}</p>
                                 <Image src={'/icons/right-icon.svg'} width={24} height={24} alt='자세히보기 버튼' />
                             </div>

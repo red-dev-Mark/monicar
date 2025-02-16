@@ -25,7 +25,7 @@ export const container = style({
             left: '12px',
             flexDirection: 'row',
             gap: 0,
-            justifyContent: 'space-between',
+            justifyContent: 'space-around',
         },
     },
 })
