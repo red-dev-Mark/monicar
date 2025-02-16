@@ -47,7 +47,8 @@ export const useVehicleDisclosure = () => {
     const selectVehicle = async (vehicleId: string | null, vehicleNumber: string) => {
         if (!vehicleId) return
 
-        const vehicleDetail = await vehicleService.getVehicleDetail(vehicleId)
+        const vehicleDetailResult = await vehicleService.getVehicleDetail(vehicleId)
+        if (!vehicleDetailResult.isSuccess) throw new Error(vehicleDetailResult.error)
 
         hideSearchedVehicle()
 
@@ -58,7 +59,7 @@ export const useVehicleDisclosure = () => {
         setInputValue(vehicleNumber)
         setSelectVehicleId(vehicleId)
 
-        return vehicleDetail
+        return vehicleDetailResult.data
     }
 
     const unselectVehicle = () => {
