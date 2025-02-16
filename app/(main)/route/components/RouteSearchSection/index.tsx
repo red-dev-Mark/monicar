@@ -81,7 +81,7 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
                     />
 
                     {/* {isRouteSearchVisible && ( */}
-                    {vehicleNumber && (
+                    {!vehicleNumber && (
                         <div className={styles.bottomSection}>
                             <DateRangeSection
                                 searchableDateRange={searchableDateRange}

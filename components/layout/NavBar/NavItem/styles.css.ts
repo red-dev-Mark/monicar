@@ -16,13 +16,10 @@ export const navItem = style({
     '@media': {
         [mediaQuery.mobile]: {
             flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '4px',
+            gap: '6px',
             textAlign: 'center',
-            padding: '4px 0',
+            padding: '8px 20px',
             fontSize: vars.fontSizes.xsmall,
-            width: '100%',
         },
     },
 })

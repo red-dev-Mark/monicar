@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { vars } from '@/styles/theme.css'
+import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
     width: '92%',
@@ -25,6 +25,14 @@ export const container = style({
     '::-webkit-scrollbar-thumb': {
         background: vars.colors.gray[500],
         borderRadius: '2px',
+    },
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            width: '100%',
+            maxHeight: '200px',
+            marginTop: '2px',
+        },
     },
 })
 

@@ -95,13 +95,13 @@ const VehicleDetailCard = () => {
                             </th>
                             <td className={styles.tableCell}>{speed} km/h</td>
                         </tr>
-                        <tr>
+                        <tr className={styles.engineInfo}>
                             <th scope='row' className={styles.tableHeader}>
                                 최근시동 ON
                             </th>
                             <td className={styles.tableCell}>{lastEngineOn}</td>
                         </tr>
-                        <tr>
+                        <tr className={styles.engineInfo}>
                             <th scope='row' className={styles.tableHeader}>
                                 최근시동 OFF
                             </th>
