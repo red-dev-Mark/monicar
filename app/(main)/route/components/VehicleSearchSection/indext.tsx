@@ -1,8 +1,7 @@
 import { ChangeEvent } from 'react'
 
 import SearchInput from '@/components/common/Input/SearchInput'
-import AutoComplete from '@/components/domain/vehicle/AutoComplete'
-import { useAutoComplete } from '@/hooks/useAutoComplete'
+// import { useAutoComplete } from '@/hooks/useAutoComplete'
 import { useLoading } from '@/hooks/useLoading'
 import { useQueryParams } from '@/hooks/useQueryParams'
 import { getVehicleOperationInfo } from '@/lib/services/vehicle'
@@ -29,7 +28,6 @@ const VehicleSearchSection = ({
 }: VehicleSearchSectionProps) => {
     const [isSearchingVehicle, startSearchingVehicle, finishSearchingVehicle] = useLoading()
 
-    const { isAutoCompleteVisible, autoCompleteList, hideAutoComplete } = useAutoComplete(value)
     const { updateQueries, clearAllQueries } = useQueryParams()
 
     const handleVehicleSearch = async () => {
@@ -61,24 +59,20 @@ const VehicleSearchSection = ({
             }
         } finally {
             finishSearchingVehicle()
-            hideAutoComplete()
         }
     }
 
     return (
-        <>
-            <SearchInput
-                value={value}
-                onChange={onChange}
-                onSubmit={handleVehicleSearch}
-                placeholder='차량번호 검색'
-                icon='/icons/pink-search-icon.svg'
-                isLoading={isSearchingVehicle}
-                disabled={isSearchingVehicle}
-                style={{ borderRadius: '8px', boxShadow: 'none' }}
-            />
-            {isAutoCompleteVisible && <AutoComplete list={autoCompleteList} onClick={handleVehicleSearch} />}
-        </>
+        <SearchInput
+            value={value}
+            onChange={onChange}
+            onSubmit={handleVehicleSearch}
+            placeholder='차량번호 검색'
+            icon='/icons/pink-search-icon.svg'
+            isLoading={isSearchingVehicle}
+            disabled={isSearchingVehicle}
+            style={{ borderRadius: '8px', boxShadow: 'none' }}
+        />
     )
 }
 

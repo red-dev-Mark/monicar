@@ -82,6 +82,7 @@ const VehicleSearchSection = ({ mapRef, isMapLoaded }: VehicleSearchSectionProps
                     value={inputValue}
                     onChange={(event) => setInputValue(event.target.value)}
                     onSubmit={() => handleInputSubmit(inputValue)}
+                    style={{ borderRadius: '8px' }}
                 />
                 {isAutoCompleteVisible && <AutoComplete list={autoCompleteList} onClick={handleAutoComplete} />}
             </div>

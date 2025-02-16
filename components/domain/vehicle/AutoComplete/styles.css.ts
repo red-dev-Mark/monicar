@@ -6,13 +6,13 @@ export const container = style({
     width: '92%',
     maxHeight: '260px',
     marginTop: '4px',
-    position: 'absolute',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     borderRadius: '0 0 12px 12px',
     overflow: 'auto',
     border: `1px solid ${vars.colors.gray[200]}`,
+    zIndex: vars.zIndex.dropdown,
 
     '::-webkit-scrollbar': {
         width: '4px',
