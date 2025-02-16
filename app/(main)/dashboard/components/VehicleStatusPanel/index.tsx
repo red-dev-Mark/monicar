@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import VehicleStatusItem from '@/app/(main)/dashboard/components/VehicleStatusItem'
+import { useLoading } from '@/hooks/useLoading'
 import { vehicleService } from '@/lib/apis'
 import { vars } from '@/styles/theme.css'
 import { VehicleStatusSummary } from '@/types/vehicle'
@@ -10,18 +11,23 @@ import * as styles from './styles.css'
 // TODO: location VehicleStatusPanel 컴포넌트와 통합해보기
 const VehicleStatusPanel = () => {
     const [vehicleStatus, setVehicleStatus] = useState<VehicleStatusSummary>()
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, startLoading, finishLoading] = useLoading()
 
     useEffect(() => {
         const getVehicleStatus = async () => {
             try {
-                setIsLoading(true)
-                const vehicleStatus = await vehicleService.getVehicleStatus()
+                startLoading()
+                const result = await vehicleService.getVehicleStatus()
+                if (!result.isSuccess) throw new Error(result.error)
+
+                const vehicleStatus = result.data
                 setVehicleStatus(vehicleStatus)
             } catch (error) {
-                console.error('차량현황 조회에 실패하였습니다', error)
+                if (error instanceof Error) {
+                    console.error(error.message)
+                }
             } finally {
-                setIsLoading(false)
+                finishLoading()
             }
         }
         getVehicleStatus()

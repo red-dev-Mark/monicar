@@ -1,24 +1,20 @@
 import Image from 'next/image'
 import { useEffect } from 'react'
 
-import VehicleDetailCard from '@/app/(main)/location/components/VehicleDetailCard'
 import Badge from '@/components/common/Badge'
 import { OPERATION_STATUS } from '@/components/common/Badge/constants'
 import { useQueryParams } from '@/hooks/useQueryParams'
-import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
-import { VehicleDetail, VehicleLocation } from '@/types/vehicle'
+import { VehicleLocation } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
 interface ViewportVehicleListProps {
     clusterDetail: VehicleLocation[]
-    selectedVehicleDetail: VehicleDetail | undefined
-    onItemClick: (vehicleId: string, vehicleNumber: string) => void
+    onVehicleClick: (vehicleId: string, vehicleNumber: string) => void
 }
 
-const ViewportVehicleList = ({ clusterDetail, selectedVehicleDetail, onItemClick }: ViewportVehicleListProps) => {
-    const { isSelectedVehicleVisible, hideSelectedVehicle, unselectVehicle } = useVehicleDisclosure()
+const ViewportVehicleList = ({ clusterDetail, onVehicleClick }: ViewportVehicleListProps) => {
     const { removeQuery } = useQueryParams()
 
     const hasVehicles = clusterDetail.length > 0
@@ -26,11 +22,6 @@ const ViewportVehicleList = ({ clusterDetail, selectedVehicleDetail, onItemClick
     useEffect(() => {
         return () => removeQuery('vehicleName')
     }, [])
-
-    const clearSelectedVehicle = () => {
-        unselectVehicle()
-        hideSelectedVehicle()
-    }
 
     const getVehicleStatus = (status: keyof typeof OPERATION_STATUS) => {
         return OPERATION_STATUS[status] ?? '운행중'
@@ -55,7 +46,7 @@ const ViewportVehicleList = ({ clusterDetail, selectedVehicleDetail, onItemClick
                             <div
                                 key={cluster.vehicleId}
                                 className={styles.vehicleItem}
-                                onClick={() => onItemClick(cluster.vehicleId, cluster.vehicleNumber)}
+                                onClick={() => onVehicleClick(cluster.vehicleId, cluster.vehicleNumber)}
                                 role='presentation'
                             >
                                 <Badge shape='circle' variant={getVehicleStatus(cluster.status!)} />
@@ -70,13 +61,6 @@ const ViewportVehicleList = ({ clusterDetail, selectedVehicleDetail, onItemClick
                     <p>현재 영역에서 찾은 차량이 없습니다</p>
                     <small className={styles.description}>지도를 이동하여 차량을 찾아보세요</small>
                 </div>
-            )}
-
-            {isSelectedVehicleVisible && (
-                <VehicleDetailCard
-                    vehicleDetail={selectedVehicleDetail as VehicleDetail}
-                    onClose={clearSelectedVehicle}
-                />
             )}
         </article>
     )
