@@ -184,6 +184,8 @@ const DashboardPage = () => {
                     ]}
                 />
 
+                <Alarm />
+
                 <div className={styles.vehicleStatusPanelWrapper}>
                     <VehicleStatusPanel />
                 </div>
@@ -208,7 +210,6 @@ const DashboardPage = () => {
 
                 <NoticeListBoard />
             </section>
-            <Alarm></Alarm>
 
             {/* <Modal
                 isOpen={isOpen}

@@ -14,6 +14,7 @@ import { DAILY_TITLES, HOURLY_TITLES } from '@/constants/listHeader'
 import { useKakaoLoader } from '@/hooks/useKakaoLoader'
 import { useModal } from '@/hooks/useModal'
 import { documentService } from '@/lib/apis/document'
+import { addSpaceVehicleNumber } from '@/lib/utils/string'
 
 import { breadcrumbsWrapper } from '../styles.css'
 
@@ -33,6 +34,7 @@ const DailyPage = () => {
     const { openModalWithMessage } = useModal()
     const { dailyData, isLoading, error } = useDailyData({ url: `${API_ENDPOINTS.DAILY}/${id}`, period })
     const { hourlyData } = useHourlyData({ url: `${API_ENDPOINTS.HOURLY}/${id}`, date: selectedDate })
+    const vehicleNumber = addSpaceVehicleNumber(dailyData?.vehicleNumber || '')
 
     const handleDailyExcelButtonClick = async () => {
         try {
@@ -165,7 +167,7 @@ const DailyPage = () => {
                             />
                         }
                         button={<ExcelButton onClick={handleDailyExcelButtonClick} />}
-                        vehicleNumber={dailyData?.vehicleNumber}
+                        vehicleNumber={vehicleNumber}
                     >
                         <div className={styles.contentWrapper}>
                             <ListHeader headerTitles={DAILY_TITLES} />

@@ -1,19 +1,9 @@
+import { AlarmResponse } from '@/types/vehicle'
+
 import * as styles from './styles.css'
 
-type StatusType = 'REQUIRED' | 'SCHEDULED' | 'INPROGRESS' | 'COMPLETED'
-type IconType = 'bell' | 'alert' | 'button' | 'check'
-
-export interface InspectionStatusAlarmModel {
-    status: StatusType
-    iconType: IconType
-    icon: React.ReactNode
-    title: string
-    vehicleNumber: string
-    message: string
-}
-
 interface InspectionStatusAlarmProps {
-    inspectionStatusData: InspectionStatusAlarmModel[]
+    inspectionStatusData: AlarmResponse[]
     isOpen?: boolean
 }
 
@@ -26,21 +16,22 @@ const InspectionStatusAlarm = ({ inspectionStatusData, isOpen = true }: Inspecti
                 {inspectionStatusData?.map((data) => {
                     return (
                         <div
-                            key={data.status}
+                            key={data.id}
                             className={styles.statusCard({
                                 status: data.status,
                             })}
                         >
                             <div>
-                                <div className={styles.iconWrapper[data.iconType]}>
-                                    <div className={styles.icon}>{data.icon}</div>
-                                </div>
+                                {/* <div className={styles.iconWrapper[getIconType(data.status)]}>
+                                    <div className={styles.icon}>{getIcon(data.status)}</div>
+                                </div> */}
                             </div>
 
                             <div>
-                                <div className={styles.title}>{data.title}</div>
+                                {/* <div className={styles.title}>{getTitle(data.status)}</div> */}
                                 <div className={styles.vehicleNumber}>{data.vehicleNumber}</div>
-                                <div className={styles.message}>{data.message}</div>
+                                <div className={styles.message}>{data.drivingDistance}</div>
+                                <div className={styles.message}>{data.managerName}</div>
                             </div>
                         </div>
                     )

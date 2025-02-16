@@ -29,10 +29,23 @@ const InspectionPage = () => {
                 setInspectionData(response.error)
             }
         } catch (error) {
-            console.error('에러지롱', error)
+            console.error('get 에러지롱', error)
         } finally {
             setIsLoading(false)
         }
+    }
+
+    const patchInspectionStatusData = async (alarmId: number) => {
+        try {
+            await vehicleService.patchInspectionStatus(alarmId)
+            await getInspectionStatusData()
+        } catch (error) {
+            console.error('이건 patch 에러', error)
+        }
+    }
+
+    const handleButtonClick = async (alarmId: number) => {
+        await patchInspectionStatusData(alarmId)
     }
 
     useEffect(() => {
@@ -141,13 +154,14 @@ const InspectionPage = () => {
 
             <Suspense fallback={<InspectionSkeleton />}>
                 <div className={styles.cardWrapper}>
-                    {inspectionData?.map((item) => (
+                    {inspectionData?.map((data) => (
                         <InspectionCard
-                            key={item.id}
-                            vehicleNumber={item.vehicleNumber}
-                            status={item.status}
-                            drivingDistance={item.drivingDistance}
-                            managerName={item.managerName}
+                            key={data.id}
+                            vehicleNumber={data.vehicleNumber}
+                            status={data.status}
+                            drivingDistance={data.drivingDistance}
+                            managerName={data.managerName}
+                            onClick={() => handleButtonClick(data.id)}
                         />
                     ))}
                 </div>

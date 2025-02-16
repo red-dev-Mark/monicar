@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 
-import { InspectionStatusAlarmModel } from '@/components/common/InspectionStatusAlarm'
 import { API_URL } from '@/constants/api'
+import { AlarmResponse } from '@/types/vehicle'
 
 export const useSubscribe = () => {
-    const [alarm, setAlarm] = useState<InspectionStatusAlarmModel[]>([])
+    const [alarm, setAlarm] = useState<AlarmResponse[]>([])
     const [error, setError] = useState<Error | null>(null)
 
     useEffect(() => {

@@ -155,4 +155,21 @@ export const vehicleService = {
 
         return { isSuccess: true, data: response.data.result.content }
     },
+
+    // 점검현황 승인
+    patchInspectionStatus: async (alarmId: number) => {
+        const response = await httpClient.patch(`/api/v1/alarm/${alarmId}`)
+        return response.data
+    },
+
+    // 점검현황 통계
+    getInspectionStatusStats: async () => {
+        const response = await httpClient.get('/api/v1/alarm/status/stats')
+
+        if (!response.data.isSuccess) {
+            return { isSuccess: false, error: response.data.errorMessage }
+        }
+
+        return { isSuccess: true, data: response.data.result }
+    },
 }
