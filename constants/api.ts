@@ -12,4 +12,5 @@ export const API_ENDPOINTS = {
     DAILY: '/api/v1/log/daily',
     HOURLY: '/api/v1/log/hourly',
     RANK: '/api/v1/vehicle/rank',
+    STATS: '/api/v1/alarm/status/stats',
 } as const

@@ -1,7 +1,5 @@
 import { RingProgress } from '@mantine/core'
-import { memo } from 'react'
 
-import PanelSkeleton from '@/components/common/Skeleton/PanelSkeleton'
 import { vars } from '@/styles/theme.css'
 import { InspectionStatusType } from '@/types/vehicle'
 
@@ -9,11 +7,7 @@ import InspectionStatusItem from '../InspectionStatusItem'
 
 import * as styles from './styles.css'
 
-const InspectionStatusPanel = memo(({ data }: { data: InspectionStatusType | undefined }) => {
-    if (!data) {
-        return <PanelSkeleton />
-    }
-
+const InspectionStatusPanel = ({ data }: { data: InspectionStatusType | undefined }) => {
     const total = (data?.[0]?.count || 0) + (data?.[1]?.count || 0) + (data?.[2]?.count || 0) + (data?.[3]?.count || 0)
 
     return (
@@ -48,8 +42,6 @@ const InspectionStatusPanel = memo(({ data }: { data: InspectionStatusType | und
             </div>
         </div>
     )
-})
-
-InspectionStatusPanel.displayName = 'InspectionStatusPanel'
+}
 
 export default InspectionStatusPanel
