@@ -2,9 +2,11 @@
 
 import { Group, Pagination } from '@mantine/core'
 import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
 
 import Breadcrumbs from '@/components/common/Breadcrumbs'
 import { vehicleService } from '@/lib/apis/vehicle'
+import { StatusType } from '@/types/vehicle'
 
 import InspectionCard from './components/InspectionCard'
 import InspectionStatusPanel from './components/InspectionStatusPanel'
@@ -14,6 +16,9 @@ import { useStatusPanelData } from './hooks/useStatusPanelData'
 import * as styles from './styles.css'
 
 const Inspection = () => {
+    const searchParams = useSearchParams()
+    const status = searchParams.get('status') as StatusType
+
     const { statusData, isLoading, error } = useStatusPanelData()
     const { inspectionData } = useInspectionStatusData({
         page: '1',
@@ -62,7 +67,7 @@ const Inspection = () => {
             </div>
             <InspectionStatusPanel data={statusData} />
 
-            <InspectionStatusTabs />
+            <InspectionStatusTabs status={status} />
 
             <div className={styles.cardWrapper}>
                 {inspectionData?.content?.map((data) => (

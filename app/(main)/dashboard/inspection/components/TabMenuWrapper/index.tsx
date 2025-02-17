@@ -1,13 +1,16 @@
 'use client'
-import { useRouter, useSearchParams } from 'next/navigation'
+
+import { useRouter } from 'next/navigation'
 
 import TabMenu from '@/components/common/TabMenu'
+import { StatusType } from '@/types/vehicle'
 
-const InspectionStatusTabs = () => {
+interface TabProps {
+    status: StatusType
+}
+
+const InspectionStatusTabs: React.FC<TabProps> = ({ status }) => {
     const router = useRouter()
-    const searchParams = useSearchParams()
-    const status = searchParams.get('status') || 'REQUIRED'
-
     const handleTabChange = (newStatus: string | null) => {
         router.push(`/dashboard/inspection?status=${newStatus || 'REQUIRED'}`)
     }
