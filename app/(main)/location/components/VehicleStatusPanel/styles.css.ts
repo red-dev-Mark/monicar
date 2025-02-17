@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { vars } from '@/styles/theme.css'
+import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
     padding: '16px',
@@ -16,4 +16,17 @@ export const container = style({
     color: vars.colors.gray[800],
     backgroundColor: vars.colors.transparent[800],
     borderRadius: '14px',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            width: 'calc(100% - 24px)',
+            padding: '4px',
+            top: '88px',
+            left: '12px',
+            flexDirection: 'row',
+            gap: 0,
+            justifyContent: 'space-around',
+            backgroundColor: '#ffffff90',
+        },
+    },
 })

@@ -9,9 +9,3 @@ export interface LogListResponse {
     first: boolean
     last: boolean
 }
-
-export type ApiType<T> = {
-    isSuccess: boolean
-    message: string
-    result: T
-}

@@ -57,7 +57,7 @@ const MapSection = memo(({ mapRef, mapState, routes, isMapLoaded, onRoutesChange
                 strokeOpacity={POLYLINE_CONFIG.STROKE_OPACITY}
                 strokeStyle={POLYLINE_CONFIG.STROKE_STYLE}
             />
-            {isVisible && <VehicleMarker vehicleInfo={vehicleOnDestination} useHoverEffect={false} />}
+            {isVisible && <VehicleMarker vehicleInfo={vehicleOnDestination} />}
         </Map>
     )
 })

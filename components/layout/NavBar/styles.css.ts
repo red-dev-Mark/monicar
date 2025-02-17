@@ -12,16 +12,19 @@ export const navbar = style({
     justifyContent: 'space-between',
     backgroundColor: vars.colors.white,
     borderRight: `1px solid ${vars.colors.gray[200]}`,
-
+    zIndex: vars.zIndex.dropdown,
+    selectors: {
+        '.dark &': {
+            backgroundColor: vars.colors.dark,
+        },
+    },
     '@media': {
         [mediaQuery.mobile]: {
             position: 'fixed',
             bottom: 0,
             height: 'auto',
             width: '100%',
-            zIndex: vars.zIndex.default,
-            padding: '12px 12px',
-            alignItems: 'center',
+            padding: '4px 0',
         },
     },
 })
@@ -58,11 +61,13 @@ export const navList = style({
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
+
     '@media': {
         [mediaQuery.mobile]: {
+            width: '100vw',
             flexDirection: 'row',
-            width: '100%',
-            gap: '50px',
+            justifyContent: 'center',
+            gap: '8px',
         },
     },
 })
@@ -87,6 +92,14 @@ export const logoutButton = style({
     color: vars.colors.black,
     ':hover': {
         backgroundColor: vars.colors.gray[50],
+    },
+    selectors: {
+        '.dark &': {
+            color: vars.colors.white,
+        },
+        '.dark &:hover': {
+            backgroundColor: vars.colors.gray[700],
+        },
     },
     '@media': {
         [mediaQuery.mobile]: {

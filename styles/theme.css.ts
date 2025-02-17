@@ -65,6 +65,11 @@ export const colors = {
         500: '#00000050',
         800: '#00000080',
     },
+    progress: {
+        100: '#FFE7F0',
+        200: '#FFC6DB',
+        300: '#FF4086',
+    },
 }
 
 export const fontSizes = {
@@ -96,7 +101,7 @@ export const zIndex = {
     below: '-1',
 }
 
-const opacity = {
+export const opacity = {
     80: '0.8',
     50: '0.5',
 }

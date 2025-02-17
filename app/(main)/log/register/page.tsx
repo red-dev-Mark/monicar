@@ -14,7 +14,6 @@ import SearchInput from '@/components/common/Input/SearchInput'
 import Message from '@/components/common/Message'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
-import PageLoader from '@/components/common/PageLoader'
 import { useModal } from '@/hooks/useModal'
 import { vehicleService } from '@/lib/apis'
 import { removeSpaces } from '@/lib/utils/string'
@@ -260,7 +259,7 @@ const RegisterPage = () => {
     ]
 
     if (isLoading) {
-        return <PageLoader />
+        return
     }
     if (error) {
         return <ErrorMessage />
