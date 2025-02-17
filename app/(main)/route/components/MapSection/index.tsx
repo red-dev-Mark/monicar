@@ -1,13 +1,13 @@
 'use client'
 
-import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { memo, useEffect } from 'react'
-import { CustomOverlayMap, Polyline } from 'react-kakao-maps-sdk'
+import { Polyline } from 'react-kakao-maps-sdk'
 
 import Map from '@/components/domain/map/Map'
+import { LiveMarker } from '@/components/domain/vehicle/LiveMarker'
 import VehicleMarker from '@/components/domain/vehicle/VehicleMarker'
-import { LIVE_IMAGE, MAP_CONFIG, POLYLINE_CONFIG } from '@/constants/map'
+import { MAP_CONFIG, POLYLINE_CONFIG } from '@/constants/map'
 import { useLiveRoute } from '@/hooks/useLiveRoute'
 import { useMapStatus } from '@/hooks/useMapStatus'
 import { MapState, LatLng, MapRefType } from '@/types/map'
@@ -31,6 +31,7 @@ const MapSection = memo(({ mapRef, mapState, routes, isMapLoaded, onRoutesChange
     const vehicleNumber = searchParams.get('vehicleNumber') || ''
     const lat = Number(searchParams.get('endLat'))
     const lng = Number(searchParams.get('endLng'))
+    const live = searchParams.get('live')
 
     useEffect(() => {
         if (!vehicleId || !vehicleNumber || !lat || !lng) {
@@ -65,24 +66,7 @@ const MapSection = memo(({ mapRef, mapState, routes, isMapLoaded, onRoutesChange
                 strokeStyle={POLYLINE_CONFIG.STROKE_STYLE}
             />
             {isVisible && <VehicleMarker vehicleInfo={vehicleOnDestination} />}
-            {currentRoute && (
-                <CustomOverlayMap
-                    position={{
-                        lat: currentRoute.lat,
-                        lng: currentRoute.lng,
-                    }}
-                >
-                    <div
-                        style={{
-                            width: `${LIVE_IMAGE.size.width}px`,
-                            height: `${LIVE_IMAGE.size.height}px`,
-                            transform: `translate(-50%, -50%) rotate(${currentRoute.ang}deg)`,
-                        }}
-                    >
-                        <Image src={LIVE_IMAGE.src} alt='vehicle' width={24} height={24} priority />
-                    </div>
-                </CustomOverlayMap>
-            )}
+            {live && currentRoute && <LiveMarker route={currentRoute} />}
         </Map>
     )
 })
