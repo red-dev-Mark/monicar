@@ -1,4 +1,4 @@
-import { MAP_BOUNDS } from '@/constants/map'
+import { MAP_BOUNDS, MAP_CONFIG } from '@/constants/map'
 import { MapState } from '@/types/map'
 
 // 위도와 경도를 받아 해당 좌표의 주소를 반환
@@ -69,7 +69,6 @@ export const getBoundedMapStatus = (map: kakao.maps.Map): MapState => {
     const mapState = getMapStatus(map)
 
     const { swCoord, neCoord } = mapState
-
     if (!swCoord || !neCoord) return mapState
 
     const isOutOfBounds = {
@@ -112,3 +111,5 @@ export const formatDrivingTime = (seconds: number): string => {
 
     return minutes === 0 ? `${hours}시간` : `${hours}시간 ${minutes}분`
 }
+
+export const isWithinZoomThreshold = (mapState: MapState): boolean => mapState.level <= MAP_CONFIG.CLUSTER.VISIBLE_LEVEL
