@@ -1,26 +1,23 @@
 'use client'
 
-import { Group, Pagination, Tabs } from '@mantine/core'
+import { Group, Pagination } from '@mantine/core'
 import Image from 'next/image'
-import { useRouter, useSearchParams } from 'next/navigation'
 
 import Breadcrumbs from '@/components/common/Breadcrumbs'
 import { vehicleService } from '@/lib/apis/vehicle'
 
 import InspectionCard from './components/InspectionCard'
 import InspectionStatusPanel from './components/InspectionStatusPanel'
+import InspectionStatusTabs from './components/TabMenuWrapper'
 import { useInspectionStatusData } from './hooks/useInspectionStatusData'
 import { useStatusPanelData } from './hooks/useStatusPanelData'
 import * as styles from './styles.css'
 
 const InspectionPage = () => {
-    const router = useRouter()
-    const searchParams = useSearchParams()
-    const status = searchParams.get('status') || 'REQUIRED'
     const { statusData, isLoading, error } = useStatusPanelData()
     const { inspectionData } = useInspectionStatusData({
         page: '1',
-        size: '10',
+        size: '8',
         status,
     })
 
@@ -34,10 +31,6 @@ const InspectionPage = () => {
 
     const handleButtonClick = async (alarmId: number) => {
         await patchInspectionStatusData(alarmId)
-    }
-
-    const handleTabChange = (newStatus: string | null) => {
-        router.push(`/dashboard/inspection?status=${newStatus}`)
     }
 
     if (isLoading) {
@@ -59,7 +52,6 @@ const InspectionPage = () => {
                     style={{ width: '152px', height: '30px' }}
                 />
             </div>
-
             <div className={styles.breadcrumbsWrapper}>
                 <Breadcrumbs
                     breadcrumbsData={[
@@ -68,25 +60,9 @@ const InspectionPage = () => {
                     ]}
                 />
             </div>
-
             <InspectionStatusPanel data={statusData} />
 
-            <Tabs color='#ff385c' variant='pills' radius='xl' value={status} onChange={handleTabChange}>
-                <Tabs.List className={styles.tabsWrapper}>
-                    <Tabs.Tab className={styles.tab} value='REQUIRED'>
-                        점검 필요
-                    </Tabs.Tab>
-                    <Tabs.Tab className={styles.tab} value='SCHEDULED'>
-                        점검 예정
-                    </Tabs.Tab>
-                    <Tabs.Tab className={styles.tab} value='INPROGRESS'>
-                        점검 진행
-                    </Tabs.Tab>
-                    <Tabs.Tab className={styles.tab} value='COMPLETED'>
-                        점검 완료
-                    </Tabs.Tab>
-                </Tabs.List>
-            </Tabs>
+            <InspectionStatusTabs />
 
             <div className={styles.cardWrapper}>
                 {inspectionData?.content?.map((data) => (
