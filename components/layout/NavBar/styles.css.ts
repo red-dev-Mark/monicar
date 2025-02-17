@@ -57,6 +57,7 @@ export const navList = style({
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
+
     '@media': {
         [mediaQuery.mobile]: {
             width: '100vw',

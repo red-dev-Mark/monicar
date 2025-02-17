@@ -7,9 +7,9 @@ import SearchInput from '@/components/common/Input/SearchInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import AutoComplete from '@/components/domain/vehicle/AutoComplete'
-import { MAP_CONFIG } from '@/constants/map'
+// import { MAP_CONFIG } from '@/constants/map'
 import { useAutoComplete } from '@/hooks/useAutoComplete'
-import { useMapStatus } from '@/hooks/useMapStatus'
+// import { useMapStatus } from '@/hooks/useMapStatus'
 import { useModal } from '@/hooks/useModal'
 import { useQueryParams } from '@/hooks/useQueryParams'
 import { getVehicleInfo } from '@/lib/services/vehicle'
@@ -24,8 +24,8 @@ interface VehicleSearchSectionProps {
 
 const VehicleSearchSection = ({ mapRef, isMapLoaded }: VehicleSearchSectionProps) => {
     const [inputValue, setInputValue] = useState('')
-
-    const { controlMapStatus } = useMapStatus(mapRef.current)
+    console.log(mapRef)
+    // const { controlMapStatus } = useMapStatus(mapRef.current)
     const { addQueries } = useQueryParams()
     const { isAutoCompleteVisible, autoCompleteList, hideAutoComplete } = useAutoComplete(inputValue)
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
@@ -37,7 +37,7 @@ const VehicleSearchSection = ({ mapRef, isMapLoaded }: VehicleSearchSectionProps
         if (!vehicleNumber || !isMapLoaded) return
 
         setInputValue(vehicleNumber)
-        handleInputSubmit(vehicleNumber)
+        // handleInputSubmit(vehicleNumber)
     }, [searchParams, isMapLoaded])
 
     const handleInputSubmit = async (inputValue: string) => {
@@ -57,7 +57,7 @@ const VehicleSearchSection = ({ mapRef, isMapLoaded }: VehicleSearchSectionProps
                 lat,
                 lng,
             })
-            controlMapStatus({ lat, lng }, MAP_CONFIG.SEARCH_VEHICLE.ZOOM_INCREMENT)
+            // controlMapStatus({ lat, lng }, MAP_CONFIG.SEARCH_VEHICLE.ZOOM_INCREMENT)
         } catch (error) {
             if (error instanceof Error) {
                 openModalWithMessage?.(error.message)

@@ -8,7 +8,7 @@ export const container = style({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    zIndex: 2,
+    zIndex: 35,
     display: 'flex',
     flexDirection: 'column',
     padding: '16px',

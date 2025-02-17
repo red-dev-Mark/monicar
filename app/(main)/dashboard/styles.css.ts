@@ -3,7 +3,7 @@ import { style } from '@vanilla-extract/css'
 import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
-    height: 'auto',
+    height: '130vh',
     backgroundColor: vars.colors.dashboard,
     display: 'flex',
     gap: '34px',

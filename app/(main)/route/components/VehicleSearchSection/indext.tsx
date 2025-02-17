@@ -1,14 +1,9 @@
 import { ChangeEvent } from 'react'
 
 import SearchInput from '@/components/common/Input/SearchInput'
-// import { useAutoComplete } from '@/hooks/useAutoComplete'
 import { useLoading } from '@/hooks/useLoading'
 import { useQueryParams } from '@/hooks/useQueryParams'
 import { getVehicleOperationInfo } from '@/lib/services/vehicle'
-
-// import { Result } from '@/types/apis/common'
-// import { Vehicle } from '@/types/vehicle'
-
 interface VehicleSearchSectionProps {
     value: string
     onChange: (event: ChangeEvent<HTMLInputElement>) => void
@@ -27,7 +22,6 @@ const VehicleSearchSection = ({
     // onDatesClean,
 }: VehicleSearchSectionProps) => {
     const [isSearchingVehicle, startSearchingVehicle, finishSearchingVehicle] = useLoading()
-
     const { updateQueries, clearAllQueries } = useQueryParams()
 
     const handleVehicleSearch = async () => {
