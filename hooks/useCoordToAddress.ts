@@ -4,10 +4,12 @@ import { convertCoordsToAddress } from '@/lib/utils/map'
 
 const addressCache = new Map()
 
-export const useCoordToAddress = (lat: number, lng: number) => {
+export const useCoordToAddress = (lat: number, lng: number, onError?: (message: string) => void) => {
     const [address, setAddress] = useState('')
 
     useEffect(() => {
+        if (!lat || !lng) return
+
         const cacheKey = `${lat}-${lng}`
 
         if (addressCache.has(cacheKey)) {
@@ -17,12 +19,15 @@ export const useCoordToAddress = (lat: number, lng: number) => {
         }
 
         const getAddressFromCoords = async () => {
-            const address = await convertCoordsToAddress(lat, lng)
-
-            addressCache.set(cacheKey, address)
-            setAddress(address)
+            try {
+                const address = await convertCoordsToAddress(lat, lng)
+                addressCache.set(cacheKey, address)
+                setAddress(address)
+            } catch (error) {
+                console.error(error)
+                onError?.('현재 위치가 서비스 지역을 벗어났습니다')
+            }
         }
-
         getAddressFromCoords()
     }, [lat, lng])
 

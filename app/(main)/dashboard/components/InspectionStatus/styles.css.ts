@@ -12,7 +12,12 @@ export const container = style({
     backgroundColor: vars.colors.white,
     borderRadius: '12px',
     fontWeight: vars.fontWeights.bold,
-
+    cursor: 'pointer',
+    selectors: {
+        '.dark &': {
+            backgroundColor: vars.colors.dark,
+        },
+    },
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'flex',
@@ -56,10 +61,10 @@ export const statusCard = recipe({
     },
     variants: {
         status: {
-            required: { backgroundColor: vars.colors.pink[200] },
-            scheduled: { backgroundColor: vars.colors.yellow[100] },
-            inProgress: { backgroundColor: vars.colors.green[100] },
-            completed: { backgroundColor: vars.colors.purple[100] },
+            REQUIRED: { backgroundColor: vars.colors.pink[200] },
+            SCHEDULED: { backgroundColor: vars.colors.yellow[100] },
+            INPROGRESS: { backgroundColor: vars.colors.green[100] },
+            COMPLETED: { backgroundColor: vars.colors.purple[100] },
         },
     },
 })

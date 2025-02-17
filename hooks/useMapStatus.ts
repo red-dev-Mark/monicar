@@ -14,7 +14,6 @@ export const useMapStatus = (map: kakao.maps.Map | null | undefined) => {
 
     const updateMapStatus = () => {
         if (!map) return
-
         setCurrentMapState(getBoundedMapStatus(map))
     }
 
@@ -31,6 +30,7 @@ export const useMapStatus = (map: kakao.maps.Map | null | undefined) => {
             }
 
             setCurrentMapState(getBoundedMapStatus(map))
+            updateMapStatus()
         } catch (error) {
             console.error('지도상태 변경 실패', error)
         }
