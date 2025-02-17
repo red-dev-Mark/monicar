@@ -42,6 +42,14 @@ export const MARKER_IMAGE = {
     },
 } as const
 
+export const LIVE_IMAGE = {
+    src: '/icons/mini-red-car-icon.svg',
+    size: {
+        width: 24,
+        height: 24,
+    },
+} as const
+
 export const POLYLINE_CONFIG = {
     STROKE_WEIGHT: 5,
     STROKE_COLOR: vars.colors.primary,

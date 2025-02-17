@@ -1,12 +1,14 @@
 'use client'
 
+import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { memo, useEffect } from 'react'
-import { Polyline } from 'react-kakao-maps-sdk'
+import { CustomOverlayMap, Polyline } from 'react-kakao-maps-sdk'
 
 import Map from '@/components/domain/map/Map'
 import VehicleMarker from '@/components/domain/vehicle/VehicleMarker'
-import { MAP_CONFIG, POLYLINE_CONFIG } from '@/constants/map'
+import { LIVE_IMAGE, MAP_CONFIG, POLYLINE_CONFIG } from '@/constants/map'
+import { useLiveRoute } from '@/hooks/useLiveRoute'
 import { useMapStatus } from '@/hooks/useMapStatus'
 import { MapState, LatLng, MapRefType } from '@/types/map'
 
@@ -21,6 +23,7 @@ interface MapSectionProps {
 
 const MapSection = memo(({ mapRef, mapState, routes, isMapLoaded, onRoutesChange, onLoad }: MapSectionProps) => {
     const { controlMapStatus } = useMapStatus(mapRef.current)
+    const { currentRoute, getLiveRouteData } = useLiveRoute()
 
     const searchParams = useSearchParams()
 
@@ -40,6 +43,10 @@ const MapSection = memo(({ mapRef, mapState, routes, isMapLoaded, onRoutesChange
         }
     }, [searchParams, isMapLoaded])
 
+    useEffect(() => {
+        getLiveRouteData('2')
+    }, [])
+
     const vehicleOnDestination = {
         vehicleId,
         vehicleNumber,
@@ -58,6 +65,24 @@ const MapSection = memo(({ mapRef, mapState, routes, isMapLoaded, onRoutesChange
                 strokeStyle={POLYLINE_CONFIG.STROKE_STYLE}
             />
             {isVisible && <VehicleMarker vehicleInfo={vehicleOnDestination} />}
+            {currentRoute && (
+                <CustomOverlayMap
+                    position={{
+                        lat: currentRoute.lat,
+                        lng: currentRoute.lng,
+                    }}
+                >
+                    <div
+                        style={{
+                            width: `${LIVE_IMAGE.size.width}px`,
+                            height: `${LIVE_IMAGE.size.height}px`,
+                            transform: `translate(-50%, -50%) rotate(${currentRoute.ang}deg)`,
+                        }}
+                    >
+                        <Image src={LIVE_IMAGE.src} alt='vehicle' width={24} height={24} priority />
+                    </div>
+                </CustomOverlayMap>
+            )}
         </Map>
     )
 })
