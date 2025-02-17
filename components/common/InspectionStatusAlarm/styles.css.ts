@@ -31,10 +31,10 @@ export const container = style({
     right: '20px',
     width: '100%',
     maxWidth: '450px',
-    justifyContent: 'center',
-    alignItems: 'center',
+    gap: '12px',
     display: 'flex',
-    backgroundColor: vars.colors.white,
+    flexDirection: 'column',
+    backgroundColor: 'transparent',
     borderRadius: '12px',
     zIndex: vars.zIndex.modal,
 })
