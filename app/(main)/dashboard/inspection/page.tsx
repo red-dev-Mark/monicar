@@ -71,6 +71,10 @@ const InspectionPage = () => {
         getInspectionStatusData()
     }, [status])
 
+    if (isLoading) {
+        return
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.logoWrapper}>
@@ -111,36 +115,34 @@ const InspectionPage = () => {
                         </Tabs.Tab>
                     </Tabs.List>
                 </Tabs>
+            </Suspense>
 
+            <Suspense fallback={<InspectionSkeleton />}>
                 <div className={styles.cardWrapper}>
-                    {isLoading ? (
-                        <InspectionSkeleton />
-                    ) : (
-                        inspectionData?.map((data) => (
-                            <InspectionCard
-                                key={data.id}
-                                vehicleNumber={data.vehicleNumber}
-                                status={data.status}
-                                drivingDistance={data.drivingDistance}
-                                managerName={data.managerName}
-                                onClick={() => handleButtonClick(data.id)}
-                            />
-                        ))
-                    )}
-                </div>
-
-                <div className={styles.paginationWrapper}>
-                    <Pagination.Root total={1} color='#ff385c' boundaries={0}>
-                        <Group gap={5} justify='center'>
-                            <Pagination.First />
-                            <Pagination.Previous />
-                            <Pagination.Items />
-                            <Pagination.Next />
-                            <Pagination.Last />
-                        </Group>
-                    </Pagination.Root>
+                    {inspectionData?.map((data) => (
+                        <InspectionCard
+                            key={data.id}
+                            vehicleNumber={data.vehicleNumber}
+                            status={data.status}
+                            drivingDistance={data.drivingDistance}
+                            managerName={data.managerName}
+                            onClick={() => handleButtonClick(data.id)}
+                        />
+                    ))}
                 </div>
             </Suspense>
+
+            <div className={styles.paginationWrapper}>
+                <Pagination.Root total={1} color='#ff385c' boundaries={0}>
+                    <Group gap={5} justify='center'>
+                        <Pagination.First />
+                        <Pagination.Previous />
+                        <Pagination.Items />
+                        <Pagination.Next />
+                        <Pagination.Last />
+                    </Group>
+                </Pagination.Root>
+            </div>
         </div>
     )
 }
