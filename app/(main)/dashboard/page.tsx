@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { Suspense, useEffect, useState } from 'react'
 
 import Calendar from '@/app/(main)/dashboard/components/Calendar'
@@ -12,6 +13,7 @@ import HeaderSkeleton from '@/components/common/Skeleton/HeaderSkeleton'
 import Map from '@/components/domain/map/Map'
 // import { useSearchSingleVehicle } from '@/hooks/useVehicleLocationSearch'
 import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from '@/public/icons'
+import { StatusType } from '@/types/vehicle'
 
 import InspectionStatus from './components/InspectionStatus'
 import NoticeListBoard from './components/NoticeListBoard'
@@ -30,12 +32,16 @@ const DashboardPage = () => {
     //     handleSearchChange,
     //     closeModal,
     // } = useSearchSingleVehicle()
-
+    const router = useRouter()
     const [userInfo, setUserInfo] = useState({
         companyName: '',
         nickname: '',
     })
-    const [isLoading] = useState()
+    const [isLoading, setIsLoading] = useState(true)
+
+    const handleStatusClick = (status: StatusType) => {
+        router.push(`/dashboard/inspection?status=${status}`)
+    }
 
     useEffect(() => {
         const companyName = localStorage.getItem('company_name') || ''
@@ -45,6 +51,7 @@ const DashboardPage = () => {
             companyName,
             nickname,
         }))
+        setIsLoading(false)
     }, [])
 
     // const isVehicleMarkerVisible = !!(isVehicleVisible && vehicleInfo)
@@ -74,30 +81,31 @@ const DashboardPage = () => {
                         <InspectionStatus
                             inspectionStatusData={[
                                 {
-                                    status: 'required',
+                                    status: 'REQUIRED',
                                     icon: <WhiteBellIcon color='white' size={24} />,
                                     text: '점검 필요',
                                     iconType: 'bell',
                                 },
                                 {
-                                    status: 'scheduled',
+                                    status: 'SCHEDULED',
                                     icon: <WhiteAlertIcon color='white' size={24} />,
                                     text: '점검 예정',
                                     iconType: 'alert',
                                 },
                                 {
-                                    status: 'inProgress',
+                                    status: 'INPROGRESS',
                                     icon: <WhiteOnButtonIcon color='white' size={24} />,
                                     text: '점검 진행',
                                     iconType: 'button',
                                 },
                                 {
-                                    status: 'completed',
+                                    status: 'COMPLETED',
                                     icon: <WhiteCheckIcon color='white' size={24} />,
                                     text: '점검 완료',
                                     iconType: 'check',
                                 },
                             ]}
+                            onStatusClick={handleStatusClick}
                         />
 
                         <div className={styles.vehicleStatusPanelWrapper}>
@@ -153,34 +161,37 @@ const DashboardPage = () => {
                     </div>
                 </header>
 
-                <InspectionStatus
-                    inspectionStatusData={[
-                        {
-                            status: 'required',
-                            icon: <WhiteBellIcon color='white' size={24} />,
-                            text: '점검 필요',
-                            iconType: 'bell',
-                        },
-                        {
-                            status: 'scheduled',
-                            icon: <WhiteAlertIcon color='white' size={24} />,
-                            text: '점검 예정',
-                            iconType: 'alert',
-                        },
-                        {
-                            status: 'inProgress',
-                            icon: <WhiteOnButtonIcon color='white' size={24} />,
-                            text: '점검 진행',
-                            iconType: 'button',
-                        },
-                        {
-                            status: 'completed',
-                            icon: <WhiteCheckIcon color='white' size={24} />,
-                            text: '점검 완료',
-                            iconType: 'check',
-                        },
-                    ]}
-                />
+                <Suspense fallback={<div>로딩 중</div>}>
+                    <InspectionStatus
+                        inspectionStatusData={[
+                            {
+                                status: 'REQUIRED',
+                                icon: <WhiteBellIcon color='white' size={24} />,
+                                text: '점검 필요',
+                                iconType: 'bell',
+                            },
+                            {
+                                status: 'SCHEDULED',
+                                icon: <WhiteAlertIcon color='white' size={24} />,
+                                text: '점검 예정',
+                                iconType: 'alert',
+                            },
+                            {
+                                status: 'INPROGRESS',
+                                icon: <WhiteOnButtonIcon color='white' size={24} />,
+                                text: '점검 진행',
+                                iconType: 'button',
+                            },
+                            {
+                                status: 'COMPLETED',
+                                icon: <WhiteCheckIcon color='white' size={24} />,
+                                text: '점검 완료',
+                                iconType: 'check',
+                            },
+                        ]}
+                        onStatusClick={handleStatusClick}
+                    />
+                </Suspense>
 
                 <div className={styles.vehicleStatusPanelWrapper}>
                     <VehicleStatusPanel />

@@ -14,13 +14,14 @@ export const statusCard = recipe({
         borderLeft: '12px solid',
         display: 'flex',
         alignItems: 'flex-start',
+        position: 'relative',
     },
     variants: {
         status: {
-            required: { backgroundColor: vars.colors.pink[200], borderLeftColor: vars.colors.pink[700] },
-            scheduled: { backgroundColor: vars.colors.yellow[100], borderLeftColor: vars.colors.yellow[200] },
-            inProgress: { backgroundColor: vars.colors.green[100], borderLeftColor: vars.colors.green[300] },
-            completed: { backgroundColor: vars.colors.purple[100], borderLeftColor: vars.colors.purple[200] },
+            REQUIRED: { backgroundColor: vars.colors.pink[200], borderLeftColor: vars.colors.pink[700] },
+            SCHEDULED: { backgroundColor: vars.colors.yellow[100], borderLeftColor: vars.colors.yellow[200] },
+            INPROGRESS: { backgroundColor: vars.colors.green[100], borderLeftColor: vars.colors.green[300] },
+            COMPLETED: { backgroundColor: vars.colors.purple[100], borderLeftColor: vars.colors.purple[200] },
         },
     },
 })
@@ -31,10 +32,10 @@ export const container = style({
     right: '20px',
     width: '100%',
     maxWidth: '450px',
-    justifyContent: 'center',
-    alignItems: 'center',
+    gap: '12px',
     display: 'flex',
-    backgroundColor: vars.colors.white,
+    flexDirection: 'column',
+    backgroundColor: 'transparent',
     borderRadius: '12px',
     zIndex: vars.zIndex.modal,
 })
@@ -49,10 +50,10 @@ export const iconWrapperBase = style({
 })
 
 export const iconWrapper = styleVariants({
-    bell: [iconWrapperBase, { backgroundColor: vars.colors.pink[700] }],
-    alert: [iconWrapperBase, { backgroundColor: vars.colors.yellow[200] }],
-    button: [iconWrapperBase, { backgroundColor: vars.colors.green[300] }],
-    check: [iconWrapperBase, { backgroundColor: vars.colors.purple[200] }],
+    REQUIRED: [iconWrapperBase, { backgroundColor: vars.colors.pink[700] }],
+    SCHEDULED: [iconWrapperBase, { backgroundColor: vars.colors.yellow[200] }],
+    INPROGRESS: [iconWrapperBase, { backgroundColor: vars.colors.green[300] }],
+    COMPLETED: [iconWrapperBase, { backgroundColor: vars.colors.purple[200] }],
 })
 
 export const icon = style({
@@ -87,4 +88,10 @@ export const buttonGroup = style({
 
 export const button = style({
     color: vars.colors.gray[700],
+})
+
+export const closeButton = style({
+    position: 'absolute',
+    top: '16px',
+    right: '16px',
 })

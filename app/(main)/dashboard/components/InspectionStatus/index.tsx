@@ -1,6 +1,5 @@
 import * as styles from './styles.css'
-
-type StatusType = 'required' | 'scheduled' | 'inProgress' | 'completed'
+type StatusType = 'REQUIRED' | 'SCHEDULED' | 'INPROGRESS' | 'COMPLETED'
 type IconType = 'bell' | 'alert' | 'button' | 'check'
 
 interface InspectionStatusModel {
@@ -12,17 +11,20 @@ interface InspectionStatusModel {
 
 interface InspectionStatusProps {
     inspectionStatusData: InspectionStatusModel[]
+    onStatusClick: (status: StatusType) => void
 }
 
-const InspectionStatus = ({ inspectionStatusData }: InspectionStatusProps) => {
+const InspectionStatus = ({ inspectionStatusData, onStatusClick }: InspectionStatusProps) => {
     return (
         <div className={styles.container}>
             {inspectionStatusData.map((data) => (
-                <div
+                <button
                     key={data.status}
                     className={`${styles.statusCard({
                         status: data.status,
                     })} ${styles.mobileStatusCard}`}
+                    onClick={() => onStatusClick(data.status)}
+                    type='button'
                 >
                     <div className={styles.mobileStatusWrapper}>
                         <div className={styles.iconWrapper[data.iconType]}>
@@ -30,7 +32,7 @@ const InspectionStatus = ({ inspectionStatusData }: InspectionStatusProps) => {
                         </div>
                         <div className={styles.statusText}>{data.text}</div>
                     </div>
-                </div>
+                </button>
             ))}
         </div>
     )

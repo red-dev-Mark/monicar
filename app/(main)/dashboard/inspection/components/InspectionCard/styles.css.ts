@@ -47,10 +47,6 @@ export const description = style({
     },
 })
 
-export const button = style({
-    color: vars.colors.gray[600],
-})
-
 const iconWrapperBase = style({
     width: '40px',
     height: '40px',
