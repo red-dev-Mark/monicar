@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import { MAP_CONFIG } from '@/constants/map'
-import { useVehicleDisclosure } from '@/hooks/useVehicleDisclosure'
 import { clusterService } from '@/lib/apis'
-import { useVehicleVisibleStore } from '@/stores/useVehicleVisibleStore'
+import { isWithinZoomThreshold } from '@/lib/utils/map'
 import { TransformedClusterInfo } from '@/types/cluster'
 import { MapState } from '@/types/map'
 import { VehicleLocation } from '@/types/vehicle'
@@ -11,9 +9,6 @@ import { VehicleLocation } from '@/types/vehicle'
 export const useCluster = (mapState: MapState, isMapLoaded: boolean) => {
     const [clusterInfo, setClusterInfo] = useState<TransformedClusterInfo[]>([])
     const [clusterDetail, setClusterDetail] = useState<VehicleLocation[]>([])
-
-    const { hideSearchedVehicle, hideSelectedVehicle } = useVehicleDisclosure()
-    const setInputValue = useVehicleVisibleStore((state) => state.setInputValue)
 
     useEffect(() => {
         if (!mapState || !isMapLoaded) return
@@ -28,11 +23,8 @@ export const useCluster = (mapState: MapState, isMapLoaded: boolean) => {
             setClusterDetail(Array.isArray(clusterDetail) ? clusterDetail : [])
         }
 
-        if (mapState.level > MAP_CONFIG.CLUSTER.VISIBLE_LEVEL) {
+        if (!isWithinZoomThreshold(mapState)) {
             getClusterInfo()
-            hideSearchedVehicle()
-            hideSelectedVehicle()
-            setInputValue('')
         } else {
             getClusterDetails()
         }

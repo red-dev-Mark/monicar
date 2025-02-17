@@ -10,6 +10,7 @@ import VehicleSearchSection from '@/app/(main)/route/components/VehicleSearchSec
 import Accordion from '@/components/common/Accordion'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
+// import { useAutoComplete } from '@/hooks/useAutoComplete'
 import { useModal } from '@/hooks/useModal'
 import { useQueryParams } from '@/hooks/useQueryParams'
 import { hasValidDateRange } from '@/lib/utils/validation'
@@ -26,7 +27,6 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
     const [inputValue, setInputValue] = useState('')
     // const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null])
     // const [isRouteSearchVisible, { open: openRouteSearch, close: closeRout eSearch }] = useDisclosure()
-
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
 
     const searchParams = useSearchParams()
@@ -81,7 +81,7 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
                     />
 
                     {/* {isRouteSearchVisible && ( */}
-                    {!vehicleNumber && (
+                    {vehicleNumber && (
                         <div className={styles.bottomSection}>
                             <DateRangeSection
                                 searchableDateRange={searchableDateRange}

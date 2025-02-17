@@ -16,26 +16,12 @@ export const useQueryParams = () => {
         router.replace(`?${params.toString()}`)
     }
 
-    // const addQueries = async (queries: Record<string, string | number>) => {
-    //     const params = new URLSearchParams(searchParams)
-    //     Object.entries(queries).forEach(([key, value]) => {
-    //         params.set(key, removeSpaces(String(value)))
-    //     })
-    //     router.replace(`?${params.toString()}`)
-    // }
-    const addQueries = (queries: Record<string, string | number>) => {
-        const currentPath = window.location.pathname
-        const params = new URLSearchParams(searchParams.toString())
-
+    const addQueries = async (queries: Record<string, string | number>) => {
+        const params = new URLSearchParams(searchParams)
         Object.entries(queries).forEach(([key, value]) => {
             params.set(key, removeSpaces(String(value)))
         })
-
-        // pushState를 사용하여 즉시 URL 업데이트
-        window.history.pushState(null, '', `${currentPath}?${params.toString()}`)
-
-        // router.replace로 Next.js 라우터 상태 동기화
-        router.replace(`${currentPath}?${params.toString()}`)
+        router.replace(`?${params.toString()}`)
     }
 
     const removeQuery = (key: string) => {
@@ -46,7 +32,6 @@ export const useQueryParams = () => {
 
     const updateQueries = (addParams: Record<string, string | number>, removeKeys: string[]) => {
         const params = new URLSearchParams()
-
         Object.entries(addParams).forEach(([key, value]) => {
             params.set(key, removeSpaces(String(value)))
         })

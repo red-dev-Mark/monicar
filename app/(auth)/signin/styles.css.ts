@@ -9,15 +9,6 @@ export const container = style({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-
-    // '@media': {
-    //     [`screen and (max-width: ${breakPoints.mobile}px)`]: {
-    //         width: '380px',
-    //         position: 'relative',
-    //         left: 0,
-    //         gap: '360px',
-    //     },
-    // },
 })
 
 export const content = style({

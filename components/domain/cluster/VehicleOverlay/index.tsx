@@ -1,8 +1,6 @@
 import VehicleMarker from '@/components/domain/vehicle/VehicleMarker'
 import { MAP_CONFIG } from '@/constants/map'
 import { useQueryParams } from '@/hooks/useQueryParams'
-import { vehicleService } from '@/lib/apis'
-import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { LatLng, MapState } from '@/types/map'
 import { VehicleLocation } from '@/types/vehicle'
 
@@ -12,31 +10,11 @@ interface VehicleOverlayProps {
     clusterDetail: VehicleLocation[]
 }
 
-const VehicleOverlay = ({ mapState, controlMapStatus, clusterDetail }: VehicleOverlayProps) => {
-    const { addQueries } = useQueryParams()
+const VehicleOverlay = ({ mapState, clusterDetail }: VehicleOverlayProps) => {
+    const { addQuery } = useQueryParams()
 
-    const handleVehicleClick = async (vehicleId: string) => {
-        const result = await vehicleService.getVehicleDetail(vehicleId)
-        if (!result.isSuccess || !result.data) throw new Error(result.error || '')
-
-        const vehicleDetail = result.data
-        const {
-            recentVehicleInfo: { vehicleNumber },
-            recentCycleInfo: { lat, lng },
-        } = vehicleDetail
-
-        const coordinate = {
-            lat: normalizeCoordinate(lat),
-            lng: normalizeCoordinate(lng),
-        }
-
-        controlMapStatus(coordinate)
-        addQueries({
-            vehicleId,
-            vehicleNumber,
-            lat: coordinate.lat,
-            lng: coordinate.lng,
-        })
+    const handleVehicleClick = async (vehicleNumber: string) => {
+        addQuery('vehicleNumber', vehicleNumber)
     }
 
     if (mapState.level > MAP_CONFIG.CLUSTER.VISIBLE_LEVEL) return
