@@ -168,11 +168,12 @@ export const vehicleService = {
     },
 
     // 상태별 알람 조회
-    getInspectionStatus: async (page: number = 0, size: number = 8) => {
+    getInspectionStatus: async (status: string, page: number = 0, size: number = 8) => {
         const response = await httpClient.get('/api/v1/alarm', {
             params: {
                 page,
                 size,
+                status,
             },
         })
 

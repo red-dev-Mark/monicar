@@ -85,7 +85,7 @@ export interface InspectionStatusAlarmModel {
     managerName: string
 }
 
-type StatusType = 'REQUIRED' | 'SCHEDULED' | 'INPROGRESS' | 'COMPLETED'
+export type StatusType = 'REQUIRED' | 'SCHEDULED' | 'INPROGRESS' | 'COMPLETED'
 type IconType = 'bell' | 'alert' | 'button' | 'check'
 
 // 점검현황 통계

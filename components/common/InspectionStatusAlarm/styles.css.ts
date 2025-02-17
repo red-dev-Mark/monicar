@@ -49,10 +49,10 @@ export const iconWrapperBase = style({
 })
 
 export const iconWrapper = styleVariants({
-    bell: [iconWrapperBase, { backgroundColor: vars.colors.pink[700] }],
-    alert: [iconWrapperBase, { backgroundColor: vars.colors.yellow[200] }],
-    button: [iconWrapperBase, { backgroundColor: vars.colors.green[300] }],
-    check: [iconWrapperBase, { backgroundColor: vars.colors.purple[200] }],
+    REQUIRED: [iconWrapperBase, { backgroundColor: vars.colors.pink[700] }],
+    SCHEDULED: [iconWrapperBase, { backgroundColor: vars.colors.yellow[200] }],
+    INPROGRESS: [iconWrapperBase, { backgroundColor: vars.colors.green[300] }],
+    COMPLETED: [iconWrapperBase, { backgroundColor: vars.colors.purple[200] }],
 })
 
 export const icon = style({

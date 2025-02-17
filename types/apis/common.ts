@@ -3,3 +3,10 @@ export interface Result<T> {
     data?: T
     error?: string
 }
+
+export interface ErrorResponse {
+    isSuccess: boolean
+    errorMessage: string[]
+    errorCode: number
+    timestamp: number
+}

@@ -8,7 +8,6 @@ import Calendar from '@/app/(main)/dashboard/components/Calendar'
 // import SearchInput from '@/components/common/Input/SearchInput'
 // import Modal from '@/components/common/Modal'
 // import { ModalMessageType } from '@/components/common/Modal/types'
-import Alarm from '@/components/common/Alarm'
 import HeaderSkeleton from '@/components/common/Skeleton/HeaderSkeleton'
 import Map from '@/components/domain/map/Map'
 // import { useSearchSingleVehicle } from '@/hooks/useVehicleLocationSearch'
@@ -183,8 +182,6 @@ const DashboardPage = () => {
                         },
                     ]}
                 />
-
-                <Alarm />
 
                 <div className={styles.vehicleStatusPanelWrapper}>
                     <VehicleStatusPanel />
