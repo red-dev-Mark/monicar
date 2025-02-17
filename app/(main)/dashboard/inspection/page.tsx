@@ -2,6 +2,7 @@
 
 import { Group, Pagination, Tabs } from '@mantine/core'
 import Image from 'next/image'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import Breadcrumbs from '@/components/common/Breadcrumbs'
@@ -14,7 +15,9 @@ import InspectionStatusPanel from './components/InspectionStatusPanel'
 import * as styles from './styles.css'
 
 const InspectionPage = () => {
-    const [activeTab, setActiveTab] = useState<string | null>('REQUIRED')
+    const router = useRouter()
+    const searchParams = useSearchParams()
+    const status = searchParams.get('status') || 'REQUIRED'
     const [inspectionData, setInspectionData] = useState<AlarmResponse[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const [page] = useState(1)
@@ -23,7 +26,7 @@ const InspectionPage = () => {
     const getInspectionStatusData = async () => {
         try {
             setIsLoading(true)
-            const { isSuccess, data } = await vehicleService.getInspectionStatus(activeTab || 'REQUIRED')
+            const { isSuccess, data } = await vehicleService.getInspectionStatus(status || 'REQUIRED')
             if (!isSuccess) {
                 throw new Error(data)
             }
@@ -44,14 +47,6 @@ const InspectionPage = () => {
         }
     }
 
-    useEffect(() => {
-        getStatusPanelData()
-    }, [])
-
-    useEffect(() => {
-        getInspectionStatusData()
-    }, [activeTab, page])
-
     const patchInspectionStatusData = async (alarmId: number) => {
         try {
             await vehicleService.patchInspectionStatus(alarmId)
@@ -64,6 +59,18 @@ const InspectionPage = () => {
     const handleButtonClick = async (alarmId: number) => {
         await patchInspectionStatusData(alarmId)
     }
+
+    const handleTabChange = (newStatus: string | null) => {
+        router.push(`/dashboard/inspection?status=${newStatus}`)
+    }
+
+    useEffect(() => {
+        getStatusPanelData()
+    }, [])
+
+    useEffect(() => {
+        getInspectionStatusData()
+    }, [status, page])
 
     return (
         <div className={styles.container}>
@@ -88,7 +95,7 @@ const InspectionPage = () => {
 
             <InspectionStatusPanel data={statusPanelData} />
 
-            <Tabs color='#ff385c' variant='pills' radius='xl' value={activeTab} onChange={setActiveTab}>
+            <Tabs color='#ff385c' variant='pills' radius='xl' value={status} onChange={handleTabChange}>
                 <Tabs.List className={styles.tabsWrapper}>
                     <Tabs.Tab className={styles.tab} value='REQUIRED'>
                         점검 필요

@@ -14,6 +14,7 @@ export const statusCard = recipe({
         borderLeft: '12px solid',
         display: 'flex',
         alignItems: 'flex-start',
+        position: 'relative',
     },
     variants: {
         status: {
@@ -90,5 +91,7 @@ export const button = style({
 })
 
 export const closeButton = style({
-    color: vars.colors.gray[200],
+    position: 'absolute',
+    top: '16px',
+    right: '16px',
 })

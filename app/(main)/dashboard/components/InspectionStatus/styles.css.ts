@@ -57,10 +57,10 @@ export const statusCard = recipe({
     },
     variants: {
         status: {
-            required: { backgroundColor: vars.colors.pink[200] },
-            scheduled: { backgroundColor: vars.colors.yellow[100] },
-            inProgress: { backgroundColor: vars.colors.green[100] },
-            completed: { backgroundColor: vars.colors.purple[100] },
+            REQUIRED: { backgroundColor: vars.colors.pink[200] },
+            SCHEDULED: { backgroundColor: vars.colors.yellow[100] },
+            INPROGRESS: { backgroundColor: vars.colors.green[100] },
+            COMPLETED: { backgroundColor: vars.colors.purple[100] },
         },
     },
 })

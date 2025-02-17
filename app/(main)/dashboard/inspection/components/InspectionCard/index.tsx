@@ -1,5 +1,6 @@
 import { BaseButton } from '@/components/common/Button/BaseButton'
 import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from '@/public/icons'
+import { vars } from '@/styles/theme.css'
 
 import * as styles from './styles.css'
 
@@ -48,8 +49,10 @@ const InspectionCard = ({
             </div>
 
             {hasButton && (
-                <div className={styles.button}>
-                    <BaseButton onClick={onClick}>승인</BaseButton>
+                <div>
+                    <BaseButton onClick={onClick} style={{ color: vars.colors.gray[800] }}>
+                        승인
+                    </BaseButton>
                 </div>
             )}
         </div>
