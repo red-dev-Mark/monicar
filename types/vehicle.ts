@@ -96,3 +96,11 @@ export interface InspectionStatusItem {
 
 // useState에서 사용할 타입
 export type InspectionStatusType = InspectionStatusItem[]
+
+// 점검현황
+export interface InspectionStatusResponse {
+    content: AlarmResponse[]
+    status: string
+    page: number
+    size: number
+}
