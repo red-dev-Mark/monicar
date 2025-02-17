@@ -88,3 +88,7 @@ export const buttonGroup = style({
 export const button = style({
     color: vars.colors.gray[700],
 })
+
+export const closeButton = style({
+    color: vars.colors.gray[200],
+})
