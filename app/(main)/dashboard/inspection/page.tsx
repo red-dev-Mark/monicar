@@ -3,7 +3,7 @@
 import { Group, Pagination, Tabs } from '@mantine/core'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 
 import Breadcrumbs from '@/components/common/Breadcrumbs'
 import InspectionSkeleton from '@/components/common/Skeleton/InspectionSkeleton'
@@ -20,7 +20,6 @@ const InspectionPage = () => {
     const status = searchParams.get('status') || 'REQUIRED'
     const [inspectionData, setInspectionData] = useState<AlarmResponse[]>([])
     const [isLoading, setIsLoading] = useState(true)
-    const [page] = useState(1)
     const [statusPanelData, setStatusPanelData] = useState<InspectionStatusType>()
 
     const getInspectionStatusData = async () => {
@@ -70,7 +69,7 @@ const InspectionPage = () => {
 
     useEffect(() => {
         getInspectionStatusData()
-    }, [status, page])
+    }, [status])
 
     return (
         <div className={styles.container}>
@@ -95,22 +94,24 @@ const InspectionPage = () => {
 
             <InspectionStatusPanel data={statusPanelData} />
 
-            <Tabs color='#ff385c' variant='pills' radius='xl' value={status} onChange={handleTabChange}>
-                <Tabs.List className={styles.tabsWrapper}>
-                    <Tabs.Tab className={styles.tab} value='REQUIRED'>
-                        점검 필요
-                    </Tabs.Tab>
-                    <Tabs.Tab className={styles.tab} value='SCHEDULED'>
-                        점검 예정
-                    </Tabs.Tab>
-                    <Tabs.Tab className={styles.tab} value='INPROGRESS'>
-                        점검 진행
-                    </Tabs.Tab>
-                    <Tabs.Tab className={styles.tab} value='COMPLETED'>
-                        점검 완료
-                    </Tabs.Tab>
-                </Tabs.List>
-            </Tabs>
+            <Suspense fallback={<div>로딩 중</div>}>
+                <Tabs color='#ff385c' variant='pills' radius='xl' value={status} onChange={handleTabChange}>
+                    <Tabs.List className={styles.tabsWrapper}>
+                        <Tabs.Tab className={styles.tab} value='REQUIRED'>
+                            점검 필요
+                        </Tabs.Tab>
+                        <Tabs.Tab className={styles.tab} value='SCHEDULED'>
+                            점검 예정
+                        </Tabs.Tab>
+                        <Tabs.Tab className={styles.tab} value='INPROGRESS'>
+                            점검 진행
+                        </Tabs.Tab>
+                        <Tabs.Tab className={styles.tab} value='COMPLETED'>
+                            점검 완료
+                        </Tabs.Tab>
+                    </Tabs.List>
+                </Tabs>
+            </Suspense>
 
             <div className={styles.cardWrapper}>
                 {isLoading ? (

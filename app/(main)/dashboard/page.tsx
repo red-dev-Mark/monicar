@@ -161,35 +161,37 @@ const DashboardPage = () => {
                     </div>
                 </header>
 
-                <InspectionStatus
-                    inspectionStatusData={[
-                        {
-                            status: 'REQUIRED',
-                            icon: <WhiteBellIcon color='white' size={24} />,
-                            text: '점검 필요',
-                            iconType: 'bell',
-                        },
-                        {
-                            status: 'SCHEDULED',
-                            icon: <WhiteAlertIcon color='white' size={24} />,
-                            text: '점검 예정',
-                            iconType: 'alert',
-                        },
-                        {
-                            status: 'INPROGRESS',
-                            icon: <WhiteOnButtonIcon color='white' size={24} />,
-                            text: '점검 진행',
-                            iconType: 'button',
-                        },
-                        {
-                            status: 'COMPLETED',
-                            icon: <WhiteCheckIcon color='white' size={24} />,
-                            text: '점검 완료',
-                            iconType: 'check',
-                        },
-                    ]}
-                    onStatusClick={handleStatusClick}
-                />
+                <Suspense fallback={<div>로딩 중</div>}>
+                    <InspectionStatus
+                        inspectionStatusData={[
+                            {
+                                status: 'REQUIRED',
+                                icon: <WhiteBellIcon color='white' size={24} />,
+                                text: '점검 필요',
+                                iconType: 'bell',
+                            },
+                            {
+                                status: 'SCHEDULED',
+                                icon: <WhiteAlertIcon color='white' size={24} />,
+                                text: '점검 예정',
+                                iconType: 'alert',
+                            },
+                            {
+                                status: 'INPROGRESS',
+                                icon: <WhiteOnButtonIcon color='white' size={24} />,
+                                text: '점검 진행',
+                                iconType: 'button',
+                            },
+                            {
+                                status: 'COMPLETED',
+                                icon: <WhiteCheckIcon color='white' size={24} />,
+                                text: '점검 완료',
+                                iconType: 'check',
+                            },
+                        ]}
+                        onStatusClick={handleStatusClick}
+                    />
+                </Suspense>
 
                 <div className={styles.vehicleStatusPanelWrapper}>
                     <VehicleStatusPanel />
