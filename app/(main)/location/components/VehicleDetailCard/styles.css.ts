@@ -19,7 +19,7 @@ export const container = style({
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             width: '100%',
-            height: '340px',
+            height: '348px',
             marginBottom: '68px',
             padding: '12px',
         },

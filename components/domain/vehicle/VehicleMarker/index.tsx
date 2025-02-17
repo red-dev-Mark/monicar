@@ -10,16 +10,16 @@ import * as styles from './styles.css'
 
 interface VehicleMarkerProps {
     vehicleInfo: VehicleLocation
-    onClick?: (vehicleId: string, vehicleNumber: string) => void
+    onClick?: (vehicleNumber: string) => void
 }
 
 const VehicleMarker = ({ vehicleInfo, onClick }: VehicleMarkerProps) => {
     const [isHovered, setIsHovered] = useState(false)
 
     const searchParams = useSearchParams()
-    const currentVehicleId = searchParams.get('vehicleId')
+    const vehicleNumberInQuery = searchParams.get('vehicleNumber')
 
-    const isSelected = currentVehicleId === String(vehicleInfo.vehicleId)
+    const isSelected = vehicleNumberInQuery === String(vehicleInfo.vehicleNumber)
     const isVehicleNumberVisible = isSelected ? true : isHovered
     const vehicleNumber = addSpaceVehicleNumber(vehicleInfo.vehicleNumber)
 
@@ -33,7 +33,7 @@ const VehicleMarker = ({ vehicleInfo, onClick }: VehicleMarkerProps) => {
             <MapMarker
                 position={vehicleInfo.coordinate}
                 image={MARKER_IMAGE}
-                onClick={() => onClick?.(vehicleInfo.vehicleId, vehicleInfo.vehicleNumber)}
+                onClick={() => onClick?.(vehicleInfo.vehicleNumber)}
                 onMouseOver={() => setIsHovered(true)}
                 onMouseOut={() => setIsHovered(false)}
             />

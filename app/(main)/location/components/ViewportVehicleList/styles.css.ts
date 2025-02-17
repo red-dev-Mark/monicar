@@ -18,7 +18,7 @@ export const container = style({
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             width: '100%',
-            maxHeight: '340px',
+            maxHeight: '348px',
             bottom: '68px',
         },
     },
@@ -39,7 +39,7 @@ export const vehicleCount = style({
 })
 
 export const vehicleList = style({
-    height: '340px',
+    height: '436px',
     overflowY: 'auto',
     display: 'flex',
     gap: '4px',
@@ -60,7 +60,7 @@ export const vehicleList = style({
 
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
-            maxHeight: '220px',
+            maxHeight: '348px',
         },
     },
 })

@@ -5,7 +5,6 @@ import { removeSpaces } from '@/lib/utils/string'
 export const useQueryParams = () => {
     const router = useRouter()
     const searchParams = useSearchParams()
-    console.log(searchParams)
 
     const getQuery = (key: string) => {
         return searchParams.get(key)
@@ -33,7 +32,6 @@ export const useQueryParams = () => {
 
     const updateQueries = (addParams: Record<string, string | number>, removeKeys: string[]) => {
         const params = new URLSearchParams()
-
         Object.entries(addParams).forEach(([key, value]) => {
             params.set(key, removeSpaces(String(value)))
         })

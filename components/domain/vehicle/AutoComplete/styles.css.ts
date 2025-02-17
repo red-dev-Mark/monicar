@@ -3,7 +3,7 @@ import { style } from '@vanilla-extract/css'
 import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
-    width: '92%',
+    width: '97%',
     maxHeight: '260px',
     marginTop: '4px',
     display: 'flex',

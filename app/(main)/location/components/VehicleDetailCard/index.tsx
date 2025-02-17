@@ -1,6 +1,6 @@
 'use client'
 
-import { Tooltip } from '@mantine/core'
+import { Skeleton, Tooltip } from '@mantine/core'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -9,41 +9,81 @@ import Badge from '@/components/common/Badge'
 import SquareButton from '@/components/common/Button/SquareButton'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
+import { MAP_CONFIG } from '@/constants/map'
 import { useCoordToAddress } from '@/hooks/useCoordToAddress'
+import { useLoading } from '@/hooks/useLoading'
+import { useMapStatus } from '@/hooks/useMapStatus'
 import { useModal } from '@/hooks/useModal'
 import { useQueryParams } from '@/hooks/useQueryParams'
 import { vehicleService } from '@/lib/apis'
+import { isWithinZoomThreshold } from '@/lib/utils/map'
 import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { getFormattedVehicleDetail } from '@/lib/utils/vehicle'
 import { vars } from '@/styles/theme.css'
+import { MapRefType } from '@/types/map'
 import { VehicleDetail } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
-const VehicleDetailCard = () => {
+interface VehicleDetailCardProps {
+    mapRef: MapRefType
+}
+const VehicleDetailCard = ({ mapRef }: VehicleDetailCardProps) => {
     const [vehicleDetail, setVehicleDetail] = useState<VehicleDetail>()
 
+    const { mapState, controlMapStatus } = useMapStatus(mapRef.current)
     const { clearAllQueries } = useQueryParams()
+    const [isLoading, startLoading, finishLoading] = useLoading()
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
 
     const searchParams = useSearchParams()
 
     useEffect(() => {
-        const vehicleId = searchParams.get('vehicleId')
-        if (!vehicleId) {
+        const vehicleNumber = searchParams.get('vehicleNumber')
+        if (!vehicleNumber) {
             setVehicleDetail(undefined)
             return
         }
 
         const initializeVehicleDetail = async () => {
-            const result = await vehicleService.getVehicleDetail(vehicleId)
-            if (!result.isSuccess) throw new Error(result.error)
+            if (!mapRef.current) return
 
-            setVehicleDetail(result.data)
+            try {
+                startLoading()
+                const vehicleLocation = await vehicleService.getVehicleInfo(vehicleNumber)
+                if (!vehicleLocation.data) throw new Error(vehicleLocation.error)
+
+                const { vehicleId } = vehicleLocation.data
+
+                const result = await vehicleService.getVehicleDetail(vehicleId)
+                if (!result.data) throw new Error(vehicleLocation.error)
+
+                setVehicleDetail(result.data)
+                const {
+                    recentCycleInfo: { lat, lng },
+                } = result.data
+
+                const coordinate = {
+                    lat: normalizeCoordinate(lat),
+                    lng: normalizeCoordinate(lng),
+                }
+                controlMapStatus(
+                    coordinate,
+                    isWithinZoomThreshold(mapState) ? mapState.level : MAP_CONFIG.CLUSTER.VISIBLE_LEVEL,
+                )
+            } catch (error) {
+                if (error instanceof Error) {
+                    openModalWithMessage?.(error.message)
+                } else {
+                    openModalWithMessage?.('알 수 없는 오류가 발생했습니다')
+                }
+            } finally {
+                finishLoading()
+            }
         }
 
         initializeVehicleDetail()
-    }, [searchParams])
+    }, [searchParams, mapRef.current])
 
     const normalizedCoordinate = {
         lat: normalizeCoordinate(vehicleDetail?.recentCycleInfo?.lat || 0),
@@ -66,11 +106,28 @@ const VehicleDetailCard = () => {
         lastUpdated,
     } = getFormattedVehicleDetail(vehicleDetail)
 
+    const renderWithLoading = (value: React.ReactNode, unit?: string) => {
+        if (isLoading) {
+            return <Skeleton height={20} width='100%' radius='sm' />
+        } else {
+            return unit ? `${value} ${unit}` : value
+        }
+    }
+
     return (
         <article className={styles.container}>
             <header className={styles.header}>
-                <Badge shape='circle' variant={isDriving ? '운행중' : '미운행'} />
-                <h2 className={styles.vehicleNumber}>{vehicleNumber}</h2>
+                {isLoading ? (
+                    <>
+                        <Skeleton height={36} width='80px' radius='lg' />
+                        <Skeleton height={28} width='114px' radius='sm' />
+                    </>
+                ) : (
+                    <>
+                        <Badge shape='circle' variant={isDriving ? '운행중' : '미운행'} />
+                        <h2 className={styles.vehicleNumber}>{vehicleNumber}</h2>
+                    </>
+                )}
                 <button
                     className={styles.closeButton}
                     onClick={() => clearAllQueries()}
@@ -93,43 +150,43 @@ const VehicleDetailCard = () => {
                             <th scope='row' className={styles.tableHeader}>
                                 속도
                             </th>
-                            <td className={styles.tableCell}>{speed} km/h</td>
+                            <td className={styles.tableCell}>{renderWithLoading(speed, 'km')} </td>
                         </tr>
                         <tr className={styles.engineInfo}>
                             <th scope='row' className={styles.tableHeader}>
                                 최근시동 ON
                             </th>
-                            <td className={styles.tableCell}>{lastEngineOn}</td>
+                            <td className={styles.tableCell}>{renderWithLoading(lastEngineOn)}</td>
                         </tr>
                         <tr className={styles.engineInfo}>
                             <th scope='row' className={styles.tableHeader}>
                                 최근시동 OFF
                             </th>
-                            <td className={styles.tableCell}>{lastEngineOff}</td>
+                            <td className={styles.tableCell}>{renderWithLoading(lastEngineOff)}</td>
                         </tr>
                         <tr>
                             <th scope='row' className={styles.tableHeader}>
                                 당일주행시간
                             </th>
-                            <td className={styles.tableCell}>{todayDrivingTime}</td>
+                            <td className={styles.tableCell}>{renderWithLoading(todayDrivingTime)}</td>
                         </tr>
                         <tr>
                             <th scope='row' className={styles.tableHeader}>
                                 당일주행거리
                             </th>
-                            <td className={styles.tableCell}>{todayDrivingDistance} km</td>
+                            <td className={styles.tableCell}>{renderWithLoading(todayDrivingDistance, 'km')}</td>
                         </tr>
                         <tr>
                             <th scope='row' className={styles.tableHeader}>
                                 최종수신
                             </th>
-                            <td className={styles.tableCell}>{lastUpdated}</td>
+                            <td className={styles.tableCell}>{renderWithLoading(lastUpdated)}</td>
                         </tr>
                         <tr>
                             <th scope='row' className={styles.tableHeader}>
                                 최종위치
                             </th>
-                            <td className={styles.tableCell}>{lastAddress}</td>
+                            <td className={styles.tableCell}>{renderWithLoading(lastAddress)}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { useEffect } from 'react'
 
 import Accordion from '@/components/common/Accordion'
 import Badge from '@/components/common/Badge'
@@ -12,17 +11,12 @@ import * as styles from './styles.css'
 
 interface ViewportVehicleListProps {
     clusterDetail: VehicleLocation[]
-    onVehicleClick: (vehicleId: string, vehicleNumber: string) => void
 }
 
-const ViewportVehicleList = ({ clusterDetail, onVehicleClick }: ViewportVehicleListProps) => {
-    const { removeQuery } = useQueryParams()
+const ViewportVehicleList = ({ clusterDetail }: ViewportVehicleListProps) => {
+    const { addQuery } = useQueryParams()
 
     const hasVehicles = clusterDetail.length > 0
-
-    useEffect(() => {
-        return () => removeQuery('vehicleName')
-    }, [])
 
     const getVehicleStatus = (status: keyof typeof OPERATION_STATUS) => {
         return OPERATION_STATUS[status] === '운행중' ? '운행중' : '미운행'
@@ -43,7 +37,7 @@ const ViewportVehicleList = ({ clusterDetail, onVehicleClick }: ViewportVehicleL
                                 <div
                                     key={cluster.vehicleId}
                                     className={styles.listItem}
-                                    onClick={() => onVehicleClick(cluster.vehicleId, cluster.vehicleNumber)}
+                                    onClick={() => addQuery('vehicleNumber', vehicleNumber)}
                                     role='presentation'
                                 >
                                     <Badge

@@ -21,11 +21,12 @@ export const container = style({
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             width: 'calc(100% - 24px)',
             padding: '4px',
-            top: '72px',
+            top: '88px',
             left: '12px',
             flexDirection: 'row',
             gap: 0,
             justifyContent: 'space-around',
+            backgroundColor: '#ffffff90',
         },
     },
 })
