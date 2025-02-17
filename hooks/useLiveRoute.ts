@@ -40,8 +40,15 @@ export const useLiveRoute = () => {
         const STEP = 1000 / FRAME_RATE / ANIMATION_DURATION
 
         const interval = setInterval(() => {
+            if (index >= liveRoutes.length - 1 && progress >= 1) {
+                clearInterval(interval)
+                return
+            }
+
             const currentRoute = liveRoutes[index]
-            const nextRoute = liveRoutes[(index + 1) % liveRoutes.length]
+            const nextRoute = liveRoutes[index + 1]
+
+            if (!nextRoute) return
 
             const interpolatedLat = lerp(currentRoute.lat, nextRoute.lat, progress)
             const interpolatedLng = lerp(currentRoute.lng, nextRoute.lng, progress)
@@ -58,12 +65,14 @@ export const useLiveRoute = () => {
 
             if (progress >= 1) {
                 progress = 0
-                index = (index + 1) % liveRoutes.length
+                if (index < liveRoutes.length - 1) {
+                    index++
+                }
             }
         }, 1000 / FRAME_RATE)
 
         return () => clearInterval(interval)
-    }, [liveRoutes, calculateAngle])
+    }, [liveRoutes])
 
     return {
         currentRoute,
