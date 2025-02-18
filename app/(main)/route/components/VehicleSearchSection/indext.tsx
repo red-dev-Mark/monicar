@@ -1,10 +1,10 @@
 import { ChangeEvent } from 'react'
 
 import SearchInput from '@/components/common/Input/SearchInput'
-import { useLoading } from '@/hooks/useLoading'
 import { useQueryParams } from '@/hooks/useQueryParams'
-import { getVehicleOperationInfo } from '@/lib/services/vehicle'
+import { validateVehicleNumber } from '@/lib/utils/validation'
 interface VehicleSearchSectionProps {
+    // setOperationPeriod: Dispatch<SetStateAction<VehicleOperationPeriod | null>>
     value: string
     onChange: (event: ChangeEvent<HTMLInputElement>) => void
     // searchVehicle: (vehicleNumber: string) => Promise<Result<Vehicle>>
@@ -21,38 +21,21 @@ const VehicleSearchSection = ({
     onError,
     // onDatesClean,
 }: VehicleSearchSectionProps) => {
-    const [isSearchingVehicle, startSearchingVehicle, finishSearchingVehicle] = useLoading()
-    const { updateQueries, clearAllQueries } = useQueryParams()
+    // const [inputValue, setInputValue] = useState('')
 
-    const handleVehicleSearch = async () => {
+    const { addQuery } = useQueryParams()
+
+    const handleInputSubmit = () => {
         try {
-            startSearchingVehicle()
-
-            const result = await getVehicleOperationInfo(value)
-
-            if (!result.isSuccess) throw new Error(result.error || '차량 검색에 실패했습니다')
-
-            // onDatesClean()
-
-            if (!result.data || !result.data.firstOperationDate || !result.data.lastOperationDate) throw new Error()
-            const { vehicleId, vehicleNumber, firstOperationDate, lastOperationDate } = result?.data
-
-            // openRouteSearch()
-            updateQueries({ vehicleId, vehicleNumber, firstOperationDate, lastOperationDate }, [
-                'startDate',
-                'endDate',
-                'startLat',
-                'startLng',
-                'endLat',
-                'endLng',
-            ])
+            const validation = validateVehicleNumber(value)
+            if (!validation.isValid) {
+                return { isSuccess: false, error: validation.message! }
+            }
+            addQuery('vehicleNumber', value)
         } catch (error) {
             if (error instanceof Error) {
                 onError?.(error.message)
-                clearAllQueries()
             }
-        } finally {
-            finishSearchingVehicle()
         }
     }
 
@@ -60,11 +43,11 @@ const VehicleSearchSection = ({
         <SearchInput
             value={value}
             onChange={onChange}
-            onSubmit={handleVehicleSearch}
+            onSubmit={handleInputSubmit}
             placeholder='차량번호 검색'
             icon='/icons/pink-search-icon.svg'
-            isLoading={isSearchingVehicle}
-            disabled={isSearchingVehicle}
+            // isLoading={isSearchingVehicle}
+            // disabled={isSearchingVehicle}
             style={{ borderRadius: '8px', boxShadow: 'none' }}
         />
     )

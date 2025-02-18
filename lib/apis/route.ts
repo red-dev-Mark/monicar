@@ -88,10 +88,9 @@ export const routeService = {
     // 차량 실시간 이동 경로 조회
     getVehicleLiveRoutes: async (vehicleId: string) => {
         const currentTime = new Date()
-        const mockTime = new Date(currentTime.getTime() - (1063200000 + 21600000))
 
         const params: LiveRouteParams = {
-            currentTime: formatISODateToISOString(mockTime),
+            currentTime: formatISODateToISOString(currentTime),
         }
 
         const response = await httpClient.get(`api/v1/vehicle/${vehicleId}/recent/routes`, {

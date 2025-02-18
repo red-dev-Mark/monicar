@@ -1,5 +1,6 @@
 'use client'
 
+import { Switch, Tooltip } from '@mantine/core'
 import { DatesRangeValue } from '@mantine/dates'
 import { useSearchParams } from 'next/navigation'
 import { ChangeEvent, useEffect, useState } from 'react'
@@ -11,10 +12,10 @@ import Accordion from '@/components/common/Accordion'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import { useModal } from '@/hooks/useModal'
-import { useQueryParams } from '@/hooks/useQueryParams'
+// import { vehicleService } from '@/lib/apis'
 import { hasValidDateRange } from '@/lib/utils/validation'
+import { vars } from '@/styles/theme.css'
 import { LatLng, MapRefType } from '@/types/map'
-import { VehicleOperationPeriod } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 interface RouteSearchSectionProps {
@@ -25,17 +26,20 @@ interface RouteSearchSectionProps {
 const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps) => {
     const [inputValue, setInputValue] = useState('')
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
+    // const [operationPeriod, setOperationPeriod] = useState<VehicleOperationPeriod | null>(null)
+    // const [isOperation, setIsOperation] = useState(false)
 
     const searchParams = useSearchParams()
-    const { addQueries } = useQueryParams()
 
+    // const vehicleId = searchParams.get('vehicleId')
     const vehicleNumber = searchParams.get('vehicleNumber')
-    const firstOperationDate = searchParams.get('firstOperationDate')
-    const lastOperationDate = searchParams.get('lastOperationDate')
+    // const live = searchParams.get('live') === 'true'
+    // const firstOperationDate = searchParams.get('firstOperationDate')
+    // const lastOperationDate = searchParams.get('lastOperationDate')
     const startDate = searchParams.get('startDate')
     const endDate = searchParams.get('endDate')
     const dateRange: DatesRangeValue = [startDate ? new Date(startDate) : null, endDate ? new Date(endDate) : null]
-    const searchableDateRange: VehicleOperationPeriod = { firstOperationDate, lastOperationDate }
+    // const searchableDateRange: VehicleOperationPeriod = { firstOperationDate, lastOperationDate }
 
     useEffect(() => {
         if (!vehicleNumber) {
@@ -46,21 +50,38 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
         setInputValue(vehicleNumber)
     }, [vehicleNumber])
 
-    const handleDateChange = (value: DatesRangeValue) => {
-        if (value[0] && !value[1]) {
-            addQueries({
-                startDate: value[0].toISOString(),
-                endDate: '',
-            })
-        }
+    // useEffect(() => {
+    //     if (!vehicleId && !live) return
 
-        if (value[0] && value[1]) {
-            addQueries({
-                startDate: value[0].toISOString(),
-                endDate: value[1].toISOString(),
-            })
-        }
-    }
+    //     const checkIsOperationStatus = async () => {
+    //         try {
+    //             const response = await vehicleService.getVehicleOperationStatus(vehicleId || '')
+    //             setIsOperation(response.result)
+
+    //             if (!response.result) {
+    //                 removeQuery('live')
+    //             }
+    //         } catch (error) {
+    //             console.error('운행 상태 조회 실패', error)
+    //             setIsOperation(false)
+    //         }
+    //     }
+
+    //     checkIsOperationStatus()
+    // }, [searchParams])
+
+    // const handleLiveToggle = () => {
+    //     if (live) {
+    //         removeQuery('live')
+    //     } else {
+    //         clearAllQueries()
+    //         addQueries({
+    //             live: 'true',
+    //             vehicleId: vehicleId || '',
+    //             vehicleNumber: vehicleNumber || '',
+    //         })
+    //     }
+    // }
 
     const isVehicleNumberDirty = searchParams.get('vehicleNumber') !== inputValue
     const isRouteSearchable = !!searchParams.get('vehicleNumber') && hasValidDateRange(dateRange)
@@ -71,6 +92,7 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
             <Accordion title='차량 및 기간 검색'>
                 <div className={styles.container} aria-label='경로 조회 판넬'>
                     <VehicleSearchSection
+                        // setOperationPeriod={setOperationPeriod}
                         value={inputValue}
                         onChange={(event: ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value)}
                         onError={openModalWithMessage}
@@ -79,10 +101,31 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
                     {vehicleNumber && (
                         <div className={styles.bottomSection}>
                             <DateRangeSection
-                                searchableDateRange={searchableDateRange}
-                                value={dateRange}
-                                onChange={handleDateChange}
+                            // searchableDateRange={searchableDateRange}
+                            // value={dateRange}
+                            // onChange={handleDateChange}
                             />
+                            <Tooltip
+                                label='현재 미운행 차량입니다'
+                                // disabled={isOperation}
+                                color={vars.colors.gray[800]}
+                                arrowSize={6}
+                                arrowOffset={120}
+                                withArrow
+                                arrowPosition='side'
+                                offset={{ mainAxis: 10, crossAxis: 180 }}
+                            >
+                                <div className={styles.swtich}>
+                                    실시간 경로 조회
+                                    <Switch
+                                        // disabled={isOperation}
+                                        // defaultChecked={isOperation && live}
+                                        // onChange={handleLiveToggle}
+                                        size='lg'
+                                        color={`${vars.colors.primary}`}
+                                    />
+                                </div>
+                            </Tooltip>
 
                             <RouteSearchButton
                                 mapRef={mapRef}

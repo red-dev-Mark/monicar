@@ -1,13 +1,12 @@
 'use client'
 
-import { useSearchParams } from 'next/navigation'
+// import { useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
 import MapSection from '@/app/(main)/route/components/MapSection'
 import RouteSearchSection from '@/app/(main)/route/components/RouteSearchSection'
-import SquareButton from '@/components/common/Button/SquareButton'
+// import { useLiveRoute } from '@/hooks/useLiveRoute'
 import { useMapStatus } from '@/hooks/useMapStatus'
-import { useQueryParams } from '@/hooks/useQueryParams'
 import { LatLng } from '@/types/map'
 
 import * as styles from './styles.css'
@@ -16,36 +15,35 @@ const Route = () => {
     const [routes, setRoutes] = useState<LatLng[]>([])
     const [isMapLoaded, setIsMapLoaded] = useState(false)
 
+    // const searchParams = useSearchParams()
+    // const vehicleId = searchParams.get('vehicleId')
+    // const live = searchParams.get('live') === 'true'
+
+    // const { currentRoute, getLiveRouteData } = useLiveRoute(vehicleId || '')
+
     const mapRef = useRef<kakao.maps.Map>(null)
-
     const { mapState, updateMapStatus } = useMapStatus(mapRef?.current)
-
-    const searchParams = useSearchParams()
-    const { removeQuery } = useQueryParams()
-
-    const live = searchParams.get('live')
 
     useEffect(() => {
         if (!isMapLoaded) return
-
         updateMapStatus()
     }, [isMapLoaded])
 
+    // useEffect(() => {
+    // if (live && vehicleId) {
+    // getLiveRouteData(vehicleId)
+    // setRoutes([])
+    // }
+    // }, [live, vehicleId])
+
     return (
         <div className={styles.container}>
-            {live ? (
-                <div className={styles.buttonWrapper}>
-                    <SquareButton onClick={() => removeQuery('live')}>경로 조회</SquareButton>
-                </div>
-            ) : (
-                <RouteSearchSection mapRef={mapRef} onRoutesChange={setRoutes} />
-            )}
-
-            {/* <RouteTimelineSection /> */}
+            <RouteSearchSection mapRef={mapRef} onRoutesChange={setRoutes} />
             <MapSection
                 mapRef={mapRef}
                 mapState={mapState}
                 routes={routes}
+                // liveRoutes={live ? currentRoute : undefined}
                 isMapLoaded={isMapLoaded}
                 onRoutesChange={setRoutes}
                 onLoad={() => setIsMapLoaded(true)}
