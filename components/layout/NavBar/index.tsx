@@ -3,42 +3,19 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-import Switch from '@/components/common/Switch'
+import SideFooter from '@/components/common/SideFooter'
 import NavItem from '@/components/layout/NavBar/NavItem'
-import { useAuth } from '@/hooks/useAuth'
-import { HomeIcon, ListIcon, PinIcon, PointerIcon, SignOutIcon, SunIcon } from '@/public/icons'
+import { HomeIcon, ListIcon, PinIcon, PointerIcon } from '@/public/icons'
 
 import * as styles from './styles.css'
 
 const NavBar = () => {
-    const { logout } = useAuth()
     const [useEmail, setUserEmail] = useState<string>('')
-    const [isDarkMode, setIsDarkMode] = useState(false)
 
     useEffect(() => {
         const useEmail = localStorage.getItem('email') || 'b6f2@monicar.com'
         setUserEmail(useEmail)
     }, [])
-
-    useEffect(() => {
-        if (isDarkMode) {
-            document.body.classList.add('dark')
-        } else {
-            document.body.classList.remove('dark')
-        }
-    }, [isDarkMode])
-
-    useEffect(() => {
-        const savedDarkMode = localStorage.getItem('darkMode') === 'true'
-        setIsDarkMode(savedDarkMode)
-    }, [])
-
-    const handleDarkModeClick = () => {
-        setIsDarkMode((previous) => {
-            localStorage.setItem('darkMode', (!previous).toString())
-            return !previous
-        })
-    }
 
     const navigationItems = [
         {
@@ -88,19 +65,7 @@ const NavBar = () => {
                 </ul>
             </nav>
 
-            <footer className={styles.sideFooter}>
-                <button className={styles.logoutButton} onClick={logout}>
-                    <SignOutIcon className={styles.icon} />
-                    <span>로그아웃</span>
-                </button>
-                <div className={styles.themeControl}>
-                    <div className={styles.themeInfo}>
-                        <SunIcon className={styles.icon} />
-                        <span>{isDarkMode ? '다크모드' : '라이트모드'}</span>
-                    </div>
-                    <Switch checked={isDarkMode} onChange={handleDarkModeClick} />
-                </div>
-            </footer>
+            <SideFooter />
         </aside>
     )
 }
