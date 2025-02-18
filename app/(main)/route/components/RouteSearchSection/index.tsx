@@ -90,7 +90,7 @@ const RouteSearchSection = ({
             ])
         } else {
             stopLiveTracking()
-            removeQuery('live')
+            updateQueries({}, ['live', 'tracking'])
         }
     }
 

@@ -55,7 +55,7 @@ export const LIVE_IMAGE = {
 export const LIVE_ROUTE_CONFIG = {
     ANIMATION_DURATION: 1000,
     FRAME_RATE: 60,
-    REQUEST_TERM: 60 * 1000,
+    REQUEST_TERM: 55 * 1000,
 }
 
 export const POLYLINE_CONFIG = {

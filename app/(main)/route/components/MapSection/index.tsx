@@ -37,7 +37,7 @@ const MapSection = memo(
         useEffect(() => {
             if (!isMapLoaded) return
 
-            if (tracking) {
+            if (tracking && currentLiveRoute?.lat) {
                 controlMapStatus(
                     { lat: currentLiveRoute.lat, lng: currentLiveRoute.lng },
                     MAP_CONFIG.ROUTE.TRACKING_ZOOM_INCREMENT,

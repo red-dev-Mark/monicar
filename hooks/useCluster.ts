@@ -12,7 +12,6 @@ export const useCluster = (mapState: MapState, isMapLoaded: boolean) => {
 
     useEffect(() => {
         if (!mapState || !isMapLoaded) return
-        console.log('cluster!!!!', mapState.level, mapState.neCoord)
 
         const getClusterInfo = async () => {
             const clusterInfo = (await clusterService.getClusterInfo(mapState)) || []
@@ -25,10 +24,8 @@ export const useCluster = (mapState: MapState, isMapLoaded: boolean) => {
         }
 
         if (!isWithinZoomThreshold(mapState)) {
-            console.log('getClusterInfo')
             getClusterInfo()
         } else {
-            console.log('getClusterDetails')
             getClusterDetails()
         }
     }, [isMapLoaded, mapState])

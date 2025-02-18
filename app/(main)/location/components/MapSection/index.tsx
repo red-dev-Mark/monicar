@@ -33,8 +33,9 @@ const MapSection = memo(() => {
 
     useEffect(() => {
         if (!vehicleNumber) return
-        console.log('search', mapState.level, mapState.neCoord)
-        updateMapStatus()
+        setTimeout(() => {
+            updateMapStatus()
+        }, 400)
     }, [vehicleNumber])
 
     return (
