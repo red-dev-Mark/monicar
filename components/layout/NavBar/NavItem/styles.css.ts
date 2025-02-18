@@ -15,10 +15,10 @@ export const navItem = style({
     },
     selectors: {
         '.dark &': {
-            color: vars.colors.white,
+            color: vars.colors.darkText,
         },
         '.dark &:hover': {
-            backgroundColor: vars.colors.gray[700],
+            backgroundColor: vars.colors.darkGray,
         },
     },
     '@media': {
@@ -38,8 +38,8 @@ export const currentItem = style({
     backgroundColor: vars.colors.gray[50],
     selectors: {
         '.dark &': {
-            color: vars.colors.white,
-            backgroundColor: vars.colors.gray[700],
+            color: vars.colors.darkText,
+            backgroundColor: vars.colors.darkGray,
             fontWeight: vars.fontWeights.bold,
         },
     },

@@ -95,10 +95,10 @@ export const logoutButton = style({
     },
     selectors: {
         '.dark &': {
-            color: vars.colors.white,
+            color: vars.colors.darkText,
         },
         '.dark &:hover': {
-            backgroundColor: vars.colors.gray[700],
+            backgroundColor: vars.colors.darkGray,
         },
     },
     '@media': {

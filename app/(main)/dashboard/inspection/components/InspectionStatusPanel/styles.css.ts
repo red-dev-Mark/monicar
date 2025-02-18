@@ -8,6 +8,12 @@ export const container = style({
     padding: '20px 50px',
     border: `1px solid ${vars.colors.gray[300]}`,
     borderRadius: '6px',
+    selectors: {
+        '.dark &': {
+            backgroundColor: vars.colors.darkBlue,
+            border: `1px solid ${vars.colors.darkGray}`,
+        },
+    },
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             padding: '24px',
@@ -36,7 +42,8 @@ export const inspectionStatusItem = style({
     flex: 1,
     selectors: {
         '.dark &': {
-            backgroundColor: vars.colors.dark,
+            backgroundColor: vars.colors.darkBlue,
+            color: vars.colors.darkText,
         },
     },
     '@media': {

@@ -98,7 +98,7 @@ export const introduce = style({
     marginLeft: '24px',
     selectors: {
         '.dark &': {
-            color: vars.colors.white,
+            color: vars.colors.darkText,
         },
     },
     '@media': {

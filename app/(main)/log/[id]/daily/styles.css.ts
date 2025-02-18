@@ -77,4 +77,9 @@ export const empty = style({
     display: 'flex',
     fontWeight: vars.fontWeights.bold,
     color: vars.colors.gray[700],
+    selectors: {
+        '.dark &': {
+            color: vars.colors.darkText,
+        },
+    },
 })

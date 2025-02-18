@@ -64,6 +64,13 @@ export const linkButton = style({
     ':hover': {
         opacity: vars.opacity[80],
     },
+    selectors: {
+        '.dark &': {
+            color: vars.colors.darkText,
+            backgroundColor: vars.colors.darkBlue,
+            border: `1px solid ${vars.colors.darkGray}`,
+        },
+    },
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
