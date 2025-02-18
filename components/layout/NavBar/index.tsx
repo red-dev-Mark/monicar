@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react'
 
 import Switch from '@/components/common/Switch'
 import NavItem from '@/components/layout/NavBar/NavItem'
-import { navigationItems } from '@/constants/navigation'
 import { useAuth } from '@/hooks/useAuth'
+import { HomeIcon, ListIcon, PinIcon, PointerIcon, SignOutIcon, SunIcon } from '@/public/icons'
 
 import * as styles from './styles.css'
 
@@ -40,6 +40,29 @@ const NavBar = () => {
         })
     }
 
+    const navigationItems = [
+        {
+            label: '대시보드',
+            path: '/dashboard',
+            icon: <HomeIcon className={styles.icon} />,
+        },
+        {
+            label: '위치조회',
+            path: '/location',
+            icon: <PinIcon className={styles.icon} />,
+        },
+        {
+            label: '경로조회',
+            path: '/route',
+            icon: <PointerIcon className={styles.icon} />,
+        },
+        {
+            label: '운행기록',
+            path: '/log',
+            icon: <ListIcon className={styles.icon} />,
+        },
+    ] as const
+
     return (
         <aside className={styles.navbar}>
             <nav className={styles.navContainer}>
@@ -60,19 +83,19 @@ const NavBar = () => {
 
                 <ul className={styles.navList}>
                     {navigationItems.map((navItem, index) => (
-                        <NavItem key={index} label={navItem.label} path={navItem.path} iconSrc={navItem.iconSrc} />
+                        <NavItem key={index} label={navItem.label} path={navItem.path} icon={navItem.icon} />
                     ))}
                 </ul>
             </nav>
 
             <footer className={styles.sideFooter}>
                 <button className={styles.logoutButton} onClick={logout}>
-                    <Image src='/icons/sign-out-icon.svg' alt={`로그아웃 아이콘`} width={20} height={20} />
+                    <SignOutIcon className={styles.icon} />
                     <span>로그아웃</span>
                 </button>
                 <div className={styles.themeControl}>
                     <div className={styles.themeInfo}>
-                        <Image src='/icons/sun-icon.svg' alt='아이콘' width={20} height={20} />
+                        <SunIcon className={styles.icon} />
                         <span>{isDarkMode ? '다크모드' : '라이트모드'}</span>
                     </div>
                     <Switch checked={isDarkMode} onChange={handleDarkModeClick} />

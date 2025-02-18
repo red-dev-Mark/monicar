@@ -127,3 +127,8 @@ export const themeInfo = style({
     alignItems: 'center',
     gap: '12px',
 })
+
+export const icon = style({
+    width: '20px',
+    height: '20px',
+})
