@@ -8,3 +8,11 @@ export const container = style({
     height: '100vh',
     color: vars.colors.white,
 })
+
+export const buttonWrapper = style({
+    width: '200px',
+    position: 'absolute',
+    top: '12px',
+    right: '12px',
+    zIndex: vars.zIndex.dropdown,
+})

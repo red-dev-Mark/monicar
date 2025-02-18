@@ -5,8 +5,10 @@ import { memo, useEffect } from 'react'
 import { Polyline } from 'react-kakao-maps-sdk'
 
 import Map from '@/components/domain/map/Map'
+import { LiveMarker } from '@/components/domain/vehicle/LiveMarker'
 import VehicleMarker from '@/components/domain/vehicle/VehicleMarker'
 import { MAP_CONFIG, POLYLINE_CONFIG } from '@/constants/map'
+import { useLiveRoute } from '@/hooks/useLiveRoute'
 import { useMapStatus } from '@/hooks/useMapStatus'
 import { MapState, LatLng, MapRefType } from '@/types/map'
 
@@ -21,6 +23,7 @@ interface MapSectionProps {
 
 const MapSection = memo(({ mapRef, mapState, routes, isMapLoaded, onRoutesChange, onLoad }: MapSectionProps) => {
     const { controlMapStatus } = useMapStatus(mapRef.current)
+    const { currentRoute, getLiveRouteData } = useLiveRoute()
 
     const searchParams = useSearchParams()
 
@@ -28,6 +31,7 @@ const MapSection = memo(({ mapRef, mapState, routes, isMapLoaded, onRoutesChange
     const vehicleNumber = searchParams.get('vehicleNumber') || ''
     const lat = Number(searchParams.get('endLat'))
     const lng = Number(searchParams.get('endLng'))
+    const live = searchParams.get('live')
 
     useEffect(() => {
         if (!vehicleId || !vehicleNumber || !lat || !lng) {
@@ -39,6 +43,10 @@ const MapSection = memo(({ mapRef, mapState, routes, isMapLoaded, onRoutesChange
             controlMapStatus({ lat, lng }, MAP_CONFIG.ROUTE.ZOOM_INCREMENT)
         }
     }, [searchParams, isMapLoaded])
+
+    useEffect(() => {
+        getLiveRouteData('2')
+    }, [])
 
     const vehicleOnDestination = {
         vehicleId,
@@ -58,6 +66,7 @@ const MapSection = memo(({ mapRef, mapState, routes, isMapLoaded, onRoutesChange
                 strokeStyle={POLYLINE_CONFIG.STROKE_STYLE}
             />
             {isVisible && <VehicleMarker vehicleInfo={vehicleOnDestination} />}
+            {live && currentRoute && <LiveMarker route={currentRoute} />}
         </Map>
     )
 })

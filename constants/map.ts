@@ -18,6 +18,7 @@ export const MAP_CONFIG = {
     },
     ROUTE: {
         ZOOM_INCREMENT: 9,
+        LIVE_ZOOM_INCREMENT: 7,
     },
 } as const
 
@@ -39,6 +40,14 @@ export const MARKER_IMAGE = {
             x: 48,
             y: 48,
         },
+    },
+} as const
+
+export const LIVE_IMAGE = {
+    src: '/icons/mini-red-car-icon.svg',
+    size: {
+        width: 24,
+        height: 24,
     },
 } as const
 
