@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { vehicleService } from '@/lib/apis'
 import { AutoVehicle } from '@/types/vehicle'
@@ -6,6 +6,7 @@ import { AutoVehicle } from '@/types/vehicle'
 export const useAutoComplete = (inputValue: string) => {
     const [isAutoCompleteVisible, setIsAutoCompleteVisible] = useState(false)
     const [autoCompleteList, setAutoCompleteList] = useState<AutoVehicle[]>([])
+    const timeoutRef = useRef<NodeJS.Timeout>()
 
     useEffect(() => {
         const abortController = new AbortController()
@@ -17,15 +18,28 @@ export const useAutoComplete = (inputValue: string) => {
                 return
             }
 
-            const response = await vehicleService.getVehicleAutocomplete(inputValue, abortController.signal)
-
-            setIsAutoCompleteVisible(true)
-            setAutoCompleteList(response.value.length === 0 ? [] : response.value)
+            try {
+                const response = await vehicleService.getVehicleAutocomplete(inputValue, abortController.signal)
+                setIsAutoCompleteVisible(true)
+                setAutoCompleteList(response.value.length === 0 ? [] : response.value)
+            } catch (error) {
+                console.log('자동완성 응답 전 새로운 요청', error)
+                setAutoCompleteList([])
+            }
         }
 
-        getVehicleList()
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current)
+        }
+
+        timeoutRef.current = setTimeout(() => {
+            getVehicleList()
+        }, 300)
 
         return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current)
+            }
             abortController.abort()
         }
     }, [inputValue])

@@ -2,7 +2,7 @@
 
 import { Skeleton, Tooltip } from '@mantine/core'
 import Image from 'next/image'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import Badge from '@/components/common/Badge'
@@ -36,6 +36,7 @@ const VehicleDetailCard = ({ mapRef }: VehicleDetailCardProps) => {
     const [isLoading, startLoading, finishLoading] = useLoading()
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
 
+    const router = useRouter()
     const searchParams = useSearchParams()
 
     useEffect(() => {
@@ -192,7 +193,7 @@ const VehicleDetailCard = ({ mapRef }: VehicleDetailCardProps) => {
                 </table>
             </div>
 
-            {!isDriving ? (
+            {isDriving ? (
                 <Tooltip
                     color={vars.colors.gray[800]}
                     arrowSize={6}
@@ -205,7 +206,13 @@ const VehicleDetailCard = ({ mapRef }: VehicleDetailCardProps) => {
                     </div>
                 </Tooltip>
             ) : (
-                <SquareButton>실시간 경로보기</SquareButton>
+                <SquareButton
+                    onClick={() => {
+                        router.push(`/route?live=true&vehicleNumber=${vehicleNumber}`)
+                    }}
+                >
+                    실시간 경로보기
+                </SquareButton>
             )}
 
             <Modal
