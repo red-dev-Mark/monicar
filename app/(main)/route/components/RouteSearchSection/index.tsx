@@ -10,7 +10,6 @@ import VehicleSearchSection from '@/app/(main)/route/components/VehicleSearchSec
 import Accordion from '@/components/common/Accordion'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
-// import { useAutoComplete } from '@/hooks/useAutoComplete'
 import { useModal } from '@/hooks/useModal'
 import { useQueryParams } from '@/hooks/useQueryParams'
 import { hasValidDateRange } from '@/lib/utils/validation'
@@ -25,8 +24,6 @@ interface RouteSearchSectionProps {
 
 const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps) => {
     const [inputValue, setInputValue] = useState('')
-    // const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null])
-    // const [isRouteSearchVisible, { open: openRouteSearch, close: closeRout eSearch }] = useDisclosure()
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
 
     const searchParams = useSearchParams()
@@ -50,15 +47,17 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
     }, [vehicleNumber])
 
     const handleDateChange = (value: DatesRangeValue) => {
-        if (value[0]) {
+        if (value[0] && !value[1]) {
             addQueries({
-                startDate: value[0]?.toISOString() || '',
+                startDate: value[0].toISOString(),
+                endDate: '',
             })
         }
 
         if (value[0] && value[1]) {
             addQueries({
-                endDate: value[1]?.toISOString() || '',
+                startDate: value[0].toISOString(),
+                endDate: value[1].toISOString(),
             })
         }
     }
@@ -74,13 +73,9 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
                     <VehicleSearchSection
                         value={inputValue}
                         onChange={(event: ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value)}
-                        // searchVehicle={searchVehicle}
-                        // openRouteSearch={openRouteSearch}
                         onError={openModalWithMessage}
-                        // onDatesClean={() => setDateRange([null, null])}
                     />
 
-                    {/* {isRouteSearchVisible && ( */}
                     {vehicleNumber && (
                         <div className={styles.bottomSection}>
                             <DateRangeSection
@@ -91,8 +86,6 @@ const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps)
 
                             <RouteSearchButton
                                 mapRef={mapRef}
-                                // vehicleId={vehicleId || ''}
-                                // dateRange={dateRange}
                                 disabled={buttonDisabledCondition}
                                 onRoutesChange={onRoutesChange}
                                 onError={openModalWithMessage}

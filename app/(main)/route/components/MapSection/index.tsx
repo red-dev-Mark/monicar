@@ -23,7 +23,7 @@ interface MapSectionProps {
 
 const MapSection = memo(({ mapRef, mapState, routes, isMapLoaded, onRoutesChange, onLoad }: MapSectionProps) => {
     const { controlMapStatus } = useMapStatus(mapRef.current)
-    const { currentRoute, getLiveRouteData } = useLiveRoute()
+    const { currentRoute, getLiveRouteData } = useLiveRoute('2')
 
     const searchParams = useSearchParams()
 
@@ -31,7 +31,7 @@ const MapSection = memo(({ mapRef, mapState, routes, isMapLoaded, onRoutesChange
     const vehicleNumber = searchParams.get('vehicleNumber') || ''
     const lat = Number(searchParams.get('endLat'))
     const lng = Number(searchParams.get('endLng'))
-    const live = searchParams.get('live')
+    const live = searchParams.get('live') === 'true'
 
     useEffect(() => {
         if (!vehicleId || !vehicleNumber || !lat || !lng) {
@@ -42,11 +42,11 @@ const MapSection = memo(({ mapRef, mapState, routes, isMapLoaded, onRoutesChange
         if (isMapLoaded) {
             controlMapStatus({ lat, lng }, MAP_CONFIG.ROUTE.ZOOM_INCREMENT)
         }
-    }, [searchParams, isMapLoaded])
 
-    useEffect(() => {
-        getLiveRouteData('2')
-    }, [])
+        if (live) {
+            getLiveRouteData('2')
+        }
+    }, [searchParams, isMapLoaded])
 
     const vehicleOnDestination = {
         vehicleId,

@@ -1,8 +1,7 @@
 import { httpClient } from '@/lib/apis'
 import { addOneDay, formatISODateToISOString } from '@/lib/utils/date'
-import LiveRoute from '@/mock/live_routes copy.json'
 import { Result } from '@/types/apis/common'
-import { RouteDetailParams, RouteDetailRequest, RouteParams, RouteRequest } from '@/types/apis/route'
+import { LiveRouteParams, RouteDetailParams, RouteDetailRequest, RouteParams, RouteRequest } from '@/types/apis/route'
 import { Route } from '@/types/route'
 
 export const routeService = {
@@ -88,23 +87,25 @@ export const routeService = {
     },
     // 차량 실시간 이동 경로 조회
     getVehicleLiveRoutes: async (vehicleId: string) => {
-        console.log(vehicleId)
-        // const currentTime = new Date()
-        // const params: LiveRouteParams = {
-        //     currentTime: '2025-02-06T00:00:00',
-        //     // currentTime,
-        // }
+        const currentTime = new Date()
+        const mockTime = new Date(currentTime.getTime() - (1063200000 + 21600000))
 
-        // const response = await httpClient.get(`api/v1/vehicle/${vehicleId}/recent/routes`, {
-        //     params,
-        // })
+        const params: LiveRouteParams = {
+            currentTime: formatISODateToISOString(mockTime),
+        }
 
-        // const { result } = response.data
+        const response = await httpClient.get(`api/v1/vehicle/${vehicleId}/recent/routes`, {
+            params,
+        })
+        if (!response.data.isSuccess) {
+            return { isSuccess: false, error: '서버 연결에 문제가 발생했습니다. 잠시 후 다시 시도해 주세요' }
+        }
 
-        // console.log(result)
+        const { result } = response.data
 
-        const response = LiveRoute
-
-        return response.result
+        return {
+            isSuccess: true,
+            data: result,
+        }
     },
 }
