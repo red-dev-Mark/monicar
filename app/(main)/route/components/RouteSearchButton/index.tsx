@@ -22,8 +22,8 @@ interface RouteSearchButtonProps {
 }
 
 const RouteSearchButton = ({ mapRef, disabled, onRoutesChange, onError }: RouteSearchButtonProps) => {
-    const [isSearchingRoute, startSearchingRoute, finishSearchingRoute] = useLoading()
     const [vehicleId, setVehicleId] = useState('')
+    const [isSearchingRoute, startSearchingRoute, finishSearchingRoute] = useLoading()
 
     const { controlMapStatus } = useMapStatus(mapRef.current)
     const { addQueries, clearAllQueries } = useQueryParams()
@@ -35,6 +35,7 @@ const RouteSearchButton = ({ mapRef, disabled, onRoutesChange, onError }: RouteS
     const endDate = searchParams.get('endDate') || ''
     const lat = searchParams.get('endLat')
     const lng = searchParams.get('endLng')
+    const live = searchParams.get('live') === 'true'
     const dateRange: DatesRangeValue = [startDate ? new Date(startDate) : null, endDate ? new Date(endDate) : null]
 
     useEffect(() => {
@@ -57,19 +58,22 @@ const RouteSearchButton = ({ mapRef, disabled, onRoutesChange, onError }: RouteS
 
             getVehicleId()
         }
-    }, [searchParams])
+    }, [startDate, endDate])
 
     useEffect(() => {
-        if (!mapRef.current || !lat || !lng) return
+        if (!mapRef.current || !lat || !lng || !vehicleNumber) {
+            onRoutesChange([])
+            return
+        }
 
         const getRouteData = async () => {
-            console.log(lat, lng)
             controlMapStatus({ lat: Number(lat), lng: Number(lng) }, MAP_CONFIG.ROUTE.ZOOM_INCREMENT)
+
             await handleButtonClick()
         }
 
         getRouteData()
-    }, [lat, lng, vehicleId, mapRef])
+    }, [lat, lng, vehicleId, mapRef, vehicleNumber])
 
     const handleButtonClick = async () => {
         const [startDate, endDate] = dateRange
@@ -103,14 +107,20 @@ const RouteSearchButton = ({ mapRef, disabled, onRoutesChange, onError }: RouteS
     }
 
     const { isVehicleNumberDirty, isRouteSearchable } = disabled
-    const isButtonDisable = !!isVehicleNumberDirty || !isRouteSearchable || !!isSearchingRoute
+    const isButtonDisable = !!isVehicleNumberDirty || !isRouteSearchable || !!isSearchingRoute || live
 
     return (
         <div>
             <Tooltip
                 color={vars.colors.gray[800]}
                 arrowSize={6}
-                label={isVehicleNumberDirty ? '차량번호를 먼저 검색해주세요' : '기간을 먼저 선택해주세요'}
+                label={
+                    live
+                        ? '실시간 추적 중에는 경로 조회가 불가능합니다'
+                        : isVehicleNumberDirty
+                          ? '차량번호를 먼저 검색해주세요'
+                          : '조회 기간을 선택해주세요'
+                }
                 withArrow
                 position='top'
                 disabled={!(isVehicleNumberDirty || !isRouteSearchable)}

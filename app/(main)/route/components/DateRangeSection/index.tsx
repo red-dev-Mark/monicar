@@ -41,7 +41,7 @@ const DateRangeSection = () => {
             setOperationPeriod({ firstOperationDate, lastOperationDate })
         }
         getVehicleOperationPeriod()
-    }, [searchParams])
+    }, [vehicleNumber])
 
     // const result = await getVehicleOperationInfo(inputValue)
     //         // if (!result.data) throw new Error(result.error || '차량 검색에 실패했습니다')
