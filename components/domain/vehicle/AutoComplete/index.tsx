@@ -1,3 +1,5 @@
+import { useSearchParams } from 'next/navigation'
+
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
 import { Vehicle } from '@/types/vehicle'
 
@@ -9,6 +11,13 @@ interface AutoCompleteProps {
 }
 
 const AutoComplete = ({ list, onClick }: AutoCompleteProps) => {
+    const searchParams = useSearchParams()
+
+    const vehicleNumber = searchParams.get('vehicleNumber')
+    const isHidden = list.length === 1 && list[0].vehicleNumber === vehicleNumber
+
+    if (isHidden) return
+
     return (
         <div className={styles.container}>
             {list.map((item: Vehicle) => {

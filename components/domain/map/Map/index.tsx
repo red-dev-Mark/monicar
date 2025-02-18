@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect } from 'react'
 import { Map as KakaoMap } from 'react-kakao-maps-sdk'
 
 import ErrorMessage from '@/components/common/ErrorMessage'
@@ -30,18 +29,12 @@ const Map = ({
 }: MapProps) => {
     const { loading, error } = useKakaoLoader()
 
-    useEffect(() => {
-        if (!loading) {
-            handleCreate()
-        }
-    }, [loading])
+    const handleCreate = () => {
+        onLoad?.(true)
+    }
 
     const handleMapStatusChange = () => {
         onMapStatusChanged?.()
-    }
-
-    const handleCreate = () => {
-        onLoad?.(true)
     }
 
     if (loading) return <MapSkeleton />

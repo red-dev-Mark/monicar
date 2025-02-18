@@ -1,5 +1,6 @@
 'use client'
 
+import { useSearchParams } from 'next/navigation'
 import { memo, useEffect, useRef, useState } from 'react'
 
 import VehicleDetailCard from '@/app/(main)/location/components/VehicleDetailCard'
@@ -20,12 +21,21 @@ const MapSection = memo(() => {
     const { mapState, updateMapStatus, controlMapStatus } = useMapStatus(mapRef?.current)
     const { clearAllQueries } = useQueryParams()
     const { clusterInfo, clusterDetail } = useCluster(mapState, isMapLoaded)
-    console.log(mapState.level, mapState.center)
+
+    const searchParams = useSearchParams()
+
+    const vehicleNumber = searchParams.get('vehicleNumber')
+
     useEffect(() => {
         if (!isMapLoaded) return
-
         updateMapStatus()
     }, [isMapLoaded])
+
+    useEffect(() => {
+        if (!vehicleNumber) return
+        console.log('search', mapState.level, mapState.neCoord)
+        updateMapStatus()
+    }, [vehicleNumber])
 
     return (
         <>
