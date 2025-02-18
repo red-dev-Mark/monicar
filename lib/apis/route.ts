@@ -1,7 +1,8 @@
 import { httpClient } from '@/lib/apis'
 import { addOneDay, formatISODateToISOString } from '@/lib/utils/date'
+import LiveRoute from '@/mock/live_routes copy.json'
 import { Result } from '@/types/apis/common'
-import { LiveRouteParams, RouteDetailParams, RouteDetailRequest, RouteParams, RouteRequest } from '@/types/apis/route'
+import { RouteDetailParams, RouteDetailRequest, RouteParams, RouteRequest } from '@/types/apis/route'
 import { Route } from '@/types/route'
 
 export const routeService = {
@@ -87,20 +88,23 @@ export const routeService = {
     },
     // 차량 실시간 이동 경로 조회
     getVehicleLiveRoutes: async (vehicleId: string) => {
+        console.log(vehicleId)
         // const currentTime = new Date()
-        const params: LiveRouteParams = {
-            currentTime: '2025-01-27T21:23:00',
-            // currentTime,
-        }
+        // const params: LiveRouteParams = {
+        //     currentTime: '2025-02-06T00:00:00',
+        //     // currentTime,
+        // }
 
-        const response = await httpClient.get(`api/v1/vehicle/${vehicleId}/recent/routes`, {
-            params,
-        })
+        // const response = await httpClient.get(`api/v1/vehicle/${vehicleId}/recent/routes`, {
+        //     params,
+        // })
 
-        const { result } = response.data
+        // const { result } = response.data
 
-        console.log(result)
+        // console.log(result)
 
-        // return response.data.result
+        const response = LiveRoute
+
+        return response.result
     },
 }

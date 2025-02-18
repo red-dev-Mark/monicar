@@ -61,7 +61,9 @@ const VehicleSearchSection = () => {
                     onSubmit={() => handleInputSubmit(inputValue)}
                     style={{ borderRadius: '8px' }}
                 />
-                {isAutoCompleteVisible && <AutoComplete list={autoCompleteList} onClick={handleAutoComplete} />}
+                {isAutoCompleteVisible && !!autoCompleteList.length && (
+                    <AutoComplete list={autoCompleteList} onClick={handleAutoComplete} />
+                )}
             </div>
 
             <Modal
