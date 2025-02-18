@@ -40,7 +40,7 @@ const RouteSearchSection = ({
 
     const searchParams = useSearchParams()
 
-    const { updateQueries, removeQuery } = useQueryParams()
+    const { addQuery, updateQueries, removeQuery } = useQueryParams()
 
     const vehicleNumber = searchParams.get('vehicleNumber')
     const startDate = searchParams.get('startDate')
@@ -94,6 +94,14 @@ const RouteSearchSection = ({
         }
     }
 
+    const handleTrackingToggle = (event: ChangeEvent<HTMLInputElement>) => {
+        if (event.currentTarget.checked) {
+            addQuery('tracking', 'true')
+        } else {
+            removeQuery('tracking')
+        }
+    }
+
     const isVehicleNumberDirty = searchParams.get('vehicleNumber') !== inputValue
     const isRouteSearchable = !!searchParams.get('vehicleNumber') && hasValidDateRange(dateRange)
     const buttonDisabledCondition = { isVehicleNumberDirty, isRouteSearchable }
@@ -113,9 +121,25 @@ const RouteSearchSection = ({
                             <DateRangeSection />
                             <div className={styles.swtich}>
                                 실시간 경로 조회
+                                {live && (
+                                    <Tooltip
+                                        label={'차량 위치 자동 추적'}
+                                        color={vars.colors.gray[800]}
+                                        arrowSize={6}
+                                        withArrow
+                                        arrowPosition='side'
+                                    >
+                                        <div>
+                                            <Switch
+                                                onChange={handleTrackingToggle}
+                                                size='lg'
+                                                color={`${vars.colors.dark}`}
+                                            />
+                                        </div>
+                                    </Tooltip>
+                                )}
                                 <Tooltip
-                                    label={isOperation ? '실시간 경로 조회를 시작합니다' : '현재 미운행 차량입니다'}
-                                    disabled={isOperation}
+                                    label={!isOperation ? '실시간 경로 조회를 시작합니다' : '현재 미운행 차량입니다'}
                                     color={vars.colors.gray[800]}
                                     arrowSize={6}
                                     withArrow

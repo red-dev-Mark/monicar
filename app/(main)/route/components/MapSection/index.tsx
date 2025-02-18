@@ -9,44 +9,63 @@ import { LiveMarker } from '@/components/domain/vehicle/LiveMarker'
 import VehicleMarker from '@/components/domain/vehicle/VehicleMarker'
 import { MAP_CONFIG, POLYLINE_CONFIG } from '@/constants/map'
 import { useMapStatus } from '@/hooks/useMapStatus'
-import { MapState, LatLng, MapRefType } from '@/types/map'
+import { LatLng, MapRefType } from '@/types/map'
 import { Route } from '@/types/route'
 
 interface MapSectionProps {
     mapRef: MapRefType
-    mapState: MapState
     routes: LatLng[]
-    currentRoute: Route
+    initialLiveRoute: Route
+    currentLiveRoute: Route
     isMapLoaded: boolean
     onRoutesChange: (paths: LatLng[]) => void
     onLoad?: () => void
 }
 
 const MapSection = memo(
-    ({ mapRef, mapState, routes, currentRoute, isMapLoaded, onRoutesChange, onLoad }: MapSectionProps) => {
-        const { controlMapStatus } = useMapStatus(mapRef.current)
+    ({ mapRef, routes, initialLiveRoute, currentLiveRoute, isMapLoaded, onRoutesChange, onLoad }: MapSectionProps) => {
+        const { mapState, controlMapStatus } = useMapStatus(mapRef.current)
 
         const searchParams = useSearchParams()
 
-        const vehicleId = searchParams.get('vehicleId') || ''
         const vehicleNumber = searchParams.get('vehicleNumber') || ''
         const lat = Number(searchParams.get('endLat'))
         const lng = Number(searchParams.get('endLng'))
         const live = searchParams.get('live') === 'true'
+        const tracking = searchParams.get('tracking') === 'true'
 
         useEffect(() => {
-            if (!vehicleId || !vehicleNumber || !lat || !lng) {
-                onRoutesChange([])
+            if (!isMapLoaded) return
+
+            if (tracking) {
+                controlMapStatus(
+                    { lat: currentLiveRoute.lat, lng: currentLiveRoute.lng },
+                    MAP_CONFIG.ROUTE.ZOOM_INCREMENT,
+                )
+            }
+        }, [tracking, currentLiveRoute, isMapLoaded])
+
+        useEffect(() => {
+            if (!isMapLoaded) return
+
+            if (live && initialLiveRoute) {
+                controlMapStatus(
+                    { lat: initialLiveRoute.lat, lng: initialLiveRoute.lng },
+                    MAP_CONFIG.ROUTE.ZOOM_INCREMENT,
+                )
                 return
             }
 
-            if (isMapLoaded) {
-                controlMapStatus({ lat, lng }, MAP_CONFIG.ROUTE.ZOOM_INCREMENT)
+            if (lat && lng) {
+                controlMapStatus({ lat, lng }, MAP_CONFIG.ROUTE.LIVE_ZOOM_INCREMENT)
+                return
             }
-        }, [searchParams, isMapLoaded])
+
+            onRoutesChange([])
+        }, [live, initialLiveRoute, lat, lng, isMapLoaded])
 
         const vehicleOnDestination = {
-            vehicleId,
+            vehicleId: '',
             vehicleNumber,
             coordinate: { lat, lng },
         }
@@ -63,7 +82,7 @@ const MapSection = memo(
                     strokeStyle={POLYLINE_CONFIG.STROKE_STYLE}
                 />
                 {isVisible && <VehicleMarker vehicleInfo={vehicleOnDestination} />}
-                {live && currentRoute && <LiveMarker route={currentRoute} />}
+                {live && currentLiveRoute && <LiveMarker route={currentLiveRoute} />}
             </Map>
         )
     },

@@ -7,7 +7,7 @@ import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { Route } from '@/types/route'
 
 export const useLiveRoute = () => {
-    const [currentRoute, setCurrentRoute] = useState<Route>()
+    const [currentLiveRoute, setCurrentLiveRoute] = useState<Route>()
     const [liveRoutes, setLiveRoutes] = useState<Route[]>([])
     const [vehicleId, setVehicleId] = useState('')
     const [isTracking, setIsTracking] = useState(false)
@@ -30,7 +30,7 @@ export const useLiveRoute = () => {
 
                 const uniqueRoutes = new Map<string, Route>(normalized.map((route: Route) => [route.timestamp, route]))
                 setLiveRoutes([...uniqueRoutes.values()])
-                setCurrentRoute(normalized[0])
+                setCurrentLiveRoute(normalized[0])
             } catch (error) {
                 console.error('실시간 경로 데이터 조회 실패:', error)
             }
@@ -52,7 +52,7 @@ export const useLiveRoute = () => {
         setIsTracking(false)
         setVehicleId('')
         setLiveRoutes([])
-        setCurrentRoute(undefined)
+        setCurrentLiveRoute(undefined)
     }
 
     useEffect(() => {
@@ -78,17 +78,17 @@ export const useLiveRoute = () => {
                 return
             }
 
-            const currentRoute = liveRoutes[index]
+            const currentLiveRoute = liveRoutes[index]
             const nextRoute = liveRoutes[index + 1]
 
             if (!nextRoute) return
 
-            const interpolatedLat = lerp(currentRoute.lat, nextRoute.lat, progress)
-            const interpolatedLng = lerp(currentRoute.lng, nextRoute.lng, progress)
+            const interpolatedLat = lerp(currentLiveRoute.lat, nextRoute.lat, progress)
+            const interpolatedLng = lerp(currentLiveRoute.lng, nextRoute.lng, progress)
 
-            const angle = calculateAngle(currentRoute, nextRoute)
-            setCurrentRoute({
-                ...currentRoute,
+            const angle = calculateAngle(currentLiveRoute, nextRoute)
+            setCurrentLiveRoute({
+                ...currentLiveRoute,
                 lat: interpolatedLat,
                 lng: interpolatedLng,
                 ang: angle,
@@ -108,7 +108,8 @@ export const useLiveRoute = () => {
     }, [liveRoutes, isTracking])
 
     return {
-        currentRoute,
+        initialLiveRoute: liveRoutes[0],
+        currentLiveRoute,
         isTracking,
         startLiveTracking,
         stopLiveTracking,
