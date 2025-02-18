@@ -18,7 +18,8 @@ export const MAP_CONFIG = {
     },
     ROUTE: {
         ZOOM_INCREMENT: 9,
-        LIVE_ZOOM_INCREMENT: 7,
+        TRACKING_ZOOM_INCREMENT: 4,
+        LIVE_ZOOM_INCREMENT: 6,
     },
 } as const
 

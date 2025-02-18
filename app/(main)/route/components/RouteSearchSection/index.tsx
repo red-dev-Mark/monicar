@@ -139,7 +139,7 @@ const RouteSearchSection = ({
                                     </Tooltip>
                                 )}
                                 <Tooltip
-                                    label={!isOperation ? '실시간 경로 조회를 시작합니다' : '현재 미운행 차량입니다'}
+                                    label={isOperation ? '실시간 경로 조회를 시작합니다' : '현재 미운행 차량입니다'}
                                     color={vars.colors.gray[800]}
                                     arrowSize={6}
                                     withArrow
@@ -147,7 +147,7 @@ const RouteSearchSection = ({
                                 >
                                     <div>
                                         <Switch
-                                            disabled={isOperation}
+                                            disabled={!isOperation}
                                             defaultChecked={live}
                                             onChange={handleLiveToggle}
                                             size='lg'

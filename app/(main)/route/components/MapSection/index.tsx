@@ -40,7 +40,7 @@ const MapSection = memo(
             if (tracking) {
                 controlMapStatus(
                     { lat: currentLiveRoute.lat, lng: currentLiveRoute.lng },
-                    MAP_CONFIG.ROUTE.ZOOM_INCREMENT,
+                    MAP_CONFIG.ROUTE.TRACKING_ZOOM_INCREMENT,
                 )
             }
         }, [tracking, currentLiveRoute, isMapLoaded])
@@ -51,13 +51,13 @@ const MapSection = memo(
             if (live && initialLiveRoute) {
                 controlMapStatus(
                     { lat: initialLiveRoute.lat, lng: initialLiveRoute.lng },
-                    MAP_CONFIG.ROUTE.ZOOM_INCREMENT,
+                    MAP_CONFIG.ROUTE.LIVE_ZOOM_INCREMENT,
                 )
                 return
             }
 
             if (lat && lng) {
-                controlMapStatus({ lat, lng }, MAP_CONFIG.ROUTE.LIVE_ZOOM_INCREMENT)
+                controlMapStatus({ lat, lng }, MAP_CONFIG.ROUTE.ZOOM_INCREMENT)
                 return
             }
 
