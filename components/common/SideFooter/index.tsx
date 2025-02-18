@@ -2,17 +2,13 @@ import { Switch } from '@mantine/core'
 import { useEffect, useState } from 'react'
 
 import { useAuth } from '@/hooks/useAuth'
-import { useSubscribe } from '@/hooks/useSubscribe'
 import { BellIcon, SignOutIcon, SunIcon } from '@/public/icons'
-
-import Alarm from '../Alarm'
 
 import * as styles from './styles.css'
 
 const SideFooter = () => {
     const { logout } = useAuth()
     const [isDarkMode, setIsDarkMode] = useState(false)
-    const { isEnabled, toggleEnabled } = useSubscribe()
 
     useEffect(() => {
         if (isDarkMode) {
@@ -47,7 +43,7 @@ const SideFooter = () => {
                         <BellIcon style={{ width: '20px', height: '20px' }} />
                         <span>점검알림</span>
                     </div>
-                    <Switch checked={isEnabled} onChange={toggleEnabled} color='#f6475f' />
+                    <Switch checked={isDarkMode} onChange={handleDarkModeClick} color='#f6475f' />
                 </div>
 
                 <div className={styles.themeControl}>
@@ -58,8 +54,6 @@ const SideFooter = () => {
                     <Switch checked={isDarkMode} onChange={handleDarkModeClick} color='#f6475f' />
                 </div>
             </footer>
-
-            <Alarm />
         </div>
     )
 }
