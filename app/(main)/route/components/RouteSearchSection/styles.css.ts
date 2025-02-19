@@ -53,6 +53,13 @@ export const searchInputStyle = style({
 export const swtich = style({
     display: 'flex',
     justifyContent: 'space-between',
+    alignItems: 'center',
     padding: '0 8px 0 16px',
     fontSize: vars.fontSizes.medium,
+})
+
+export const liveText = style({
+    color: vars.colors.gray[800],
+    fontWeight: vars.fontWeights.bold,
+    fontSize: vars.fontSizes.small,
 })
