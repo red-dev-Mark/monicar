@@ -7,7 +7,8 @@ export const useSubscribe = () => {
     const [error, setError] = useState<Error | null>(null)
 
     useEffect(() => {
-        const eventSource = new EventSource(`${API_URL}/api/v1/alarm/subscribe`, { withCredentials: true })
+        const url = `${API_URL}/api/v1/alarm/subscribe`.replace('//api', '/api')
+        const eventSource = new EventSource(url, { withCredentials: true })
 
         const addAlarm = (event: MessageEvent) => {
             const newAlarm = JSON.parse(event.data)
