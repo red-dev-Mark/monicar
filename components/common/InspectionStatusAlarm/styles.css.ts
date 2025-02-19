@@ -1,7 +1,7 @@
 import { style, styleVariants } from '@vanilla-extract/css'
 import { recipe } from '@vanilla-extract/recipes'
 
-import { vars } from '@/styles/theme.css'
+import { breakPoints, vars } from '@/styles/theme.css'
 
 export const statusCard = recipe({
     base: {
@@ -38,6 +38,11 @@ export const container = style({
     backgroundColor: 'transparent',
     borderRadius: '12px',
     zIndex: vars.zIndex.modal,
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+        },
+    },
 })
 
 export const iconWrapperBase = style({

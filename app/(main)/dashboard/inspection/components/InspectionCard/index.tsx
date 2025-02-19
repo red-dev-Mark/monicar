@@ -50,7 +50,7 @@ const InspectionCard = ({
 
             {hasButton && (
                 <div>
-                    <BaseButton onClick={onClick} style={{ color: vars.colors.gray[800] }}>
+                    <BaseButton onClick={onClick} style={{ color: vars.colors.darkDescription }}>
                         승인
                     </BaseButton>
                 </div>

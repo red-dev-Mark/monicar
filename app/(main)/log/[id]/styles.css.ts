@@ -61,7 +61,9 @@ export const tableHeader = style({
     color: vars.colors.black,
     selectors: {
         '.dark &': {
-            backgroundColor: vars.colors.gray[200],
+            backgroundColor: vars.colors.darkGray,
+            color: vars.colors.darkText,
+            border: `1px solid ${vars.colors.darkGray}`,
         },
     },
 })
@@ -74,7 +76,9 @@ export const tableCell = style({
     color: vars.colors.black,
     selectors: {
         '.dark &': {
-            backgroundColor: vars.colors.white,
+            backgroundColor: vars.colors.darkBlue,
+            color: vars.colors.darkText,
+            border: `1px solid ${vars.colors.darkGray}`,
         },
     },
 })
@@ -135,8 +139,9 @@ export const linkButton = style({
     },
     selectors: {
         '.dark &': {
-            backgroundColor: vars.colors.primary,
-            color: vars.colors.white,
+            color: vars.colors.darkText,
+            backgroundColor: vars.colors.darkBlue,
+            border: `1px solid ${vars.colors.darkGray}`,
         },
     },
     '@media': {
@@ -154,4 +159,9 @@ export const empty = style({
     display: 'flex',
     fontWeight: vars.fontWeights.bold,
     color: vars.colors.gray[700],
+    selectors: {
+        '.dark &': {
+            color: vars.colors.darkText,
+        },
+    },
 })

@@ -10,7 +10,7 @@ import * as styles from './styles.css'
 interface InspectionStatusAlarmProps {
     inspectionStatusData: AlarmResponse[]
     isOpen?: boolean
-    onClose: () => void
+    onClose?: () => void
 }
 
 const InspectionStatusAlarm = ({ inspectionStatusData, isOpen = true, onClose }: InspectionStatusAlarmProps) => {

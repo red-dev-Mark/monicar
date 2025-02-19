@@ -19,10 +19,11 @@ export const container = style({
     },
     selectors: {
         '.dark &': {
-            color: vars.colors.white,
+            color: vars.colors.darkText,
+            border: `1px solid ${vars.colors.darkGray}`,
         },
         '.dark &:hover': {
-            backgroundColor: vars.colors.gray[700],
+            backgroundColor: vars.colors.darkGray,
         },
     },
     '@media': {

@@ -15,6 +15,10 @@ export const colors = {
     black: '#222222', // 기본 텍스트 색상
     dashboard: '#F9F9F9',
     dark: '#121212', // 다크모드 배경 색상
+    darkBlue: '#151b23', // 다크모드 컨테이너 색상
+    darkText: '#f0f6fc', // 다크모드 텍스트 색상
+    darkGray: '#3d444d', // 다크모드 보더 색상
+    darkDescription: '#9198a1', // 다크모드 설명 색상
     description: '#6b7280',
     error: '#c13515', // 에러 색상
     red: '#df0404', // 레드 뱃지색상 ##

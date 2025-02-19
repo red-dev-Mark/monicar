@@ -1,6 +1,5 @@
 import '@/styles'
 import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from '@mantine/core'
-import { Notifications } from '@mantine/notifications'
 
 import type { Metadata } from 'next'
 
@@ -19,7 +18,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             </head>
             <body>
                 <MantineProvider>
-                    <Notifications />
                     {children}
                     <div id='modal-root'></div>
                 </MantineProvider>

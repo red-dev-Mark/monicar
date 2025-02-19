@@ -33,8 +33,9 @@ export const item = style({
             zIndex: vars.zIndex.default,
         },
         '.dark &': {
-            backgroundColor: vars.colors.dark,
-            color: vars.colors.gray[600],
+            backgroundColor: vars.colors.darkBlue,
+            color: vars.colors.darkText,
+            border: `1px solid ${vars.colors.darkGray}`,
         },
     },
 })
@@ -45,8 +46,8 @@ export const activeItem = style({
     backgroundColor: vars.colors.gray[200],
     selectors: {
         '.dark &': {
-            backgroundColor: vars.colors.gray[700],
-            color: vars.colors.white,
+            backgroundColor: vars.colors.darkGray,
+            color: vars.colors.darkText,
         },
     },
 })
