@@ -83,13 +83,12 @@ export type StatusType = 'REQUIRED' | 'SCHEDULED' | 'INPROGRESS' | 'COMPLETED'
 type IconType = 'bell' | 'alert' | 'button' | 'check'
 
 // 점검현황 통계
-export interface InspectionStatusItem {
-    status: string
-    count: number
+export interface InspectionStatusType {
+    required: number
+    scheduled: number
+    inProgress: number
+    completed: number
 }
-
-// useState에서 사용할 타입
-export type InspectionStatusType = InspectionStatusItem[]
 
 // 점검현황
 export interface InspectionStatusResponse {
