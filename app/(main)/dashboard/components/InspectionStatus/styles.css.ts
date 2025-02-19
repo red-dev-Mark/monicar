@@ -106,8 +106,8 @@ export const mobileStatusWrapper = style({
 
 export const count = style({
     fontSize: vars.fontSizes.small,
-    backgroundColor: vars.colors.white,
-    color: vars.colors.gray[800],
+    backgroundColor: vars.colors.gray[600],
+    color: vars.colors.white,
     borderRadius: '50%',
     width: '26px',
     height: '26px',
