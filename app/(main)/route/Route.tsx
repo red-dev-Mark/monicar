@@ -6,6 +6,7 @@ import { ChangeEvent, useRef, useState } from 'react'
 
 import MapSection from '@/app/(main)/route/components/MapSection'
 import RouteSearchSection from '@/app/(main)/route/components/RouteSearchSection'
+import LiveMode from '@/components/common/LiveMode'
 import { useLiveRoute } from '@/hooks/useLiveRoute'
 import { useQueryParams } from '@/hooks/useQueryParams'
 import { vars } from '@/styles/theme.css'
@@ -61,6 +62,7 @@ const Route = () => {
                 startLiveTracking={startLiveTracking}
                 stopLiveTracking={stopLiveTracking}
             />
+            <LiveMode />
             <MapSection
                 mapRef={mapRef}
                 routes={routes}
