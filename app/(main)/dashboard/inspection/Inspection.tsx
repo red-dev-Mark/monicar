@@ -65,7 +65,7 @@ const Inspection = () => {
                     ]}
                 />
             </div>
-            <InspectionStatusPanel data={statusData} />
+            <InspectionStatusPanel statusData={statusData} />
 
             <InspectionStatusTabs status={status} />
 
