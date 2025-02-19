@@ -9,6 +9,12 @@ import * as styles from './styles.css'
 
 const InspectionStatusPanel = ({ statusData }: { statusData: InspectionStatusType | undefined }) => {
     const total = statusData ? Object.values(statusData).reduce((acc, curr) => acc + curr, 0) : 0
+    const ringProgressValue = (value: number | undefined) => {
+        if (!value || total === 0) {
+            return 0
+        }
+        return (value / total) * 100
+    }
 
     return (
         <div className={styles.container}>
@@ -19,10 +25,10 @@ const InspectionStatusPanel = ({ statusData }: { statusData: InspectionStatusTyp
                     thickness={14}
                     roundCaps
                     sections={[
-                        { value: 20, color: '#FF385C', tooltip: '점검 필요' },
-                        { value: 40, color: '#FF4086', tooltip: '점검 예정' },
-                        { value: 20, color: '#FFC6DB', tooltip: '점검 진행' },
-                        { value: 10, color: '#FFE7F0', tooltip: '점검 완료' },
+                        { value: ringProgressValue(statusData?.required), color: '#FF385C', tooltip: '점검 필요' },
+                        { value: ringProgressValue(statusData?.scheduled), color: '#FF4086', tooltip: '점검 예정' },
+                        { value: ringProgressValue(statusData?.inProgress), color: '#FFC6DB', tooltip: '점검 진행' },
+                        { value: ringProgressValue(statusData?.completed), color: '#FFE7F0', tooltip: '점검 완료' },
                     ]}
                 />
             </div>
