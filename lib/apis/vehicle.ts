@@ -13,6 +13,7 @@ export const vehicleService = {
                 'vehicle-number': removeSpaces(vehicleNumber),
             },
         })
+
         if (!response.data.isSuccess) {
             const { errorCode } = response.data
             if (errorCode === 1003) {

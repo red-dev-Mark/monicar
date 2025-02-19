@@ -52,12 +52,12 @@ const VehicleDetailCard = ({ mapRef }: VehicleDetailCardProps) => {
             try {
                 startLoading()
                 const vehicleLocation = await vehicleService.getVehicleInfo(vehicleNumber)
-                if (!vehicleLocation.data) throw new Error(vehicleLocation.error)
+                if (!vehicleLocation.data) throw new Error(vehicleLocation.error || '알 수 없는 오류가 발생했습니다')
 
                 const { vehicleId } = vehicleLocation.data
 
                 const result = await vehicleService.getVehicleDetail(vehicleId)
-                if (!result.data) throw new Error(vehicleLocation.error)
+                if (!result.data) throw new Error(vehicleLocation.error || '알 수 없는 오류가 발생했습니다')
 
                 setVehicleDetail(result.data)
                 const {
@@ -75,8 +75,6 @@ const VehicleDetailCard = ({ mapRef }: VehicleDetailCardProps) => {
             } catch (error) {
                 if (error instanceof Error) {
                     openModalWithMessage?.(error.message)
-                } else {
-                    openModalWithMessage?.('알 수 없는 오류가 발생했습니다')
                 }
             } finally {
                 finishLoading()

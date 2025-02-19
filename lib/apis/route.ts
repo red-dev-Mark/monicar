@@ -87,9 +87,7 @@ export const routeService = {
     },
     // 차량 실시간 이동 경로 조회
     getVehicleLiveRoutes: async (vehicleId: string) => {
-        // const currentTime = new Date(new Date().getTime() - 9 * 60 * 60 * 1000)
-        // const currentTime = new Date()
-        const currentTime = new Date('2025-02-18T19:59:14')
+        const currentTime = new Date()
 
         const params: LiveRouteParams = {
             currentTime: formatISODateToISOString(currentTime),
