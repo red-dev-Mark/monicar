@@ -3,17 +3,16 @@ import { useSubscribe } from '@/hooks/useSubscribe'
 import InspectionStatusAlarm from '../InspectionStatusAlarm'
 
 const Alarm = () => {
-    const { alarm, error, isEnabled, toggleEnabled } = useSubscribe()
+    const { alarm, error } = useSubscribe()
+    const isOpen = true
 
     if (error) {
         console.error('SubscribeAlert 에러', error)
     }
 
-    if (!isEnabled) return null
-
     return (
         <div>
-            <InspectionStatusAlarm inspectionStatusData={alarm} onClose={toggleEnabled} />
+            <InspectionStatusAlarm inspectionStatusData={alarm} isOpen={isOpen} />
         </div>
     )
 }

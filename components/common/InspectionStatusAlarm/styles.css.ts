@@ -6,11 +6,10 @@ import { breakPoints, vars } from '@/styles/theme.css'
 export const statusCard = recipe({
     base: {
         width: '100%',
-        height: '100%',
         borderRadius: '11px',
         color: vars.colors.gray[800],
-        padding: '16px',
-        gap: '20px 20px',
+        padding: '10px',
+        gap: '10px',
         borderLeft: '12px solid',
         display: 'flex',
         alignItems: 'flex-start',
@@ -75,7 +74,7 @@ export const title = style({
 export const vehicleNumber = style({
     color: vars.colors.black,
     fontWeight: vars.fontWeights.extraBold,
-    fontSize: vars.fontSizes.xlarge,
+    fontSize: vars.fontSizes.large,
     marginBottom: '10px',
 })
 
