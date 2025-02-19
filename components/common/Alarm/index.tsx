@@ -7,7 +7,7 @@ const Alarm = () => {
     const isOpen = true
 
     if (error) {
-        console.error('SubscribeAlert 에러', error)
+        // console.error('SubscribeAlert 에러', error)
     }
 
     return (
