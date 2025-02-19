@@ -40,7 +40,7 @@ const RouteSearchSection = ({
 
     const searchParams = useSearchParams()
 
-    const { addQuery, updateQueries, removeQuery } = useQueryParams()
+    const { updateQueries } = useQueryParams()
 
     const vehicleNumber = searchParams.get('vehicleNumber')
     const startDate = searchParams.get('startDate')
@@ -90,15 +90,8 @@ const RouteSearchSection = ({
             ])
         } else {
             stopLiveTracking()
-            updateQueries({}, ['live', 'tracking'])
-        }
-    }
-
-    const handleTrackingToggle = (event: ChangeEvent<HTMLInputElement>) => {
-        if (event.currentTarget.checked) {
-            addQuery('tracking', 'true')
-        } else {
-            removeQuery('tracking')
+            if (!vehicleNumber) return
+            updateQueries({ vehicleNumber }, ['live', 'tracking'])
         }
     }
 
@@ -108,7 +101,7 @@ const RouteSearchSection = ({
 
     return (
         <div className={styles.accordion}>
-            <Accordion title='차량 및 기간 검색'>
+            <Accordion title='ㅤ'>
                 <div className={styles.container} aria-label='경로 조회 판넬'>
                     <VehicleSearchSection
                         value={inputValue}
@@ -120,24 +113,7 @@ const RouteSearchSection = ({
                         <div className={styles.bottomSection}>
                             <DateRangeSection />
                             <div className={styles.swtich}>
-                                실시간 경로 조회
-                                {live && (
-                                    <Tooltip
-                                        label={'차량 위치 자동 추적'}
-                                        color={vars.colors.gray[800]}
-                                        arrowSize={6}
-                                        withArrow
-                                        arrowPosition='side'
-                                    >
-                                        <div>
-                                            <Switch
-                                                onChange={handleTrackingToggle}
-                                                size='lg'
-                                                color={`${vars.colors.dark}`}
-                                            />
-                                        </div>
-                                    </Tooltip>
-                                )}
+                                <p className={styles.liveText}>실시간 경로 조회</p>
                                 <Tooltip
                                     label={isOperation ? '실시간 경로 조회를 시작합니다' : '현재 미운행 차량입니다'}
                                     color={vars.colors.gray[800]}
