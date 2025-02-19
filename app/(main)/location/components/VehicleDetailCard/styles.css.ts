@@ -15,7 +15,12 @@ export const container = style({
     backgroundColor: vars.colors.white,
     borderRadius: '12px 12px 0 0',
     boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
-
+    selectors: {
+        '.dark &': {
+            color: vars.colors.darkText,
+            backgroundColor: vars.colors.dark,
+        },
+    },
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             width: '100%',
@@ -33,7 +38,6 @@ export const header = style({
     alignItems: 'center',
     width: '100%',
     borderBottom: `1px solid ${vars.colors.gray[200]}`,
-
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {},
     },
@@ -41,10 +45,8 @@ export const header = style({
 
 export const closeButton = style({
     position: 'relative',
-
     opacity: 0.7,
     transition: 'opacity 0.2s ease',
-
     ':hover': {
         opacity: 1,
     },
@@ -54,7 +56,6 @@ export const vehicleNumber = style({
     marginLeft: '-14px',
     fontSize: vars.fontSizes.large,
     fontWeight: vars.fontWeights.bold,
-
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             fontSize: vars.fontSizes.mediumPlus,
@@ -67,6 +68,11 @@ export const tableWrapper = style({
     border: `1px solid ${vars.colors.gray[400]}`,
     borderRadius: '8px',
     overflow: 'hidden',
+    selectors: {
+        '.dark &': {
+            border: `1px solid ${vars.colors.darkGray}`,
+        },
+    },
 })
 
 export const table = style({
@@ -83,12 +89,24 @@ export const tableHeader = style({
     backgroundColor: vars.colors.gray[50],
     borderBottom: `1px solid ${vars.colors.gray[200]}`,
     borderRight: `1px solid ${vars.colors.gray[200]}`,
+    selectors: {
+        '.dark &': {
+            color: vars.colors.darkText,
+            backgroundColor: vars.colors.darkBlue,
+            border: `1px solid ${vars.colors.darkGray}`,
+        },
+    },
 })
 
 export const tableCell = style({
     padding: '8px',
     borderBottom: `1px solid ${vars.colors.gray[200]}`,
     borderRight: `1px solid ${vars.colors.gray[200]}`,
+    selectors: {
+        '.dark &': {
+            border: `1px solid ${vars.colors.darkGray}`,
+        },
+    },
 })
 
 export const engineInfo = style({

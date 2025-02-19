@@ -10,8 +10,9 @@ export const container = style({
     textAlign: 'center',
     selectors: {
         '.dark &': {
-            backgroundColor: vars.colors.dark,
-            color: vars.colors.gray[200],
+            backgroundColor: vars.colors.darkBlue,
+            color: vars.colors.darkText,
+            border: `1px solid ${vars.colors.darkGray}`,
         },
     },
 })

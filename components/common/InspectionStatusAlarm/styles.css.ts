@@ -1,16 +1,15 @@
 import { style, styleVariants } from '@vanilla-extract/css'
 import { recipe } from '@vanilla-extract/recipes'
 
-import { vars } from '@/styles/theme.css'
+import { breakPoints, vars } from '@/styles/theme.css'
 
 export const statusCard = recipe({
     base: {
         width: '100%',
-        height: '100%',
         borderRadius: '11px',
         color: vars.colors.gray[800],
-        padding: '16px',
-        gap: '20px 20px',
+        padding: '10px',
+        gap: '10px',
         borderLeft: '12px solid',
         display: 'flex',
         alignItems: 'flex-start',
@@ -38,6 +37,11 @@ export const container = style({
     backgroundColor: 'transparent',
     borderRadius: '12px',
     zIndex: vars.zIndex.modal,
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'none',
+        },
+    },
 })
 
 export const iconWrapperBase = style({
@@ -70,7 +74,7 @@ export const title = style({
 export const vehicleNumber = style({
     color: vars.colors.black,
     fontWeight: vars.fontWeights.extraBold,
-    fontSize: vars.fontSizes.xlarge,
+    fontSize: vars.fontSizes.large,
     marginBottom: '10px',
 })
 

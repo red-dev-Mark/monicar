@@ -49,3 +49,10 @@ export const searchInputStyle = style({
     borderRadius: '8px',
     boxShadow: 'none',
 })
+
+export const swtich = style({
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '0 8px 0 16px',
+    fontSize: vars.fontSizes.medium,
+})

@@ -7,11 +7,6 @@ export const accordion = style({
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
     overflow: 'hidden',
     zIndex: vars.zIndex.dropdown,
-    selectors: {
-        '.dark &': {
-            backgroundColor: vars.colors.gray[200],
-        },
-    },
 })
 
 export const baseControl = style({
@@ -27,6 +22,11 @@ export const baseControl = style({
 export const primaryControl = style({
     color: vars.colors.white,
     backgroundColor: vars.colors.primary,
+    selectors: {
+        '.dark &': {
+            backgroundColor: vars.colors.dark,
+        },
+    },
 })
 
 export const secondaryControl = style({

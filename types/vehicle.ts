@@ -7,12 +7,6 @@ export interface Vehicle extends Partial<VehicleOperationPeriod> {
     vehicleNumber: string
 }
 
-//TODO: 위와 수정
-export interface AutoVehicle {
-    id: string
-    vehicleNumber: string
-}
-
 // 차량의 현재 위치 정보
 export interface VehicleLocation {
     vehicleId: string

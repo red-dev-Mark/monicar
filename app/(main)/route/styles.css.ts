@@ -6,7 +6,7 @@ export const container = style({
     position: 'relative',
     width: '100%',
     height: '100vh',
-    color: vars.colors.gray[800],
+    color: vars.colors.white,
 })
 
 export const buttonWrapper = style({

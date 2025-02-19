@@ -13,7 +13,8 @@ export const container = style({
     gap: '16px',
     selectors: {
         '.dark &': {
-            backgroundColor: vars.colors.gray[700],
+            backgroundColor: vars.colors.darkBlue,
+            border: `1px solid ${vars.colors.darkGray}`,
         },
     },
     '@media': {
@@ -33,7 +34,7 @@ export const vehicleNumber = style({
     fontWeight: vars.fontWeights.bold,
     selectors: {
         '.dark &': {
-            color: vars.colors.white,
+            color: vars.colors.darkText,
         },
     },
 })
@@ -42,7 +43,7 @@ export const description = style({
     color: vars.colors.gray[600],
     selectors: {
         '.dark &': {
-            color: vars.colors.gray[500],
+            color: vars.colors.darkDescription,
         },
     },
 })

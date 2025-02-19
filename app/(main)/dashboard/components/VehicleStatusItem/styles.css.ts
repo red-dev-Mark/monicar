@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { vars } from '@/styles/theme.css'
+import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
     display: 'flex',
@@ -13,6 +13,11 @@ export const title = style({
 
 export const progressWrapper = style({
     width: '60%',
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            width: '50%',
+        },
+    },
 })
 
 export const circle = style({

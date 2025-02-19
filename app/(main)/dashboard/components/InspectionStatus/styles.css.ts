@@ -15,7 +15,8 @@ export const container = style({
     cursor: 'pointer',
     selectors: {
         '.dark &': {
-            backgroundColor: vars.colors.dark,
+            backgroundColor: vars.colors.darkBlue,
+            border: `1px solid ${vars.colors.darkGray}`,
         },
     },
     '@media': {

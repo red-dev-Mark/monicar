@@ -8,68 +8,85 @@ import Map from '@/components/domain/map/Map'
 import { LiveMarker } from '@/components/domain/vehicle/LiveMarker'
 import VehicleMarker from '@/components/domain/vehicle/VehicleMarker'
 import { MAP_CONFIG, POLYLINE_CONFIG } from '@/constants/map'
-import { useLiveRoute } from '@/hooks/useLiveRoute'
 import { useMapStatus } from '@/hooks/useMapStatus'
-import { MapState, LatLng, MapRefType } from '@/types/map'
+import { LatLng, MapRefType } from '@/types/map'
+import { Route } from '@/types/route'
 
 interface MapSectionProps {
     mapRef: MapRefType
-    mapState: MapState
     routes: LatLng[]
+    initialLiveRoute: Route
+    currentLiveRoute: Route
     isMapLoaded: boolean
     onRoutesChange: (paths: LatLng[]) => void
     onLoad?: () => void
 }
 
-const MapSection = memo(({ mapRef, mapState, routes, isMapLoaded, onRoutesChange, onLoad }: MapSectionProps) => {
-    const { controlMapStatus } = useMapStatus(mapRef.current)
-    const { currentRoute, getLiveRouteData } = useLiveRoute()
+const MapSection = memo(
+    ({ mapRef, routes, initialLiveRoute, currentLiveRoute, isMapLoaded, onRoutesChange, onLoad }: MapSectionProps) => {
+        const { mapState, controlMapStatus } = useMapStatus(mapRef.current)
 
-    const searchParams = useSearchParams()
+        const searchParams = useSearchParams()
 
-    const vehicleId = searchParams.get('vehicleId') || ''
-    const vehicleNumber = searchParams.get('vehicleNumber') || ''
-    const lat = Number(searchParams.get('endLat'))
-    const lng = Number(searchParams.get('endLng'))
-    const live = searchParams.get('live')
+        const vehicleNumber = searchParams.get('vehicleNumber') || ''
+        const lat = Number(searchParams.get('endLat'))
+        const lng = Number(searchParams.get('endLng'))
+        const live = searchParams.get('live') === 'true'
+        const tracking = searchParams.get('tracking') === 'true'
 
-    useEffect(() => {
-        if (!vehicleId || !vehicleNumber || !lat || !lng) {
+        useEffect(() => {
+            if (!isMapLoaded) return
+
+            if (tracking && currentLiveRoute?.lat) {
+                controlMapStatus(
+                    { lat: currentLiveRoute.lat, lng: currentLiveRoute.lng },
+                    MAP_CONFIG.ROUTE.TRACKING_ZOOM_INCREMENT,
+                )
+            }
+        }, [tracking, currentLiveRoute, isMapLoaded])
+
+        useEffect(() => {
+            if (!isMapLoaded) return
+
+            if (live && initialLiveRoute) {
+                controlMapStatus(
+                    { lat: initialLiveRoute.lat, lng: initialLiveRoute.lng },
+                    MAP_CONFIG.ROUTE.LIVE_ZOOM_INCREMENT,
+                )
+                return
+            }
+
+            if (lat && lng) {
+                controlMapStatus({ lat, lng }, MAP_CONFIG.ROUTE.ZOOM_INCREMENT)
+                return
+            }
+
             onRoutesChange([])
-            return
+        }, [live, initialLiveRoute, lat, lng, isMapLoaded])
+
+        const vehicleOnDestination = {
+            vehicleId: '',
+            vehicleNumber,
+            coordinate: { lat, lng },
         }
 
-        if (isMapLoaded) {
-            controlMapStatus({ lat, lng }, MAP_CONFIG.ROUTE.ZOOM_INCREMENT)
-        }
-    }, [searchParams, isMapLoaded])
+        const isVisible = routes.length > 0
 
-    useEffect(() => {
-        getLiveRouteData('2')
-    }, [])
-
-    const vehicleOnDestination = {
-        vehicleId,
-        vehicleNumber,
-        coordinate: { lat, lng },
-    }
-
-    const isVisible = routes.length > 0
-
-    return (
-        <Map ref={mapRef} level={mapState.level} center={mapState.center} onLoad={onLoad}>
-            <Polyline
-                path={[routes]}
-                strokeWeight={POLYLINE_CONFIG.STROKE_WEIGHT}
-                strokeColor={POLYLINE_CONFIG.STROKE_COLOR}
-                strokeOpacity={POLYLINE_CONFIG.STROKE_OPACITY}
-                strokeStyle={POLYLINE_CONFIG.STROKE_STYLE}
-            />
-            {isVisible && <VehicleMarker vehicleInfo={vehicleOnDestination} />}
-            {live && currentRoute && <LiveMarker route={currentRoute} />}
-        </Map>
-    )
-})
+        return (
+            <Map ref={mapRef} level={mapState.level} center={mapState.center} onLoad={onLoad}>
+                <Polyline
+                    path={[routes]}
+                    strokeWeight={POLYLINE_CONFIG.STROKE_WEIGHT}
+                    strokeColor={POLYLINE_CONFIG.STROKE_COLOR}
+                    strokeOpacity={POLYLINE_CONFIG.STROKE_OPACITY}
+                    strokeStyle={POLYLINE_CONFIG.STROKE_STYLE}
+                />
+                {isVisible && <VehicleMarker vehicleInfo={vehicleOnDestination} />}
+                {live && currentLiveRoute && <LiveMarker route={currentLiveRoute} />}
+            </Map>
+        )
+    },
+)
 
 MapSection.displayName = 'MapSection'
 

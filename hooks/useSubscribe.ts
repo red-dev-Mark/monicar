@@ -27,8 +27,7 @@ export const useSubscribe = () => {
             console.log('SSE 연결 시작')
         }
 
-        eventSource.onerror = (error) => {
-            console.error('SSE 에러', error)
+        eventSource.onerror = () => {
             setError(new Error('SSE 연결 실패'))
             eventSource.close()
         }

@@ -20,6 +20,7 @@ export const container = style({
             height: 'auto',
             gap: '10px',
             padding: '50px 20px',
+            paddingBottom: '300px',
         },
     },
 })
@@ -98,7 +99,7 @@ export const introduce = style({
     marginLeft: '24px',
     selectors: {
         '.dark &': {
-            color: vars.colors.white,
+            color: vars.colors.darkText,
         },
     },
     '@media': {
@@ -139,6 +140,15 @@ export const mapWrapper = style({
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
+        },
+    },
+})
+
+export const signOutButton = style({
+    display: 'none',
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'flex',
         },
     },
 })

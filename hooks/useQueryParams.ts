@@ -35,7 +35,6 @@ export const useQueryParams = () => {
         Object.entries(addParams).forEach(([key, value]) => {
             params.set(key, removeSpaces(String(value)))
         })
-
         removeKeys.forEach((key) => {
             params.delete(key)
         })
