@@ -10,19 +10,12 @@ interface InspectionCardProps {
     vehicleNumber: string
     managerName?: string
     drivingDistance?: number
-    hasButton?: boolean
+
     status: StatusType
     onClick: () => void
 }
 
-const InspectionCard = ({
-    vehicleNumber,
-    drivingDistance,
-    managerName,
-    hasButton = true,
-    status,
-    onClick,
-}: InspectionCardProps) => {
+const InspectionCard = ({ vehicleNumber, drivingDistance, managerName, status, onClick }: InspectionCardProps) => {
     const iconStatus = (status: StatusType) => {
         switch (status) {
             case 'REQUIRED':
@@ -35,6 +28,8 @@ const InspectionCard = ({
                 return <WhiteCheckIcon />
         }
     }
+
+    const hasButton = status !== 'COMPLETED'
 
     return (
         <div className={styles.container}>

@@ -293,6 +293,7 @@ const DetailPage = () => {
                                 onChange={handleDateRangeChange}
                                 valueFormat='YYYY년 MM월 DD일'
                                 clearable={true}
+                                allowSingleDateInRange
                             />
                         </div>
                     }
