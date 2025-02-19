@@ -208,7 +208,7 @@ const VehicleDetailCard = ({ mapRef }: VehicleDetailCardProps) => {
             ) : (
                 <SquareButton
                     onClick={() => {
-                        router.push(`/route?live=true&vehicleNumber=${vehicleNumber}`)
+                        router.push(`/route?vehicleNumber=${vehicleNumber}`)
                     }}
                 >
                     실시간 경로보기

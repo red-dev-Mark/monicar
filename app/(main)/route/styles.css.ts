@@ -16,3 +16,10 @@ export const buttonWrapper = style({
     right: '12px',
     zIndex: vars.zIndex.dropdown,
 })
+
+export const trackingButton = style({
+    position: 'absolute',
+    bottom: '12px',
+    left: '12px',
+    zIndex: vars.zIndex.dropdown,
+})
