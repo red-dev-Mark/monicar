@@ -7,8 +7,8 @@ import InspectionStatusItem from '../InspectionStatusItem'
 
 import * as styles from './styles.css'
 
-const InspectionStatusPanel = ({ data }: { data: InspectionStatusType | undefined }) => {
-    const total = (data?.[0]?.count || 0) + (data?.[1]?.count || 0) + (data?.[2]?.count || 0) + (data?.[3]?.count || 0)
+const InspectionStatusPanel = ({ statusData }: { statusData: InspectionStatusType | undefined }) => {
+    const total = statusData ? Object.values(statusData).reduce((acc, curr) => acc + curr, 0) : 0
 
     return (
         <div className={styles.container}>
@@ -27,16 +27,28 @@ const InspectionStatusPanel = ({ data }: { data: InspectionStatusType | undefine
                 />
             </div>
             <div className={styles.inspectionStatusItem}>
-                <InspectionStatusItem total={total} current={data?.[0]?.count || 0} color={vars.colors.primary}>
+                <InspectionStatusItem total={total} current={statusData?.required || 0} color={vars.colors.primary}>
                     점검 필요
                 </InspectionStatusItem>
-                <InspectionStatusItem total={total} current={data?.[1]?.count || 0} color={vars.colors.progress[300]}>
+                <InspectionStatusItem
+                    total={total}
+                    current={statusData?.scheduled || 0}
+                    color={vars.colors.progress[300]}
+                >
                     점검 예정
                 </InspectionStatusItem>
-                <InspectionStatusItem total={total} current={data?.[2]?.count || 0} color={vars.colors.progress[200]}>
+                <InspectionStatusItem
+                    total={total}
+                    current={statusData?.inProgress || 0}
+                    color={vars.colors.progress[200]}
+                >
                     점검 진행
                 </InspectionStatusItem>
-                <InspectionStatusItem total={total} current={data?.[3]?.count || 0} color={vars.colors.progress[100]}>
+                <InspectionStatusItem
+                    total={total}
+                    current={statusData?.completed || 0}
+                    color={vars.colors.progress[100]}
+                >
                     점검 완료
                 </InspectionStatusItem>
             </div>
