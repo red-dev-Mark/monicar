@@ -32,6 +32,7 @@ const Inspection = () => {
     const patchInspectionStatusData = async (alarmId: number) => {
         try {
             await vehicleService.patchInspectionStatus(alarmId)
+            window.location.reload()
         } catch (error) {
             console.error('이건 patch 에러', error)
         }
