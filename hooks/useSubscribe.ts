@@ -5,11 +5,8 @@ import { AlarmResponse } from '@/types/vehicle'
 export const useSubscribe = () => {
     const [alarm, setAlarm] = useState<AlarmResponse[]>([])
     const [error, setError] = useState<Error | null>(null)
-    const [isEnabled, setIsEnabled] = useState(true)
 
     useEffect(() => {
-        if (!isEnabled) return
-
         const eventSource = new EventSource(`${API_URL}/api/v1/alarm/subscribe`, { withCredentials: true })
 
         const addAlarm = (event: MessageEvent) => {
@@ -30,8 +27,7 @@ export const useSubscribe = () => {
             console.log('SSE 연결 시작')
         }
 
-        eventSource.onerror = (error) => {
-            console.error('SSE 에러', error)
+        eventSource.onerror = () => {
             setError(new Error('SSE 연결 실패'))
             eventSource.close()
         }
@@ -40,16 +36,10 @@ export const useSubscribe = () => {
             console.log('SSE 연결 종료')
             eventSource.close()
         }
-    }, [isEnabled])
-
-    const toggleEnabled = () => {
-        setIsEnabled((prev) => !prev)
-    }
+    }, [])
 
     return {
         alarm,
         error,
-        isEnabled,
-        toggleEnabled,
     }
 }
