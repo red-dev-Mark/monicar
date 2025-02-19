@@ -48,7 +48,7 @@ export const title = style({
     marginBottom: '10px',
     selectors: {
         '.dark &': {
-            color: vars.colors.white,
+            color: vars.colors.darkText,
         },
     },
 })
@@ -63,7 +63,7 @@ export const contents = style({
     selectors: {
         '.dark &': {
             backgroundColor: vars.colors.dark,
-            border: `solid 1px ${vars.colors.gray[600]}`,
+            border: `solid 1px ${vars.colors.darkGray}`,
         },
     },
     '@media': {

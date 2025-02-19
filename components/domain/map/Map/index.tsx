@@ -8,8 +8,6 @@ import { MAP_CONFIG } from '@/constants/map'
 import { useKakaoLoader } from '@/hooks/useKakaoLoader'
 import { LatLng, MapRefType } from '@/types/map'
 
-// import * as styles from './styles.css'
-
 interface MapProps {
     ref?: MapRefType
     level?: number

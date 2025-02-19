@@ -8,7 +8,7 @@ export const title = style({
     margin: '10px',
     selectors: {
         '.dark &': {
-            color: vars.colors.gray[200],
+            color: vars.colors.darkText,
         },
     },
 })
@@ -36,7 +36,7 @@ export const messageWrapper = style({
     color: vars.colors.gray[600],
     selectors: {
         '.dark &': {
-            color: vars.colors.gray[400],
+            color: vars.colors.darkDescription,
         },
     },
 })

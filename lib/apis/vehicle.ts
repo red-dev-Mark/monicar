@@ -125,6 +125,15 @@ export const vehicleService = {
         return { isValid: true, value: vehicleOperationHistory }
     },
 
+    // 차량 운행 여부 조회
+    getVehicleOperationStatus: async (vehicleId: string) => {
+        const response = await httpClient.get(`api/v1/vehicle/${vehicleId}/operaton-status`)
+        if (!response.data.isSuccess) {
+            throw response.data.errorMessage
+        }
+        return response.data
+    },
+
     // 등록 가능한 차량 번호 조회
     getAvailableVehicleNumber: async (vehicleNumber: string) => {
         const response = await httpClient.get(`api/v1/vehicle/check`, { params: { vehicleNumber } })

@@ -12,7 +12,9 @@ export const container = style({
     flexDirection: 'column',
     selectors: {
         '.dark &': {
-            backgroundColor: vars.colors.dark,
+            backgroundColor: vars.colors.darkBlue,
+            color: vars.colors.darkText,
+            border: `1px solid ${vars.colors.darkGray}`,
         },
     },
     '@media': {
@@ -30,7 +32,7 @@ export const heading = style({
     fontWeight: vars.fontWeights.extraBold,
     selectors: {
         '.dark &': {
-            color: vars.colors.gray[200],
+            color: vars.colors.darkText,
         },
     },
     '@media': {
@@ -86,7 +88,7 @@ export const title = style({
     color: vars.colors.black,
     selectors: {
         '.dark &': {
-            color: vars.colors.gray[500],
+            color: vars.colors.darkText,
         },
     },
 })
@@ -101,7 +103,7 @@ export const description = style({
     textOverflow: 'ellipsis',
     selectors: {
         '.dark &': {
-            color: vars.colors.gray[700],
+            color: vars.colors.darkDescription,
         },
     },
 })

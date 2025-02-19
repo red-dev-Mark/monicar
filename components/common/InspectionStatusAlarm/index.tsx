@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 import { alarmTitle } from '@/constants/inspection'
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
 import { WhiteAlertIcon } from '@/public/icons'
@@ -10,10 +8,10 @@ import * as styles from './styles.css'
 interface InspectionStatusAlarmProps {
     inspectionStatusData: AlarmResponse[]
     isOpen?: boolean
-    onClose: () => void
+    // onClose?: () => void
 }
 
-const InspectionStatusAlarm = ({ inspectionStatusData, isOpen = true, onClose }: InspectionStatusAlarmProps) => {
+const InspectionStatusAlarm = ({ inspectionStatusData, isOpen = true }: InspectionStatusAlarmProps) => {
     if (!isOpen) return null
 
     const alarmIcon = {
@@ -51,7 +49,7 @@ const InspectionStatusAlarm = ({ inspectionStatusData, isOpen = true, onClose }:
                                 {data.managerName && <div className={styles.message}>{data.managerName}</div>}
                             </div>
 
-                            <button className={styles.closeButton} onClick={onClose}>
+                            {/* <button className={styles.closeButton} onClick={onClose}>
                                 <Image
                                     src={'/icons/clear-icon.svg'}
                                     width={36}
@@ -59,7 +57,7 @@ const InspectionStatusAlarm = ({ inspectionStatusData, isOpen = true, onClose }:
                                     alt='닫기 버튼'
                                     style={{ width: '36px', height: '36px' }}
                                 />
-                            </button>
+                            </button> */}
                         </div>
                     )
                 })}
