@@ -7,6 +7,7 @@ interface InspectionStatusModel {
     icon: React.ReactNode
     text: string
     iconType: IconType
+    count: number
 }
 
 interface InspectionStatusProps {
@@ -29,6 +30,7 @@ const InspectionStatus = ({ inspectionStatusData, onStatusClick }: InspectionSta
                     <div className={styles.mobileStatusWrapper}>
                         <div className={styles.iconWrapper[data.iconType]}>
                             <div className={styles.icon}>{data.icon}</div>
+                            <div className={styles.count}> {data.count}</div>
                         </div>
                         <div className={styles.statusText}>{data.text}</div>
                     </div>

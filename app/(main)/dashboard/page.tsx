@@ -19,6 +19,7 @@ import { StatusType } from '@/types/vehicle'
 import InspectionStatus from './components/InspectionStatus'
 import NoticeListBoard from './components/NoticeListBoard'
 import VehicleStatusPanel from './components/VehicleStatusPanel'
+import { useStatusPanelData } from './inspection/hooks/useStatusPanelData'
 import * as styles from './styles.css'
 
 const DashboardPage = () => {
@@ -39,6 +40,7 @@ const DashboardPage = () => {
         nickname: '',
     })
     const [isLoading, setIsLoading] = useState(true)
+    const { statusData } = useStatusPanelData()
 
     const handleStatusClick = (status: StatusType) => {
         router.push(`/dashboard/inspection?status=${status}`)
@@ -86,24 +88,28 @@ const DashboardPage = () => {
                                     icon: <WhiteBellIcon color='white' size={24} />,
                                     text: '점검 필요',
                                     iconType: 'bell',
+                                    count: statusData?.required || 0,
                                 },
                                 {
                                     status: 'SCHEDULED',
                                     icon: <WhiteAlertIcon color='white' size={24} />,
                                     text: '점검 예정',
                                     iconType: 'alert',
+                                    count: statusData?.scheduled || 0,
                                 },
                                 {
                                     status: 'INPROGRESS',
                                     icon: <WhiteOnButtonIcon color='white' size={24} />,
                                     text: '점검 진행',
                                     iconType: 'button',
+                                    count: statusData?.inProgress || 0,
                                 },
                                 {
                                     status: 'COMPLETED',
                                     icon: <WhiteCheckIcon color='white' size={24} />,
                                     text: '점검 완료',
                                     iconType: 'check',
+                                    count: statusData?.completed || 0,
                                 },
                             ]}
                             onStatusClick={handleStatusClick}
@@ -170,24 +176,28 @@ const DashboardPage = () => {
                                 icon: <WhiteBellIcon color='white' size={24} />,
                                 text: '점검 필요',
                                 iconType: 'bell',
+                                count: statusData?.required || 0,
                             },
                             {
                                 status: 'SCHEDULED',
                                 icon: <WhiteAlertIcon color='white' size={24} />,
                                 text: '점검 예정',
                                 iconType: 'alert',
+                                count: statusData?.scheduled || 0,
                             },
                             {
                                 status: 'INPROGRESS',
                                 icon: <WhiteOnButtonIcon color='white' size={24} />,
                                 text: '점검 진행',
                                 iconType: 'button',
+                                count: statusData?.inProgress || 0,
                             },
                             {
                                 status: 'COMPLETED',
                                 icon: <WhiteCheckIcon color='white' size={24} />,
                                 text: '점검 완료',
                                 iconType: 'check',
+                                count: statusData?.completed || 0,
                             },
                         ]}
                         onStatusClick={handleStatusClick}
