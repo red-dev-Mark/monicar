@@ -19,10 +19,10 @@ const InspectionStatusPanel = ({ data }: { data: InspectionStatusType | undefine
                     thickness={14}
                     roundCaps
                     sections={[
-                        { value: data?.[0]?.count || 0, color: '#FF385C', tooltip: '점검 필요' },
-                        { value: data?.[1]?.count || 0, color: '#FF4086', tooltip: '점검 예정' },
-                        { value: data?.[2]?.count || 0, color: '#FFC6DB', tooltip: '점검 진행' },
-                        { value: data?.[3]?.count || 0, color: '#FFE7F0', tooltip: '점검 완료' },
+                        { value: 20, color: '#FF385C', tooltip: '점검 필요' },
+                        { value: 40, color: '#FF4086', tooltip: '점검 예정' },
+                        { value: 20, color: '#FFC6DB', tooltip: '점검 진행' },
+                        { value: 10, color: '#FFE7F0', tooltip: '점검 완료' },
                     ]}
                 />
             </div>

@@ -12,7 +12,7 @@ globalStyle('body', {
 
 globalStyle('body.dark', {
     backgroundColor: vars.colors.dark,
-    color: vars.colors.white,
+    color: vars.colors.darkText,
 })
 
 globalStyle('a', {

@@ -9,6 +9,13 @@ export const container = style({
     padding: '24px 0px',
     borderBottom: `1px solid ${vars.colors.gray[200]}`,
     color: vars.colors.gray[600],
+    selectors: {
+        '.dark &': {
+            backgroundColor: vars.colors.darkBlue,
+            border: `1px solid ${vars.colors.darkGray}`,
+            color: vars.colors.darkDescription,
+        },
+    },
 })
 
 export const headerTitle = style({
