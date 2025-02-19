@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { vehicleService } from '@/lib/apis'
-import { AutoVehicle } from '@/types/vehicle'
+import { Vehicle } from '@/types/vehicle'
 
 export const useAutoComplete = (inputValue: string) => {
     const [isAutoCompleteVisible, setIsAutoCompleteVisible] = useState(false)
-    const [autoCompleteList, setAutoCompleteList] = useState<AutoVehicle[]>([])
+    const [autoCompleteList, setAutoCompleteList] = useState<Vehicle[]>([])
     const timeoutRef = useRef<NodeJS.Timeout>()
 
     useEffect(() => {

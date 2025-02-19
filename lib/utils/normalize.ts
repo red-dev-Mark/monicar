@@ -5,6 +5,7 @@ export const denormalizeCoordinate = (coordinateValue: number): number => Math.r
 
 export const normalizeRoutes = (routes: Route[]) =>
     routes.map((route: Route) => ({
+        ...route,
         lat: normalizeCoordinate(route.lat),
         lng: normalizeCoordinate(route.lng),
     }))
