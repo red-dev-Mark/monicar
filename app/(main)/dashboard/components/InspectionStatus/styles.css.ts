@@ -38,6 +38,7 @@ const iconWrapperBase = style({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
 })
 
 export const iconWrapper = styleVariants({
@@ -101,4 +102,20 @@ export const mobileStatusWrapper = style({
             justifyContent: 'center',
         },
     },
+})
+
+export const count = style({
+    fontSize: vars.fontSizes.small,
+    backgroundColor: vars.colors.gray[600],
+    color: vars.colors.white,
+    borderRadius: '50%',
+    width: '26px',
+    height: '26px',
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    position: 'absolute',
+    top: '-8px',
+    right: '-8px',
+    zIndex: vars.zIndex.default,
 })
