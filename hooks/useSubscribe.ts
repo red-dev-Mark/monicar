@@ -25,16 +25,16 @@ export const useSubscribe = () => {
         eventSource.addEventListener('COMPLETED', addAlarm)
 
         eventSource.onopen = () => {
-            console.log('SSE 연결 시작')
+            // console.log('SSE 연결 시작')
         }
 
         eventSource.onerror = () => {
-            setError(new Error('SSE 연결 실패'))
+            setError(new Error(''))
             eventSource.close()
         }
 
         return () => {
-            console.log('SSE 연결 종료')
+            // console.log('SSE 연결 종료')
             eventSource.close()
         }
     }, [])

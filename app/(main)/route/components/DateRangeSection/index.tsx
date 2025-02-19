@@ -9,8 +9,8 @@ import { FONT_FAMILY } from '@/styles/font.css'
 import { vars } from '@/styles/theme.css'
 import { VehicleOperationPeriod } from '@/types/vehicle'
 
-import 'dayjs/locale/ko'
 import '@mantine/dates/styles.css'
+import 'dayjs/locale/ko'
 // interface DateRangeSectionProps {
 // searchableDateRange: VehicleOperationPeriod
 // value: DatesRangeValue

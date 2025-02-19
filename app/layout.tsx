@@ -1,5 +1,5 @@
 import '@/styles'
-import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from '@mantine/core'
+import { ColorSchemeScript, MantineProvider, createTheme, mantineHtmlProps } from '@mantine/core'
 
 import type { Metadata } from 'next'
 
@@ -11,13 +11,17 @@ export const metadata: Metadata = {
 }
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
+    const theme = createTheme({
+        cursorType: 'pointer',
+    })
+
     return (
         <html lang='ko' className='trancy-ko' {...mantineHtmlProps}>
             <head>
                 <ColorSchemeScript />
             </head>
             <body>
-                <MantineProvider>
+                <MantineProvider theme={theme}>
                     {children}
                     <div id='modal-root'></div>
                 </MantineProvider>
