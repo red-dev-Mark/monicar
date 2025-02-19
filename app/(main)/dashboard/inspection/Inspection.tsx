@@ -2,9 +2,10 @@
 
 import { Group, Pagination } from '@mantine/core'
 import Image from 'next/image'
-import { useSearchParams } from 'next/navigation'
+import { useState } from 'react'
 
 import Breadcrumbs from '@/components/common/Breadcrumbs'
+import { useQueryParams } from '@/hooks/useQueryParams'
 import { vehicleService } from '@/lib/apis/vehicle'
 import { StatusType } from '@/types/vehicle'
 
@@ -16,12 +17,14 @@ import { useStatusPanelData } from './hooks/useStatusPanelData'
 import * as styles from './styles.css'
 
 const Inspection = () => {
-    const searchParams = useSearchParams()
-    const status = searchParams.get('status') as StatusType
+    const { addQuery, getQuery } = useQueryParams()
+    const initialPage = Number(getQuery('page')) || 1
+    const [activePage, setActivePage] = useState(initialPage)
+    const status = (getQuery('status') as StatusType) || 'required'
 
     const { statusData, isLoading, error } = useStatusPanelData()
     const { inspectionData } = useInspectionStatusData({
-        page: '1',
+        page: activePage.toString(),
         size: '8',
         status,
     })
@@ -83,7 +86,16 @@ const Inspection = () => {
             </div>
 
             <div className={styles.paginationWrapper}>
-                <Pagination.Root total={1} color='#ff385c' boundaries={0}>
+                <Pagination.Root
+                    total={100}
+                    value={Number(activePage)}
+                    onChange={(page) => {
+                        setActivePage(page)
+                        addQuery('page', String(page))
+                    }}
+                    color='#ff385c'
+                    boundaries={0}
+                >
                     <Group gap={5} justify='center'>
                         <Pagination.First />
                         <Pagination.Previous />

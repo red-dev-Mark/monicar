@@ -16,6 +16,7 @@ import LogSkeleton from '@/components/common/Skeleton/LogSkeleton'
 import ListHeader from '@/components/domain/vehicle/ListHeader'
 import { LOG_TITLES } from '@/constants/listHeader'
 import { useModal } from '@/hooks/useModal'
+import { useQueryParams } from '@/hooks/useQueryParams'
 import { validateSearchTerm } from '@/lib/utils/validation'
 import '@mantine/notifications/styles.css'
 
@@ -26,7 +27,9 @@ import { downloadExcel } from './utils/excel'
 
 const LogPage = () => {
     const router = useRouter()
-    const [activePage, setActivePage] = useState(1)
+    const { addQuery, getQuery } = useQueryParams()
+    const initialPage = Number(getQuery('page')) || 1
+    const [activePage, setActivePage] = useState(initialPage)
     const [searchVehicleNumber, setSearchVehicleNumber] = useState<string>()
     const [searchTerm, setSearchTerm] = useState('')
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
@@ -183,7 +186,10 @@ const LogPage = () => {
                 <Pagination.Root
                     total={logData?.totalPages || 1}
                     value={activePage}
-                    onChange={setActivePage}
+                    onChange={(page) => {
+                        setActivePage(page)
+                        addQuery('page', String(page))
+                    }}
                     color='#ff385c'
                     boundaries={0}
                 >
