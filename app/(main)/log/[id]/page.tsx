@@ -75,7 +75,7 @@ const DetailPage = () => {
     const handleDeleteVehicle = async (id: number) => {
         try {
             await vehicleService.deleteVehicle(id)
-            router.push('/log')
+            router.replace('/log')
         } catch (error) {
             console.error('차량 삭제 실패', error)
             showAlertMessage('차량 삭제에 실패했습니다')
@@ -293,6 +293,7 @@ const DetailPage = () => {
                                 onChange={handleDateRangeChange}
                                 valueFormat='YYYY년 MM월 DD일'
                                 clearable={true}
+                                allowSingleDateInRange
                             />
                         </div>
                     }
