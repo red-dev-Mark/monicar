@@ -3,12 +3,16 @@ import { style } from '@vanilla-extract/css'
 import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
-    height: 'auto',
+    height: '130vh',
     backgroundColor: vars.colors.dashboard,
     display: 'flex',
     gap: '34px',
     padding: '24px',
-
+    selectors: {
+        '.dark &': {
+            backgroundColor: vars.colors.dark,
+        },
+    },
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             backgroundColor: vars.colors.white,
@@ -16,13 +20,13 @@ export const container = style({
             height: 'auto',
             gap: '10px',
             padding: '50px 20px',
+            paddingBottom: '300px',
         },
     },
 })
 
 export const logoWrapper = style({
     display: 'none',
-
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'flex',
@@ -38,7 +42,6 @@ export const leftSection = style({
     display: 'flex',
     flexDirection: 'column',
     gap: '24px',
-
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             width: '100%',
@@ -52,7 +55,6 @@ export const rightSection = style({
     display: 'flex',
     flexDirection: 'column',
     gap: '24px',
-
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             width: '100%',
@@ -81,7 +83,6 @@ export const header = style({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
@@ -96,7 +97,11 @@ export const introduce = style({
     display: 'flex',
     flexDirection: 'column',
     marginLeft: '24px',
-
+    selectors: {
+        '.dark &': {
+            color: vars.colors.darkText,
+        },
+    },
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
@@ -107,7 +112,6 @@ export const introduce = style({
 
 export const userName = style({
     fontSize: vars.fontSizes.xlarge,
-
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
@@ -121,7 +125,6 @@ export const searchInputWrapper = style({
     top: 18,
     width: '358px',
     zIndex: vars.zIndex.four,
-
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
@@ -134,10 +137,18 @@ export const mapWrapper = style({
     height: '100%',
     borderRadius: '14px',
     overflow: 'hidden',
-
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
+        },
+    },
+})
+
+export const signOutButton = style({
+    display: 'none',
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            display: 'flex',
         },
     },
 })

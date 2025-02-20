@@ -1,31 +1,31 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import React from 'react'
 
 import * as styles from './styles.css'
 
 interface NavItemProps {
     label: string
     path: string
-    iconSrc: string
+    icon: React.ReactNode
 }
 
-const NavItem = ({ label, path, iconSrc }: NavItemProps) => {
+const NavItem = ({ label, path, icon }: NavItemProps) => {
     const pathname = usePathname()
     const isCurrentPage = pathname.startsWith(path)
 
     return (
         <li>
-            <Link href={`${path}`} className={`${styles.navItem} ${isCurrentPage && styles.currentItem}`}>
-                <Image
-                    src={iconSrc}
-                    alt={`${label} 아이콘`}
-                    width={20}
-                    height={20}
-                    style={{ width: '20px', height: '20px' }}
-                />
+            <Link
+                href={`${path}`}
+                className={`
+          ${styles.navItem}
+          ${isCurrentPage ? styles.currentItem : ''}
+        `}
+            >
+                <span> {icon}</span>
                 <span>{label}</span>
             </Link>
         </li>

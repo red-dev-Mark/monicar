@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { vars } from '@/styles/theme.css'
+import { breakPoints, vars } from '@/styles/theme.css'
 
 export const accordion = style({
     width: '390px',
@@ -13,6 +13,12 @@ export const accordion = style({
     borderRadius: '12px',
     zIndex: vars.zIndex.dropdown,
     overflow: 'hidden',
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            width: 'calc(100% - 24px)',
+            left: '12px',
+        },
+    },
 })
 
 export const container = style({
@@ -20,15 +26,40 @@ export const container = style({
     display: 'flex',
     gap: '24px',
     flexDirection: 'column',
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            padding: '12px',
+            gap: '18px',
+        },
+    },
 })
 
 export const bottomSection = style({
     display: 'flex',
     gap: '24px',
     flexDirection: 'column',
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            gap: '18px',
+        },
+    },
 })
 
 export const searchInputStyle = style({
     borderRadius: '8px',
     boxShadow: 'none',
+})
+
+export const swtich = style({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '0 8px 0 16px',
+    fontSize: vars.fontSizes.medium,
+})
+
+export const liveText = style({
+    color: vars.colors.gray[800],
+    fontWeight: vars.fontWeights.bold,
+    fontSize: vars.fontSizes.small,
 })

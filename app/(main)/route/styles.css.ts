@@ -6,5 +6,20 @@ export const container = style({
     position: 'relative',
     width: '100%',
     height: '100vh',
-    color: vars.colors.gray[800],
+    color: vars.colors.white,
+})
+
+export const buttonWrapper = style({
+    width: '200px',
+    position: 'absolute',
+    top: '12px',
+    right: '12px',
+    zIndex: vars.zIndex.dropdown,
+})
+
+export const trackingButton = style({
+    position: 'absolute',
+    bottom: '12px',
+    left: '12px',
+    zIndex: vars.zIndex.dropdown,
 })

@@ -13,16 +13,21 @@ export const navItem = style({
     ':hover': {
         backgroundColor: vars.colors.gray[50],
     },
+    selectors: {
+        '.dark &': {
+            color: vars.colors.darkText,
+        },
+        '.dark &:hover': {
+            backgroundColor: vars.colors.darkGray,
+        },
+    },
     '@media': {
         [mediaQuery.mobile]: {
             flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '4px',
+            gap: '6px',
             textAlign: 'center',
-            padding: '4px 0',
+            padding: '8px 20px',
             fontSize: vars.fontSizes.xsmall,
-            width: '100%',
         },
     },
 })
@@ -31,4 +36,11 @@ export const currentItem = style({
     color: vars.colors.primary,
     fontWeight: vars.fontWeights.bold,
     backgroundColor: vars.colors.gray[50],
+    selectors: {
+        '.dark &': {
+            color: vars.colors.darkText,
+            backgroundColor: vars.colors.darkGray,
+            fontWeight: vars.fontWeights.bold,
+        },
+    },
 })

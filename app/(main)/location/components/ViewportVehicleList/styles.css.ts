@@ -1,42 +1,49 @@
 import { style } from '@vanilla-extract/css'
 
-import { vars } from '@/styles/theme.css'
+import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
     width: '390px',
-    height: '436px',
+    maxHeight: '436px',
     position: 'absolute',
-    bottom: 0,
     left: 0,
-    zIndex: 1,
+    bottom: 0,
+    zIndex: vars.zIndex.dropdown,
     display: 'flex',
     flexDirection: 'column',
-    padding: '16px',
-    backgroundColor: vars.colors.white,
     borderRadius: '12px 12px 0 0',
     boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+    overflow: 'hidden',
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            width: '100%',
+            maxHeight: '348px',
+            bottom: '68px',
+        },
+    },
 })
 
-export const header = style({
-    paddingBottom: '12px',
+export const listHeader = style({
+    margin: '8px 0',
+    marginRight: '12px',
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    borderBottom: `1px solid ${vars.colors.gray[200]}`,
+    justifyContent: 'flex-end',
+    color: vars.colors.gray[700],
+    fontSize: vars.fontSizes.small,
 })
 
-export const title = style({
-    fontSize: vars.fontSizes.large,
+export const vehicleCount = style({
+    margin: '0 2px',
     fontWeight: vars.fontWeights.bold,
 })
 
 export const vehicleList = style({
-    marginTop: '12px',
+    height: '436px',
+    overflowY: 'auto',
     display: 'flex',
     gap: '4px',
     flexDirection: 'column',
-    overflowY: 'auto',
 
     '::-webkit-scrollbar': {
         width: '4px',
@@ -50,22 +57,15 @@ export const vehicleList = style({
         background: vars.colors.gray[500],
         borderRadius: '2px',
     },
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            maxHeight: '348px',
+        },
+    },
 })
 
-export const listHeader = style({
-    marginRight: '12px',
-    display: 'flex',
-    justifyContent: 'flex-end',
-    color: vars.colors.gray[700],
-    fontSize: vars.fontSizes.small,
-})
-
-export const vehicleCount = style({
-    margin: '0 2px',
-    fontWeight: vars.fontWeights.bold,
-})
-
-export const vehicleItem = style({
+export const listItem = style({
     padding: '12px',
     display: 'flex',
     justifyContent: 'space-between',
@@ -85,22 +85,43 @@ export const vehicleItem = style({
 export const vehicleNumber = style({
     marginLeft: '-32px',
     fontSize: vars.fontSizes.large,
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            fontSize: vars.fontSizes.mediumPlus,
+        },
+    },
 })
 
 export const emptyText = style({
-    height: '100%',
-    paddingBottom: '24px',
+    height: '436px',
+    paddingBottom: '64px',
     display: 'flex',
     gap: '4px',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-
     color: vars.colors.gray[800],
     fontSize: vars.fontSizes.medium,
     fontWeight: vars.fontWeights.bold,
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            paddingBottom: '144px',
+        },
+    },
 })
 
 export const description = style({
     color: vars.colors.gray[600],
+})
+
+export const badge = style({
+    fontSize: vars.fontSizes.small,
+
+    '@media': {
+        [`screen and (max-width: ${breakPoints.mobile}px)`]: {
+            fontSize: vars.fontSizes.xsmall,
+        },
+    },
 })

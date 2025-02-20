@@ -22,6 +22,11 @@ export const baseControl = style({
 export const primaryControl = style({
     color: vars.colors.white,
     backgroundColor: vars.colors.primary,
+    selectors: {
+        '.dark &': {
+            backgroundColor: vars.colors.dark,
+        },
+    },
 })
 
 export const secondaryControl = style({

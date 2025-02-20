@@ -25,9 +25,8 @@ export const routeService = {
                 error: '선택되지 않는 날짜가 포함되어 있습니다',
             }
 
-        const isOneDay = startDate.getTime() === endDate.getTime()
         const startTime = formatISODateToISOString(startDate)
-        const endTime = isOneDay ? formatISODateToISOString(addOneDay(endDate)) : formatISODateToISOString(endDate)
+        const endTime = formatISODateToISOString(new Date(endDate.setDate(endDate.getDate() + 1)))
 
         const params: RouteParams = {
             startTime,
@@ -88,20 +87,24 @@ export const routeService = {
     },
     // 차량 실시간 이동 경로 조회
     getVehicleLiveRoutes: async (vehicleId: string) => {
-        // const currentTime = new Date()
+        const currentTime = new Date()
+
         const params: LiveRouteParams = {
-            currentTime: '2025-01-27T21:23:00',
-            // currentTime,
+            currentTime: formatISODateToISOString(currentTime),
         }
 
         const response = await httpClient.get(`api/v1/vehicle/${vehicleId}/recent/routes`, {
             params,
         })
+        if (!response.data.isSuccess) {
+            return { isSuccess: false, error: '서버 연결에 문제가 발생했습니다. 잠시 후 다시 시도해 주세요' }
+        }
 
         const { result } = response.data
 
-        console.log(result)
-
-        // return response.data.result
+        return {
+            isSuccess: true,
+            data: result,
+        }
     },
 }

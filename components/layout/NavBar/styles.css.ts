@@ -12,16 +12,19 @@ export const navbar = style({
     justifyContent: 'space-between',
     backgroundColor: vars.colors.white,
     borderRight: `1px solid ${vars.colors.gray[200]}`,
-
+    zIndex: vars.zIndex.dropdown,
+    selectors: {
+        '.dark &': {
+            backgroundColor: vars.colors.dark,
+        },
+    },
     '@media': {
         [mediaQuery.mobile]: {
             position: 'fixed',
             bottom: 0,
             height: 'auto',
             width: '100%',
-            zIndex: vars.zIndex.default,
-            padding: '12px 12px',
-            alignItems: 'center',
+            padding: '4px 0',
         },
     },
 })
@@ -58,59 +61,18 @@ export const navList = style({
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
+
     '@media': {
         [mediaQuery.mobile]: {
+            width: '100vw',
             flexDirection: 'row',
-            width: '100%',
-            gap: '50px',
-        },
-    },
-})
-
-export const sideFooter = style({
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '16px',
-    '@media': {
-        [mediaQuery.mobile]: {
-            display: 'none',
-        },
-    },
-})
-
-export const logoutButton = style({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '16px',
-    padding: '12px',
-    borderRadius: '4px',
-    color: vars.colors.black,
-    ':hover': {
-        backgroundColor: vars.colors.gray[50],
-    },
-    '@media': {
-        [mediaQuery.mobile]: {
-            flexDirection: 'column',
-            alignItems: 'center',
             justifyContent: 'center',
-            gap: '4px',
-            textAlign: 'center',
-            padding: '4px 0',
-            fontSize: vars.fontSizes.xsmall,
-            width: '100%',
+            gap: '8px',
         },
     },
 })
 
-export const themeControl = style({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '12px',
-})
-
-export const themeInfo = style({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
+export const icon = style({
+    width: '20px',
+    height: '20px',
 })

@@ -12,7 +12,11 @@ export const container = style({
     backgroundColor: vars.colors.white,
     borderRadius: '30px 30px 0 0',
     position: 'relative',
-
+    selectors: {
+        '.dark &': {
+            backgroundColor: vars.colors.dark,
+        },
+    },
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             width: '100%',
@@ -29,7 +33,6 @@ export const header = style({
 
 export const breadcrumbsWrapper = style({
     minWidth: '220px',
-
     '@media': {
         [`screen and (max-width: 1166px)`]: {
             display: 'none',
@@ -56,6 +59,13 @@ export const tableHeader = style({
     borderRight: `1px solid ${vars.colors.gray[200]}`,
     textAlign: 'center',
     color: vars.colors.black,
+    selectors: {
+        '.dark &': {
+            backgroundColor: vars.colors.darkGray,
+            color: vars.colors.darkText,
+            border: `1px solid ${vars.colors.darkGray}`,
+        },
+    },
 })
 
 export const tableCell = style({
@@ -64,6 +74,13 @@ export const tableCell = style({
     borderBottom: `1px solid ${vars.colors.gray[200]}`,
     borderRight: `1px solid ${vars.colors.gray[200]}`,
     color: vars.colors.black,
+    selectors: {
+        '.dark &': {
+            backgroundColor: vars.colors.darkBlue,
+            color: vars.colors.darkText,
+            border: `1px solid ${vars.colors.darkGray}`,
+        },
+    },
 })
 
 export const datePickerInputWrapper = style({
@@ -71,7 +88,6 @@ export const datePickerInputWrapper = style({
     minWidth: '390px',
     height: '48px',
     color: vars.colors.black,
-
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             width: '100%',
@@ -85,7 +101,6 @@ export const excelButtonWrapper = style({
     width: '90px',
     justifyContent: 'center',
     gap: '6px',
-
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
@@ -95,7 +110,6 @@ export const excelButtonWrapper = style({
 
 export const deleteButtonWrapper = style({
     width: '110px',
-
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',
@@ -123,7 +137,13 @@ export const linkButton = style({
     ':hover': {
         backgroundColor: vars.colors.gray[800],
     },
-
+    selectors: {
+        '.dark &': {
+            color: vars.colors.darkText,
+            backgroundColor: vars.colors.darkBlue,
+            border: `1px solid ${vars.colors.darkGray}`,
+        },
+    },
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             textAlign: 'center',
@@ -139,4 +159,9 @@ export const empty = style({
     display: 'flex',
     fontWeight: vars.fontWeights.bold,
     color: vars.colors.gray[700],
+    selectors: {
+        '.dark &': {
+            color: vars.colors.darkText,
+        },
+    },
 })

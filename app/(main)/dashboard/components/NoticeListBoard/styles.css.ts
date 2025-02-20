@@ -3,7 +3,6 @@ import { style } from '@vanilla-extract/css'
 import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
-    // height: 0,
     flex: 1,
     backgroundColor: vars.colors.white,
     padding: '24px',
@@ -11,7 +10,13 @@ export const container = style({
     display: 'flex',
     gap: '24px',
     flexDirection: 'column',
-
+    selectors: {
+        '.dark &': {
+            backgroundColor: vars.colors.darkBlue,
+            color: vars.colors.darkText,
+            border: `1px solid ${vars.colors.darkGray}`,
+        },
+    },
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             padding: '0px',
@@ -25,7 +30,11 @@ export const heading = style({
     color: vars.colors.black,
     fontSize: vars.fontSizes.large,
     fontWeight: vars.fontWeights.extraBold,
-
+    selectors: {
+        '.dark &': {
+            color: vars.colors.darkText,
+        },
+    },
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             fontSize: vars.fontSizes.mediumPlus,
@@ -77,6 +86,11 @@ export const contentsWrapper = style({
 export const title = style({
     fontWeight: vars.fontWeights.bold,
     color: vars.colors.black,
+    selectors: {
+        '.dark &': {
+            color: vars.colors.darkText,
+        },
+    },
 })
 
 export const description = style({
@@ -87,4 +101,9 @@ export const description = style({
     WebkitBoxOrient: 'vertical',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    selectors: {
+        '.dark &': {
+            color: vars.colors.darkDescription,
+        },
+    },
 })

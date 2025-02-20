@@ -2,10 +2,12 @@ import { RegisterVehicleModel, VehicleTypeModel } from '@/app/(main)/log/registe
 import { httpClient } from '@/lib/apis'
 import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { removeSpaces } from '@/lib/utils/string'
+import { Result } from '@/types/apis/common'
+import { VehicleDetail, VehicleLocation, VehicleStatusSummary } from '@/types/vehicle'
 
 export const vehicleService = {
     // 차량 정보 조회
-    getVehicleInfo: async (vehicleNumber: string) => {
+    getVehicleInfo: async (vehicleNumber: string): Promise<Result<VehicleLocation>> => {
         const response = await httpClient.get(`api/v1/vehicle/search`, {
             params: {
                 'vehicle-number': removeSpaces(vehicleNumber),
@@ -13,12 +15,21 @@ export const vehicleService = {
         })
 
         if (!response.data.isSuccess) {
-            if (response.data.errorCode === 1003) {
-                return { isValid: false, value: '등록되지 않은 차량입니다.' }
+            const { errorCode } = response.data
+            if (errorCode === 1003) {
+                return { isSuccess: false, error: '등록되지 않은 차량입니다' }
+            } else if (errorCode === 2000) {
+                return { isSuccess: false, error: '해당 차량의 위치를 찾을 수 없습니다' }
+            } else {
+                return { isSuccess: false, error: response.data.errorMessage }
             }
         }
 
         const { result } = response.data
+
+        if (!result) {
+            return { isSuccess: false, error: '차량 정보 조회에 실패했습니다' }
+        }
 
         const normalizeResult = {
             vehicleId: result.vehicleId,
@@ -29,21 +40,63 @@ export const vehicleService = {
             },
         }
 
-        return { isValid: true, value: normalizeResult }
+        return { isSuccess: true, data: normalizeResult }
+    },
+
+    // 차량 번호 자동완성 검색
+    getVehicleAutocomplete: async (vehicleNumber: string, signal?: AbortSignal) => {
+        if (!removeSpaces(vehicleNumber)) {
+            return { isValid: true, value: [] }
+        }
+
+        const response = await httpClient.get('/api/v1/vehicle/find', {
+            params: {
+                keyword: vehicleNumber,
+            },
+            signal,
+        })
+
+        if (!response.data.isSuccess) {
+            const { errorCode } = response.data
+            return { isValid: false, value: errorCode }
+        }
+
+        const { result } = response.data
+
+        return { isValid: true, value: result }
     },
 
     // 차량 상세정보 조회
-    getVehicleDetail: async (vehicleId: string) => {
-        const response = await httpClient.get(`api/v1/vehicle/${vehicleId}`)
+    getVehicleDetail: async (vehicleId: string): Promise<Result<VehicleDetail>> => {
+        if (!vehicleId) return { isSuccess: false, error: '차량 ID가 필요합니다' }
 
-        return response.data.result
+        const response = await httpClient.get(`api/v1/vehicle/${vehicleId}`)
+        if (!response.data.isSuccess) {
+            return { isSuccess: false, error: response.data.errorMessage }
+        }
+
+        const { result } = response.data
+
+        if (!result) {
+            return { isSuccess: false, error: '차량 상세정보 조회에 실패했습니다' }
+        }
+
+        return { isSuccess: true, data: result }
     },
 
     // 차량 운행 상태별 현황 조회 (전체/운행중/미운행)
-    getVehicleStatus: async () => {
+    getVehicleStatus: async (): Promise<Result<VehicleStatusSummary>> => {
         const response = await httpClient.get(`api/v1/vehicle/status`)
 
-        return response.data.result
+        if (!response.data.isSuccess) {
+            return { isSuccess: false, error: response.data.errorMessage as string }
+        }
+
+        if (!response.data.result) {
+            return { isSuccess: false, error: '차량현황 조회에 실패하였습니다' }
+        }
+
+        return { isSuccess: true, data: response.data.result }
     },
 
     // 차량번호로 운행 이력 기간 조회
@@ -71,6 +124,15 @@ export const vehicleService = {
         }
 
         return { isValid: true, value: vehicleOperationHistory }
+    },
+
+    // 차량 운행 여부 조회
+    getVehicleOperationStatus: async (vehicleId: string) => {
+        const response = await httpClient.get(`api/v1/vehicle/${vehicleId}/operaton-status`)
+        if (!response.data.isSuccess) {
+            throw response.data.errorMessage
+        }
+        return response.data
     },
 
     // 등록 가능한 차량 번호 조회
@@ -113,5 +175,39 @@ export const vehicleService = {
             }
         }
         return response.data
+    },
+
+    // 상태별 알람 조회
+    getInspectionStatus: async (status: string, page: number = 0, size: number = 8) => {
+        const response = await httpClient.get('/api/v1/alarm', {
+            params: {
+                page,
+                size,
+                status,
+            },
+        })
+
+        if (!response.data.isSuccess) {
+            return { isSuccess: false, error: response.data.errorMessage }
+        }
+
+        return { isSuccess: true, data: response.data.result.content }
+    },
+
+    // 점검현황 승인
+    patchInspectionStatus: async (alarmId: number) => {
+        const response = await httpClient.patch(`/api/v1/alarm/${alarmId}`)
+        return response.data
+    },
+
+    // 점검현황 통계
+    getInspectionStatusStats: async () => {
+        const response = await httpClient.get('/api/v1/alarm/status/stats')
+
+        if (!response.data.isSuccess) {
+            return { isSuccess: false, error: response.data.errorMessage }
+        }
+
+        return { isSuccess: true, data: response.data.result }
     },
 }

@@ -12,7 +12,13 @@ export const container = style({
     backgroundColor: vars.colors.white,
     borderRadius: '12px',
     fontWeight: vars.fontWeights.bold,
-
+    cursor: 'pointer',
+    selectors: {
+        '.dark &': {
+            backgroundColor: vars.colors.darkBlue,
+            border: `1px solid ${vars.colors.darkGray}`,
+        },
+    },
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'flex',
@@ -32,6 +38,7 @@ const iconWrapperBase = style({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
 })
 
 export const iconWrapper = styleVariants({
@@ -56,10 +63,10 @@ export const statusCard = recipe({
     },
     variants: {
         status: {
-            required: { backgroundColor: vars.colors.pink[200] },
-            scheduled: { backgroundColor: vars.colors.yellow[100] },
-            inProgress: { backgroundColor: vars.colors.green[100] },
-            completed: { backgroundColor: vars.colors.purple[100] },
+            REQUIRED: { backgroundColor: vars.colors.pink[200] },
+            SCHEDULED: { backgroundColor: vars.colors.yellow[100] },
+            INPROGRESS: { backgroundColor: vars.colors.green[100] },
+            COMPLETED: { backgroundColor: vars.colors.purple[100] },
         },
     },
 })
@@ -95,4 +102,20 @@ export const mobileStatusWrapper = style({
             justifyContent: 'center',
         },
     },
+})
+
+export const count = style({
+    fontSize: vars.fontSizes.small,
+    backgroundColor: vars.colors.gray[600],
+    color: vars.colors.white,
+    borderRadius: '50%',
+    width: '26px',
+    height: '26px',
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    position: 'absolute',
+    top: '-8px',
+    right: '-8px',
+    zIndex: vars.zIndex.default,
 })

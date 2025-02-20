@@ -19,6 +19,11 @@ export const vehicleNumber = style({
     fontSize: vars.fontSizes.mediumPlus,
 })
 
+export const skeletonWrapper = style({
+    marginRight: 'auto',
+    padding: '4px 0px',
+})
+
 export const controlGroup = style({
     display: 'flex',
     gap: '12px',
@@ -41,6 +46,11 @@ export const title = style({
     fontWeight: vars.fontWeights.extraBold,
     color: vars.colors.black,
     marginBottom: '10px',
+    selectors: {
+        '.dark &': {
+            color: vars.colors.darkText,
+        },
+    },
 })
 
 export const contents = style({
@@ -50,7 +60,12 @@ export const contents = style({
     textAlign: 'center',
     overflowY: 'auto',
     minHeight: 'calc(80vh - 100px)',
-
+    selectors: {
+        '.dark &': {
+            backgroundColor: vars.colors.dark,
+            border: `solid 1px ${vars.colors.darkGray}`,
+        },
+    },
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             padding: '20px',
