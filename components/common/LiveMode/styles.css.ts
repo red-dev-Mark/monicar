@@ -6,22 +6,18 @@ export const container = style({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '40px',
-    height: '40px',
+    width: '48px',
+    height: '48px',
     color: vars.colors.white,
     border: `solid 1px ${vars.colors.gray[200]}`,
     backgroundColor: vars.colors.white,
     borderRadius: '50%',
+    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.3)',
     transition: 'transform 0.3s ease',
     ':hover': {
         transform: 'scale(1.05)',
         opacity: 1,
     },
-})
-
-export const icon = style({
-    width: '24px',
-    height: '24px',
 })
 
 export const clicked = style({
