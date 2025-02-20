@@ -1,11 +1,12 @@
 'use client'
 
-import { Switch, Tooltip } from '@mantine/core'
+import { Tooltip } from '@mantine/core'
 import { useSearchParams } from 'next/navigation'
-import { ChangeEvent, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import MapSection from '@/app/(main)/route/components/MapSection'
 import RouteSearchSection from '@/app/(main)/route/components/RouteSearchSection'
+import LiveMode from '@/components/common/LiveMode'
 import { useLiveRoute } from '@/hooks/useLiveRoute'
 import { useQueryParams } from '@/hooks/useQueryParams'
 import { vars } from '@/styles/theme.css'
@@ -27,8 +28,8 @@ const Route = () => {
 
     const live = searchParams.get('live') === 'true'
 
-    const handleTrackingToggle = (event: ChangeEvent<HTMLInputElement>) => {
-        if (event.currentTarget.checked) {
+    const handleTrackingToggle = (isClicked: boolean) => {
+        if (isClicked) {
             addQuery('tracking', 'true')
         } else {
             removeQuery('tracking')
@@ -46,12 +47,7 @@ const Route = () => {
                     arrowPosition='side'
                 >
                     <div className={styles.trackingButton}>
-                        <Switch
-                            disabled={!live}
-                            onChange={handleTrackingToggle}
-                            size='lg'
-                            color={`${vars.colors.dark}`}
-                        />
+                        <LiveMode disabled={!live} onChange={handleTrackingToggle} />
                     </div>
                 </Tooltip>
             )}
@@ -61,6 +57,7 @@ const Route = () => {
                 startLiveTracking={startLiveTracking}
                 stopLiveTracking={stopLiveTracking}
             />
+
             <MapSection
                 mapRef={mapRef}
                 routes={routes}
