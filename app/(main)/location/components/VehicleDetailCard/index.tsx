@@ -1,6 +1,6 @@
 'use client'
 
-import { Skeleton, Tooltip } from '@mantine/core'
+import { Skeleton } from '@mantine/core'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -19,7 +19,6 @@ import { vehicleService } from '@/lib/apis'
 import { isWithinZoomThreshold } from '@/lib/utils/map'
 import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { getFormattedVehicleDetail } from '@/lib/utils/vehicle'
-import { vars } from '@/styles/theme.css'
 import { MapRefType } from '@/types/map'
 import { VehicleDetail } from '@/types/vehicle'
 
@@ -191,7 +190,15 @@ const VehicleDetailCard = ({ mapRef }: VehicleDetailCardProps) => {
                 </table>
             </div>
 
-            {isDriving ? (
+            <SquareButton
+                onClick={() => {
+                    router.push(`/route?vehicleNumber=${vehicleNumber}`)
+                }}
+            >
+                경로 보기
+            </SquareButton>
+
+            {/* {isDriving ? (
                 <Tooltip
                     color={vars.colors.gray[800]}
                     arrowSize={6}
@@ -211,7 +218,7 @@ const VehicleDetailCard = ({ mapRef }: VehicleDetailCardProps) => {
                 >
                     실시간 경로보기
                 </SquareButton>
-            )}
+            )} */}
 
             <Modal
                 isOpen={isModalOpen}

@@ -11,7 +11,7 @@ export const getFormattedVehicleDetail = (vehicleDetail: VehicleDetail) => {
     } = vehicleDetail
 
     return {
-        isDriving: status === 'ON',
+        isDriving: status === 'IN_OPERATION',
         vehicleNumber: addSpaceVehicleNumber(vehicleNumber),
         speed: formatWithCommas(speed),
         lastEngineOn: lastEngineOn ? formatISODateToDot(lastEngineOn) : '-',
