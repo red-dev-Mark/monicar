@@ -29,8 +29,6 @@ const Modal = ({
 }: ModalProps) => {
     const [mounted, setMounted] = useState(false)
 
-    console.log(mounted, isOpen, message)
-
     useEffect(() => {
         setMounted(true)
         return () => setMounted(false)

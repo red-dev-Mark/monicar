@@ -4,7 +4,7 @@ import { breakPoints, vars } from '@/styles/theme.css'
 
 export const container = style({
     width: '390px',
-    height: '436px',
+    height: '456px',
     position: 'absolute',
     bottom: 0,
     left: 0,
