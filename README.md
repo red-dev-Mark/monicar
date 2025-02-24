@@ -4,14 +4,14 @@
 
 <div align="center">
 
-🚘 [monicar](https://www.monicar.store/)
-
+🚘 [monicar](https://www.monicar.store/)<br>
 📒 [Storybook](https://develop--677a9e60af1c67b3c5b149e8.chromatic.com)
 
 |            | **아이디** | **비밀번호** |
 | ---------- | ---------- | ------------ |
-| **테스트** | test       | test         |
+| **테스트** | kernel486  | kernel486    |
 | **테스트** | happy77    | happy77      |
+| **테스트** | angry44    | angry44      |
 
 ### 소개
 
@@ -95,7 +95,7 @@
 </p>
 
 <p align="center">
-  🗺️ Tech Stack: Next.js,React, TypeScript, VanillaExtract, Zustand, Vercel, Kakao Map 
+  🗺️ Tech Stack: Next.js, React, TypeScript, VanillaExtract, Zustand
 </p>
 
 ### BE
@@ -112,42 +112,13 @@
 
 ## 팀원소개
 
-<table>
-  <tbody>
-    <tr>
-      <td align="center">
-        <a href="https://github.com/Suxxxxhyun">
-          <img src="img/수현.png" width="100px;" alt="팀장 프로필"/><br />
-          <sub><b>팀장(BE, Infra) : 박수현</b></sub>
-        </a>
-      </td>
-      <td align="center">
-        <a href="https://github.com/kbyunghoon">
-          <img src="img/병훈.png" width="100px;" alt="BE 팀원 프로필"/><br />
-          <sub><b>BE 팀원 : 김병훈</b></sub>
-        </a>
-      </td>
-      <td align="center">
-        <a href="https://github.com/tomatozil">
-          <img src="img/지윤.png" width="100px;" alt="BE 팀원 프로필"/><br />
-          <sub><b>BE 팀원 : 윤지윤</b></sub>
-        </a>
-      </td>
-      <td align="center">
-        <a href="https://github.com/red-dev-Mark">
-          <img src="img/혁준.png" width="100px;" alt="FE 팀원 프로필"/><br />
-          <sub><b>FE 팀원 : 권혁준</b></sub>
-        </a>
-      </td>
-      <td align="center">
-        <a href="https://github.com/nanafromjeju">
-          <img src="img/난아.png" width="100px;" alt="FE 팀원 프로필"/><br />
-          <sub><b>FE 팀원 : 김난아</b></sub>
-        </a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div align="center">
+
+| [<img src="https://avatars.githubusercontent.com/u/93717306?v=4" width="100" height="100"/>](https://github.com/Suxxxxhyun) | [<img src="https://avatars.githubusercontent.com/u/79817983?v=4" width="100" height="100"/>](https://github.com/kbyunghoon) | [<img src="https://avatars.githubusercontent.com/u/70049994?v=4" width="100" height="100"/>](https://github.com/tomatozil) | [<img src="https://avatars.githubusercontent.com/u/93127663?v=4" width="100" height="100"/>](https://github.com/red-dev-Mark) | [<img src="https://avatars.githubusercontent.com/u/170427166?s=400&u=3ff8a944ecc62e8224cd1a7372148d8e70fcc45f&v=4" width="100" height="100"/>](https://github.com/nanafromjeju) |
+| :-------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                       [👑 BE @박수현](https://github.com/Suxxxxhyun)                                        |                                         [BE @김병훈](https://github.com/kbyunghoon)                                         |                                         [BE @윤지윤](https://github.com/tomatozil)                                         |                                         [FE @권혁준](https://github.com/red-dev-Mark)                                         |                                                                  [FE @김난아](https://github.com/nanafromjeju)                                                                  |
+
+</div>
 
 ## BE Trouble Shooting
 
