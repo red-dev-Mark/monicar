@@ -1,15 +1,24 @@
 import { httpClient } from '@/lib/apis'
-import { SignInRequestModel } from '@/types/apis/auth'
 
 export const authService = {
     // 로그인 요청
     signIn: async (userId: string, password: string) => {
-        const signInData: SignInRequestModel = {
-            userId,
-            password,
-        }
+        // const formData: SignInRequestModel = {
+        //     userId,
+        //     password,
+        // }
 
-        const response = await httpClient.post(`api/v1/sign-in`, signInData)
+        const formData = new FormData()
+        formData.append('userId', userId)
+        formData.append('password', password)
+
+        const response = await httpClient.post(`api/v1/sign-in`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+
+        // const response = await httpClient.post(`api/v1/sign-in`, formData)
 
         if (!response.data.isSuccess) {
             switch (response.data.errorCode) {
