@@ -14,11 +14,6 @@ export const authService = {
             },
         })
 
-        const { nickname, email, companyName } = response.data.result
-        localStorage.setItem('email', email)
-        localStorage.setItem('company_name', companyName)
-        localStorage.setItem('nickname', nickname)
-
         if (!response.data.isSuccess) {
             switch (response.data.errorCode) {
                 case 9999:
@@ -30,11 +25,15 @@ export const authService = {
             }
         }
 
+        const { nickname, email, companyName } = response.data.result
+        localStorage.setItem('email', email)
+        localStorage.setItem('company_name', companyName)
+        localStorage.setItem('nickname', nickname)
         return { isSuccess: true }
     },
     // 로그아웃 요청
     signOut: async () => {
-        await httpClient.post(`logout`)
+        await httpClient.post(`api/v1/logout`)
     },
     // 현재 사용자 정보 조회
     getUserInfo: async () => {
