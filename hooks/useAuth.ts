@@ -2,7 +2,7 @@ import { authService } from '@/lib/apis'
 import { useAuthStore } from '@/stores/useAuthStore'
 
 export const useAuth = () => {
-    const { setAuthLoading, setAuthError, login, logout } = useAuthStore()
+    const { setAuthLoading, setAuthError, logout } = useAuthStore()
 
     const handleLogin = async (userId: string, password: string) => {
         setAuthLoading(true)
@@ -14,12 +14,12 @@ export const useAuth = () => {
                 return
             }
 
-            const { nickname, email, departmentName, companyName } = await authService.getUserInfo()
-            login({ email, nickname, companyName, departmentName })
+            // const { nickname, email, departmentName, companyName } = await authService.getUserInfo()
+            // login({ email, nickname, companyName, departmentName })
 
-            localStorage.setItem('email', email)
-            localStorage.setItem('company_name', companyName)
-            localStorage.setItem('nickname', nickname)
+            // localStorage.setItem('email', email)
+            // localStorage.setItem('company_name', companyName)
+            // localStorage.setItem('nickname', nickname)
         } catch (error) {
             console.error(error)
             setAuthError(error instanceof Error ? error.message : '로그인에 실패하였습니다')
