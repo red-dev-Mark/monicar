@@ -1,23 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export const middleware = async (request: NextRequest) => {
-    const sessionId = request.cookies.get('SESSION')?.value
+    const REMEMBER_COOKIE_NAME = process.env.NEXT_PUBLIC_REMEMBER_COOKIE || ''
+    const rememberCookie = request.cookies.get(REMEMBER_COOKIE_NAME)?.value
 
     const { pathname } = request.nextUrl
 
     console.log('----------------------------------------------')
-    console.log('세션 ID: ', sessionId)
+    console.log('Remember 쿠키: ', rememberCookie)
     console.log('----------------------------------------------')
 
     const protectedRoutes = ['/dashboard', '/log', '/route', '/location']
 
     if (protectedRoutes.some((route) => pathname.startsWith(route))) {
-        if (!sessionId) {
+        if (!rememberCookie) {
             return NextResponse.redirect(new URL('/signin', request.url))
         }
     }
 
-    if (pathname === '/signin' && sessionId) {
+    if (pathname === '/signin' && rememberCookie) {
         return NextResponse.redirect(new URL('/dashboard', request.url))
     }
 

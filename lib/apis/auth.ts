@@ -14,7 +14,7 @@ export const authService = {
             },
         })
 
-        const { nickname, email, companyName } = await authService.getUserInfo()
+        const { nickname, email, companyName } = response.data.result
         localStorage.setItem('email', email)
         localStorage.setItem('company_name', companyName)
         localStorage.setItem('nickname', nickname)
@@ -34,7 +34,7 @@ export const authService = {
     },
     // 로그아웃 요청
     signOut: async () => {
-        await httpClient.post(`api/v1/logout`)
+        await httpClient.post(`logout`)
     },
     // 현재 사용자 정보 조회
     getUserInfo: async () => {

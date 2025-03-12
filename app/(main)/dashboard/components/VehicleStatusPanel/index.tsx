@@ -18,7 +18,8 @@ const VehicleStatusPanel = () => {
             try {
                 startLoading()
                 const result = await vehicleService.getVehicleStatus()
-                if (!result.isSuccess) throw new Error(result.error)
+                // TODO: API 수정 필요 (현재 서버 내부 오류 발생)
+                // if (!result.isSuccess) throw new Error(result.error)
 
                 const vehicleStatus = result.data
                 setVehicleStatus(vehicleStatus)
