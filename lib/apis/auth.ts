@@ -1,15 +1,18 @@
 import { httpClient } from '@/lib/apis'
-import { SignInRequestModel } from '@/types/apis/auth'
 
 export const authService = {
     // 로그인 요청
     signIn: async (userId: string, password: string) => {
-        const signInData: SignInRequestModel = {
-            userId,
-            password,
-        }
+        const formData = new FormData()
+        formData.append('userId', userId)
+        formData.append('password', password)
+        formData.append('remember-me', 'true')
 
-        const response = await httpClient.post(`api/v1/sign-in`, signInData)
+        const response = await httpClient.post(`api/v1/sign-in`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
 
         if (!response.data.isSuccess) {
             switch (response.data.errorCode) {
@@ -22,6 +25,10 @@ export const authService = {
             }
         }
 
+        const { nickname, email, companyName } = response.data.result
+        localStorage.setItem('email', email)
+        localStorage.setItem('company_name', companyName)
+        localStorage.setItem('nickname', nickname)
         return { isSuccess: true }
     },
     // 로그아웃 요청

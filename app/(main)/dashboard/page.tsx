@@ -47,14 +47,18 @@ const DashboardPage = () => {
     }
 
     useEffect(() => {
-        const companyName = localStorage.getItem('company_name') || ''
-        const nickname = localStorage.getItem('nickname') || ''
+        const getUserInfo = async () => {
+            const companyName = localStorage.getItem('company_name') || ''
+            const nickname = localStorage.getItem('nickname') || ''
 
-        setUserInfo(() => ({
-            companyName,
-            nickname,
-        }))
-        setIsLoading(false)
+            setUserInfo(() => ({
+                companyName,
+                nickname,
+            }))
+            setIsLoading(false)
+        }
+
+        getUserInfo()
     }, [])
 
     // const isVehicleMarkerVisible = !!(isVehicleVisible && vehicleInfo)
