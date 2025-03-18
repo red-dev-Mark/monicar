@@ -1,6 +1,4 @@
-## monicar
-
-<div align="center">
+## 실시간 차량 관제 서비스 monicar
 
 ![Image](https://github.com/user-attachments/assets/1f23c32b-6988-4c50-bc9a-707b1f4f2449)
 
@@ -8,62 +6,54 @@
 📒 [Storybook](https://develop--677a9e60af1c67b3c5b149e8.chromatic.com)<br>
 💫 [Portfolio](https://www.notion.so/monicar-1a706eec94e680708960f83d128b7523)
 
+<div align="center">
+
 |            | **아이디** | **비밀번호** |
 | ---------- | ---------- | ------------ |
 | **테스트** | test       | test         |
 | **테스트** | happy77    | happy77      |
 | **테스트** | angry44    | angry44      |
 
+</div>
+
 <br>
 
 > monicar는 **대규모 카쉐어링 관제를 위한 실시간 모니터링 서비스**입니다. <br> 15,000대 이상의 차량에서 발생하는 시동, GPS, 운행 데이터를 수집하고 분석하여 효율적인 차량 관리 솔루션을 제공합니다.
-> <br>
+
+<br>
 
 ## 📊 주요 기능
 
 <br>
 
-<div align="center">
-
 ![Image](https://github.com/user-attachments/assets/92738813-9be8-4b12-b14d-b1592f0f7f1e)
-
-</div>
 
 ### 대시보드
 
 - 직관적인 UI/UX로 알림 현황과 공지사항을 한눈에 파악<br>
 - SSE(Server-Sent Events)를 활용한 실시간 차량 점검 알림 시스템
 
-<div align="center">
 <br>
 
 ![Image](https://github.com/user-attachments/assets/3570566d-a223-4f3f-8578-0b2ce9b499d8)
-
-</div>
 
 ### 위치 조회
 
 - 지도 줌 레벨에 따른 차량 클러스터링 시스템<br>
 - 개별 차량의 실시간 위치 추적
 
-<div align="center">
 <br>
 
 ![Image](https://github.com/user-attachments/assets/4e9bd3b3-ae35-4f76-869b-a6ffaeab52d3)
-
-</div>
 
 ### 경로 조회
 
 - 자동 위치 추적을 통한 실시간 차량 모니터링<br>
 - 선택 기간의 차량 이동 정보 표시
 
-<div align="center">
 <br>
 
 ![Image](https://github.com/user-attachments/assets/0d8fa13b-7249-49b4-b6ab-eb97a6d5f96f)
-
-</div>
 
 ### 운행 기록
 
