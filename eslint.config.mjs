@@ -132,6 +132,8 @@ const eslintConfig = [
 
             // TanStack Query 규칙
             '@tanstack/query/exhaustive-deps': 'error',
+            '@tanstack/query/stable-query-client': 'error',
+            '@tanstack/query/no-rest-destructuring': 'warn',
         },
     },
 ]

@@ -1,5 +1,6 @@
 import '@/styles'
 import { ColorSchemeScript, MantineProvider, createTheme, mantineHtmlProps } from '@mantine/core'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import type { Metadata } from 'next'
 
@@ -15,6 +16,8 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         cursorType: 'pointer',
     })
 
+    const queryClient = new QueryClient()
+
     return (
         <html lang='ko' className='trancy-ko' {...mantineHtmlProps}>
             <head>
@@ -22,8 +25,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             </head>
             <body>
                 <MantineProvider theme={theme}>
-                    {children}
-                    <div id='modal-root'></div>
+                    <QueryClientProvider client={queryClient}>
+                        {children}
+                        <div id='modal-root'></div>
+                    </QueryClientProvider>
                 </MantineProvider>
             </body>
         </html>
