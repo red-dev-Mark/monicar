@@ -5,7 +5,7 @@ import { removeSpaces } from '@/lib/utils/string'
 import { Result } from '@/types/apis/common'
 import { VehicleDetail, VehicleLocation, VehicleStatus } from '@/types/vehicle'
 
-export const vehicleService = {
+export const vehicleAPI = {
     // 차량 정보 조회
     getVehicleInfo: async (vehicleNumber: string): Promise<Result<VehicleLocation>> => {
         const response = await httpClient.get(`api/v1/vehicle/search`, {

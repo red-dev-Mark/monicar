@@ -1,4 +1,4 @@
-import { vehicleService } from '@/lib/apis'
+import { vehicleAPI } from '@/lib/apis'
 import { validateVehicleNumber } from '@/lib/utils/validation'
 import { Result } from '@/types/apis/common'
 import { Vehicle, VehicleLocation } from '@/types/vehicle'
@@ -10,7 +10,7 @@ export const getVehicleOperationInfo = async (vehicleNumber: string): Promise<Re
     }
 
     try {
-        const response = await vehicleService.getVehicleOperationPeriod(vehicleNumber)
+        const response = await vehicleAPI.getVehicleOperationPeriod(vehicleNumber)
         if (!response.isValid) {
             return { isSuccess: false, error: response.value }
         }
@@ -40,7 +40,7 @@ export const getVehicleInfo = async (vehicleNumber: string): Promise<Result<Vehi
         return { isSuccess: false, error: validation.message! }
     }
 
-    const result = await vehicleService.getVehicleInfo(vehicleNumber)
+    const result = await vehicleAPI.getVehicleInfo(vehicleNumber)
     if (!result.isSuccess) {
         return { isSuccess: false, error: result.error as string }
     }

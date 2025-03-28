@@ -16,7 +16,7 @@ import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import DetailSkeleton from '@/components/common/Skeleton/DetailSkeleton'
 import { API_ENDPOINTS } from '@/constants/api'
-import { vehicleService } from '@/lib/apis'
+import { vehicleAPI } from '@/lib/apis'
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
 import { CalendarIcon } from '@/public/icons'
 import { breakPoints } from '@/styles/theme.css'
@@ -74,7 +74,7 @@ const DetailPage = () => {
 
     const handleDeleteVehicle = async (id: number) => {
         try {
-            await vehicleService.deleteVehicle(id)
+            await vehicleAPI.deleteVehicle(id)
             router.replace('/log')
         } catch (error) {
             console.error('차량 삭제 실패', error)

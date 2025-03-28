@@ -15,7 +15,7 @@ import { useLoading } from '@/hooks/useLoading'
 import { useMapStatus } from '@/hooks/useMapStatus'
 import { useModal } from '@/hooks/useModal'
 import { useQueryParams } from '@/hooks/useQueryParams'
-import { vehicleService } from '@/lib/apis'
+import { vehicleAPI } from '@/lib/apis'
 import { isWithinZoomThreshold } from '@/lib/utils/map'
 import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { getFormattedVehicleDetail } from '@/lib/utils/vehicle'
@@ -50,12 +50,12 @@ const VehicleDetailCard = ({ mapRef }: VehicleDetailCardProps) => {
 
             try {
                 startLoading()
-                const vehicleLocation = await vehicleService.getVehicleInfo(vehicleNumber)
+                const vehicleLocation = await vehicleAPI.getVehicleInfo(vehicleNumber)
                 if (!vehicleLocation.data) throw new Error(vehicleLocation.error || '알 수 없는 오류가 발생했습니다')
 
                 const { vehicleId } = vehicleLocation.data
 
-                const result = await vehicleService.getVehicleDetail(vehicleId)
+                const result = await vehicleAPI.getVehicleDetail(vehicleId)
                 if (!result.data) throw new Error(vehicleLocation.error || '알 수 없는 오류가 발생했습니다')
 
                 setVehicleDetail(result.data)

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import VehicleStatusItem from '@/app/(main)/dashboard/components/VehicleStatusItem'
 import { useLoading } from '@/hooks/useLoading'
-import { vehicleService } from '@/lib/apis'
+import { vehicleAPI } from '@/lib/apis'
 import { vars } from '@/styles/theme.css'
 import { VehicleStatus } from '@/types/vehicle'
 
@@ -17,7 +17,7 @@ const VehicleStatusPanel = () => {
         const getVehicleStatus = async () => {
             try {
                 startLoading()
-                const result = await vehicleService.getVehicleStatus()
+                const result = await vehicleAPI.getVehicleStatus()
                 if (!result.isSuccess) throw new Error(result.error)
 
                 const vehicleStatus = result.data
