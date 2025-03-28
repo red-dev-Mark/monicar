@@ -20,6 +20,7 @@ const VehicleStatusPanel = () => {
     } = useQuery({
         queryKey: ['status'],
         queryFn: async () => await vehicleService.getVehicleStatus(),
+        // staleTime: 0,
     })
 
     // useEffect(() => {
