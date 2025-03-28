@@ -9,7 +9,6 @@ export const useVehicleStatus = () => {
     return useQuery<Result<VehicleStatus>, Error, VehicleStatus>({
         queryKey: queryKeys.vehicle.status,
         queryFn: vehicleAPI.getVehicleStatus,
-        placeholderData: { isSuccess: true, data: { allVehicles: 0, engineOnVehicles: 0, engineOffVehicles: 0 } },
         select: (result) => {
             if (!result.isSuccess) {
                 throw new Error(result.error)

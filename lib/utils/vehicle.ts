@@ -1,7 +1,7 @@
 import { formatISODateToDot } from '@/lib/utils/date'
 import { formatMinuteToHour, formatWithCommas } from '@/lib/utils/format'
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
-import { VehicleDetail } from '@/types/vehicle'
+import { VehicleDetail, VehicleStatus } from '@/types/vehicle'
 
 export const getFormattedVehicleDetail = (vehicleDetail: VehicleDetail) => {
     const {
@@ -21,3 +21,6 @@ export const getFormattedVehicleDetail = (vehicleDetail: VehicleDetail) => {
         lastUpdated: lastUpdated ? formatISODateToDot(lastUpdated) : '-',
     }
 }
+
+export const getVehicleCount = (isLoading: boolean, vehicleStatus: VehicleStatus | undefined) =>
+    !isLoading && vehicleStatus ? vehicleStatus : { allVehicles: 0, engineOnVehicles: 0, engineOffVehicles: 0 }
