@@ -3,7 +3,7 @@ import { httpClient } from '@/lib/apis'
 import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { removeSpaces } from '@/lib/utils/string'
 import { Result } from '@/types/apis/common'
-import { VehicleDetail, VehicleLocation, VehicleStatusSummary } from '@/types/vehicle'
+import { VehicleDetail, VehicleLocation, VehicleStatus } from '@/types/vehicle'
 
 export const vehicleService = {
     // 차량 정보 조회
@@ -85,11 +85,11 @@ export const vehicleService = {
     },
 
     // 차량 운행 상태별 현황 조회 (전체/운행중/미운행)
-    getVehicleStatus: async (): Promise<Result<VehicleStatusSummary>> => {
+    getVehicleStatus: async (): Promise<Result<VehicleStatus>> => {
         const response = await httpClient.get(`api/v1/vehicle/status`)
 
         if (!response.data.isSuccess) {
-            return { isSuccess: false, error: response.data.errorMessage as string }
+            return { isSuccess: false, error: response.data.errorMessag }
         }
 
         if (!response.data.result) {

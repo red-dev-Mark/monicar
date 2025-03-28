@@ -46,7 +46,7 @@ export interface VehicleDetail {
 }
 
 // 차량 운행 상태별 현황 요약 정보
-export interface VehicleStatusSummary {
+export interface VehicleStatus {
     allVehicles: number
     engineOnVehicles: number
     engineOffVehicles: number
