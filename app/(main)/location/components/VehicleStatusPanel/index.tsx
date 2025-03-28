@@ -9,6 +9,7 @@ const VehicleStatusPanel = () => {
 
     if (isLoading) return
     if (error) return
+    if (!vehicleStatus) return
 
     return (
         <div className={styles.container}>
