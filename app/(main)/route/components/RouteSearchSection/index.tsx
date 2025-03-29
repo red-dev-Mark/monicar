@@ -13,7 +13,7 @@ import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import { useModal } from '@/hooks/useModal'
 import { useQueryParams } from '@/hooks/useQueryParams'
-import { vehicleService } from '@/lib/apis'
+import { vehicleAPI } from '@/lib/apis'
 import { getVehicleOperationInfo } from '@/lib/services/vehicle'
 import { hasValidDateRange } from '@/lib/utils/validation'
 import { vars } from '@/styles/theme.css'
@@ -64,7 +64,7 @@ const RouteSearchSection = ({
                 const { vehicleId } = result.data
                 if (!vehicleId) throw new Error('해당 차량을 찾을 수 없습니다')
 
-                const operationResult = await vehicleService.getVehicleOperationStatus(vehicleId)
+                const operationResult = await vehicleAPI.getVehicleOperationStatus(vehicleId)
                 setIsVehicleId(vehicleId)
                 setIsOperation(operationResult.result)
             } catch (error) {

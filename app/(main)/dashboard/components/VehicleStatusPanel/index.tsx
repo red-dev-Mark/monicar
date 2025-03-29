@@ -1,43 +1,18 @@
-import { useEffect, useState } from 'react'
-
 import VehicleStatusItem from '@/app/(main)/dashboard/components/VehicleStatusItem'
-import { useLoading } from '@/hooks/useLoading'
-import { vehicleService } from '@/lib/apis'
+import { useVehicleStatus } from '@/hooks/queries/useVehicle'
+import { getVehicleCount } from '@/lib/utils/vehicle'
 import { vars } from '@/styles/theme.css'
-import { VehicleStatusSummary } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
 // TODO: location VehicleStatusPanel 컴포넌트와 통합해보기
 const VehicleStatusPanel = () => {
-    const [vehicleStatus, setVehicleStatus] = useState<VehicleStatusSummary>()
-    const [isLoading, startLoading, finishLoading] = useLoading()
+    const { data: vehicleStatus, error, isLoading } = useVehicleStatus()
 
-    useEffect(() => {
-        const getVehicleStatus = async () => {
-            try {
-                startLoading()
-                const result = await vehicleService.getVehicleStatus()
-                if (!result.isSuccess) throw new Error(result.error)
+    const { allVehicles, engineOnVehicles, engineOffVehicles } = getVehicleCount(isLoading, vehicleStatus)
 
-                const vehicleStatus = result.data
-                setVehicleStatus(vehicleStatus)
-            } catch (error) {
-                if (error instanceof Error) {
-                    console.error(error.message)
-                }
-            } finally {
-                finishLoading()
-            }
-        }
-        getVehicleStatus()
-    }, [])
-
-    const getVehicleCount = (value: number | undefined) => (!isLoading && value ? value : 0)
-
-    const allVehicles = getVehicleCount(vehicleStatus?.allVehicles)
-    const engineOnVehicles = getVehicleCount(vehicleStatus?.engineOnVehicles)
-    const engineOffVehicles = getVehicleCount(vehicleStatus?.engineOffVehicles)
+    if (isLoading) return
+    if (error) return
 
     return (
         <div className={styles.container}>

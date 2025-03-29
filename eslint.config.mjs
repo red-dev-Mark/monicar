@@ -1,6 +1,7 @@
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { FlatCompat } from '@eslint/eslintrc'
+import pluginQuery from '@tanstack/eslint-plugin-query'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -26,6 +27,9 @@ const eslintConfig = [
                 project: './tsconfig.json',
                 tsconfigRootDir: __dirname,
             },
+        },
+        plugins: {
+            '@tanstack/query': pluginQuery,
         },
         rules: {
             // 네이밍 규칙
@@ -125,6 +129,11 @@ const eslintConfig = [
             'react-hooks/rules-of-hooks': 'error',
             'react-hooks/exhaustive-deps': 'warn',
             'react-hooks/rules-of-hooks': 'off',
+
+            // TanStack Query 규칙
+            '@tanstack/query/exhaustive-deps': 'error',
+            '@tanstack/query/stable-query-client': 'error',
+            '@tanstack/query/no-rest-destructuring': 'warn',
         },
     },
 ]

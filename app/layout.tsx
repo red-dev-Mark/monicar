@@ -1,6 +1,8 @@
 import '@/styles'
 import { ColorSchemeScript, MantineProvider, createTheme, mantineHtmlProps } from '@mantine/core'
 
+import TanStackProvider from '@/providers/TanStackProvider'
+
 import type { Metadata } from 'next'
 
 import '@mantine/core/styles.css'
@@ -21,10 +23,12 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
                 <ColorSchemeScript />
             </head>
             <body>
-                <MantineProvider theme={theme}>
-                    {children}
-                    <div id='modal-root'></div>
-                </MantineProvider>
+                <TanStackProvider>
+                    <MantineProvider theme={theme}>
+                        {children}
+                        <div id='modal-root'></div>
+                    </MantineProvider>
+                </TanStackProvider>
             </body>
         </html>
     )

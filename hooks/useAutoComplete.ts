@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { vehicleService } from '@/lib/apis'
+import { vehicleAPI } from '@/lib/apis'
 import { Vehicle } from '@/types/vehicle'
 
 export const useAutoComplete = (inputValue: string) => {
@@ -19,7 +19,7 @@ export const useAutoComplete = (inputValue: string) => {
             }
 
             try {
-                const response = await vehicleService.getVehicleAutocomplete(inputValue, abortController.signal)
+                const response = await vehicleAPI.getVehicleAutocomplete(inputValue, abortController.signal)
                 setIsAutoCompleteVisible(true)
                 setAutoCompleteList(response.value.length === 0 ? [] : response.value)
             } catch (error) {

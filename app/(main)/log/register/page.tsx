@@ -15,7 +15,7 @@ import Message from '@/components/common/Message'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
 import { useModal } from '@/hooks/useModal'
-import { vehicleService } from '@/lib/apis'
+import { vehicleAPI } from '@/lib/apis'
 import { removeSpaces } from '@/lib/utils/string'
 import { isValidVehicleNumberFormat, validateDrivingDistance } from '@/lib/utils/validation'
 import { CalendarIcon } from '@/public/icons'
@@ -47,7 +47,7 @@ const RegisterPage = () => {
         const getVehicleType = async () => {
             try {
                 setIsLoading(true)
-                const vehicleType = await vehicleService.getAvailableVehicleTypes()
+                const vehicleType = await vehicleAPI.getAvailableVehicleTypes()
                 setVehicleType(vehicleType)
             } catch (error) {
                 console.error(error)
@@ -61,7 +61,7 @@ const RegisterPage = () => {
 
     const checkVehicleNumber = async () => {
         try {
-            await vehicleService.getAvailableVehicleNumber(vehicleNumber)
+            await vehicleAPI.getAvailableVehicleNumber(vehicleNumber)
             setShowSuccessMessage(true)
             setShowErrorMessage('')
         } catch (error) {
@@ -116,7 +116,7 @@ const RegisterPage = () => {
 
         setIsSubmitting(true)
 
-        const response = await vehicleService.registerVehicle({
+        const response = await vehicleAPI.registerVehicle({
             vehicleNumber,
             vehicleTypeId,
             deliveryDate,

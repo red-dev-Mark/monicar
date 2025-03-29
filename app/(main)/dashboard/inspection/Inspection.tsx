@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 import Breadcrumbs from '@/components/common/Breadcrumbs'
 import { useQueryParams } from '@/hooks/useQueryParams'
-import { vehicleService } from '@/lib/apis/vehicle'
+import { vehicleAPI } from '@/lib/apis/vehicle'
 import { StatusType } from '@/types/vehicle'
 
 import InspectionCard from './components/InspectionCard'
@@ -31,7 +31,7 @@ const Inspection = () => {
 
     const patchInspectionStatusData = async (alarmId: number) => {
         try {
-            await vehicleService.patchInspectionStatus(alarmId)
+            await vehicleAPI.patchInspectionStatus(alarmId)
             window.location.reload()
         } catch (error) {
             console.error('이건 patch 에러', error)
