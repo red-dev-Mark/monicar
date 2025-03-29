@@ -1,6 +1,6 @@
 import { httpClient } from '@/lib/apis'
 
-export const noticeService = {
+export const noticeAPI = {
     // 공지사항 목록 조회
     getNoticeList: async () => {
         const response = await httpClient.get(`api/v1/notice`)

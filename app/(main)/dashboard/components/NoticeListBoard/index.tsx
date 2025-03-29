@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 import NoticeSkeleton from '@/components/common/Skeleton/NoticeSkeleton'
-import { noticeService } from '@/lib/apis'
+import { noticeAPI } from '@/lib/apis'
 import { Notice } from '@/types/notice'
 
 import * as styles from './styles.css'
@@ -17,7 +17,7 @@ const NoticeListBoard = () => {
             try {
                 setIsLoading(true)
 
-                const noticeList = await noticeService.getNoticeList()
+                const noticeList = await noticeAPI.getNoticeList()
 
                 setNoticeList(noticeList)
             } catch (error) {
