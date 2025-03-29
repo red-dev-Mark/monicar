@@ -10,7 +10,7 @@ const NoticeListBoard = () => {
     const SKELETONS_COUNT = 5
     const { data: noticeList, isLoading, error } = useNoticeList()
 
-    const Skeletons = () => (
+    const NoticeSkeletons = () => (
         <>
             {Array.from({ length: SKELETONS_COUNT }).map((_, index) => (
                 <NoticeSkeleton key={index} />
@@ -25,7 +25,7 @@ const NoticeListBoard = () => {
             <h2 className={styles.heading}>공지사항</h2>
 
             {isLoading ? (
-                <Skeletons />
+                <NoticeSkeletons />
             ) : (
                 <div className={styles.noticeList}>
                     {noticeList?.map((notice) => (
