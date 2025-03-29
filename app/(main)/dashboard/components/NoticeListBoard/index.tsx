@@ -1,50 +1,34 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
 
 import NoticeSkeleton from '@/components/common/Skeleton/NoticeSkeleton'
-import { noticeAPI } from '@/lib/apis'
-import { Notice } from '@/types/notice'
+import { useNoticeList } from '@/hooks/queries/useNotice'
 
 import * as styles from './styles.css'
 
 const NoticeListBoard = () => {
-    const [noticeList, setNoticeList] = useState<Notice[]>([])
-    const [isLoading, setIsLoading] = useState(true)
+    const SKELETONS_COUNT = 5
+    const { data: noticeList, isLoading, error } = useNoticeList()
 
-    useEffect(() => {
-        const getNoticeListData = async () => {
-            try {
-                setIsLoading(true)
+    const Skeletons = () => (
+        <>
+            {Array.from({ length: SKELETONS_COUNT }).map((_, index) => (
+                <NoticeSkeleton key={index} />
+            ))}
+        </>
+    )
 
-                const noticeList = await noticeAPI.getNoticeList()
-
-                setNoticeList(noticeList)
-            } catch (error) {
-                console.error(error)
-            } finally {
-                setIsLoading(false)
-            }
-        }
-
-        getNoticeListData()
-    }, [])
+    if (error) return
 
     return (
         <div className={styles.container}>
             <h2 className={styles.heading}>공지사항</h2>
 
             {isLoading ? (
-                <>
-                    <NoticeSkeleton />
-                    <NoticeSkeleton />
-                    <NoticeSkeleton />
-                    <NoticeSkeleton />
-                    <NoticeSkeleton />
-                </>
+                <Skeletons />
             ) : (
                 <div className={styles.noticeList}>
-                    {noticeList.map((notice) => (
+                    {noticeList?.map((notice) => (
                         <Link key={notice.id} href={`/dashboard/notice/${notice.id}`} className={styles.noticeItem}>
                             <div className={styles.imageWrapper}>
                                 <Image

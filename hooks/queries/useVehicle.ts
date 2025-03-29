@@ -10,13 +10,13 @@ export const useVehicleStatus = () => {
         queryKey: queryKeys.vehicle.status,
         queryFn: vehicleAPI.getVehicleStatus,
         select: (result) => {
-            if (!result.isSuccess) {
+            if (!result.isSuccess || !result.data) {
                 throw new Error(result.error)
             }
 
-            if (!result.data) {
-                return { allVehicles: 0, engineOnVehicles: 0, engineOffVehicles: 0 }
-            }
+            // if (!result.data) {
+            //     return { allVehicles: 0, engineOnVehicles: 0, engineOffVehicles: 0 }
+            // }
 
             return result.data
         },
