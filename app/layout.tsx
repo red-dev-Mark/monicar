@@ -1,7 +1,7 @@
 import '@/styles'
 import { ColorSchemeScript, MantineProvider, createTheme, mantineHtmlProps } from '@mantine/core'
 
-import TanStackProvider from '@/lib/TanStackProvider'
+import TanStackProvider from '@/providers/TanStackProvider'
 
 import type { Metadata } from 'next'
 
