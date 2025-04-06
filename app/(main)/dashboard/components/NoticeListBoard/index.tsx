@@ -12,7 +12,7 @@ const NoticeListBoard = () => {
 
     const NoticeSkeletons = () => (
         <>
-            {Array.from({ length: SKELETONS_COUNT }).map((_, index) => (
+            {Array.from({ length: SKELETONS_COUNT }, (_, index) => (
                 <NoticeSkeleton key={index} />
             ))}
         </>

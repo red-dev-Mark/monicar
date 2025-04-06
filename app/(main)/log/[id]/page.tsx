@@ -2,6 +2,7 @@
 
 import { DatePickerInput } from '@mantine/dates'
 import { useMediaQuery } from '@mantine/hooks'
+import { useMutation } from '@tanstack/react-query'
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
 import { Suspense } from 'react'
@@ -72,10 +73,21 @@ const DetailPage = () => {
         showConfirmMessage('선택한 차량을 삭제하시겠습니까?')
     }
 
+    const mutation = useMutation({
+        mutationFn: (id: number) => vehicleAPI.deleteVehicle(Number(id)),
+        onSuccess: () => {
+            console.log('mutation success!!!!!!!!!!')
+        },
+    })
+
     const handleDeleteVehicle = async (id: number) => {
         try {
-            await vehicleAPI.deleteVehicle(id)
-            router.replace('/log')
+            mutation.mutate(id, {
+                onSuccess: () => {
+                    console.log('mutate success!!!!!!!!!!')
+                    router.replace('/log')
+                },
+            })
         } catch (error) {
             console.error('차량 삭제 실패', error)
             showAlertMessage('차량 삭제에 실패했습니다')

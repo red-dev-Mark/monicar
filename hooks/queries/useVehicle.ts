@@ -14,10 +14,6 @@ export const useVehicleStatus = () => {
                 throw new Error(result.error)
             }
 
-            // if (!result.data) {
-            //     return { allVehicles: 0, engineOnVehicles: 0, engineOffVehicles: 0 }
-            // }
-
             return result.data
         },
         staleTime: minutesToStaleTime(10),
