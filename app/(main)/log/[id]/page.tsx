@@ -6,7 +6,6 @@ import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
 import { Suspense } from 'react'
 
-import Breadcrumbs from '@/components/common/Breadcrumbs'
 import ExcelButton from '@/components/common/Button/ExcelButton'
 import LinkButton from '@/components/common/Button/LinkButton'
 import { RoundButton } from '@/components/common/Button/RoundButton'
@@ -23,6 +22,7 @@ import { breakPoints } from '@/styles/theme.css'
 import '@mantine/dates/styles.css'
 import 'dayjs/locale/ko'
 
+import Header from './components/Header'
 import { useDetailData } from './hooks/useDetailData'
 import { useDetailModal } from './hooks/useDetailModal'
 import { useSearchDate } from './hooks/useSearchDate'
@@ -95,15 +95,7 @@ const DetailPage = () => {
         return (
             <div className={styles.container}>
                 <div className={styles.header}>
-                    <div className={styles.breadcrumbsWrapper}>
-                        <Breadcrumbs
-                            breadcrumbsData={[
-                                { title: '운행기록', isActive: false },
-                                { title: '운행일지', isActive: true },
-                            ]}
-                        />
-                    </div>
-
+                    <Header />
                     <ControlLayout
                         control={
                             <div className={styles.datePickerInputWrapper}>
@@ -264,14 +256,7 @@ const DetailPage = () => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <div className={styles.breadcrumbsWrapper}>
-                    <Breadcrumbs
-                        breadcrumbsData={[
-                            { title: '운행기록', isActive: false },
-                            { title: '운행일지', isActive: true },
-                        ]}
-                    />
-                </div>
+                <Header />
 
                 <ControlLayout
                     control={
@@ -318,6 +303,7 @@ const DetailPage = () => {
                     }
                 />
             </div>
+
             <Modal
                 isOpen={isConfirmModalOpen}
                 message={confirmModalMessage as ModalMessageType}
@@ -331,6 +317,7 @@ const DetailPage = () => {
                 variant={{ variant: 'alert', confirmButton: '확인' }}
                 onClose={closeAlertModal}
             />
+
             <div className={styles.tableWrapper}>
                 <table>
                     <tbody>
