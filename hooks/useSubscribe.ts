@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 
-import { API_URL } from '@/constants/api'
+// import { API_URL } from '@/constants/api'
 import { AlarmResponse } from '@/types/vehicle'
+
 export const useSubscribe = () => {
     const [alarm, setAlarm] = useState<AlarmResponse[]>([])
     const [error, setError] = useState<Error | null>(null)
 
     useEffect(() => {
-        const url = `${API_URL}/api/v1/alarm/subscribe`.replace('//api', '/api')
+        const url = `https://api.monicar.kr/api/v1/alarm/subscribe`
         const eventSource = new EventSource(url, { withCredentials: true })
 
         const addAlarm = (event: MessageEvent) => {
