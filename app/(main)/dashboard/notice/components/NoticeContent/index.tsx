@@ -1,13 +1,13 @@
 import Image from 'next/image'
 
-import { noticeService } from '@/lib/apis'
+import { noticeAPI } from '@/lib/apis'
 import { formatISODateToKorean } from '@/lib/utils/date'
 import { Notice } from '@/types/notice'
 
 import * as styles from './styles.css'
 
 const NoticeContent = async ({ noticeId }: { noticeId: string }) => {
-    const noticeItem: Notice = await noticeService.getNoticeDetail(noticeId)
+    const noticeItem: Notice = await noticeAPI.getNoticeDetail(noticeId)
     const createdDate = noticeItem?.createdAt ? formatISODateToKorean(noticeItem.createdAt, false) : ''
 
     if (!noticeItem) return
