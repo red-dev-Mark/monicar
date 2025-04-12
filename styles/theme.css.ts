@@ -98,11 +98,11 @@ export const zIndex = {
     overlay: '40',
     dropdown: '30',
     header: '20',
-    four: '4',
-    third: '3',
-    second: '2',
+    content: '4', // 중요 콘텐츠
+    component: '3', // 일반 컴포넌트
+    base: '2', // 기본 요소
     default: '1',
-    below: '-1',
+    background: '-1',
 }
 
 export const opacity = {
