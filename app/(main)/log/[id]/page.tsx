@@ -98,6 +98,7 @@ const DetailPage = () => {
             <div className={styles.container}>
                 <div className={styles.header}>
                     <Header />
+
                     <ControlLayout
                         control={
                             <div className={styles.datePickerInputWrapper}>
@@ -131,7 +132,19 @@ const DetailPage = () => {
                                 <div className={styles.deleteButtonWrapper}>
                                     <RoundButton color='primary' size='small' onClick={handleDeleteButtonClick}>
                                         <div className={styles.deleteButton}>
-                                            <Image src='/icons/white-trash-icon.svg' alt='add' width={18} height={18} />
+                                            <Image
+                                                src='/icons/white-trash-icon.svg'
+                                                alt='삭제 아이콘'
+                                                width={18}
+                                                height={18}
+                                                style={{
+                                                    width: 'auto',
+                                                    height: 'auto',
+                                                    display: 'inline-block',
+                                                    verticalAlign: 'middle',
+                                                }}
+                                                aria-hidden='true'
+                                            />
                                             차량삭제
                                         </div>
                                     </RoundButton>
@@ -187,7 +200,19 @@ const DetailPage = () => {
                             <div className={styles.deleteButtonWrapper}>
                                 <RoundButton color='primary' size='small' onClick={handleDeleteButtonClick}>
                                     <div className={styles.deleteButton}>
-                                        <Image src='/icons/white-trash-icon.svg' alt='add' width={18} height={18} />
+                                        <Image
+                                            src='/icons/white-trash-icon.svg'
+                                            alt='삭제 아이콘'
+                                            width={18}
+                                            height={18}
+                                            style={{
+                                                width: 'auto',
+                                                height: 'auto',
+                                                display: 'inline-block',
+                                                verticalAlign: 'middle',
+                                            }}
+                                            aria-hidden='true'
+                                        />
                                         차량삭제
                                     </div>
                                 </RoundButton>
