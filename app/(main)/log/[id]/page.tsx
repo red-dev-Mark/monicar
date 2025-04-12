@@ -143,14 +143,7 @@ const DetailPage = () => {
                     />
                 </div>
 
-                <div className={styles.tableWrapper}>
-                    <VehicleInfoTable
-                        vehicleNumber={formattedVehicleNumber}
-                        vehicleModel={detailData?.vehicleInfo.vehicleModel}
-                        isLoading={true}
-                    />
-                    <DetailSkeleton />
-                </div>
+                <DetailSkeleton />
             </div>
         )
     }
@@ -220,28 +213,26 @@ const DetailPage = () => {
                 onClose={closeAlertModal}
             />
 
-            <div className={styles.tableWrapper}>
-                <VehicleInfoTable
-                    vehicleNumber={formattedVehicleNumber}
-                    vehicleModel={detailData?.vehicleInfo.vehicleModel}
-                    isLoading={false}
-                />
+            <VehicleInfoTable
+                vehicleNumber={formattedVehicleNumber}
+                vehicleModel={detailData?.vehicleInfo.vehicleModel}
+                isLoading={false}
+            />
 
-                <BusinessInfoTable
-                    taxStartPeriod={detailData?.taxStartPeriod}
-                    taxEndPeriod={detailData?.taxEndPeriod}
-                    businessName={detailData?.businessInfo.businessName}
-                    businessRegistrationNumber={detailData?.businessInfo.businessRegistrationNumber}
-                />
+            <BusinessInfoTable
+                taxStartPeriod={detailData?.taxStartPeriod}
+                taxEndPeriod={detailData?.taxEndPeriod}
+                businessName={detailData?.businessInfo.businessName}
+                businessRegistrationNumber={detailData?.businessInfo.businessRegistrationNumber}
+            />
 
-                <DrivingInfoTable records={detailData?.records} />
+            <DrivingInfoTable records={detailData?.records} />
 
-                <TotalTable
-                    taxPeriodDistance={detailData?.taxPeriodDistance}
-                    taxPeriodBusinessDistance={detailData?.taxPeriodBusinessDistance}
-                    businessUseRatio={detailData?.businessUseRatio}
-                />
-            </div>
+            <TotalTable
+                taxPeriodDistance={detailData?.taxPeriodDistance}
+                taxPeriodBusinessDistance={detailData?.taxPeriodBusinessDistance}
+                businessUseRatio={detailData?.businessUseRatio}
+            />
 
             {(detailData?.records.length ?? 0) > 0 && (
                 <LinkButton href={`/log/${id}/daily`} className={styles.linkButton}>
