@@ -216,7 +216,6 @@ const DetailPage = () => {
             <VehicleInfoTable
                 vehicleNumber={formattedVehicleNumber}
                 vehicleModel={detailData?.vehicleInfo.vehicleModel}
-                isLoading={false}
             />
 
             <BusinessInfoTable

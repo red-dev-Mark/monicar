@@ -3,11 +3,8 @@ import { style } from '@vanilla-extract/css'
 import { vars } from '@/styles/theme.css'
 
 export const tableWrapper = style({
-    flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    gap: '30px',
-    paddingBottom: '100px',
 })
 
 export const tableHeader = style({
