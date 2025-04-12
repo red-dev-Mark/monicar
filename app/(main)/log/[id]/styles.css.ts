@@ -140,16 +140,3 @@ export const linkButton = style({
         },
     },
 })
-
-export const empty = style({
-    margin: '50px',
-    justifyContent: 'center',
-    display: 'flex',
-    fontWeight: vars.fontWeights.bold,
-    color: vars.colors.gray[700],
-    selectors: {
-        '.dark &': {
-            color: vars.colors.darkText,
-        },
-    },
-})

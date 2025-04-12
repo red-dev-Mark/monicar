@@ -4,7 +4,6 @@ import { DatePickerInput } from '@mantine/dates'
 import { useMediaQuery } from '@mantine/hooks'
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
-import { Suspense } from 'react'
 
 import ExcelButton from '@/components/common/Button/ExcelButton'
 import LinkButton from '@/components/common/Button/LinkButton'
@@ -22,12 +21,15 @@ import { breakPoints } from '@/styles/theme.css'
 import '@mantine/dates/styles.css'
 import 'dayjs/locale/ko'
 
+import BusinessInfoTable from './components/BusinessInfoTable'
+import DrivingInfoTable from './components/DrivingInfoTable'
 import Header from './components/Header'
+import TotalTable from './components/TotalTable'
+import VehicleInfoTable from './components/VehicleInfoTable'
 import { useDetailData } from './hooks/useDetailData'
 import { useDetailModal } from './hooks/useDetailModal'
 import { useSearchDate } from './hooks/useSearchDate'
 import * as styles from './styles.css'
-import { DrivingRecord } from './types'
 import { downloadExcel } from './utils/excel'
 
 const DetailPage = () => {
@@ -142,112 +144,12 @@ const DetailPage = () => {
                 </div>
 
                 <div className={styles.tableWrapper}>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th scope='row' className={styles.tableHeader}>
-                                    자동차 등록번호
-                                </th>
-                                <th scope='row' className={styles.tableHeader}>
-                                    차량종류
-                                </th>
-                            </tr>
-                            <tr>
-                                <td className={styles.tableCell}>{formattedVehicleNumber}</td>
-                                <td className={styles.tableCell}>{detailData?.vehicleInfo.vehicleModel}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th scope='row' rowSpan={3} className={styles.tableHeader}>
-                                    과세기간
-                                </th>
-                                <td rowSpan={3} className={styles.tableCell}>
-                                    {detailData?.taxStartPeriod} - {detailData?.taxEndPeriod}
-                                </td>
-                                <th scope='row' rowSpan={2} className={styles.tableHeader}>
-                                    업무승용차 운행기록부
-                                </th>
-                                <th scope='row' className={styles.tableHeader}>
-                                    상호명
-                                </th>
-                                <td className={styles.tableCell}>{detailData?.businessInfo.businessName}</td>
-                            </tr>
-                            <tr>
-                                <th scope='row' className={styles.tableHeader}>
-                                    사업자 등록번호
-                                </th>
-                                <td className={styles.tableCell}>
-                                    {detailData?.businessInfo.businessRegistrationNumber}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th scope='row' rowSpan={2} className={styles.tableHeader}>
-                                    사용일자
-                                </th>
-                                <th scope='row' colSpan={8} className={styles.tableHeader}>
-                                    운행내역
-                                </th>
-                            </tr>
-                            <tr>
-                                <th scope='row' className={styles.tableHeader}>
-                                    부서
-                                </th>
-                                <th scope='row' className={styles.tableHeader}>
-                                    성명
-                                </th>
-                                <th scope='row' className={styles.tableHeader}>
-                                    전 계기판 거리
-                                </th>
-                                <th scope='row' className={styles.tableHeader}>
-                                    후 계기판 거리
-                                </th>
-                                <th scope='row' className={styles.tableHeader}>
-                                    주행거리
-                                </th>
-                                <th scope='row' className={styles.tableHeader}>
-                                    출근용
-                                </th>
-                                <th scope='row' className={styles.tableHeader}>
-                                    일반업무용
-                                </th>
-                                <th scope='row' className={styles.tableHeader}>
-                                    비고
-                                </th>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <VehicleInfoTable
+                        vehicleNumber={formattedVehicleNumber}
+                        vehicleModel={detailData?.vehicleInfo.vehicleModel}
+                        isLoading={true}
+                    />
                     <DetailSkeleton />
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th scope='row' className={styles.tableHeader}>
-                                    과세기간 총 주행 거리
-                                </th>
-                                <td className={styles.tableCell}>
-                                    {detailData?.taxPeriodDistance.toLocaleString('ko-KR')}km
-                                </td>
-                                <th scope='row' className={styles.tableHeader}>
-                                    과세기간 업무용 사용 거리
-                                </th>
-                                <td className={styles.tableCell}>
-                                    {detailData?.taxPeriodBusinessDistance.toLocaleString('ko-KR')}km
-                                </td>
-                                <th scope='row' className={styles.tableHeader}>
-                                    업무사용비율
-                                </th>
-                                <td className={styles.tableCell}>{detailData?.businessUseRatio}%</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         )
@@ -319,165 +221,26 @@ const DetailPage = () => {
             />
 
             <div className={styles.tableWrapper}>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th scope='row' className={styles.tableHeader}>
-                                자동차 등록번호
-                            </th>
-                            <th scope='row' className={styles.tableHeader}>
-                                차량종류
-                            </th>
-                        </tr>
-                        <tr>
-                            <td className={styles.tableCell}>{formattedVehicleNumber}</td>
-                            <td className={styles.tableCell}>{detailData?.vehicleInfo.vehicleModel}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <VehicleInfoTable
+                    vehicleNumber={formattedVehicleNumber}
+                    vehicleModel={detailData?.vehicleInfo.vehicleModel}
+                    isLoading={false}
+                />
 
-                <table>
-                    <tbody>
-                        <tr>
-                            <th scope='row' rowSpan={3} className={styles.tableHeader}>
-                                과세기간
-                            </th>
-                            <td rowSpan={3} className={styles.tableCell}>
-                                {detailData?.taxStartPeriod} - {detailData?.taxEndPeriod}
-                            </td>
-                            <th scope='row' rowSpan={2} className={styles.tableHeader}>
-                                업무승용차 운행기록부
-                            </th>
-                            <th scope='row' className={styles.tableHeader}>
-                                상호명
-                            </th>
-                            <td className={styles.tableCell}>{detailData?.businessInfo.businessName}</td>
-                        </tr>
-                        <tr>
-                            <th scope='row' className={styles.tableHeader}>
-                                사업자 등록번호
-                            </th>
-                            <td className={styles.tableCell}>{detailData?.businessInfo.businessRegistrationNumber}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <BusinessInfoTable
+                    taxStartPeriod={detailData?.taxStartPeriod}
+                    taxEndPeriod={detailData?.taxEndPeriod}
+                    businessName={detailData?.businessInfo.businessName}
+                    businessRegistrationNumber={detailData?.businessInfo.businessRegistrationNumber}
+                />
 
-                <table>
-                    <tbody>
-                        <tr>
-                            <th scope='row' rowSpan={2} className={styles.tableHeader}>
-                                사용일자
-                            </th>
-                            <th scope='row' colSpan={8} className={styles.tableHeader}>
-                                운행내역
-                            </th>
-                        </tr>
-                        <tr>
-                            <th scope='row' className={styles.tableHeader}>
-                                부서
-                            </th>
-                            <th scope='row' className={styles.tableHeader}>
-                                성명
-                            </th>
-                            <th scope='row' className={styles.tableHeader}>
-                                전 계기판 거리
-                            </th>
-                            <th scope='row' className={styles.tableHeader}>
-                                후 계기판 거리
-                            </th>
-                            <th scope='row' className={styles.tableHeader}>
-                                주행거리
-                            </th>
-                            <th scope='row' className={styles.tableHeader}>
-                                출근용
-                            </th>
-                            <th scope='row' className={styles.tableHeader}>
-                                일반업무용
-                            </th>
-                            <th scope='row' className={styles.tableHeader}>
-                                비고
-                            </th>
-                        </tr>
-                        <Suspense fallback={<DetailSkeleton />}>
-                            {detailData?.records.length === 0 ? (
-                                <tr>
-                                    <td colSpan={9}>
-                                        <div className={styles.empty}>운행내역이 없습니다.</div>
-                                    </td>
-                                </tr>
-                            ) : (
-                                detailData?.records.map((data: DrivingRecord) => {
-                                    const isCommutePurpose =
-                                        data.drivingInfo.businessDrivingDetails.usePurpose === 'COMMUTE'
-                                    const drivingDistance = data.drivingInfo.businessDrivingDetails.drivingDistance
+                <DrivingInfoTable records={detailData?.records} />
 
-                                    return (
-                                        <tr key={data.id}>
-                                            <td className={styles.tableCell}>{data.usageDate}</td>
-                                            <td className={styles.tableCell}>{data.user.departmentName}</td>
-                                            <td className={styles.tableCell}>{data.user.name}</td>
-                                            <td className={styles.tableCell}>
-                                                {Math.floor(data.drivingInfo.drivingBefore / 1000).toLocaleString(
-                                                    'ko-KR',
-                                                )}
-                                                km
-                                            </td>
-                                            <td className={styles.tableCell}>
-                                                {Math.floor(data.drivingInfo.drivingAfter / 1000).toLocaleString(
-                                                    'ko-KR',
-                                                )}
-                                                km
-                                            </td>
-                                            <td className={styles.tableCell}>
-                                                {Math.floor(data.drivingInfo.totalDriving / 1000).toLocaleString(
-                                                    'ko-KR',
-                                                )}
-                                                km
-                                            </td>
-                                            <td className={styles.tableCell}>
-                                                {isCommutePurpose
-                                                    ? Math.floor(drivingDistance / 1000).toLocaleString('ko-KR') + 'km'
-                                                    : '0km'}
-                                            </td>
-                                            <td className={styles.tableCell}>
-                                                {!isCommutePurpose
-                                                    ? Math.floor(drivingDistance / 1000).toLocaleString('ko-KR') + 'km'
-                                                    : '0km'}
-                                            </td>
-                                            <td className={styles.tableCell}>{data.drivingInfo.notes}</td>
-                                        </tr>
-                                    )
-                                })
-                            )}
-                        </Suspense>
-                    </tbody>
-                </table>
-
-                <table>
-                    <tbody>
-                        <tr>
-                            <th scope='row' className={styles.tableHeader}>
-                                과세기간 총 주행 거리
-                            </th>
-                            <td className={styles.tableCell}>
-                                {Math.floor((detailData?.taxPeriodDistance ?? 0) / 1000).toLocaleString('ko-KR')}km
-                            </td>
-                            <th scope='row' className={styles.tableHeader}>
-                                과세기간 업무용 사용 거리
-                            </th>
-                            <td className={styles.tableCell}>
-                                {Math.floor((detailData?.taxPeriodBusinessDistance ?? 0) / 1000).toLocaleString(
-                                    'ko-KR',
-                                )}
-                                km
-                            </td>
-                            <th scope='row' className={styles.tableHeader}>
-                                업무사용비율
-                            </th>
-                            <td className={styles.tableCell}>{detailData?.businessUseRatio}%</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <TotalTable
+                    taxPeriodDistance={detailData?.taxPeriodDistance}
+                    taxPeriodBusinessDistance={detailData?.taxPeriodBusinessDistance}
+                    businessUseRatio={detailData?.businessUseRatio}
+                />
             </div>
 
             {(detailData?.records.length ?? 0) > 0 && (
