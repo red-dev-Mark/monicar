@@ -3,13 +3,17 @@ import { TableCell } from '@/components/common/TableCell'
 import TableHeader from '@/components/common/TableHeader'
 import { formatDistance } from '@/lib/utils/format'
 
-interface TotalTable {
+interface TotalInfoTableProps {
     taxPeriodDistance?: number
     taxPeriodBusinessDistance?: number
     businessUseRatio?: number
 }
 
-const TotalTable = ({ taxPeriodDistance = 0, taxPeriodBusinessDistance = 0, businessUseRatio = 0 }: TotalTable) => {
+const TotalInfoTable = ({
+    taxPeriodDistance = 0,
+    taxPeriodBusinessDistance = 0,
+    businessUseRatio = 0,
+}: TotalInfoTableProps) => {
     return (
         <Table>
             <tr>
@@ -24,4 +28,4 @@ const TotalTable = ({ taxPeriodDistance = 0, taxPeriodBusinessDistance = 0, busi
     )
 }
 
-export default TotalTable
+export default TotalInfoTable

@@ -24,7 +24,7 @@ import 'dayjs/locale/ko'
 import BusinessInfoTable from './components/BusinessInfoTable'
 import DrivingInfoTable from './components/DrivingInfoTable'
 import Header from './components/Header'
-import TotalTable from './components/TotalTable'
+import TotalInfoTable from './components/TotalInfoTable'
 import VehicleInfoTable from './components/VehicleInfoTable'
 import { useDetailData } from './hooks/useDetailData'
 import { useDetailModal } from './hooks/useDetailModal'
@@ -252,7 +252,7 @@ const DetailPage = () => {
 
             <DrivingInfoTable records={detailData?.records} />
 
-            <TotalTable
+            <TotalInfoTable
                 taxPeriodDistance={detailData?.taxPeriodDistance}
                 taxPeriodBusinessDistance={detailData?.taxPeriodBusinessDistance}
                 businessUseRatio={detailData?.businessUseRatio}

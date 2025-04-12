@@ -2,7 +2,7 @@ import { Table } from '@/components/common/Table'
 import { TableCell } from '@/components/common/TableCell'
 import TableHeader from '@/components/common/TableHeader'
 
-interface BusinessInfoTable {
+interface BusinessInfoTableProps {
     taxStartPeriod?: string
     taxEndPeriod?: string
     businessName?: string
@@ -14,7 +14,7 @@ const BusinessInfoTable = ({
     taxEndPeriod,
     businessName,
     businessRegistrationNumber,
-}: BusinessInfoTable) => {
+}: BusinessInfoTableProps) => {
     return (
         <Table>
             <tr>
