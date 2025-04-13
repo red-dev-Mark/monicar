@@ -122,6 +122,7 @@ const DetailPage = () => {
                                 valueFormat='YYYY년 MM월 DD일'
                                 clearable={true}
                                 allowSingleDateInRange
+                                aria-label='운행일지 과세기간 범위 선택'
                             />
                         </div>
                     }
@@ -133,11 +134,16 @@ const DetailPage = () => {
                     secondaryButton={
                         isDeleteButtonVisible ? (
                             <div className={styles.deleteButtonWrapper}>
-                                <RoundButton color='primary' size='small' onClick={handleDeleteButtonClick}>
+                                <RoundButton
+                                    color='primary'
+                                    size='small'
+                                    onClick={handleDeleteButtonClick}
+                                    aria-label='차량 삭제 버튼'
+                                >
                                     <div className={styles.deleteButton}>
                                         <Image
                                             src='/icons/white-trash-icon.svg'
-                                            alt='삭제 아이콘'
+                                            alt=''
                                             width={18}
                                             height={18}
                                             style={{
@@ -146,15 +152,13 @@ const DetailPage = () => {
                                                 display: 'inline-block',
                                                 verticalAlign: 'middle',
                                             }}
-                                            aria-hidden='true'
+                                            role='presentation'
                                         />
                                         차량삭제
                                     </div>
                                 </RoundButton>
                             </div>
-                        ) : (
-                            <></>
-                        )
+                        ) : null
                     }
                 />
             </div>
