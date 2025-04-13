@@ -1,5 +1,5 @@
-import { Table } from '@/components/common/Table'
-import { TableCell } from '@/components/common/TableCell'
+import Table from '@/components/common/Table'
+import TableCell from '@/components/common/TableCell'
 import TableHeader from '@/components/common/TableHeader'
 interface VehicleInfoTableProps {
     vehicleNumber: string

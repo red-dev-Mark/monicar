@@ -2,8 +2,8 @@ import { Skeleton } from '@mantine/core'
 
 import * as styles from '@/styles/table.css'
 
-import { Table } from '../../Table'
-import { TableCell } from '../../TableCell'
+import Table from '../../Table'
+import TableCell from '../../TableCell'
 import TableHeader from '../../TableHeader'
 
 const DetailSkeleton = () => {

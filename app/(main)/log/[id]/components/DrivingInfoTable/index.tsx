@@ -1,8 +1,8 @@
 import { Suspense } from 'react'
 
 import DetailSkeleton from '@/components/common/Skeleton/DetailSkeleton'
-import { Table } from '@/components/common/Table'
-import { TableCell } from '@/components/common/TableCell'
+import Table from '@/components/common/Table'
+import TableCell from '@/components/common/TableCell'
 import TableHeader from '@/components/common/TableHeader'
 import { formatDistance } from '@/lib/utils/format'
 
