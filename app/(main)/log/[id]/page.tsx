@@ -93,73 +93,8 @@ const DetailPage = () => {
         return <ErrorMessage />
     }
 
-    if (isLoading) {
-        return (
-            <div className={styles.container}>
-                <div className={styles.header}>
-                    <Header />
-
-                    <ControlLayout
-                        control={
-                            <div className={styles.datePickerInputWrapper}>
-                                <DatePickerInput
-                                    locale='ko'
-                                    leftSection={
-                                        <div style={{ width: '24px', height: '24px' }}>
-                                            <CalendarIcon size={16} stroke={1} />
-                                        </div>
-                                    }
-                                    leftSectionPointerEvents='none'
-                                    maxDate={new Date()}
-                                    size={isMobile ? 'md' : 'lg'}
-                                    type='range'
-                                    radius='xl'
-                                    placeholder='과세기간 범위 선택'
-                                    value={dateRange}
-                                    onChange={handleDateRangeChange}
-                                    valueFormat='YYYY년 MM월 DD일'
-                                    clearable={true}
-                                />
-                            </div>
-                        }
-                        primaryButton={
-                            <div className={styles.excelButtonWrapper}>
-                                <ExcelButton onClick={handleExcelButtonClick} />
-                            </div>
-                        }
-                        secondaryButton={
-                            detailData?.vehicleInfo.status !== 'IN_OPERATION' ? (
-                                <div className={styles.deleteButtonWrapper}>
-                                    <RoundButton color='primary' size='small' onClick={handleDeleteButtonClick}>
-                                        <div className={styles.deleteButton}>
-                                            <Image
-                                                src='/icons/white-trash-icon.svg'
-                                                alt='삭제 아이콘'
-                                                width={18}
-                                                height={18}
-                                                style={{
-                                                    width: 'auto',
-                                                    height: 'auto',
-                                                    display: 'inline-block',
-                                                    verticalAlign: 'middle',
-                                                }}
-                                                aria-hidden='true'
-                                            />
-                                            차량삭제
-                                        </div>
-                                    </RoundButton>
-                                </div>
-                            ) : (
-                                <></>
-                            )
-                        }
-                    />
-                </div>
-
-                <DetailSkeleton />
-            </div>
-        )
-    }
+    const isDeleteButtonVisible = detailData?.vehicleInfo.status !== 'IN_OPERATION'
+    const hasRecords = (detailData?.records.length ?? 0) > 0
 
     return (
         <div className={styles.container}>
@@ -196,7 +131,7 @@ const DetailPage = () => {
                         </div>
                     }
                     secondaryButton={
-                        detailData?.vehicleInfo.status !== 'IN_OPERATION' ? (
+                        isDeleteButtonVisible ? (
                             <div className={styles.deleteButtonWrapper}>
                                 <RoundButton color='primary' size='small' onClick={handleDeleteButtonClick}>
                                     <div className={styles.deleteButton}>
@@ -238,27 +173,30 @@ const DetailPage = () => {
                 onClose={closeAlertModal}
             />
 
-            <VehicleInfoTable
-                vehicleNumber={formattedVehicleNumber}
-                vehicleModel={detailData?.vehicleInfo.vehicleModel}
-            />
+            {isLoading ? (
+                <DetailSkeleton />
+            ) : (
+                <>
+                    <VehicleInfoTable
+                        vehicleNumber={formattedVehicleNumber}
+                        vehicleModel={detailData?.vehicleInfo.vehicleModel}
+                    />
+                    <BusinessInfoTable
+                        taxStartPeriod={detailData?.taxStartPeriod}
+                        taxEndPeriod={detailData?.taxEndPeriod}
+                        businessName={detailData?.businessInfo.businessName}
+                        businessRegistrationNumber={detailData?.businessInfo.businessRegistrationNumber}
+                    />
+                    <DrivingInfoTable records={detailData?.records} />
+                    <TotalInfoTable
+                        taxPeriodDistance={detailData?.taxPeriodDistance}
+                        taxPeriodBusinessDistance={detailData?.taxPeriodBusinessDistance}
+                        businessUseRatio={detailData?.businessUseRatio}
+                    />
+                </>
+            )}
 
-            <BusinessInfoTable
-                taxStartPeriod={detailData?.taxStartPeriod}
-                taxEndPeriod={detailData?.taxEndPeriod}
-                businessName={detailData?.businessInfo.businessName}
-                businessRegistrationNumber={detailData?.businessInfo.businessRegistrationNumber}
-            />
-
-            <DrivingInfoTable records={detailData?.records} />
-
-            <TotalInfoTable
-                taxPeriodDistance={detailData?.taxPeriodDistance}
-                taxPeriodBusinessDistance={detailData?.taxPeriodBusinessDistance}
-                businessUseRatio={detailData?.businessUseRatio}
-            />
-
-            {(detailData?.records.length ?? 0) > 0 && (
+            {hasRecords && (
                 <LinkButton href={`/log/${id}/daily`} className={styles.linkButton}>
                     일별 및 시간별 조회
                 </LinkButton>
