@@ -18,7 +18,7 @@ const Route = () => {
     const [routes, setRoutes] = useState<LatLng[]>([])
     const [isMapLoaded, setIsMapLoaded] = useState(false)
 
-    const { initialLiveRoute, currentLiveRoute, startLiveTracking, stopLiveTracking } = useLiveRoute()
+    const { currentLocation, startLiveTracking, stopLiveTracking } = useLiveRoute()
 
     const mapRef = useRef<kakao.maps.Map>(null)
 
@@ -36,7 +36,7 @@ const Route = () => {
         }
     }
 
-    // console.log('currentLiveRoute', currentLiveRoute)
+    // console.log('currentLocation', currentLocation)
 
     return (
         <div className={styles.container}>
@@ -63,8 +63,8 @@ const Route = () => {
             <MapSection
                 mapRef={mapRef}
                 routes={routes}
-                initialLiveRoute={initialLiveRoute!}
-                currentLiveRoute={currentLiveRoute!}
+                // initialLiveRoute={initialLiveRoute!}
+                currentLocation={currentLocation!}
                 isMapLoaded={isMapLoaded}
                 onRoutesChange={setRoutes}
                 onLoad={() => setIsMapLoaded(true)}
