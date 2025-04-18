@@ -1,5 +1,5 @@
 import * as styles from '@/styles/table.css'
-import { TableProps } from '@/types/table'
+import { TableProps } from '@/types/ui'
 
 const Table = ({ children, className }: TableProps) => (
     <div className={`${styles.tableWrapper} ${className || ''}`}>
