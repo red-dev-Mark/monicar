@@ -4,9 +4,7 @@ import { DatePickerInput } from '@mantine/dates'
 import { useMediaQuery } from '@mantine/hooks'
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
-import { Suspense } from 'react'
 
-import Breadcrumbs from '@/components/common/Breadcrumbs'
 import ExcelButton from '@/components/common/Button/ExcelButton'
 import LinkButton from '@/components/common/Button/LinkButton'
 import { RoundButton } from '@/components/common/Button/RoundButton'
@@ -23,11 +21,15 @@ import { breakPoints } from '@/styles/theme.css'
 import '@mantine/dates/styles.css'
 import 'dayjs/locale/ko'
 
+import BusinessInfoTable from './components/BusinessInfoTable'
+import DrivingInfoTable from './components/DrivingInfoTable'
+import Header from './components/Header'
+import TotalInfoTable from './components/TotalInfoTable'
+import VehicleInfoTable from './components/VehicleInfoTable'
 import { useDetailData } from './hooks/useDetailData'
 import { useDetailModal } from './hooks/useDetailModal'
 import { useSearchDate } from './hooks/useSearchDate'
 import * as styles from './styles.css'
-import { DrivingRecord } from './types'
 import { downloadExcel } from './utils/excel'
 
 const DetailPage = () => {
@@ -91,187 +93,13 @@ const DetailPage = () => {
         return <ErrorMessage />
     }
 
-    if (isLoading) {
-        return (
-            <div className={styles.container}>
-                <div className={styles.header}>
-                    <div className={styles.breadcrumbsWrapper}>
-                        <Breadcrumbs
-                            breadcrumbsData={[
-                                { title: '운행기록', isActive: false },
-                                { title: '운행일지', isActive: true },
-                            ]}
-                        />
-                    </div>
-
-                    <ControlLayout
-                        control={
-                            <div className={styles.datePickerInputWrapper}>
-                                <DatePickerInput
-                                    locale='ko'
-                                    leftSection={
-                                        <div style={{ width: '24px', height: '24px' }}>
-                                            <CalendarIcon size={16} stroke={1} />
-                                        </div>
-                                    }
-                                    leftSectionPointerEvents='none'
-                                    maxDate={new Date()}
-                                    size={isMobile ? 'md' : 'lg'}
-                                    type='range'
-                                    radius='xl'
-                                    placeholder='과세기간 범위 선택'
-                                    value={dateRange}
-                                    onChange={handleDateRangeChange}
-                                    valueFormat='YYYY년 MM월 DD일'
-                                    clearable={true}
-                                />
-                            </div>
-                        }
-                        primaryButton={
-                            <div className={styles.excelButtonWrapper}>
-                                <ExcelButton onClick={handleExcelButtonClick} />
-                            </div>
-                        }
-                        secondaryButton={
-                            detailData?.vehicleInfo.status !== 'IN_OPERATION' ? (
-                                <div className={styles.deleteButtonWrapper}>
-                                    <RoundButton color='primary' size='small' onClick={handleDeleteButtonClick}>
-                                        <div className={styles.deleteButton}>
-                                            <Image src='/icons/white-trash-icon.svg' alt='add' width={18} height={18} />
-                                            차량삭제
-                                        </div>
-                                    </RoundButton>
-                                </div>
-                            ) : (
-                                <></>
-                            )
-                        }
-                    />
-                </div>
-
-                <div className={styles.tableWrapper}>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th scope='row' className={styles.tableHeader}>
-                                    자동차 등록번호
-                                </th>
-                                <th scope='row' className={styles.tableHeader}>
-                                    차량종류
-                                </th>
-                            </tr>
-                            <tr>
-                                <td className={styles.tableCell}>{formattedVehicleNumber}</td>
-                                <td className={styles.tableCell}>{detailData?.vehicleInfo.vehicleModel}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th scope='row' rowSpan={3} className={styles.tableHeader}>
-                                    과세기간
-                                </th>
-                                <td rowSpan={3} className={styles.tableCell}>
-                                    {detailData?.taxStartPeriod} - {detailData?.taxEndPeriod}
-                                </td>
-                                <th scope='row' rowSpan={2} className={styles.tableHeader}>
-                                    업무승용차 운행기록부
-                                </th>
-                                <th scope='row' className={styles.tableHeader}>
-                                    상호명
-                                </th>
-                                <td className={styles.tableCell}>{detailData?.businessInfo.businessName}</td>
-                            </tr>
-                            <tr>
-                                <th scope='row' className={styles.tableHeader}>
-                                    사업자 등록번호
-                                </th>
-                                <td className={styles.tableCell}>
-                                    {detailData?.businessInfo.businessRegistrationNumber}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th scope='row' rowSpan={2} className={styles.tableHeader}>
-                                    사용일자
-                                </th>
-                                <th scope='row' colSpan={8} className={styles.tableHeader}>
-                                    운행내역
-                                </th>
-                            </tr>
-                            <tr>
-                                <th scope='row' className={styles.tableHeader}>
-                                    부서
-                                </th>
-                                <th scope='row' className={styles.tableHeader}>
-                                    성명
-                                </th>
-                                <th scope='row' className={styles.tableHeader}>
-                                    전 계기판 거리
-                                </th>
-                                <th scope='row' className={styles.tableHeader}>
-                                    후 계기판 거리
-                                </th>
-                                <th scope='row' className={styles.tableHeader}>
-                                    주행거리
-                                </th>
-                                <th scope='row' className={styles.tableHeader}>
-                                    출근용
-                                </th>
-                                <th scope='row' className={styles.tableHeader}>
-                                    일반업무용
-                                </th>
-                                <th scope='row' className={styles.tableHeader}>
-                                    비고
-                                </th>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <DetailSkeleton />
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th scope='row' className={styles.tableHeader}>
-                                    과세기간 총 주행 거리
-                                </th>
-                                <td className={styles.tableCell}>
-                                    {detailData?.taxPeriodDistance.toLocaleString('ko-KR')}km
-                                </td>
-                                <th scope='row' className={styles.tableHeader}>
-                                    과세기간 업무용 사용 거리
-                                </th>
-                                <td className={styles.tableCell}>
-                                    {detailData?.taxPeriodBusinessDistance.toLocaleString('ko-KR')}km
-                                </td>
-                                <th scope='row' className={styles.tableHeader}>
-                                    업무사용비율
-                                </th>
-                                <td className={styles.tableCell}>{detailData?.businessUseRatio}%</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        )
-    }
+    const isDeleteButtonVisible = detailData?.vehicleInfo.status !== 'IN_OPERATION'
+    const hasRecords = (detailData?.records.length ?? 0) > 0
 
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <div className={styles.breadcrumbsWrapper}>
-                    <Breadcrumbs
-                        breadcrumbsData={[
-                            { title: '운행기록', isActive: false },
-                            { title: '운행일지', isActive: true },
-                        ]}
-                    />
-                </div>
+                <Header />
 
                 <ControlLayout
                     control={
@@ -294,6 +122,7 @@ const DetailPage = () => {
                                 valueFormat='YYYY년 MM월 DD일'
                                 clearable={true}
                                 allowSingleDateInRange
+                                aria-label='운행일지 과세기간 범위 선택'
                             />
                         </div>
                     }
@@ -303,21 +132,37 @@ const DetailPage = () => {
                         </div>
                     }
                     secondaryButton={
-                        detailData?.vehicleInfo.status !== 'IN_OPERATION' ? (
+                        isDeleteButtonVisible ? (
                             <div className={styles.deleteButtonWrapper}>
-                                <RoundButton color='primary' size='small' onClick={handleDeleteButtonClick}>
+                                <RoundButton
+                                    color='primary'
+                                    size='small'
+                                    onClick={handleDeleteButtonClick}
+                                    aria-label='차량 삭제 버튼'
+                                >
                                     <div className={styles.deleteButton}>
-                                        <Image src='/icons/white-trash-icon.svg' alt='add' width={18} height={18} />
+                                        <Image
+                                            src='/icons/white-trash-icon.svg'
+                                            alt=''
+                                            width={18}
+                                            height={18}
+                                            style={{
+                                                width: 'auto',
+                                                height: 'auto',
+                                                display: 'inline-block',
+                                                verticalAlign: 'middle',
+                                            }}
+                                            role='presentation'
+                                        />
                                         차량삭제
                                     </div>
                                 </RoundButton>
                             </div>
-                        ) : (
-                            <></>
-                        )
+                        ) : null
                     }
                 />
             </div>
+
             <Modal
                 isOpen={isConfirmModalOpen}
                 message={confirmModalMessage as ModalMessageType}
@@ -331,169 +176,31 @@ const DetailPage = () => {
                 variant={{ variant: 'alert', confirmButton: '확인' }}
                 onClose={closeAlertModal}
             />
-            <div className={styles.tableWrapper}>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th scope='row' className={styles.tableHeader}>
-                                자동차 등록번호
-                            </th>
-                            <th scope='row' className={styles.tableHeader}>
-                                차량종류
-                            </th>
-                        </tr>
-                        <tr>
-                            <td className={styles.tableCell}>{formattedVehicleNumber}</td>
-                            <td className={styles.tableCell}>{detailData?.vehicleInfo.vehicleModel}</td>
-                        </tr>
-                    </tbody>
-                </table>
 
-                <table>
-                    <tbody>
-                        <tr>
-                            <th scope='row' rowSpan={3} className={styles.tableHeader}>
-                                과세기간
-                            </th>
-                            <td rowSpan={3} className={styles.tableCell}>
-                                {detailData?.taxStartPeriod} - {detailData?.taxEndPeriod}
-                            </td>
-                            <th scope='row' rowSpan={2} className={styles.tableHeader}>
-                                업무승용차 운행기록부
-                            </th>
-                            <th scope='row' className={styles.tableHeader}>
-                                상호명
-                            </th>
-                            <td className={styles.tableCell}>{detailData?.businessInfo.businessName}</td>
-                        </tr>
-                        <tr>
-                            <th scope='row' className={styles.tableHeader}>
-                                사업자 등록번호
-                            </th>
-                            <td className={styles.tableCell}>{detailData?.businessInfo.businessRegistrationNumber}</td>
-                        </tr>
-                    </tbody>
-                </table>
+            {isLoading ? (
+                <DetailSkeleton />
+            ) : (
+                <>
+                    <VehicleInfoTable
+                        vehicleNumber={formattedVehicleNumber}
+                        vehicleModel={detailData?.vehicleInfo.vehicleModel}
+                    />
+                    <BusinessInfoTable
+                        taxStartPeriod={detailData?.taxStartPeriod}
+                        taxEndPeriod={detailData?.taxEndPeriod}
+                        businessName={detailData?.businessInfo.businessName}
+                        businessRegistrationNumber={detailData?.businessInfo.businessRegistrationNumber}
+                    />
+                    <DrivingInfoTable records={detailData?.records} />
+                    <TotalInfoTable
+                        taxPeriodDistance={detailData?.taxPeriodDistance}
+                        taxPeriodBusinessDistance={detailData?.taxPeriodBusinessDistance}
+                        businessUseRatio={detailData?.businessUseRatio}
+                    />
+                </>
+            )}
 
-                <table>
-                    <tbody>
-                        <tr>
-                            <th scope='row' rowSpan={2} className={styles.tableHeader}>
-                                사용일자
-                            </th>
-                            <th scope='row' colSpan={8} className={styles.tableHeader}>
-                                운행내역
-                            </th>
-                        </tr>
-                        <tr>
-                            <th scope='row' className={styles.tableHeader}>
-                                부서
-                            </th>
-                            <th scope='row' className={styles.tableHeader}>
-                                성명
-                            </th>
-                            <th scope='row' className={styles.tableHeader}>
-                                전 계기판 거리
-                            </th>
-                            <th scope='row' className={styles.tableHeader}>
-                                후 계기판 거리
-                            </th>
-                            <th scope='row' className={styles.tableHeader}>
-                                주행거리
-                            </th>
-                            <th scope='row' className={styles.tableHeader}>
-                                출근용
-                            </th>
-                            <th scope='row' className={styles.tableHeader}>
-                                일반업무용
-                            </th>
-                            <th scope='row' className={styles.tableHeader}>
-                                비고
-                            </th>
-                        </tr>
-                        <Suspense fallback={<DetailSkeleton />}>
-                            {detailData?.records.length === 0 ? (
-                                <tr>
-                                    <td colSpan={9}>
-                                        <div className={styles.empty}>운행내역이 없습니다.</div>
-                                    </td>
-                                </tr>
-                            ) : (
-                                detailData?.records.map((data: DrivingRecord) => {
-                                    const isCommutePurpose =
-                                        data.drivingInfo.businessDrivingDetails.usePurpose === 'COMMUTE'
-                                    const drivingDistance = data.drivingInfo.businessDrivingDetails.drivingDistance
-
-                                    return (
-                                        <tr key={data.id}>
-                                            <td className={styles.tableCell}>{data.usageDate}</td>
-                                            <td className={styles.tableCell}>{data.user.departmentName}</td>
-                                            <td className={styles.tableCell}>{data.user.name}</td>
-                                            <td className={styles.tableCell}>
-                                                {Math.floor(data.drivingInfo.drivingBefore / 1000).toLocaleString(
-                                                    'ko-KR',
-                                                )}
-                                                km
-                                            </td>
-                                            <td className={styles.tableCell}>
-                                                {Math.floor(data.drivingInfo.drivingAfter / 1000).toLocaleString(
-                                                    'ko-KR',
-                                                )}
-                                                km
-                                            </td>
-                                            <td className={styles.tableCell}>
-                                                {Math.floor(data.drivingInfo.totalDriving / 1000).toLocaleString(
-                                                    'ko-KR',
-                                                )}
-                                                km
-                                            </td>
-                                            <td className={styles.tableCell}>
-                                                {isCommutePurpose
-                                                    ? Math.floor(drivingDistance / 1000).toLocaleString('ko-KR') + 'km'
-                                                    : '0km'}
-                                            </td>
-                                            <td className={styles.tableCell}>
-                                                {!isCommutePurpose
-                                                    ? Math.floor(drivingDistance / 1000).toLocaleString('ko-KR') + 'km'
-                                                    : '0km'}
-                                            </td>
-                                            <td className={styles.tableCell}>{data.drivingInfo.notes}</td>
-                                        </tr>
-                                    )
-                                })
-                            )}
-                        </Suspense>
-                    </tbody>
-                </table>
-
-                <table>
-                    <tbody>
-                        <tr>
-                            <th scope='row' className={styles.tableHeader}>
-                                과세기간 총 주행 거리
-                            </th>
-                            <td className={styles.tableCell}>
-                                {Math.floor((detailData?.taxPeriodDistance ?? 0) / 1000).toLocaleString('ko-KR')}km
-                            </td>
-                            <th scope='row' className={styles.tableHeader}>
-                                과세기간 업무용 사용 거리
-                            </th>
-                            <td className={styles.tableCell}>
-                                {Math.floor((detailData?.taxPeriodBusinessDistance ?? 0) / 1000).toLocaleString(
-                                    'ko-KR',
-                                )}
-                                km
-                            </td>
-                            <th scope='row' className={styles.tableHeader}>
-                                업무사용비율
-                            </th>
-                            <td className={styles.tableCell}>{detailData?.businessUseRatio}%</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            {(detailData?.records.length ?? 0) > 0 && (
+            {hasRecords && (
                 <LinkButton href={`/log/${id}/daily`} className={styles.linkButton}>
                     일별 및 시간별 조회
                 </LinkButton>

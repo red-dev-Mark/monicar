@@ -8,3 +8,6 @@ export const formatMinuteToHour = (minute: number) => {
 
     return formattedMinute === 0 ? `${hour}시간` : `${hour}시간 ${formattedMinute}분`
 }
+
+// 거리 데이터를 포맷팅하는 함수
+export const formatDistance = (distance: number) => `${Math.floor((distance || 0) / 1000).toLocaleString('ko-KR')}km`

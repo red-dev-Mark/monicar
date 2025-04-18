@@ -31,7 +31,7 @@ export const controlGroup = style({
     width: '100%',
     justifyContent: 'flex-end',
     marginBottom: '20px',
-    zIndex: vars.zIndex.four,
+    zIndex: vars.zIndex.content,
 })
 
 export const button = style({
