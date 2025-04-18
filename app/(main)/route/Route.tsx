@@ -36,6 +36,8 @@ const Route = () => {
         }
     }
 
+    // console.log('currentLiveRoute', currentLiveRoute)
+
     return (
         <div className={styles.container}>
             {live && (
@@ -61,7 +63,7 @@ const Route = () => {
             <MapSection
                 mapRef={mapRef}
                 routes={routes}
-                initialLiveRoute={initialLiveRoute}
+                initialLiveRoute={initialLiveRoute!}
                 currentLiveRoute={currentLiveRoute!}
                 isMapLoaded={isMapLoaded}
                 onRoutesChange={setRoutes}

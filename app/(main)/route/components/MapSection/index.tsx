@@ -26,6 +26,8 @@ const MapSection = memo(
     ({ mapRef, routes, initialLiveRoute, currentLiveRoute, isMapLoaded, onRoutesChange, onLoad }: MapSectionProps) => {
         const { mapState, controlMapStatus } = useMapStatus(mapRef.current)
 
+        // console.log('컴포넌트까지', currentLiveRoute)
+
         const searchParams = useSearchParams()
 
         const vehicleNumber = searchParams.get('vehicleNumber') || ''
@@ -37,7 +39,10 @@ const MapSection = memo(
         useEffect(() => {
             if (!isMapLoaded) return
 
+            // console.log('11111111111111111111111111111111111111111111111', tracking, currentLiveRoute, isMapLoaded)
+
             if (tracking && currentLiveRoute?.lat) {
+                // console.log('map까지는 온다', currentLiveRoute)
                 controlMapStatus(
                     { lat: currentLiveRoute.lat, lng: currentLiveRoute.lng },
                     MAP_CONFIG.ROUTE.TRACKING_ZOOM_INCREMENT,
