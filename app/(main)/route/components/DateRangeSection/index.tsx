@@ -11,55 +11,38 @@ import { VehicleOperationPeriod } from '@/types/vehicle'
 
 import '@mantine/dates/styles.css'
 import 'dayjs/locale/ko'
-// interface DateRangeSectionProps {
-// searchableDateRange: VehicleOperationPeriod
-// value: DatesRangeValue
-// onChange: (value: DatesRangeValue) => void
-// }
 
-// const DateRangeSection = ({ value, onChange }: DateRangeSectionProps) => {
-const DateRangeSection = () => {
-    const searchParams = useSearchParams()
+interface DateRangeSectionProps {
+    onError: (message: string) => void
+}
+
+const DateRangeSection = ({ onError }: DateRangeSectionProps) => {
     const [operationPeriod, setOperationPeriod] = useState<VehicleOperationPeriod>()
 
     const { addQueries } = useQueryParams()
+
+    const searchParams = useSearchParams()
 
     const vehicleNumber = searchParams.get('vehicleNumber')
     const startDate = searchParams.get('startDate')
     const endDate = searchParams.get('endDate')
 
     useEffect(() => {
-        if (!vehicleNumber) return
+        if (!vehicleNumber) {
+            return
+        }
 
         const getVehicleOperationPeriod = async () => {
-            const result = await getVehicleOperationInfo(vehicleNumber)
-            if (!result.data) throw new Error(result.error || '차량 검색에 실패했습니다')
+            const vehicleOperationInfo = await getVehicleOperationInfo(vehicleNumber, onError)
+            if (!vehicleOperationInfo) return
 
-            const { firstOperationDate, lastOperationDate } = result?.data
-            if (!firstOperationDate || !lastOperationDate) throw new Error(result.error || '차량 운행 기간이 없습니다')
-
+            const { firstOperationDate = '', lastOperationDate = '' } = vehicleOperationInfo
             setOperationPeriod({ firstOperationDate, lastOperationDate })
         }
         getVehicleOperationPeriod()
-    }, [vehicleNumber])
+    }, [vehicleNumber, onError])
+    // }, [searchParams, onError])
 
-    // const result = await getVehicleOperationInfo(inputValue)
-    //         // if (!result.data) throw new Error(result.error || '차량 검색에 실패했습니다')
-
-    //         // const { vehicleNumber, firstOperationDate, lastOperationDate } = result?.data
-    //         // if (!firstOperationDate || !lastOperationDate) throw new Error(result.error || '차량 운행 기간이 없습니다')
-
-    //         // setOperationPeriod({ firstOperationDate, lastOperationDate })
-    //         addQuery('vehicleNumber', inputValue)
-    //     } catch (error) {
-    //         if (error instanceof Error) {
-    //             onError?.(error.message)
-    //             clearAllQueries()
-    //         }
-    //     } finally {
-    //         finishSearchingVehicle()
-    //     }
-    // }
     const handleDateChange = (value: DatesRangeValue) => {
         if (value[0] && !value[1]) {
             addQueries({

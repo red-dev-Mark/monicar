@@ -18,13 +18,12 @@ const Route = () => {
     const [routes, setRoutes] = useState<LatLng[]>([])
     const [isMapLoaded, setIsMapLoaded] = useState(false)
 
+    const { addQuery, removeQuery } = useQueryParams()
     const { currentLocation, startLiveTracking, stopLiveTracking } = useLiveRoute()
 
     const mapRef = useRef<kakao.maps.Map>(null)
 
     const searchParams = useSearchParams()
-
-    const { addQuery, removeQuery } = useQueryParams()
 
     const live = searchParams.get('live') === 'true'
 
@@ -61,7 +60,6 @@ const Route = () => {
             <MapSection
                 mapRef={mapRef}
                 routes={routes}
-                // initialLiveRoute={initialLiveRoute}
                 currentLocation={currentLocation!}
                 isMapLoaded={isMapLoaded}
                 onRoutesChange={setRoutes}

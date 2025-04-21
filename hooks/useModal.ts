@@ -7,6 +7,7 @@ export const useModal = () => {
     const [isModalOpen, { open: openModal, close: closeModal }] = useDisclosure()
 
     const openModalWithMessage = (message: string) => {
+        console.log('modal message: ', message)
         setMessage(message)
         openModal()
     }

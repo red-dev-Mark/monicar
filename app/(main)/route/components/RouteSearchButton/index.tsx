@@ -18,7 +18,7 @@ interface RouteSearchButtonProps {
     mapRef: MapRefType
     disabled: { isVehicleNumberDirty: boolean; isRouteSearchable: boolean }
     onRoutesChange: (paths: LatLng[]) => void
-    onError?: (message: string) => void
+    onError: (message: string) => void
 }
 
 const RouteSearchButton = ({ mapRef, disabled, onRoutesChange, onError }: RouteSearchButtonProps) => {
@@ -41,24 +41,14 @@ const RouteSearchButton = ({ mapRef, disabled, onRoutesChange, onError }: RouteS
     useEffect(() => {
         if (vehicleNumber && startDate && endDate) {
             const getVehicleId = async () => {
-                try {
-                    const result = await getVehicleOperationInfo(vehicleNumber)
-                    if (!result.data) throw new Error(result.error || '차량 검색에 실패했습니다')
+                const result = await getVehicleOperationInfo(vehicleNumber, onError)
+                if (!result) return
 
-                    const { vehicleId } = result?.data
-                    if (!vehicleId) throw new Error('해당 차량을 찾을 수 없습니다')
-
-                    setVehicleId(vehicleId)
-                } catch (error) {
-                    if (error instanceof Error) {
-                        onError?.(error.message)
-                    }
-                }
+                setVehicleId(result.vehicleId)
             }
-
             getVehicleId()
         }
-    }, [startDate, endDate])
+    }, [vehicleNumber, startDate, endDate, onError])
 
     useEffect(() => {
         if (!mapRef.current || !lat || !lng || !vehicleNumber) {

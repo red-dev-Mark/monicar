@@ -57,22 +57,14 @@ const RouteSearchSection = ({
         setInputValue(vehicleNumber)
 
         const getVehicleOperationStatus = async () => {
-            try {
-                const result = await getVehicleOperationInfo(vehicleNumber)
-                if (!result.data) throw new Error(result.error || '차량 검색에 실패했습니다')
+            const result = await getVehicleOperationInfo(vehicleNumber, openModalWithMessage)
+            if (!result) return
 
-                const { vehicleId } = result.data
-                if (!vehicleId) throw new Error('해당 차량을 찾을 수 없습니다')
+            const { vehicleId } = result
 
-                const operationResult = await vehicleAPI.getVehicleOperationStatus(vehicleId)
-                setIsVehicleId(vehicleId)
-                setIsOperation(operationResult.result)
-            } catch (error) {
-                if (error instanceof Error) {
-                    openModalWithMessage?.(error.message)
-                }
-                setIsOperation(false)
-            }
+            const operationResult = await vehicleAPI.getVehicleOperationStatus(vehicleId)
+            setIsVehicleId(vehicleId)
+            setIsOperation(operationResult.result)
         }
 
         getVehicleOperationStatus()
@@ -111,7 +103,7 @@ const RouteSearchSection = ({
 
                     {vehicleNumber && (
                         <div className={styles.bottomSection}>
-                            <DateRangeSection />
+                            <DateRangeSection onError={openModalWithMessage} />
                             <div className={styles.swtich}>
                                 <p className={styles.liveText}>실시간 경로 조회</p>
                                 <Tooltip

@@ -18,7 +18,7 @@ const VehicleSearchSection = ({ value, onChange, onError }: VehicleSearchSection
             onError?.(validation.message!)
             return
         }
-        updateQueries({ vehicleNumber: value }, ['endLat', 'endLng', 'startDate', 'endDate'])
+        updateQueries({ vehicleNumber: value, time: Date.now() }, ['endLat', 'endLng', 'startDate', 'endDate'])
     }
 
     return (
