@@ -4,8 +4,8 @@ import { Tooltip } from '@mantine/core'
 import { useSearchParams } from 'next/navigation'
 import { useRef, useState } from 'react'
 
-import MapSection from '@/app/(main)/route/components/MapSection'
-import RouteSearchSection from '@/app/(main)/route/components/RouteSearchSection'
+import MapSection from '@/app/(main)/live/components/MapSection'
+import RouteSearchSection from '@/app/(main)/live/components/RouteSearchSection'
 import LiveMode from '@/components/common/LiveMode'
 import { useLiveRoute } from '@/hooks/useLiveRoute'
 import { useQueryParams } from '@/hooks/useQueryParams'
@@ -14,7 +14,7 @@ import { LatLng } from '@/types/map'
 
 import * as styles from './styles.css'
 
-const Route = () => {
+const LivePage = () => {
     const [routes, setRoutes] = useState<LatLng[]>([])
     const [isMapLoaded, setIsMapLoaded] = useState(false)
 
@@ -73,4 +73,4 @@ const Route = () => {
     )
 }
 
-export default Route
+export default LivePage

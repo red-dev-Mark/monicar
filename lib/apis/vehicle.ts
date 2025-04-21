@@ -111,7 +111,7 @@ export const vehicleAPI = {
 
         if (!result) {
             const { errorMessage } = response.data
-            return { isValid: false, value: errorMessage[0] }
+            return { isValid: false, value: errorMessage }
         }
 
         const vehicleOperationHistory = {

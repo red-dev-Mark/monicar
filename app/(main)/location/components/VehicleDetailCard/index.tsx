@@ -55,7 +55,7 @@ const VehicleDetailCard = ({ mapRef }: VehicleDetailCardProps) => {
 
                 const { vehicleId } = vehicleLocation.data
 
-                const result = await vehicleAPI.getVehicleDetail(vehicleId)
+                const result = await vehicleAPI.getVehicleDetail(vehicleId!)
                 if (!result.data) throw new Error(vehicleLocation.error || '알 수 없는 오류가 발생했습니다')
 
                 setVehicleDetail(result.data)
