@@ -25,7 +25,7 @@ import * as styles from './styles.css'
 interface RouteSearchSectionProps {
     mapRef: MapRefType
     onRoutesChange: (paths: LatLng[]) => void
-    startLiveTracking: (vehicleId: string) => void
+    startLiveTracking: (sub: 'single' | 'all', vehicleId: string) => void
     stopLiveTracking: () => void
 }
 
@@ -90,7 +90,7 @@ const RouteSearchSection = ({
     const handleLiveToggle = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.currentTarget.checked) {
             if (!vehicleId) return
-            startLiveTracking(vehicleId)
+            startLiveTracking('single', vehicleId)
             addQueries({ live: 'true' })
         } else {
             stopLiveTracking()

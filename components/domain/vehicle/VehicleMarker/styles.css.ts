@@ -24,6 +24,8 @@ export const vehicleNumber = recipe({
         borderRadius: '12px',
         cursor: 'pointer',
         zIndex: vars.zIndex.content,
+        userSelect: 'none',
+        pointerEvents: 'none',
 
         selectors: {
             '&:after': {

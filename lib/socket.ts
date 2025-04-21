@@ -32,41 +32,41 @@ export const socket = () => {
             console.log('소켓 연결 성공')
 
             // client.subscribe(topic, callback)
+        }
 
-            client.subscribe(SOCKET_TOPIC_URL.singleVehicle(vehicleId), (message) => {
-                try {
-                    const location = JSON.parse(message.body)
+        client.subscribe(SOCKET_TOPIC_URL.singleVehicle(vehicleId), (message) => {
+            try {
+                const location = JSON.parse(message.body)
 
-                    const normalizedLocation = {
+                const normalizedLocation = {
+                    ...location,
+                    lat: normalizeCoordinate(location.lat),
+                    lng: normalizeCoordinate(location.lng),
+                }
+
+                setCurrentLocation(normalizedLocation)
+            } catch (error) {
+                console.error('소켓 메시지 처리 실패:', error)
+            }
+        })
+
+        client.subscribe(SOCKET_TOPIC_URL.allVehicles, (message) => {
+            try {
+                const locations = JSON.parse(message.body).map((item: string) => JSON.parse(item))
+
+                const normalizedLocations = locations.map((location: Route) => {
+                    return {
                         ...location,
                         lat: normalizeCoordinate(location.lat),
                         lng: normalizeCoordinate(location.lng),
                     }
+                })
 
-                    setCurrentLocation(normalizedLocation)
-                } catch (error) {
-                    console.error('소켓 메시지 처리 실패:', error)
-                }
-            })
-
-            client.subscribe(SOCKET_TOPIC_URL.allVehicles, (message) => {
-                try {
-                    const locations = JSON.parse(message.body).map((item: string) => JSON.parse(item))
-
-                    const normalizedLocations = locations.map((location: Route) => {
-                        return {
-                            ...location,
-                            lat: normalizeCoordinate(location.lat),
-                            lng: normalizeCoordinate(location.lng),
-                        }
-                    })
-
-                    setCurrentLocations(normalizedLocations)
-                } catch (error) {
-                    console.error('소켓 메시지 처리 실패:', error)
-                }
-            })
-        }
+                setCurrentLocations(normalizedLocations)
+            } catch (error) {
+                console.error('소켓 메시지 처리 실패:', error)
+            }
+        })
 
         // 소켓 오류 처리
         client.onStompError = (frame) => {

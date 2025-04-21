@@ -16,8 +16,8 @@ const LivePage = () => {
     const { liveLocations, connectSocket, disconnectSocket } = useLiveRoute()
 
     useEffect(() => {
-        connectSocket()
-
+        if (typeof window === 'undefined') return
+        connectSocket('all')
         return () => disconnectSocket()
     }, [])
 
