@@ -9,8 +9,8 @@ import { Route } from '@/types/route'
 export const useLiveRoute = () => {
     const [isTracking, setIsTracking] = useState(false)
 
-    const [currentLocation, setCurrentLocation] = useState<Route | null>(null)
-    const [currentLocations, setCurrentLocations] = useState<Route[] | null>(null)
+    const [liveLocation, setLiveLocation] = useState<Route | null>(null)
+    const [liveLocations, setLiveLocations] = useState<Route[] | null>(null)
 
     const stompClientRef = useRef<Client | null>(null)
 
@@ -40,7 +40,7 @@ export const useLiveRoute = () => {
                         lng: normalizeCoordinate(location.lng),
                     }
 
-                    setCurrentLocation(normalizedLocation)
+                    setLiveLocation(normalizedLocation)
                 } catch (error) {
                     console.error('소켓 메시지 처리 실패:', error)
                 }
@@ -59,7 +59,7 @@ export const useLiveRoute = () => {
                         }
                     })
 
-                    setCurrentLocations(normalizedLocations)
+                    setLiveLocations(normalizedLocations)
                 } catch (error) {
                     console.error('소켓 메시지 처리 실패:', error)
                 }
@@ -71,7 +71,7 @@ export const useLiveRoute = () => {
             console.error('Stomp 오류:', frame.headers['message'])
         }
 
-        // 소연결 시작
+        // 소켓 연결 시작
         client.activate()
         stompClientRef.current = client
     }, [])
@@ -92,7 +92,7 @@ export const useLiveRoute = () => {
     const stopLiveTracking = () => {
         setIsTracking(false)
         disconnectSocket() // 소켓 연결 해제
-        setCurrentLocations(null)
+        setLiveLocation(null)
     }
 
     // 컴포넌트 언마운트 시 소켓 연결 해제
@@ -105,8 +105,8 @@ export const useLiveRoute = () => {
     return {
         connectSocket,
         disconnectSocket,
-        currentLocation,
-        currentLocations,
+        liveLocation,
+        liveLocations,
         isTracking,
         startLiveTracking,
         stopLiveTracking,

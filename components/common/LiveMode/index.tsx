@@ -5,11 +5,10 @@ import { NavigateIcon } from '@/public/icons'
 import * as styles from './styles.css'
 
 interface LiveModeProps {
-    disabled: boolean
     onChange: (isClicked: boolean) => void
 }
 
-const LiveMode = ({ disabled, onChange }: LiveModeProps) => {
+const LiveMode = ({ onChange }: LiveModeProps) => {
     const [isClicked, setIsClicked] = useState(false)
 
     useEffect(() => {
@@ -25,7 +24,6 @@ const LiveMode = ({ disabled, onChange }: LiveModeProps) => {
             className={`${styles.container} ${isClicked ? styles.clicked : ''}`}
             onClick={handleClick}
             aria-label='Live Mode'
-            disabled={disabled}
         >
             <NavigateIcon width={32} height={32} />
         </button>

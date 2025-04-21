@@ -1,53 +1,40 @@
 import { vehicleAPI } from '@/lib/apis'
 import { validateVehicleNumber } from '@/lib/utils/validation'
-import { Result } from '@/types/apis/common'
-import { Vehicle, VehicleLocation } from '@/types/vehicle'
+import { Vehicle } from '@/types/vehicle'
 
-export const getVehicleOperationInfo = async (vehicleNumber: string): Promise<Result<Vehicle>> => {
+export const getVehicleOperationInfo = async (
+    vehicleNumber: string,
+    onError: (message: string) => void,
+): Promise<Vehicle | null> => {
     const validation = validateVehicleNumber(vehicleNumber)
     if (!validation.isValid) {
-        return { isSuccess: false, error: validation.message! }
+        onError?.(validation.message!)
+        return null
     }
 
-    try {
-        const response = await vehicleAPI.getVehicleOperationPeriod(vehicleNumber)
-        if (!response.isValid) {
-            return { isSuccess: false, error: response.value }
-        }
-
-        if (typeof response.value !== 'string') {
-            return {
-                isSuccess: true,
-                data: {
-                    vehicleId: response.value.vehicleId as string,
-                    vehicleNumber: response.value.vehicleNumber as string,
-                    firstOperationDate: response.value.operationPeriod.firstDateAt,
-                    lastOperationDate: response.value.operationPeriod.lastDateAt,
-                },
-            }
-        }
-
-        return { isSuccess: false, error: '유효하지 않은 차량 정보입니다' }
-    } catch (error) {
-        return { isSuccess: false, error: '차량 정보를 불러오는데 실패했습니다' }
-    }
-}
-
-export const getVehicleInfo = async (vehicleNumber: string): Promise<Result<VehicleLocation>> => {
-    const validation = validateVehicleNumber(vehicleNumber)
-    if (!validation.isValid) {
-        return { isSuccess: false, error: validation.message! }
-    }
-
-    const result = await vehicleAPI.getVehicleInfo(vehicleNumber)
+    const result = await vehicleAPI.getVehicleOperationPeriod(vehicleNumber)
     if (!result.isSuccess) {
-        return { isSuccess: false, error: result.error as string }
+        onError?.(result.error!)
     }
 
-    const vehicleInfo = result.data
-
-    return {
-        isSuccess: true,
-        data: vehicleInfo,
-    }
+    return result.data!
 }
+
+// export const getVehicleInfo = async (vehicleNumber: string): Promise<Result<VehicleLocation>> => {
+//     const validation = validateVehicleNumber(vehicleNumber)
+//     if (!validation.isValid) {
+//         return { isSuccess: false, error: validation.message! }
+//     }
+
+//     const result = await vehicleAPI.getVehicleInfo(vehicleNumber)
+//     if (!result.isSuccess) {
+//         return { isSuccess: false, error: result.error as string }
+//     }
+
+//     const vehicleInfo = result.data
+
+//     return {
+//         isSuccess: true,
+//         data: vehicleInfo,
+//     }
+// }
