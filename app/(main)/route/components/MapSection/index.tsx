@@ -10,12 +10,12 @@ import VehicleMarker from '@/components/domain/vehicle/VehicleMarker'
 import { MAP_CONFIG, POLYLINE_CONFIG } from '@/constants/map'
 import { useMapStatus } from '@/hooks/useMapStatus'
 import { LatLng, MapRefType } from '@/types/map'
-import { Route } from '@/types/route'
+import { LiveRoute } from '@/types/route'
 
 interface MapSectionProps {
     mapRef: MapRefType
     routes: LatLng[]
-    liveLocation: Route
+    liveLocation: LiveRoute
     isMapLoaded: boolean
     onRoutesChange: (paths: LatLng[]) => void
     onLoad?: () => void

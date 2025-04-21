@@ -4,17 +4,17 @@ import SockJS from 'sockjs-client'
 
 import { SOCKET_TOPIC_URL } from '@/constants/api'
 import { normalizeCoordinate } from '@/lib/utils/normalize'
-import { Route } from '@/types/route'
+import { LiveRoute } from '@/types/route'
 
 export const useLiveRoute = () => {
     const [isTracking, setIsTracking] = useState(false)
 
-    const [liveLocation, setLiveLocation] = useState<Route | null>(null)
-    const [liveLocations, setLiveLocations] = useState<Route[] | null>(null)
+    const [liveLocation, setLiveLocation] = useState<LiveRoute | null>(null)
+    const [liveLocations, setLiveLocations] = useState<LiveRoute[] | null>(null)
 
     const stompClientRef = useRef<Client | null>(null)
 
-    const connectSocket = useCallback((vehicleId: string = 'all') => {
+    const connectSocket = useCallback((sub: 'single' | 'all', vehicleId: string = '') => {
         if (stompClientRef.current && stompClientRef.current.connected) {
             disconnectSocket()
         }
@@ -30,6 +30,7 @@ export const useLiveRoute = () => {
             console.log('소켓 연결 성공')
 
             client.subscribe(SOCKET_TOPIC_URL.singleVehicle(vehicleId), (message) => {
+                if (sub !== 'single') return
                 try {
                     console.log('1대 차량 구독 성공')
                     const location = JSON.parse(message.body)
@@ -47,11 +48,12 @@ export const useLiveRoute = () => {
             })
 
             client.subscribe(SOCKET_TOPIC_URL.allVehicles, (message) => {
+                if (sub !== 'all') return
                 try {
                     console.log('모든 차량 구독 성공')
                     const locations = JSON.parse(message.body).map((item: string) => JSON.parse(item))
 
-                    const normalizedLocations = locations.map((location: Route) => {
+                    const normalizedLocations = locations.map((location: LiveRoute) => {
                         return {
                             ...location,
                             lat: normalizeCoordinate(location.lat),
@@ -78,15 +80,15 @@ export const useLiveRoute = () => {
 
     // 소켓 연결 해제 함수
     const disconnectSocket = useCallback(() => {
-        if (stompClientRef.current && stompClientRef.current.connected) {
+        if ((stompClientRef.current && stompClientRef.current.connected) || stompClientRef.current?.active) {
             stompClientRef.current.deactivate()
             console.log('소켓 연결 해제')
         }
     }, [])
 
-    const startLiveTracking = (vehicleId: string) => {
+    const startLiveTracking = (sub: 'single' | 'all', vehicleId: string) => {
         setIsTracking(true)
-        connectSocket(vehicleId) // 소켓 연결 시작
+        connectSocket(sub, vehicleId) // 소켓 연결 시작
     }
 
     const stopLiveTracking = () => {

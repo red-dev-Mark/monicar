@@ -30,19 +30,19 @@ export const MAP_BOUNDS = {
     NE_LNG: 135.513156,
 } as const
 
-export const MARKER_IMAGE = {
+export const MARKER_IMAGE = (size: string) => ({
     src: '/icons/red-car-icon.svg',
     size: {
-        width: 96,
-        height: 96,
+        width: size === 'lg' ? 96 : 64,
+        height: size === 'lg' ? 96 : 64,
     },
     options: {
         offset: {
-            x: 48,
-            y: 48,
+            x: size === 'lg' ? 48 : 32,
+            y: size === 'lg' ? 48 : 32,
         },
     },
-} as const
+})
 
 export const LIVE_IMAGE = {
     src: '/icons/mini-red-car-icon.svg',

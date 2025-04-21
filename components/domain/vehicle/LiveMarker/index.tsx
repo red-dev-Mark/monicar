@@ -2,10 +2,10 @@ import Image from 'next/image'
 import { CustomOverlayMap } from 'react-kakao-maps-sdk'
 
 import { LIVE_IMAGE } from '@/constants/map'
-import { Route } from '@/types/route'
+import { LiveRoute } from '@/types/route'
 
 interface LiveMarkerProps {
-    route: Route
+    route: LiveRoute
 }
 
 export const LiveMarker = ({ route }: LiveMarkerProps) => {

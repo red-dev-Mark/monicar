@@ -10,13 +10,15 @@ import * as styles from './styles.css'
 
 interface VehicleMarkerProps {
     vehicleInfo: VehicleLocation
+    markerSize?: 'sm' | 'lg'
     onClick?: (vehicleNumber: string) => void
 }
 
-const VehicleMarker = ({ vehicleInfo, onClick }: VehicleMarkerProps) => {
+const VehicleMarker = ({ vehicleInfo, markerSize = 'lg', onClick }: VehicleMarkerProps) => {
     const [isHovered, setIsHovered] = useState(false)
 
     const searchParams = useSearchParams()
+
     const vehicleNumberInQuery = searchParams.get('vehicleNumber')
 
     const isSelected = vehicleNumberInQuery === String(vehicleInfo.vehicleNumber)
@@ -26,13 +28,13 @@ const VehicleMarker = ({ vehicleInfo, onClick }: VehicleMarkerProps) => {
     return (
         <CustomOverlayMap position={vehicleInfo.coordinate}>
             {isVehicleNumberVisible && (
-                <p className={styles.vehicleNumber} role='presentation'>
+                <p className={styles.vehicleNumber({ size: markerSize })} role='presentation'>
                     {vehicleNumber}
                 </p>
             )}
             <MapMarker
                 position={vehicleInfo.coordinate}
-                image={MARKER_IMAGE}
+                image={MARKER_IMAGE(markerSize)}
                 onClick={() => onClick?.(vehicleInfo.vehicleNumber)}
                 onMouseOver={() => setIsHovered(true)}
                 onMouseOut={() => setIsHovered(false)}

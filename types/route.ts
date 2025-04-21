@@ -11,6 +11,16 @@ export interface Route {
     timestamp: string
 }
 
+// 차량의 실시간 운행 경로 정보
+export interface LiveRoute {
+    id: string
+    vehicleNumber: string
+    lat: number
+    lng: number
+    ang?: number
+    timestamp: number
+}
+
 export interface RouteState {
     vehicleId: string
     vehicleNumber: string
