@@ -3,7 +3,7 @@
 import { Skeleton } from '@mantine/core'
 import { Suspense } from 'react'
 
-import Route from '@/app/(main)/route/Route'
+import Route from './Route'
 
 const RoutePage = () => {
     return (

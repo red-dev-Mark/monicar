@@ -9,7 +9,7 @@ export interface Vehicle extends Partial<VehicleOperationPeriod> {
 
 // 차량의 현재 위치 정보
 export interface VehicleLocation {
-    vehicleId: string
+    vehicleId?: string
     vehicleNumber: string
     status?: keyof typeof OPERATION_STATUS
     coordinate: LatLng
