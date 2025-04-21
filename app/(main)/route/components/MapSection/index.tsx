@@ -15,72 +15,53 @@ import { Route } from '@/types/route'
 interface MapSectionProps {
     mapRef: MapRefType
     routes: LatLng[]
-    currentLocation: Route
+    liveLocation: Route
     isMapLoaded: boolean
     onRoutesChange: (paths: LatLng[]) => void
     onLoad?: () => void
 }
 
-const MapSection = memo(({ mapRef, routes, currentLocation, isMapLoaded, onLoad }: MapSectionProps) => {
+const MapSection = memo(({ mapRef, routes, liveLocation, isMapLoaded, onLoad }: MapSectionProps) => {
     const { mapState, controlMapStatus } = useMapStatus(mapRef.current)
 
     const searchParams = useSearchParams()
 
     const vehicleNumber = searchParams.get('vehicleNumber') || ''
-    const lat = Number(searchParams.get('endLat'))
-    const lng = Number(searchParams.get('endLng'))
     const live = searchParams.get('live') === 'true'
     const tracking = searchParams.get('tracking') === 'true'
 
     useEffect(() => {
         if (!isMapLoaded) return
-
-        if (tracking && currentLocation?.lat) {
-            controlMapStatus(
-                { lat: currentLocation.lat, lng: currentLocation.lng },
-                MAP_CONFIG.ROUTE.TRACKING_ZOOM_INCREMENT,
-            )
+        if (tracking && liveLocation?.lat) {
+            controlMapStatus({ lat: liveLocation.lat, lng: liveLocation.lng }, MAP_CONFIG.ROUTE.TRACKING_ZOOM_INCREMENT)
         }
-    }, [tracking, currentLocation, isMapLoaded])
+    }, [tracking, liveLocation, isMapLoaded, controlMapStatus])
 
-    // useEffect(() => {
-    //     if (!isMapLoaded) return
-
-    //     if (live && initialLiveRoute) {
-    //         controlMapStatus(
-    //             { lat: initialLiveRoute.lat, lng: initialLiveRoute.lng },
-    //             MAP_CONFIG.ROUTE.LIVE_ZOOM_INCREMENT,
-    //         )
-    //         return
-    //     }
-
-    //     if (lat && lng) {
-    //         controlMapStatus({ lat, lng }, MAP_CONFIG.ROUTE.ZOOM_INCREMENT)
-    //         return
-    //     }
-
-    //     onRoutesChange([])
-    // }, [live, initialLiveRoute, lat, lng, isMapLoaded])
+    const isVisible = routes.length > 0 && !live
 
     const vehicleOnDestination = {
-        vehicleId: '',
         vehicleNumber,
-        coordinate: { lat, lng },
+        coordinate: {
+            lat: isVisible ? routes[routes.length - 1].lat : 0,
+            lng: isVisible ? routes[routes.length - 1].lng : 0,
+        },
     }
-
-    const isVisible = routes.length > 0
 
     return (
         <Map ref={mapRef} level={mapState.level} center={mapState.center} onLoad={onLoad}>
-            <Polyline
-                path={[routes]}
-                strokeWeight={POLYLINE_CONFIG.STROKE_WEIGHT}
-                strokeColor={POLYLINE_CONFIG.STROKE_COLOR}
-                strokeOpacity={POLYLINE_CONFIG.STROKE_OPACITY}
-                strokeStyle={POLYLINE_CONFIG.STROKE_STYLE}
-            />
-            {isVisible && <VehicleMarker vehicleInfo={vehicleOnDestination} />}
-            {live && currentLocation && <LiveMarker route={currentLocation} />}
+            {isVisible && (
+                <>
+                    <Polyline
+                        path={[routes]}
+                        strokeWeight={POLYLINE_CONFIG.STROKE_WEIGHT}
+                        strokeColor={POLYLINE_CONFIG.STROKE_COLOR}
+                        strokeOpacity={POLYLINE_CONFIG.STROKE_OPACITY}
+                        strokeStyle={POLYLINE_CONFIG.STROKE_STYLE}
+                    />
+                    <VehicleMarker vehicleInfo={vehicleOnDestination} />
+                </>
+            )}
+            {live && liveLocation && <LiveMarker route={liveLocation} />}
         </Map>
     )
 })

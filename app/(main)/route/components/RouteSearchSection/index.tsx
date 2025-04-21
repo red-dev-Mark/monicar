@@ -11,6 +11,7 @@ import VehicleSearchSection from '@/app/(main)/route/components/VehicleSearchSec
 import Accordion from '@/components/common/Accordion'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
+import { useLoading } from '@/hooks/useLoading'
 import { useModal } from '@/hooks/useModal'
 import { useQueryParams } from '@/hooks/useQueryParams'
 import { vehicleAPI } from '@/lib/apis'
@@ -18,6 +19,7 @@ import { getVehicleOperationInfo } from '@/lib/services/vehicle'
 import { hasValidDateRange } from '@/lib/utils/validation'
 import { vars } from '@/styles/theme.css'
 import { LatLng, MapRefType } from '@/types/map'
+import { VehicleOperationPeriod } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 interface RouteSearchSectionProps {
@@ -35,17 +37,24 @@ const RouteSearchSection = ({
 }: RouteSearchSectionProps) => {
     const [inputValue, setInputValue] = useState('')
     const [vehicleId, setIsVehicleId] = useState('')
+    const [operationPeriod, setOperationPeriod] = useState<VehicleOperationPeriod>()
+
+    const [isValidVehicle, setIsValidVehicle] = useState(false)
     const [isOperation, setIsOperation] = useState(false)
+
+    const [isVehicleSearching, startSearchingRoute, finishSearchingRoute] = useLoading()
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
 
     const searchParams = useSearchParams()
 
-    const { updateQueries } = useQueryParams()
+    const { addQueries, removeQuery } = useQueryParams()
 
     const vehicleNumber = searchParams.get('vehicleNumber')
     const startDate = searchParams.get('startDate')
     const endDate = searchParams.get('endDate')
     const live = searchParams.get('live') === 'true'
+    const time = searchParams.get('time')
+
     const dateRange: DatesRangeValue = [startDate ? new Date(startDate) : null, endDate ? new Date(endDate) : null]
 
     useEffect(() => {
@@ -57,33 +66,35 @@ const RouteSearchSection = ({
         setInputValue(vehicleNumber)
 
         const getVehicleOperationStatus = async () => {
+            startSearchingRoute()
             const result = await getVehicleOperationInfo(vehicleNumber, openModalWithMessage)
-            if (!result) return
+            finishSearchingRoute()
 
-            const { vehicleId } = result
+            if (!result) {
+                setIsValidVehicle(false)
+                onRoutesChange([])
+                return
+            }
 
+            const { vehicleId, firstOperationDate = '', lastOperationDate = '' } = result
             const operationResult = await vehicleAPI.getVehicleOperationStatus(vehicleId)
-            setIsVehicleId(vehicleId)
-            setIsOperation(operationResult.result)
-        }
 
+            setIsVehicleId(vehicleId)
+            setOperationPeriod({ firstOperationDate, lastOperationDate })
+            setIsOperation(operationResult.result)
+            setIsValidVehicle(true)
+        }
         getVehicleOperationStatus()
-    }, [vehicleNumber])
+    }, [time])
 
     const handleLiveToggle = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.currentTarget.checked) {
             if (!vehicleId) return
             startLiveTracking(vehicleId)
-            updateQueries({ vehicleNumber: vehicleNumber || '', live: 'true' }, [
-                'endLat',
-                'endLng',
-                'startDate',
-                'endDate',
-            ])
+            addQueries({ live: 'true' })
         } else {
             stopLiveTracking()
-            if (!vehicleNumber) return
-            updateQueries({ vehicleNumber }, ['live', 'tracking'])
+            removeQuery('live')
         }
     }
 
@@ -97,13 +108,14 @@ const RouteSearchSection = ({
                 <div className={styles.container} aria-label='경로 조회 판넬'>
                     <VehicleSearchSection
                         value={inputValue}
+                        isSearching={isVehicleSearching}
                         onChange={(event: ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value)}
                         onError={openModalWithMessage}
                     />
 
-                    {vehicleNumber && (
+                    {isValidVehicle && (
                         <div className={styles.bottomSection}>
-                            <DateRangeSection onError={openModalWithMessage} />
+                            <DateRangeSection dateRange={dateRange} operationPeriod={operationPeriod!} />
                             <div className={styles.swtich}>
                                 <p className={styles.liveText}>실시간 경로 조회</p>
                                 <Tooltip
@@ -127,6 +139,8 @@ const RouteSearchSection = ({
 
                             <RouteSearchButton
                                 mapRef={mapRef}
+                                dateRange={dateRange}
+                                vehicleId={vehicleId}
                                 disabled={buttonDisabledCondition}
                                 onRoutesChange={onRoutesChange}
                                 onError={openModalWithMessage}

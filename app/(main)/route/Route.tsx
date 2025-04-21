@@ -19,7 +19,7 @@ const Route = () => {
     const [isMapLoaded, setIsMapLoaded] = useState(false)
 
     const { addQuery, removeQuery } = useQueryParams()
-    const { currentLocation, startLiveTracking, stopLiveTracking } = useLiveRoute()
+    const { liveLocation, startLiveTracking, stopLiveTracking } = useLiveRoute()
 
     const mapRef = useRef<kakao.maps.Map>(null)
 
@@ -46,7 +46,7 @@ const Route = () => {
                     arrowPosition='side'
                 >
                     <div className={styles.trackingButton}>
-                        <LiveMode disabled={!live} onChange={handleTrackingToggle} />
+                        <LiveMode onChange={handleTrackingToggle} />
                     </div>
                 </Tooltip>
             )}
@@ -60,7 +60,7 @@ const Route = () => {
             <MapSection
                 mapRef={mapRef}
                 routes={routes}
-                currentLocation={currentLocation!}
+                liveLocation={liveLocation!}
                 isMapLoaded={isMapLoaded}
                 onRoutesChange={setRoutes}
                 onLoad={() => setIsMapLoaded(true)}

@@ -13,7 +13,7 @@ const LivePage = () => {
     const mapRef = useRef<kakao.maps.Map>(null)
     const { mapState } = useMapStatus(mapRef.current)
 
-    const { currentLocations, connectSocket, disconnectSocket } = useLiveRoute()
+    const { liveLocations, connectSocket, disconnectSocket } = useLiveRoute()
 
     useEffect(() => {
         connectSocket()
@@ -24,8 +24,7 @@ const LivePage = () => {
     return (
         <div className={styles.container}>
             <Map ref={mapRef} level={mapState.level} center={mapState.center}>
-                {currentLocations &&
-                    currentLocations.map((location, index) => <LiveMarker route={location} key={index} />)}
+                {liveLocations && liveLocations.map((location, index) => <LiveMarker route={location} key={index} />)}
             </Map>
         </div>
     )

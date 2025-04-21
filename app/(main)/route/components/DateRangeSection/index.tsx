@@ -1,9 +1,6 @@
 import { DatePickerInput, DatesRangeValue } from '@mantine/dates'
-import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
 
 import { useQueryParams } from '@/hooks/useQueryParams'
-import { getVehicleOperationInfo } from '@/lib/services/vehicle'
 import { CalendarIcon } from '@/public/icons'
 import { FONT_FAMILY } from '@/styles/font.css'
 import { vars } from '@/styles/theme.css'
@@ -13,34 +10,12 @@ import '@mantine/dates/styles.css'
 import 'dayjs/locale/ko'
 
 interface DateRangeSectionProps {
-    onError: (message: string) => void
+    dateRange: DatesRangeValue
+    operationPeriod: VehicleOperationPeriod
 }
 
-const DateRangeSection = ({ onError }: DateRangeSectionProps) => {
-    const [operationPeriod, setOperationPeriod] = useState<VehicleOperationPeriod>()
-
+const DateRangeSection = ({ dateRange, operationPeriod }: DateRangeSectionProps) => {
     const { addQueries } = useQueryParams()
-
-    const searchParams = useSearchParams()
-
-    const vehicleNumber = searchParams.get('vehicleNumber')
-    const startDate = searchParams.get('startDate')
-    const endDate = searchParams.get('endDate')
-
-    useEffect(() => {
-        if (!vehicleNumber) {
-            return
-        }
-
-        const getVehicleOperationPeriod = async () => {
-            const vehicleOperationInfo = await getVehicleOperationInfo(vehicleNumber, onError)
-            if (!vehicleOperationInfo) return
-            const { firstOperationDate = '', lastOperationDate = '' } = vehicleOperationInfo
-            setOperationPeriod({ firstOperationDate, lastOperationDate })
-        }
-        getVehicleOperationPeriod()
-    }, [vehicleNumber, onError])
-    // }, [searchParams, onError])
 
     const handleDateChange = (value: DatesRangeValue) => {
         if (value[0] && !value[1]) {
@@ -58,8 +33,6 @@ const DateRangeSection = ({ onError }: DateRangeSectionProps) => {
         }
     }
 
-    if (!operationPeriod?.firstOperationDate || !operationPeriod?.lastOperationDate) return
-    const dateRange: DatesRangeValue = [startDate ? new Date(startDate) : null, endDate ? new Date(endDate) : null]
     const { firstOperationDate, lastOperationDate } = operationPeriod
 
     return (
