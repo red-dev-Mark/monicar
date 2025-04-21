@@ -1,30 +1,69 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
 import { Polyline } from 'react-kakao-maps-sdk'
 
 import Map from '@/components/domain/map/Map'
+import { LiveMarker } from '@/components/domain/vehicle/LiveMarker'
 import VehicleMarker from '@/components/domain/vehicle/VehicleMarker'
-import { POLYLINE_CONFIG } from '@/constants/map'
+import { MAP_CONFIG, POLYLINE_CONFIG } from '@/constants/map'
 import { useMapStatus } from '@/hooks/useMapStatus'
 import { LatLng, MapRefType } from '@/types/map'
+import { Route } from '@/types/route'
 
 interface MapSectionProps {
     mapRef: MapRefType
     routes: LatLng[]
+    currentLocation: Route
+    isMapLoaded: boolean
+    onRoutesChange: (paths: LatLng[]) => void
+    onLoad?: () => void
 }
 
-const MapSection = memo(({ mapRef, routes }: MapSectionProps) => {
-    const { mapState } = useMapStatus(mapRef.current)
+const MapSection = memo(({ mapRef, routes, currentLocation, isMapLoaded, onLoad }: MapSectionProps) => {
+    const { mapState, controlMapStatus } = useMapStatus(mapRef.current)
 
     const searchParams = useSearchParams()
 
     const vehicleNumber = searchParams.get('vehicleNumber') || ''
     const lat = Number(searchParams.get('endLat'))
     const lng = Number(searchParams.get('endLng'))
+    const live = searchParams.get('live') === 'true'
+    const tracking = searchParams.get('tracking') === 'true'
+
+    useEffect(() => {
+        if (!isMapLoaded) return
+
+        if (tracking && currentLocation?.lat) {
+            controlMapStatus(
+                { lat: currentLocation.lat, lng: currentLocation.lng },
+                MAP_CONFIG.ROUTE.TRACKING_ZOOM_INCREMENT,
+            )
+        }
+    }, [tracking, currentLocation, isMapLoaded])
+
+    // useEffect(() => {
+    //     if (!isMapLoaded) return
+
+    //     if (live && initialLiveRoute) {
+    //         controlMapStatus(
+    //             { lat: initialLiveRoute.lat, lng: initialLiveRoute.lng },
+    //             MAP_CONFIG.ROUTE.LIVE_ZOOM_INCREMENT,
+    //         )
+    //         return
+    //     }
+
+    //     if (lat && lng) {
+    //         controlMapStatus({ lat, lng }, MAP_CONFIG.ROUTE.ZOOM_INCREMENT)
+    //         return
+    //     }
+
+    //     onRoutesChange([])
+    // }, [live, initialLiveRoute, lat, lng, isMapLoaded])
 
     const vehicleOnDestination = {
+        vehicleId: '',
         vehicleNumber,
         coordinate: { lat, lng },
     }
@@ -32,7 +71,7 @@ const MapSection = memo(({ mapRef, routes }: MapSectionProps) => {
     const isVisible = routes.length > 0
 
     return (
-        <Map ref={mapRef} level={mapState.level} center={mapState.center}>
+        <Map ref={mapRef} level={mapState.level} center={mapState.center} onLoad={onLoad}>
             <Polyline
                 path={[routes]}
                 strokeWeight={POLYLINE_CONFIG.STROKE_WEIGHT}
@@ -41,6 +80,7 @@ const MapSection = memo(({ mapRef, routes }: MapSectionProps) => {
                 strokeStyle={POLYLINE_CONFIG.STROKE_STYLE}
             />
             {isVisible && <VehicleMarker vehicleInfo={vehicleOnDestination} />}
+            {live && currentLocation && <LiveMarker route={currentLocation} />}
         </Map>
     )
 })
