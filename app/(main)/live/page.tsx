@@ -2,24 +2,31 @@
 
 import { useEffect, useRef } from 'react'
 
-import MapSection from '@/app/(main)/live/components/MapSection'
+import Map from '@/components/domain/map/Map'
+import { LiveMarker } from '@/components/domain/vehicle/LiveMarker'
 import { useLiveRoute } from '@/hooks/useLiveRoute'
+import { useMapStatus } from '@/hooks/useMapStatus'
 
 import * as styles from './styles.css'
 
 const LivePage = () => {
-    const { currentLocations, connectSocket, disconnectSocket } = useLiveRoute()
-
     const mapRef = useRef<kakao.maps.Map>(null)
+    const { mapState } = useMapStatus(mapRef.current)
+
+    const { currentLocations, connectSocket, disconnectSocket } = useLiveRoute()
 
     useEffect(() => {
         connectSocket()
+
         return () => disconnectSocket()
     }, [])
 
     return (
         <div className={styles.container}>
-            <MapSection mapRef={mapRef} currentLocations={currentLocations!} />
+            <Map ref={mapRef} level={mapState.level} center={mapState.center}>
+                {currentLocations &&
+                    currentLocations.map((location, index) => <LiveMarker route={location} key={index} />)}
+            </Map>
         </div>
     )
 }

@@ -35,7 +35,6 @@ const DateRangeSection = ({ onError }: DateRangeSectionProps) => {
         const getVehicleOperationPeriod = async () => {
             const vehicleOperationInfo = await getVehicleOperationInfo(vehicleNumber, onError)
             if (!vehicleOperationInfo) return
-
             const { firstOperationDate = '', lastOperationDate = '' } = vehicleOperationInfo
             setOperationPeriod({ firstOperationDate, lastOperationDate })
         }

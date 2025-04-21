@@ -71,7 +71,7 @@ export const useLiveRoute = () => {
             console.error('Stomp 오류:', frame.headers['message'])
         }
 
-        // 소연결 시작
+        // 소켓 연결 시작
         client.activate()
         stompClientRef.current = client
     }, [])
