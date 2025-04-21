@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 
-import { API_URL } from '@/constants/api'
+// import { API_URL } from '@/constants/api'
 import { AlarmResponse } from '@/types/vehicle'
+
 export const useSubscribe = () => {
     const [alarm, setAlarm] = useState<AlarmResponse[]>([])
     const [error, setError] = useState<Error | null>(null)
