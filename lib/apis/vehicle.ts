@@ -3,7 +3,7 @@ import { httpClient } from '@/lib/apis'
 import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { removeSpaces } from '@/lib/utils/string'
 import { Result } from '@/types/apis/common'
-import { VehicleDetail, VehicleLocation, VehicleStatus } from '@/types/vehicle'
+import { Vehicle, VehicleDetail, VehicleLocation, VehicleStatus } from '@/types/vehicle'
 
 export const vehicleAPI = {
     // 차량 정보 조회
@@ -89,7 +89,7 @@ export const vehicleAPI = {
         const response = await httpClient.get(`api/v1/vehicle/status`)
 
         if (!response.data.isSuccess) {
-            return { isSuccess: false, error: response.data.errorMessag }
+            return { isSuccess: false, error: response.data.errorMessage }
         }
 
         if (!response.data.result) {
@@ -100,30 +100,31 @@ export const vehicleAPI = {
     },
 
     // 차량번호로 운행 이력 기간 조회
-    getVehicleOperationPeriod: async (vehicleNumber: string) => {
-        const response = await httpClient.get(`api/v1/vehicle`, {
-            params: {
-                vehicleNumber: removeSpaces(vehicleNumber),
-            },
-        })
+    getVehicleOperationPeriod: async (vehicleNumber: string): Promise<Result<Vehicle>> => {
+        try {
+            const response = await httpClient.get(`api/v1/vehicle`, {
+                params: {
+                    vehicleNumber: removeSpaces(vehicleNumber),
+                },
+            })
+            if (!response.data.isSuccess) throw new Error(response.data.errorMessage)
 
-        const { result } = response.data
+            const { result } = response.data
 
-        if (!result) {
-            const { errorMessage } = response.data
-            return { isValid: false, value: errorMessage }
+            if (!result || !result.firstDateAt || !result.lastDateAt) {
+                throw new Error('차량 정보를 불러오는데 실패했습니다')
+            }
+
+            const formattedResult = {
+                ...result,
+                firstOperationDate: result.firstDateAt,
+                lastOperationDate: result.lastDateAt,
+            }
+
+            return { isSuccess: true, data: formattedResult }
+        } catch (error) {
+            return { isSuccess: false, error: error instanceof Error ? error.message : '' }
         }
-
-        const vehicleOperationHistory = {
-            vehicleId: result.vehicleId,
-            vehicleNumber: result.vehicleNumber,
-            operationPeriod: {
-                firstDateAt: result.firstDateAt,
-                lastDateAt: result.lastDateAt,
-            },
-        }
-
-        return { isValid: true, value: vehicleOperationHistory }
     },
 
     // 차량 운행 여부 조회

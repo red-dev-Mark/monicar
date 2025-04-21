@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { MAP_CONFIG } from '@/constants/map'
 import { getBoundedMapStatus } from '@/lib/utils/map'
@@ -17,7 +17,7 @@ export const useMapStatus = (map: kakao.maps.Map | null | undefined) => {
         setCurrentMapState(getBoundedMapStatus(map))
     }
 
-    const controlMapStatus = (location: LatLng, level?: number) => {
+    const controlMapStatus = useCallback((location: LatLng, level?: number) => {
         if (!map) {
             console.warn('카카오맵 인스턴스 생성에 실패하였습니다.')
             return
@@ -34,7 +34,7 @@ export const useMapStatus = (map: kakao.maps.Map | null | undefined) => {
         } catch (error) {
             console.error('지도상태 변경 실패', error)
         }
-    }
+    }, [])
 
     return { mapState, updateMapStatus, controlMapStatus }
 }

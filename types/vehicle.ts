@@ -17,8 +17,8 @@ export interface VehicleLocation {
 
 // 차량 운행 기간
 export interface VehicleOperationPeriod {
-    firstOperationDate: string | null
-    lastOperationDate: string | null
+    firstOperationDate: string
+    lastOperationDate: string
 }
 
 // 차량 상세 정보

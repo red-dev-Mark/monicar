@@ -1,42 +1,3 @@
-// 'use client'
-
-// import { Skeleton } from '@mantine/core'
-// import { Suspense, useRef, useState } from 'react'
-
-// import Route from '@/app/(main)/route/Route'
-// import { LatLng } from '@/types/map'
-
-// import * as styles from './styles.css'
-// import MapSection from '@/app/(main)/live/components/MapSection'
-// import RouteSearchSection from '@/app/(main)/live/components/RouteSearchSection'
-
-// const Route = () => {
-//     const [routes, setRoutes] = useState<LatLng[]>([])
-//     const [isMapLoaded, setIsMapLoaded] = useState(false)
-
-//     const mapRef = useRef<kakao.maps.Map>(null)
-
-//     return (
-//         <div className={styles.container}>
-//             <RouteSearchSection mapRef={mapRef} onRoutesChange={setRoutes} />
-//             <MapSection
-//                 mapRef={mapRef}
-//                 routes={routes}
-//                 isMapLoaded={isMapLoaded}
-//                 onRoutesChange={setRoutes}
-//                 onLoad={() => setIsMapLoaded(true)}
-//             />
-//         </div>
-//     )
-//     // return (
-//     //     <Suspense fallback={<Skeleton />}>
-//     //         <Route />
-//     //     </Suspense>
-//     // )
-// }
-
-// export default Route
-
 'use client'
 
 import { Tooltip } from '@mantine/core'
@@ -57,13 +18,12 @@ const Route = () => {
     const [routes, setRoutes] = useState<LatLng[]>([])
     const [isMapLoaded, setIsMapLoaded] = useState(false)
 
-    const { currentLocation, startLiveTracking, stopLiveTracking } = useLiveRoute()
+    const { addQuery, removeQuery } = useQueryParams()
+    const { liveLocation, startLiveTracking, stopLiveTracking } = useLiveRoute()
 
     const mapRef = useRef<kakao.maps.Map>(null)
 
     const searchParams = useSearchParams()
-
-    const { addQuery, removeQuery } = useQueryParams()
 
     const live = searchParams.get('live') === 'true'
 
@@ -86,7 +46,7 @@ const Route = () => {
                     arrowPosition='side'
                 >
                     <div className={styles.trackingButton}>
-                        <LiveMode disabled={!live} onChange={handleTrackingToggle} />
+                        <LiveMode onChange={handleTrackingToggle} />
                     </div>
                 </Tooltip>
             )}
@@ -100,8 +60,7 @@ const Route = () => {
             <MapSection
                 mapRef={mapRef}
                 routes={routes}
-                // initialLiveRoute={initialLiveRoute}
-                currentLocation={currentLocation!}
+                liveLocation={liveLocation!}
                 isMapLoaded={isMapLoaded}
                 onRoutesChange={setRoutes}
                 onLoad={() => setIsMapLoaded(true)}

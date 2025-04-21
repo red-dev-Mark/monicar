@@ -1,79 +1,3 @@
-// 'use client'
-
-// import { DatesRangeValue } from '@mantine/dates'
-// import { useSearchParams } from 'next/navigation'
-// import { ChangeEvent, useEffect, useState } from 'react'
-
-// import DateRangeSection from '@/app/(main)/route/components/DateRangeSection'
-// import RouteSearchButton from '@/app/(main)/route/components/RouteSearchButton'
-// import VehicleSearchSection from '@/app/(main)/route/components/VehicleSearchSection/indext'
-// import Accordion from '@/components/common/Accordion'
-// import Modal from '@/components/common/Modal'
-// import { ModalMessageType } from '@/components/common/Modal/types'
-// import { useModal } from '@/hooks/useModal'
-// import { hasValidDateRange } from '@/lib/utils/validation'
-// import { LatLng, MapRefType } from '@/types/map'
-
-// import * as styles from './styles.css'
-// interface RouteSearchSectionProps {
-//     mapRef: MapRefType
-//     onRoutesChange: (paths: LatLng[]) => void
-// }
-
-// const RouteSearchSection = ({ mapRef, onRoutesChange }: RouteSearchSectionProps) => {
-//     const [inputValue, setInputValue] = useState('')
-//     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
-
-//     const searchParams = useSearchParams()
-
-//     const vehicleNumber = searchParams.get('vehicleNumber')
-//     const startDate = searchParams.get('startDate')
-//     const endDate = searchParams.get('endDate')
-//     const dateRange: DatesRangeValue = [startDate ? new Date(startDate) : null, endDate ? new Date(endDate) : null]
-
-//     useEffect(() => {
-//         setInputValue(vehicleNumber ? vehicleNumber : '')
-//     }, [vehicleNumber])
-
-//     const isVehicleNumberDirty = searchParams.get('vehicleNumber') !== inputValue
-//     const isRouteSearchable = !!searchParams.get('vehicleNumber') && hasValidDateRange(dateRange)
-//     const buttonDisabledCondition = { isVehicleNumberDirty, isRouteSearchable }
-
-//     return (
-//         <div className={styles.accordion}>
-//             <Accordion title='ㅤ'>
-//                 <div className={styles.container} aria-label='경로 조회 판넬'>
-//                     <VehicleSearchSection
-//                         value={inputValue}
-//                         onChange={(event: ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value)}
-//                         onError={openModalWithMessage}
-//                     />
-
-//                     {vehicleNumber && (
-//                         <div className={styles.bottomSection}>
-//                             <DateRangeSection />
-//                             <RouteSearchButton
-//                                 mapRef={mapRef}
-//                                 disabled={buttonDisabledCondition}
-//                                 onRoutesChange={onRoutesChange}
-//                                 onError={openModalWithMessage}
-//                             />
-//                         </div>
-//                     )}
-//                 </div>
-//             </Accordion>
-//                 <Modal
-//                     isOpen={isModalOpen}
-//                     message={message as ModalMessageType}
-//                     variant={{ variant: 'alert', confirmButton: '확인' }}
-//                     onClose={closeModal}
-//                 />
-//         </div>
-//     )
-// }
-
-// export default RouteSearchSection
-
 'use client'
 
 import { Switch, Tooltip } from '@mantine/core'
@@ -87,6 +11,7 @@ import VehicleSearchSection from '@/app/(main)/route/components/VehicleSearchSec
 import Accordion from '@/components/common/Accordion'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
+import { useLoading } from '@/hooks/useLoading'
 import { useModal } from '@/hooks/useModal'
 import { useQueryParams } from '@/hooks/useQueryParams'
 import { vehicleAPI } from '@/lib/apis'
@@ -94,12 +19,13 @@ import { getVehicleOperationInfo } from '@/lib/services/vehicle'
 import { hasValidDateRange } from '@/lib/utils/validation'
 import { vars } from '@/styles/theme.css'
 import { LatLng, MapRefType } from '@/types/map'
+import { VehicleOperationPeriod } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 interface RouteSearchSectionProps {
     mapRef: MapRefType
     onRoutesChange: (paths: LatLng[]) => void
-    startLiveTracking: (vehicleId: string) => void
+    startLiveTracking: (sub: 'single' | 'all', vehicleId: string) => void
     stopLiveTracking: () => void
 }
 
@@ -111,17 +37,24 @@ const RouteSearchSection = ({
 }: RouteSearchSectionProps) => {
     const [inputValue, setInputValue] = useState('')
     const [vehicleId, setIsVehicleId] = useState('')
+    const [operationPeriod, setOperationPeriod] = useState<VehicleOperationPeriod>()
+
+    const [isValidVehicle, setIsValidVehicle] = useState(false)
     const [isOperation, setIsOperation] = useState(false)
+
+    const [isVehicleSearching, startSearchingRoute, finishSearchingRoute] = useLoading()
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
 
     const searchParams = useSearchParams()
 
-    const { updateQueries } = useQueryParams()
+    const { addQueries, removeQuery } = useQueryParams()
 
     const vehicleNumber = searchParams.get('vehicleNumber')
     const startDate = searchParams.get('startDate')
     const endDate = searchParams.get('endDate')
     const live = searchParams.get('live') === 'true'
+    const time = searchParams.get('time')
+
     const dateRange: DatesRangeValue = [startDate ? new Date(startDate) : null, endDate ? new Date(endDate) : null]
 
     useEffect(() => {
@@ -133,41 +66,35 @@ const RouteSearchSection = ({
         setInputValue(vehicleNumber)
 
         const getVehicleOperationStatus = async () => {
-            try {
-                const result = await getVehicleOperationInfo(vehicleNumber)
-                if (!result.data) throw new Error(result.error || '차량 검색에 실패했습니다')
+            startSearchingRoute()
+            const result = await getVehicleOperationInfo(vehicleNumber, openModalWithMessage)
+            finishSearchingRoute()
 
-                const { vehicleId } = result.data
-                if (!vehicleId) throw new Error('해당 차량을 찾을 수 없습니다')
-
-                const operationResult = await vehicleAPI.getVehicleOperationStatus(vehicleId)
-                setIsVehicleId(vehicleId)
-                setIsOperation(operationResult.result)
-            } catch (error) {
-                if (error instanceof Error) {
-                    openModalWithMessage?.(error.message)
-                }
-                setIsOperation(false)
+            if (!result) {
+                setIsValidVehicle(false)
+                onRoutesChange([])
+                return
             }
-        }
 
+            const { vehicleId, firstOperationDate = '', lastOperationDate = '' } = result
+            const operationResult = await vehicleAPI.getVehicleOperationStatus(vehicleId)
+
+            setIsVehicleId(vehicleId)
+            setOperationPeriod({ firstOperationDate, lastOperationDate })
+            setIsOperation(operationResult.result)
+            setIsValidVehicle(true)
+        }
         getVehicleOperationStatus()
-    }, [vehicleNumber])
+    }, [time])
 
     const handleLiveToggle = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.currentTarget.checked) {
             if (!vehicleId) return
-            startLiveTracking(vehicleId)
-            updateQueries({ vehicleNumber: vehicleNumber || '', live: 'true' }, [
-                'endLat',
-                'endLng',
-                'startDate',
-                'endDate',
-            ])
+            startLiveTracking('single', vehicleId)
+            addQueries({ live: 'true' })
         } else {
             stopLiveTracking()
-            if (!vehicleNumber) return
-            updateQueries({ vehicleNumber }, ['live', 'tracking'])
+            removeQuery('live')
         }
     }
 
@@ -181,13 +108,14 @@ const RouteSearchSection = ({
                 <div className={styles.container} aria-label='경로 조회 판넬'>
                     <VehicleSearchSection
                         value={inputValue}
+                        isSearching={isVehicleSearching}
                         onChange={(event: ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value)}
                         onError={openModalWithMessage}
                     />
 
-                    {vehicleNumber && (
+                    {isValidVehicle && (
                         <div className={styles.bottomSection}>
-                            <DateRangeSection />
+                            <DateRangeSection dateRange={dateRange} operationPeriod={operationPeriod!} />
                             <div className={styles.swtich}>
                                 <p className={styles.liveText}>실시간 경로 조회</p>
                                 <Tooltip
@@ -211,6 +139,8 @@ const RouteSearchSection = ({
 
                             <RouteSearchButton
                                 mapRef={mapRef}
+                                dateRange={dateRange}
+                                vehicleId={vehicleId}
                                 disabled={buttonDisabledCondition}
                                 onRoutesChange={onRoutesChange}
                                 onError={openModalWithMessage}
