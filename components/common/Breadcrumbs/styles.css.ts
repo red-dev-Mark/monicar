@@ -24,10 +24,10 @@ export const item = style({
             marginLeft: '-16px',
         },
         '&:nth-child(1)': {
-            zIndex: vars.zIndex.third,
+            zIndex: vars.zIndex.component,
         },
         '&:nth-child(2)': {
-            zIndex: vars.zIndex.second,
+            zIndex: vars.zIndex.base,
         },
         '&:nth-child(3)': {
             zIndex: vars.zIndex.default,

@@ -124,7 +124,7 @@ export const searchInputWrapper = style({
     right: 14,
     top: 18,
     width: '358px',
-    zIndex: vars.zIndex.four,
+    zIndex: vars.zIndex.content,
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {
             display: 'none',

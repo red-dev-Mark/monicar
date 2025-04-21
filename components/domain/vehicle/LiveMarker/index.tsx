@@ -23,7 +23,17 @@ export const LiveMarker = ({ route }: LiveMarkerProps) => {
                     transform: `translate(-50%, -50%) rotate(${route.ang}deg)`,
                 }}
             >
-                <Image src={LIVE_IMAGE.src} alt='실시간 차량 이미지' width={24} height={24} priority />
+                <Image
+                    src={LIVE_IMAGE.src}
+                    alt='실시간 차량 이미지'
+                    width={24}
+                    height={24}
+                    priority
+                    style={{
+                        userSelect: 'none',
+                        pointerEvents: 'none',
+                    }}
+                />
             </div>
         </CustomOverlayMap>
     )

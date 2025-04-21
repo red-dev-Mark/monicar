@@ -35,7 +35,7 @@ const InspectionStatus = ({ inspectionStatusData, onStatusClick }: InspectionSta
                     <div className={styles.mobileStatusWrapper}>
                         <div className={styles.iconWrapper[data.iconType]}>
                             <div className={styles.icon}>{data.icon}</div>
-                            {data.status === 'REQUIRED' && data.count !== 0 && (
+                            {data.count !== 0 && (
                                 <span className={styles.count}>
                                     <CountUp end={Number(data.count)} duration={1} />
                                 </span>

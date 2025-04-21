@@ -6,13 +6,15 @@ import { SOCKET_TOPIC_URL } from '@/constants/api'
 import { normalizeCoordinate } from '@/lib/utils/normalize'
 import { Route } from '@/types/route'
 
-export const useLiveRoute = () => {
+export const socket = () => {
     const [isTracking, setIsTracking] = useState(false)
 
     const [currentLocation, setCurrentLocation] = useState<Route | null>(null)
     const [currentLocations, setCurrentLocations] = useState<Route[] | null>(null)
 
     const stompClientRef = useRef<Client | null>(null)
+
+    // let isConnect = false
 
     const connectSocket = useCallback((vehicleId: string = 'all') => {
         if (stompClientRef.current && stompClientRef.current.connected) {
@@ -31,7 +33,6 @@ export const useLiveRoute = () => {
 
             client.subscribe(SOCKET_TOPIC_URL.singleVehicle(vehicleId), (message) => {
                 try {
-                    console.log('1대 차량 구독 성공')
                     const location = JSON.parse(message.body)
 
                     const normalizedLocation = {
@@ -48,7 +49,6 @@ export const useLiveRoute = () => {
 
             client.subscribe(SOCKET_TOPIC_URL.allVehicles, (message) => {
                 try {
-                    console.log('모든 차량 구독 성공')
                     const locations = JSON.parse(message.body).map((item: string) => JSON.parse(item))
 
                     const normalizedLocations = locations.map((location: Route) => {
@@ -92,6 +92,8 @@ export const useLiveRoute = () => {
     const stopLiveTracking = () => {
         setIsTracking(false)
         disconnectSocket() // 소켓 연결 해제
+        // setLiveRoutes([])
+        // setLiveRoutes(null)
         setCurrentLocations(null)
     }
 

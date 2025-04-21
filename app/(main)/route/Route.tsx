@@ -1,3 +1,42 @@
+// 'use client'
+
+// import { Skeleton } from '@mantine/core'
+// import { Suspense, useRef, useState } from 'react'
+
+// import Route from '@/app/(main)/route/Route'
+// import { LatLng } from '@/types/map'
+
+// import * as styles from './styles.css'
+// import MapSection from '@/app/(main)/live/components/MapSection'
+// import RouteSearchSection from '@/app/(main)/live/components/RouteSearchSection'
+
+// const Route = () => {
+//     const [routes, setRoutes] = useState<LatLng[]>([])
+//     const [isMapLoaded, setIsMapLoaded] = useState(false)
+
+//     const mapRef = useRef<kakao.maps.Map>(null)
+
+//     return (
+//         <div className={styles.container}>
+//             <RouteSearchSection mapRef={mapRef} onRoutesChange={setRoutes} />
+//             <MapSection
+//                 mapRef={mapRef}
+//                 routes={routes}
+//                 isMapLoaded={isMapLoaded}
+//                 onRoutesChange={setRoutes}
+//                 onLoad={() => setIsMapLoaded(true)}
+//             />
+//         </div>
+//     )
+//     // return (
+//     //     <Suspense fallback={<Skeleton />}>
+//     //         <Route />
+//     //     </Suspense>
+//     // )
+// }
+
+// export default Route
+
 'use client'
 
 import { Tooltip } from '@mantine/core'
@@ -18,7 +57,7 @@ const Route = () => {
     const [routes, setRoutes] = useState<LatLng[]>([])
     const [isMapLoaded, setIsMapLoaded] = useState(false)
 
-    const { initialLiveRoute, currentLiveRoute, startLiveTracking, stopLiveTracking } = useLiveRoute()
+    const { currentLocation, startLiveTracking, stopLiveTracking } = useLiveRoute()
 
     const mapRef = useRef<kakao.maps.Map>(null)
 
@@ -61,8 +100,8 @@ const Route = () => {
             <MapSection
                 mapRef={mapRef}
                 routes={routes}
-                initialLiveRoute={initialLiveRoute}
-                currentLiveRoute={currentLiveRoute!}
+                // initialLiveRoute={initialLiveRoute}
+                currentLocation={currentLocation!}
                 isMapLoaded={isMapLoaded}
                 onRoutesChange={setRoutes}
                 onLoad={() => setIsMapLoaded(true)}

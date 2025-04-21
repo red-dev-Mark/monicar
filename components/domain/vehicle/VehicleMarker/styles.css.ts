@@ -1,4 +1,4 @@
-import { style, keyframes } from '@vanilla-extract/css'
+import { keyframes, style } from '@vanilla-extract/css'
 
 import { vars } from '@/styles/theme.css'
 
@@ -22,7 +22,7 @@ export const vehicleNumber = style({
     backgroundColor: vars.colors.black,
     borderRadius: '12px',
     cursor: 'pointer',
-    zIndex: vars.zIndex.four,
+    zIndex: vars.zIndex.content,
 
     selectors: {
         '&:after': {

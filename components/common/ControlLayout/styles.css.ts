@@ -10,7 +10,7 @@ export const container = style({
     alignItems: 'center',
     width: '100%',
     justifyContent: 'flex-end',
-    zIndex: vars.zIndex.four,
+    zIndex: vars.zIndex.content,
 
     '@media': {
         [`screen and (max-width: ${breakPoints.mobile}px)`]: {

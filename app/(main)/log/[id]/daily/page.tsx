@@ -16,8 +16,6 @@ import { useModal } from '@/hooks/useModal'
 import { documentService } from '@/lib/apis/document'
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
 
-import { breadcrumbsWrapper } from '../styles.css'
-
 import { default as ControlBox } from './components/ControlBox'
 import DailyListItem from './components/DailyListItem'
 import HourlyListItem from './components/HourlyListItem'
@@ -25,6 +23,7 @@ import { selectPeriod } from './constants'
 import { useDailyData } from './hooks/useDailyData'
 import { useHourlyData } from './hooks/useHourlyData'
 import * as styles from './styles.css'
+import { breadcrumbsWrapper } from './styles.css'
 
 const DailyPage = () => {
     const {} = useKakaoLoader()

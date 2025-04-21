@@ -29,7 +29,6 @@ export const getVehicleOperationInfo = async (vehicleNumber: string): Promise<Re
 
         return { isSuccess: false, error: '유효하지 않은 차량 정보입니다' }
     } catch (error) {
-        console.error(error)
         return { isSuccess: false, error: '차량 정보를 불러오는데 실패했습니다' }
     }
 }
