@@ -31,6 +31,8 @@ export const socket = () => {
         client.onConnect = () => {
             console.log('소켓 연결 성공')
 
+            // client.subscribe(topic, callback)
+
             client.subscribe(SOCKET_TOPIC_URL.singleVehicle(vehicleId), (message) => {
                 try {
                     const location = JSON.parse(message.body)

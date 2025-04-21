@@ -4,13 +4,13 @@ import SockJS from 'sockjs-client'
 
 import { SOCKET_TOPIC_URL } from '@/constants/api'
 import { normalizeCoordinate } from '@/lib/utils/normalize'
-import { Route } from '@/types/route'
+import { LiveRoute } from '@/types/route'
 
 export const useLiveRoute = () => {
     const [isTracking, setIsTracking] = useState(false)
 
-    const [liveLocation, setLiveLocation] = useState<Route | null>(null)
-    const [liveLocations, setLiveLocations] = useState<Route[] | null>(null)
+    const [liveLocation, setLiveLocation] = useState<LiveRoute | null>(null)
+    const [liveLocations, setLiveLocations] = useState<LiveRoute[] | null>(null)
 
     const stompClientRef = useRef<Client | null>(null)
 
@@ -51,7 +51,7 @@ export const useLiveRoute = () => {
                     console.log('모든 차량 구독 성공')
                     const locations = JSON.parse(message.body).map((item: string) => JSON.parse(item))
 
-                    const normalizedLocations = locations.map((location: Route) => {
+                    const normalizedLocations = locations.map((location: LiveRoute) => {
                         return {
                             ...location,
                             lat: normalizeCoordinate(location.lat),
