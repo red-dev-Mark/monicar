@@ -1,26 +1,20 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
-export const middleware = async () => {
-    // export const middleware = async (request: NextRequest) => {
-    // const session = request.cookies.get('SESSION')?.value
+export const middleware = async (request: NextRequest) => {
+    const rememberCookie = request.cookies.get('remember-me-dev')?.value
 
-    // const { pathname } = request.nextUrl
+    const { pathname } = request.nextUrl
+    const protectedRoutes = ['/dashboard', '/log', '/route', '/location', 'live']
 
-    // console.log('----------------------------------------------')
-    // console.log('세션 ID: ', session)
-    // console.log('----------------------------------------------')
+    if (protectedRoutes.some((route) => pathname.startsWith(route))) {
+        if (!rememberCookie) {
+            return NextResponse.redirect(new URL('/signin', request.url))
+        }
+    }
 
-    // const protectedRoutes = ['/dashboard', '/log', '/route', '/location']
-
-    // if (protectedRoutes.some((route) => pathname.startsWith(route))) {
-    //     if (!session) {
-    //         return NextResponse.redirect(new URL('/signin', request.url))
-    //     }
-    // }
-
-    // if (pathname === '/signin' && session) {
-    //     return NextResponse.redirect(new URL('/dashboard', request.url))
-    // }
+    if (pathname === '/signin' && rememberCookie) {
+        return NextResponse.redirect(new URL('/dashboard', request.url))
+    }
 
     return NextResponse.next()
 }
