@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export const middleware = async (request: NextRequest) => {
-    const rememberCookie = request.cookies.get('remember-me-dev')?.value
+    const REMEMBER_ME_COOKIE_NAME = process.env.REMEMBER_ME_COOKIE_NAME || 'remember-me' || 'remember-me-dev'
+    const rememberCookie = request.cookies.get(REMEMBER_ME_COOKIE_NAME)?.value
 
     const { pathname } = request.nextUrl
-    const protectedRoutes = ['/dashboard', '/log', '/route', '/location', 'live']
+    const protectedRoutes = ['/dashboard', '/log', '/route', '/location', '/live']
 
     if (protectedRoutes.some((route) => pathname.startsWith(route))) {
         if (!rememberCookie) {
@@ -20,5 +21,5 @@ export const middleware = async (request: NextRequest) => {
 }
 
 export const config = {
-    matcher: ['/dashboard/:path*', '/log/:path*', '/route', '/location', '/signin'],
+    matcher: ['/dashboard/:path*', '/log/:path*', '/route/:path*', '/location/:path*', '/live/:path*', '/signin'],
 }
