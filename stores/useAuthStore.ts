@@ -9,8 +9,8 @@ interface AuthState {
     authError: string | null
 
     setAuthLoading: (isAuthLoading: boolean) => void
-    setAuthError: (authError: string) => void
-    login: ({ email, nickname, companyName, departmentName }: User) => void
+    setAuthError: (authError: string | null) => void
+    login: () => void
     logout: () => void
 }
 
@@ -21,11 +21,10 @@ export const useAuthStore = create<AuthState>((set) => ({
     authError: null,
 
     setAuthLoading: (isAuthLoading: boolean) => set({ isAuthLoading }),
-    setAuthError: (authError: string) => set({ authError }),
+    setAuthError: (authError: string | null) => set({ authError }),
 
-    login: ({ email, nickname, companyName, departmentName }: User) =>
+    login: () =>
         set({
-            user: { email, nickname, companyName, departmentName },
             isAuthenticated: true,
             isAuthLoading: false,
             authError: null,

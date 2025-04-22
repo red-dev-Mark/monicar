@@ -1,7 +1,8 @@
 export const MODAL_MESSAGES = {
     AUTH: {
-        INVALID_CREDENTIALS: '아이디 또는 비밀번호를 다시 확인해주세요.',
-        SERVER_ERROR: '서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.',
+        INVALID_CREDENTIALS: '아이디 또는 비밀번호를 다시 확인해주세요',
+        SERVER_ERROR: '일시적인 문제가 발생했습니다.\n잠시 후 다시 시도해주세요',
+        UNKNOWN: '알 수 없는 오류가 발생했습니다.\n잠시 후에 다시 시도해주세요',
     },
     VEHICLE: {
         NOT_FOUND: '등록되지 않은 차량번호입니다.',

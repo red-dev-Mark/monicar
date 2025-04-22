@@ -16,7 +16,7 @@ export const setupResponseInterceptor = (instance: AxiosInstance) => {
         (response: AxiosResponse) => {
             return response
         },
-        async (error: AxiosError) => {
+        (error: AxiosError) => {
             if ((error?.status === 401 || error?.status === 403) && !window.location.pathname.startsWith('/signin')) {
                 window.location.href = '/signin'
             }
