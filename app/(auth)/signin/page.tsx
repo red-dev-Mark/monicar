@@ -9,70 +9,50 @@ import { RoundButton } from '@/components/common/Button/RoundButton'
 import SignInInput from '@/components/common/Input/SignInInput'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
-import { useAuth } from '@/hooks/useAuth'
+import { MODAL_MESSAGES } from '@/constants/ui'
+import { useLoginForm } from '@/hooks/useLoginForm'
 import { useModal } from '@/hooks/useModal'
-import { validateEmail, validatePassword } from '@/lib/utils/validation'
 import { useAuthStore } from '@/stores/useAuthStore'
 
 import * as styles from './styles.css'
 
-interface FormDataModel {
-    email: string
-    password: string
-}
-
 const SignInPage = () => {
-    const [formData, setFormData] = useState<FormDataModel>({
-        email: '',
-        password: '',
-    })
+    const [isRedirecting, setIsRedirecting] = useState(false)
 
-    const { login } = useAuth()
     const { isModalOpen, message, closeModal, openModalWithMessage } = useModal()
-    const { isAuthLoading, authError } = useAuthStore()
+    const { isAuthLoading } = useAuthStore()
+
+    const { email, password, setEmail, setPassword, submitLoginForm } = useLoginForm(openModalWithMessage)
 
     const router = useRouter()
 
-    const validateFormData = (formData: FormDataModel) => {
-        const emailValidation = validateEmail(formData.email)
-        const passwordValidation = validatePassword(formData.password)
-
-        if (!emailValidation.isValid) {
-            openModalWithMessage(emailValidation.message!)
-            return { isValid: false }
-        }
-
-        if (!passwordValidation.isValid) {
-            openModalWithMessage(passwordValidation.message!)
-            return { isValid: false }
-        }
-
-        return { isValid: true }
-    }
-
     const handleSubmit = async () => {
-        const validate = validateFormData(formData)
-        if (!validate.isValid) return
+        const result = await submitLoginForm()
 
-        await login(formData.email, formData.password)
+        if (!result) {
+            return
+        }
 
-        if (authError) {
-            switch (authError) {
+        if (!result.success) {
+            switch (result?.error) {
                 case 'INVALID_CREDENTIALS':
-                    openModalWithMessage('아이디 또는 비밀번호가 일치하지 않습니다')
+                    openModalWithMessage(MODAL_MESSAGES.AUTH.INVALID_CREDENTIALS)
                     break
                 case 'SERVICE_ERROR':
-                    openModalWithMessage('일시적인 오류가 발생했습니다\n잠시 후에 다시 시도해주세요')
+                    openModalWithMessage(MODAL_MESSAGES.AUTH.SERVER_ERROR)
                     break
                 default:
-                    openModalWithMessage('서비스 이용에 불편을 드려 죄송합니다\n잠시 후에 다시 시도해주세요')
+                    openModalWithMessage(MODAL_MESSAGES.AUTH.UNKNOWN)
                     break
             }
             return
         }
 
+        setIsRedirecting(true)
         router.push('/dashboard')
     }
+
+    const isLoading = isAuthLoading || isRedirecting
 
     return (
         <div className={styles.container}>
@@ -97,16 +77,16 @@ const SignInPage = () => {
                         <SignInInput
                             icon='/icons/sign-in-user-icon.svg'
                             placeholder='아이디를 입력해주세요'
-                            value={formData.email}
-                            onChange={(event) => setFormData({ ...formData, email: event.target.value })}
+                            value={email}
+                            onChange={(event) => setEmail(event.target.value)}
                             onSubmit={handleSubmit}
                         />
                         <SignInInput
                             icon='/icons/sign-in-lock-icon.svg'
                             type='password'
                             placeholder='비밀번호를 입력해주세요'
-                            value={formData.password}
-                            onChange={(event) => setFormData({ ...formData, password: event.target.value })}
+                            value={password}
+                            onChange={(event) => setPassword(event.target.value)}
                             onSubmit={handleSubmit}
                         />
 
@@ -116,9 +96,9 @@ const SignInPage = () => {
                                 color='secondary'
                                 className={styles.resetButton}
                                 onClick={handleSubmit}
-                                disabled={isAuthLoading}
+                                disabled={isLoading}
                             >
-                                {isAuthLoading ? (
+                                {isLoading ? (
                                     <ColorRing
                                         visible={true}
                                         height='40'
