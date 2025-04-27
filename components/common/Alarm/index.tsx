@@ -4,7 +4,6 @@ import InspectionStatusAlarm from '../InspectionStatusAlarm'
 
 const Alarm = () => {
     const { alarm, error } = useSubscribe()
-    // const isOpen = true
 
     if (error) {
         return

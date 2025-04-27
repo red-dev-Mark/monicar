@@ -1,23 +1,20 @@
 import { alarmTitle } from '@/constants/inspection'
 import { addSpaceVehicleNumber } from '@/lib/utils/string'
-import { WhiteAlertIcon } from '@/public/icons'
+import { WhiteAlertIcon, WhiteBellIcon, WhiteCheckIcon, WhiteOnButtonIcon } from '@/public/icons'
 import { AlarmResponse } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 
 interface InspectionStatusAlarmProps {
     inspectionStatusData: AlarmResponse[]
-    isOpen?: boolean
 }
 
 const InspectionStatusAlarm = ({ inspectionStatusData }: InspectionStatusAlarmProps) => {
-    // if (!isOpen) return null
-
     const alarmIcon = {
-        REQUIRED: <WhiteAlertIcon />,
+        REQUIRED: <WhiteBellIcon />,
         SCHEDULED: <WhiteAlertIcon />,
-        INPROGRESS: <WhiteAlertIcon />,
-        COMPLETED: <WhiteAlertIcon />,
+        INPROGRESS: <WhiteOnButtonIcon />,
+        COMPLETED: <WhiteCheckIcon />,
     }
 
     return (
