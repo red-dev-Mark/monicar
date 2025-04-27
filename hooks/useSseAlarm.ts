@@ -1,16 +1,21 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { API_URL } from '@/constants/api'
 import { AlarmResponse } from '@/types/vehicle'
 
-export const useSubscribe = () => {
-    const [alarm, setAlarm] = useState<AlarmResponse[]>([])
+export const useSseAlarm = () => {
+    const [alarms, setAlarms] = useState<AlarmResponse[]>([])
     const [error, setError] = useState<Error | null>(null)
 
+    const timersRef = useRef<Map<string, NodeJS.Timeout>>(new Map())
+
+    const eventTypes = ['REQUIRED', 'SCHEDULED', 'INPROGRESS', 'COMPLETED']
+    const SSE_URL = `${API_URL}/api/v1/alarm/subscribe`
+
     useEffect(() => {
-        const SSE_URL = `${API_URL}/api/v1/alarm/subscribe`
         let eventSource: EventSource | null = null
-        const timers: Record<string, NodeJS.Timeout> = {}
+
+        const timers = timersRef.current
 
         const connectSSE = () => {
             eventSource = new EventSource(SSE_URL, { withCredentials: true })
@@ -18,29 +23,25 @@ export const useSubscribe = () => {
             const addAlarm = (event: MessageEvent) => {
                 try {
                     const newAlarm = JSON.parse(event.data)
-                    // setAlarm((prev) => [...prev, newAlarm])
 
-                    // setTimeout(() => {
-                    //     setAlarm((prev) => prev.filter((item) => item.id !== newAlarm.id))
-                    // }, 5000)
-
-                    // 기존 동일 ID의 알림 타이머가 있다면 제거
-                    if (timers[newAlarm.id]) {
-                        clearTimeout(timers[newAlarm.id])
-                        delete timers[newAlarm.id]
+                    if (timers.has(newAlarm.id)) {
+                        clearTimeout(timers.get(newAlarm.id))
+                        timers.delete(newAlarm.id)
                     }
 
-                    // 새 알림 추가
-                    setAlarm((prev) => [...prev, newAlarm])
+                    setAlarms((prev) => [...prev, newAlarm])
 
-                    timers[newAlarm.id] = setTimeout(() => {
-                        setAlarm((prev) => prev.filter((item) => item.id !== newAlarm.id))
-                        delete timers[newAlarm.id]
+                    const newTimer = setTimeout(() => {
+                        setAlarms((prev) => prev.filter((item) => item.id !== newAlarm.id))
+                        timers.delete(newAlarm.id)
                     }, 4000)
-                } catch (error) {}
+
+                    timers.set(newAlarm.id, newTimer)
+                } catch (error) {
+                    console.error('점검 알림 SSE 연결 실패: ', error)
+                }
             }
 
-            const eventTypes = ['REQUIRED', 'SCHEDULED', 'INPROGRESS', 'COMPLETED']
             eventTypes.forEach((type) => {
                 eventSource?.addEventListener(type, addAlarm)
             })
@@ -65,13 +66,17 @@ export const useSubscribe = () => {
         connectSSE()
 
         return () => {
-            // console.log('SSE 연결 종료')
-            // eventSource.close()
+            timers.forEach((timer) => {
+                clearTimeout(timer)
+            })
+            if (eventSource) {
+                eventSource.close()
+            }
         }
     }, [])
 
     return {
-        alarm,
+        alarms,
         error,
     }
 }
