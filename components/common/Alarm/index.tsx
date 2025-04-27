@@ -4,15 +4,15 @@ import InspectionStatusAlarm from '../InspectionStatusAlarm'
 
 const Alarm = () => {
     const { alarm, error } = useSubscribe()
-    const isOpen = true
+    // const isOpen = true
 
     if (error) {
-        // console.error(error)
+        return
     }
 
     return (
         <div>
-            <InspectionStatusAlarm inspectionStatusData={alarm} isOpen={isOpen} />
+            <InspectionStatusAlarm inspectionStatusData={alarm} />
         </div>
     )
 }
