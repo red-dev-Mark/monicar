@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 
 import Map from '@/components/domain/map/Map'
 import VehicleMarker from '@/components/domain/vehicle/VehicleMarker'
+import { SOCKET_SUBSCRIPTION } from '@/constants/socket'
 import { useLiveRoute } from '@/hooks/useLiveRoute'
 import { useMapStatus } from '@/hooks/useMapStatus'
 
@@ -16,8 +17,7 @@ const LivePage = () => {
     const { liveLocations, connectSocket, disconnectSocket } = useLiveRoute()
 
     useEffect(() => {
-        if (typeof window === 'undefined') return
-        connectSocket('all')
+        connectSocket(SOCKET_SUBSCRIPTION.ALL_VEHICLES)
         return () => disconnectSocket()
     }, [])
 

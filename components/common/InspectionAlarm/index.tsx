@@ -8,8 +8,6 @@ import * as styles from './styles.css'
 const InspectionAlarm = () => {
     const { alarms, error } = useSseAlarm()
 
-    console.log('alarms', alarms)
-
     const alarmIcon = {
         REQUIRED: <WhiteBellIcon />,
         SCHEDULED: <WhiteAlertIcon />,

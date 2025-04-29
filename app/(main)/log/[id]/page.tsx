@@ -77,16 +77,13 @@ const DetailPage = () => {
 
     const mutation = useMutation({
         mutationFn: (id: number) => vehicleAPI.deleteVehicle(Number(id)),
-        onSuccess: () => {
-            console.log('mutation success!!!!!!!!!!')
-        },
+        onSuccess: () => {},
     })
 
     const handleDeleteVehicle = async (id: number) => {
         try {
             mutation.mutate(id, {
                 onSuccess: () => {
-                    console.log('mutate success!!!!!!!!!!')
                     router.replace('/log')
                 },
             })
