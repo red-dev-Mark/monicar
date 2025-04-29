@@ -7,9 +7,11 @@ import { SocketSubscriptionType } from '@/types/socket'
 const state = {
     client: null as Client | null,
     isConnected: false,
+    params: null as { sub: SocketSubscriptionType; callback: (location: string) => void; vehicleId?: string } | null,
 }
 
 const connect = (sub: SocketSubscriptionType, callback: (location: string) => void, vehicleId?: string) => {
+    state.params = { sub, callback, vehicleId }
     if (state?.isConnected) {
         disconnect()
     }
@@ -43,21 +45,35 @@ const connect = (sub: SocketSubscriptionType, callback: (location: string) => vo
         })
     }
 
-    client.activate()
-    state.client = client
-
     client.onStompError = () => {
         console.error('소켓 연결 오류')
         state.client = null
+
+        reconnect()
+    }
+
+    state.client = client
+    client.activate()
+}
+
+const reconnect = () => {
+    disconnect()
+    if (state.params) {
+        const { sub, callback, vehicleId } = state.params
+        setTimeout(() => {
+            connect(sub, callback, vehicleId)
+        }, 500)
     }
 }
 
 const disconnect = () => {
-    if ((state.client && state.isConnected) || state.client?.active) {
-        state.client.deactivate()
-        console.log('s-disconnect')
+    if (state.client) {
+        if (state.client.active) {
+            state.client.deactivate()
+            console.log('s-disconnect')
+        }
+        state.client = null
     }
-    state.client = null
     state.isConnected = false
 }
 
