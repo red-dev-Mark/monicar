@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 
 import SideFooter from '@/components/common/SideFooter'
 import NavItem from '@/components/layout/NavBar/NavItem'
-import { HomeIcon, ListIcon, PinIcon, PointerIcon } from '@/public/icons'
+import { HomeIcon, ListIcon, NavIcon, PinIcon, PointerIcon } from '@/public/icons'
 
 import * as styles from './styles.css'
 
@@ -24,6 +24,11 @@ const NavBar = () => {
             icon: <HomeIcon className={styles.icon} />,
         },
         {
+            label: '차량현황',
+            path: '/live',
+            icon: <NavIcon className={styles.icon} />,
+        },
+        {
             label: '위치조회',
             path: '/location',
             icon: <PinIcon className={styles.icon} />,
@@ -31,11 +36,6 @@ const NavBar = () => {
         {
             label: '경로조회',
             path: '/route',
-            icon: <PointerIcon className={styles.icon} />,
-        },
-        {
-            label: '실시간 차량 현황',
-            path: '/live',
             icon: <PointerIcon className={styles.icon} />,
         },
         {

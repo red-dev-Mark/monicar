@@ -11,6 +11,7 @@ import VehicleSearchSection from '@/app/(main)/route/components/VehicleSearchSec
 import Accordion from '@/components/common/Accordion'
 import Modal from '@/components/common/Modal'
 import { ModalMessageType } from '@/components/common/Modal/types'
+import { SOCKET_SUBSCRIPTION } from '@/constants/socket'
 import { useLoading } from '@/hooks/useLoading'
 import { useModal } from '@/hooks/useModal'
 import { useQueryParams } from '@/hooks/useQueryParams'
@@ -19,13 +20,14 @@ import { getVehicleOperationInfo } from '@/lib/services/vehicle'
 import { hasValidDateRange } from '@/lib/utils/validation'
 import { vars } from '@/styles/theme.css'
 import { LatLng, MapRefType } from '@/types/map'
+import { SocketSubscriptionType } from '@/types/socket'
 import { VehicleOperationPeriod } from '@/types/vehicle'
 
 import * as styles from './styles.css'
 interface RouteSearchSectionProps {
     mapRef: MapRefType
     onRoutesChange: (paths: LatLng[]) => void
-    startLiveTracking: (sub: 'single' | 'all', vehicleId: string) => void
+    startLiveTracking: (sub: SocketSubscriptionType, vehicleId: string) => void
     stopLiveTracking: () => void
 }
 
@@ -90,7 +92,7 @@ const RouteSearchSection = ({
     const handleLiveToggle = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.currentTarget.checked) {
             if (!vehicleId) return
-            startLiveTracking('single', vehicleId)
+            startLiveTracking(SOCKET_SUBSCRIPTION.SINGLE_VEHICLE, vehicleId)
             addQueries({ live: 'true' })
         } else {
             stopLiveTracking()

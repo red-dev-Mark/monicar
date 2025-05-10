@@ -1,5 +1,6 @@
 'use client'
 
+import { memo, useCallback } from 'react'
 import { Map as KakaoMap } from 'react-kakao-maps-sdk'
 
 import ErrorMessage from '@/components/common/ErrorMessage'
@@ -18,44 +19,48 @@ interface MapProps {
     onMapStatusChanged?: () => void
 }
 
-const Map = ({
-    ref,
-    level = MAP_CONFIG.INIT.level,
-    center = MAP_CONFIG.INIT.center,
-    children,
-    onLoad,
-    onClick,
-    onMapStatusChanged,
-}: MapProps) => {
-    const { loading, error } = useKakaoLoader()
+const Map = memo(
+    ({
+        ref,
+        level = MAP_CONFIG.INIT.level,
+        center = MAP_CONFIG.INIT.center,
+        children,
+        onLoad,
+        onClick,
+        onMapStatusChanged,
+    }: MapProps) => {
+        const { loading, error } = useKakaoLoader()
 
-    const handleCreate = () => {
-        onLoad?.(true)
-    }
+        const handleCreate = useCallback(() => {
+            onLoad?.(true)
+        }, [onLoad])
 
-    const handleMapStatusChange = () => {
-        onMapStatusChanged?.()
-    }
+        const handleMapStatusChange = useCallback(() => {
+            onMapStatusChanged?.()
+        }, [onMapStatusChanged])
 
-    if (loading) return <MapSkeleton />
-    if (error) return <ErrorMessage />
+        if (loading) return <MapSkeleton />
+        if (error) return <ErrorMessage />
 
-    return (
-        <KakaoMap
-            ref={ref}
-            center={center}
-            onClick={onClick}
-            level={level}
-            maxLevel={MAP_CONFIG.ZOOM.MAX}
-            minLevel={MAP_CONFIG.ZOOM.MIN}
-            style={{ width: '100%', height: '100%' }}
-            onCreate={handleCreate}
-            onZoomChanged={handleMapStatusChange}
-            onDragEnd={handleMapStatusChange}
-        >
-            {children}
-        </KakaoMap>
-    )
-}
+        return (
+            <KakaoMap
+                ref={ref}
+                center={center}
+                onClick={onClick}
+                level={level}
+                maxLevel={MAP_CONFIG.ZOOM.MAX}
+                minLevel={MAP_CONFIG.ZOOM.MIN}
+                style={{ width: '100%', height: '100%' }}
+                onCreate={handleCreate}
+                onZoomChanged={handleMapStatusChange}
+                onDragEnd={handleMapStatusChange}
+            >
+                {children}
+            </KakaoMap>
+        )
+    },
+)
+
+Map.displayName = 'Map'
 
 export default Map
