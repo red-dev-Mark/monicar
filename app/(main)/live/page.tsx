@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { FidgetSpinner } from 'react-loader-spinner'
 
 import Map from '@/components/domain/map/Map'
 import VehicleMarker from '@/components/domain/vehicle/VehicleMarker'
@@ -15,7 +14,7 @@ import * as styles from './styles.css'
 
 const LivePage = () => {
     const [vehicles, setVehicles] = useState<LiveRoute[] | null>(null)
-    const [isConnecting, setIsConnecting] = useState('idle')
+    const [_isConnecting, setIsConnecting] = useState('idle')
 
     const mapRef = useRef<kakao.maps.Map>(null)
     const { mapState, updateMapStatus } = useMapStatus(mapRef.current)
@@ -42,7 +41,7 @@ const LivePage = () => {
 
     return (
         <div className={styles.container}>
-            {isConnecting === 'pending' && <FidgetSpinner />}
+            {/* {isConnecting === 'pending' && <FidgetSpinner />} */}
             <Map ref={mapRef} level={mapState.level} center={mapState.center} onMapStatusChanged={updateMapStatus}>
                 {vehicles &&
                     vehicles.map((location, index) => {

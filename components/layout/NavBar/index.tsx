@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 
 import SideFooter from '@/components/common/SideFooter'
 import NavItem from '@/components/layout/NavBar/NavItem'
-import { HomeIcon, ListIcon, PinIcon, PointerIcon } from '@/public/icons'
+import { HomeIcon, ListIcon, NavIcon, PinIcon, PointerIcon } from '@/public/icons'
 
 import * as styles from './styles.css'
 
@@ -26,7 +26,7 @@ const NavBar = () => {
         {
             label: '차량현황',
             path: '/live',
-            icon: <PointerIcon className={styles.icon} />,
+            icon: <NavIcon className={styles.icon} />,
         },
         {
             label: '위치조회',
