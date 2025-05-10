@@ -1,7 +1,7 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { memo, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import VehicleDetailCard from '@/app/(main)/location/components/VehicleDetailCard'
 import VehicleSearchSection from '@/app/(main)/location/components/VehicleSearchSection/indext'
@@ -14,7 +14,7 @@ import { useMapStatus } from '@/hooks/useMapStatus'
 import { useQueryParams } from '@/hooks/useQueryParams'
 import { isWithinZoomThreshold } from '@/lib/utils/map'
 
-const MapSection = memo(() => {
+const MapSection = () => {
     const [isMapLoaded, setIsMapLoaded] = useState(false)
     const mapRef = useRef<kakao.maps.Map>(null)
 
@@ -26,6 +26,18 @@ const MapSection = memo(() => {
 
     const vehicleNumber = searchParams.get('vehicleNumber')
 
+    const handleMapLoad = useCallback(() => {
+        setIsMapLoaded(true)
+    }, [])
+
+    const handleMapClick = useCallback(() => {
+        clearAllQueries()
+    }, [clearAllQueries])
+
+    const handleMapStatusChange = useCallback(() => {
+        updateMapStatus()
+    }, [updateMapStatus])
+
     useEffect(() => {
         if (!isMapLoaded) return
         updateMapStatus()
@@ -33,10 +45,14 @@ const MapSection = memo(() => {
 
     useEffect(() => {
         if (!vehicleNumber) return
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             updateMapStatus()
         }, 400)
+
+        return () => clearTimeout(timer)
     }, [vehicleNumber])
+
+    const shouldShowVehicleList = useMemo(() => isWithinZoomThreshold(mapState), [mapState])
 
     return (
         <>
@@ -45,20 +61,18 @@ const MapSection = memo(() => {
                 ref={mapRef}
                 level={mapState?.level}
                 center={mapState?.center}
-                onLoad={() => setIsMapLoaded(true)}
-                onClick={() => clearAllQueries()}
-                onMapStatusChanged={updateMapStatus}
+                onLoad={handleMapLoad}
+                onClick={handleMapClick}
+                onMapStatusChanged={handleMapStatusChange}
             >
                 <ClusterOverlay level={mapState.level} clusterInfo={clusterInfo} onClick={controlMapStatus} />
                 <VehicleOverlay mapState={mapState} controlMapStatus={controlMapStatus} clusterDetail={clusterDetail} />
 
-                {isWithinZoomThreshold(mapState) && <ViewportVehicleList clusterDetail={clusterDetail} />}
+                {shouldShowVehicleList && <ViewportVehicleList clusterDetail={clusterDetail} />}
                 <VehicleDetailCard mapRef={mapRef} />
             </Map>
         </>
     )
-})
-
-MapSection.displayName = 'MapSection'
+}
 
 export default MapSection

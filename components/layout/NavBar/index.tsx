@@ -24,6 +24,11 @@ const NavBar = () => {
             icon: <HomeIcon className={styles.icon} />,
         },
         {
+            label: '차량현황',
+            path: '/live',
+            icon: <PointerIcon className={styles.icon} />,
+        },
+        {
             label: '위치조회',
             path: '/location',
             icon: <PinIcon className={styles.icon} />,
@@ -31,11 +36,6 @@ const NavBar = () => {
         {
             label: '경로조회',
             path: '/route',
-            icon: <PointerIcon className={styles.icon} />,
-        },
-        {
-            label: '실시간 차량 현황',
-            path: '/live',
             icon: <PointerIcon className={styles.icon} />,
         },
         {

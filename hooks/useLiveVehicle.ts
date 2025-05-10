@@ -8,6 +8,7 @@ import { SocketSubscriptionType } from '@/types/socket'
 export const useLiveVehicle = () => {
     const [liveLocation, setLiveLocation] = useState<LiveRoute | null>(null)
     const [isTracking, setIsTracking] = useState(false)
+    const [isConnecting, setIsConnecting] = useState('idle')
 
     const startLiveTracking = (sub: SocketSubscriptionType, vehicleId: string) => {
         setIsTracking(true)
@@ -22,6 +23,7 @@ export const useLiveVehicle = () => {
                 }
                 setLiveLocation(normalizedLocation)
             },
+            setIsConnecting,
             vehicleId,
         )
     }
@@ -37,6 +39,7 @@ export const useLiveVehicle = () => {
     }, [])
 
     return {
+        isConnecting,
         liveLocation,
         isTracking,
         startLiveTracking,

@@ -7,14 +7,26 @@ import { SocketSubscriptionType } from '@/types/socket'
 const state = {
     client: null as Client | null,
     isConnected: false,
-    params: null as { sub: SocketSubscriptionType; callback: (location: string) => void; vehicleId?: string } | null,
+    params: null as {
+        sub: SocketSubscriptionType
+        callback: (location: string) => void
+        connectStatus: (status: string) => void
+        vehicleId?: string
+    } | null,
 }
 
-const connect = (sub: SocketSubscriptionType, callback: (location: string) => void, vehicleId?: string) => {
-    state.params = { sub, callback, vehicleId }
+const connect = (
+    sub: SocketSubscriptionType,
+    callback: (location: string) => void,
+    connectStatus: (status: string) => void,
+    vehicleId?: string,
+) => {
+    state.params = { sub, callback, connectStatus, vehicleId }
     if (state?.isConnected) {
         disconnect()
     }
+
+    connectStatus('pending')
 
     const client = new Client({
         webSocketFactory: () => new SockJS(`${SOCKET_URL.BASE}/ws`),
@@ -52,6 +64,7 @@ const connect = (sub: SocketSubscriptionType, callback: (location: string) => vo
         reconnect()
     }
 
+    state.isConnected = true
     state.client = client
     client.activate()
 }
@@ -59,9 +72,9 @@ const connect = (sub: SocketSubscriptionType, callback: (location: string) => vo
 const reconnect = () => {
     disconnect()
     if (state.params) {
-        const { sub, callback, vehicleId } = state.params
+        const { sub, callback, connectStatus, vehicleId } = state.params
         setTimeout(() => {
-            connect(sub, callback, vehicleId)
+            connect(sub, callback, connectStatus, vehicleId)
         }, 500)
     }
 }
@@ -75,6 +88,7 @@ const disconnect = () => {
         state.client = null
     }
     state.isConnected = false
+    state?.params?.connectStatus('idle')
 }
 
 export const socket = {

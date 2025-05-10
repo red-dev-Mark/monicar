@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { FidgetSpinner } from 'react-loader-spinner'
 
 import Map from '@/components/domain/map/Map'
 import VehicleMarker from '@/components/domain/vehicle/VehicleMarker'
@@ -14,12 +15,13 @@ import * as styles from './styles.css'
 
 const LivePage = () => {
     const [vehicles, setVehicles] = useState<LiveRoute[] | null>(null)
+    const [isConnecting, setIsConnecting] = useState('idle')
 
     const mapRef = useRef<kakao.maps.Map>(null)
     const { mapState, updateMapStatus } = useMapStatus(mapRef.current)
 
     useEffect(() => {
-        socket.connect(SOCKET_SUBSCRIPTION.ALL_VEHICLES, normalizeVehicleLocations)
+        socket.connect(SOCKET_SUBSCRIPTION.ALL_VEHICLES, normalizeVehicleLocations, setIsConnecting)
         return () => socket.disconnect()
     }, [])
 
@@ -33,12 +35,14 @@ const LivePage = () => {
             }
         })
         setVehicles(normalizedLocations)
+        setIsConnecting('success')
     }
 
     const isLargeMarkerSize = mapState.level < 10
 
     return (
         <div className={styles.container}>
+            {isConnecting === 'pending' && <FidgetSpinner />}
             <Map ref={mapRef} level={mapState.level} center={mapState.center} onMapStatusChanged={updateMapStatus}>
                 {vehicles &&
                     vehicles.map((location, index) => {
