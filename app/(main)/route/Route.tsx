@@ -7,7 +7,7 @@ import { useRef, useState } from 'react'
 import MapSection from '@/app/(main)/route/components/MapSection'
 import RouteSearchSection from '@/app/(main)/route/components/RouteSearchSection'
 import LiveMode from '@/components/common/LiveMode'
-import { useLiveRoute } from '@/hooks/useLiveRoute'
+import { useLiveVehicle } from '@/hooks/useLiveVehicle'
 import { useQueryParams } from '@/hooks/useQueryParams'
 import { vars } from '@/styles/theme.css'
 import { LatLng } from '@/types/map'
@@ -19,7 +19,7 @@ const Route = () => {
     const [isMapLoaded, setIsMapLoaded] = useState(false)
 
     const { addQuery, removeQuery } = useQueryParams()
-    const { liveLocation, startLiveTracking, stopLiveTracking } = useLiveRoute()
+    const { liveLocation, startLiveTracking, stopLiveTracking } = useLiveVehicle()
 
     const mapRef = useRef<kakao.maps.Map>(null)
 

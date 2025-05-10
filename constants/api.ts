@@ -1,10 +1,5 @@
 export const API_URL = process.env.NEXT_PUBLIC_API_URL
 
-export const SOCKET_TOPIC_URL = {
-    singleVehicle: (vehicleId: string) => `/topic/car/${vehicleId}`,
-    allVehicles: `/topic/car/all`,
-}
-
 export interface UseDataRequest {
     url: string
     params?: Record<string, string | number | undefined>

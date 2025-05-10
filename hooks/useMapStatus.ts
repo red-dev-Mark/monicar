@@ -12,10 +12,10 @@ export const useMapStatus = (map: kakao.maps.Map | null | undefined) => {
         neCoord: null,
     })
 
-    const updateMapStatus = () => {
+    const updateMapStatus = useCallback(() => {
         if (!map) return
         setCurrentMapState(getBoundedMapStatus(map))
-    }
+    }, [map])
 
     const controlMapStatus = useCallback((location: LatLng, level?: number) => {
         if (!map) {
